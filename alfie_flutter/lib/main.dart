@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'models/Environment.dart';
+import 'data/models/environment.dart';
 
 Future<void> main() async {
   await Environment.load();
