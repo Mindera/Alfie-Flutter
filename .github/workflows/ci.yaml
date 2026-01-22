@@ -7,8 +7,39 @@ on:
     branches-ignore: [main, 'release/**']
 
 jobs:
+  test-and-lint:
+    name: Test & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Create dummy .env files
+        run: |
+          touch .env.dev
+          touch .env.prod
+        working-directory: alfie_flutter
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: alfie_flutter
+
+      - name: Linting
+        run: flutter analyze
+        working-directory: alfie_flutter
+
+      - name: Run tests
+        run: flutter test
+        working-directory: alfie_flutter
+
   build:
     name: Build ${{ matrix.platform }}
+    needs: test-and-lint 
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -35,22 +66,14 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Install dependencies
-        run: flutter pub get
-        working-directory: alfie_flutter
-
-      - name: Create .env files
+      - name: Create .env files from secrets
         run: |
           echo "${{ secrets.ENV_DEV }}" > .env.dev
           echo "${{ secrets.ENV_PROD }}" > .env.prod
         working-directory: alfie_flutter
 
-      - name: Linting
-        run: flutter analyze
-        working-directory: alfie_flutter
-
-      - name: Run tests
-        run: flutter test
+      - name: Install dependencies
+        run: flutter pub get
         working-directory: alfie_flutter
 
       - name: Build Application
