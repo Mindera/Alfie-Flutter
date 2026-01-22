@@ -41,7 +41,7 @@ jobs:
       - name: Report LCOV
         uses: zgosalvez/github-actions-report-lcov@v6.0.0
         with:
-          coverage-files: coverage/lcov.info
+          coverage-files: alfie_flutter/coverage/lcov.info
           artifact-name: code-coverage-report
           github-token: ${{ secrets.GITHUB_TOKEN }}
           working-directory: alfie_flutter
