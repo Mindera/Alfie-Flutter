@@ -2,81 +2,63 @@ name: CI
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
   push:
-    branches-ignore:
-      - main 
-      - 'release/**'
+    branches-ignore: [main, 'release/**']
+
 jobs:
-  build-android:
-    name: Build Android APK
-    runs-on: ubuntu-latest
+  build:
+    name: Build ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: Android
+            os: ubuntu-latest
+            build-cmd: flutter build apk --release
+            artifact-path: alfie_flutter/build/app/outputs/flutter-apk/app-release.apk
+            artifact-name: android-apk
+
+          - platform: iOS
+            os: macos-latest
+            build-cmd: flutter build ipa --release --no-codesign
+            artifact-path: alfie_flutter/build/ios/ipa/*.ipa
+            artifact-name: ios-ipa
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          
+          cache: true
+
       - name: Install dependencies
         run: flutter pub get
         working-directory: alfie_flutter
 
-      - name: Linting
-        run: flutter analyze
-        working-directory: alfie_flutter
-
-      - name: Run tests
-        run: flutter test
-        working-directory: alfie_flutter
-
-      - name: Build APK
-        run: flutter build apk --release
-        working-directory: alfie_flutter
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v6
-        with:
-          name: android-apk
-          path: alfie_flutter/build/app/outputs/flutter-apk/app-release.apk
-    
-
-
-  build-ios:
-    name: Build iOS IPA
-    runs-on: macos-latest
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          
-      - name: Install dependencies
-        run: flutter pub get
-        working-directory: alfie_flutter
-
-      - name: Linting
-        run: flutter analyze
-        working-directory: alfie_flutter
-
-      - name: Run tests
-        run: flutter test
-        working-directory: alfie_flutter
-
-
-      - name: Flutter build ipa
+      - name: Create dummy env files
         run: |
-          flutter build ipa --release --no-codesign
+          touch .env.dev
+          touch .env.prod
+        working-directory: alfie_flutter
+
+      - name: Linting
+        run: flutter analyze
+        working-directory: alfie_flutter
+
+      - name: Run tests
+        run: flutter test
+        working-directory: alfie_flutter
+
+      - name: Build Application
+        run: ${{ matrix.build-cmd }}
         working-directory: alfie_flutter
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
-          name: ios-ipa
-          path: alfie_flutter/build/ios/ipa/*.ipa
+          name: ${{ matrix.artifact-name }}
+          path: ${{ matrix.artifact-path }}
