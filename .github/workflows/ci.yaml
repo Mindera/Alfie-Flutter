@@ -10,7 +10,7 @@ on:
       - 'release/**'
 jobs:
   build-android:
-    name: Build Android AOK
+    name: Build Android APK
     runs-on: ubuntu-latest
 
     steps:
