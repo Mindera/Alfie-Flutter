@@ -19,10 +19,10 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Create dummy .env files
+      - name: Create .env files from secrets
         run: |
-          touch .env.dev
-          touch .env.prod
+          echo "${{ secrets.ENV_DEV }}" > .env.dev
+          echo "${{ secrets.ENV_PROD }}" > .env.prod
         working-directory: alfie_flutter
 
       - name: Install dependencies
