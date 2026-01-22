@@ -23,8 +23,8 @@ jobs:
           - platform: iOS
             os: macos-latest
             build-cmd: flutter build ipa --release --no-codesign
-            artifact-path: alfie_flutter/build/ios/ipa/*.ipa
-            artifact-name: ios-ipa
+            artifact-path: alfie_flutter/build/ios/archive/Runner.xcarchive
+            artifact-name: ios-build-archive
 
     steps:
       - uses: actions/checkout@v6
