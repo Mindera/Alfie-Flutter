@@ -13,11 +13,12 @@ jobs:
     name: Build Android APK
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: alfie_flutter
+
     steps:
       - uses: actions/checkout@v6
-
-      - name: Set working directory
-        run: cd alfie_flutter
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -49,11 +50,12 @@ jobs:
     name: Build iOS IPA
     runs-on: macos-latest
 
+    defaults:
+      run:
+        working-directory: alfie_flutter
+
     steps:
       - uses: actions/checkout@v6
-
-      - name: Set working directory
-        run: cd alfie_flutter
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
