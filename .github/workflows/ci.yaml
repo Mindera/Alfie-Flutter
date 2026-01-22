@@ -39,10 +39,10 @@ jobs:
         run: flutter pub get
         working-directory: alfie_flutter
 
-      - name: Create dummy env files
+      - name: Create .env files
         run: |
-          touch .env.dev
-          touch .env.prod
+          echo "${{ secrets.ENV_DEV }}" > .env.dev
+          echo "${{ secrets.ENV_PROD }}" > .env.prod
         working-directory: alfie_flutter
 
       - name: Linting
