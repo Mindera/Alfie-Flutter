@@ -13,10 +13,6 @@ jobs:
     name: Build Android APK
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: alfie_flutter
-
     steps:
       - uses: actions/checkout@v6
 
@@ -24,25 +20,29 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version-file: pubspec.yaml
+          flutter-version-file: alfie_flutter/pubspec.yaml
           
       - name: Install dependencies
         run: flutter pub get
+        working-directory: alfie_flutter
 
       - name: Linting
         run: flutter analyze
+        working-directory: alfie_flutter
 
       - name: Run tests
         run: flutter test
+        working-directory: alfie_flutter
 
       - name: Build APK
         run: flutter build apk --release
+        working-directory: alfie_flutter
 
       - name: Upload artifact
         uses: actions/upload-artifact@v6
         with:
           name: android-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: alfie_flutter/build/app/outputs/flutter-apk/app-release.apk
     
 
 
@@ -50,10 +50,6 @@ jobs:
     name: Build iOS IPA
     runs-on: macos-latest
 
-    defaults:
-      run:
-        working-directory: alfie_flutter
-
     steps:
       - uses: actions/checkout@v6
 
@@ -61,16 +57,20 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version-file: pubspec.yaml
+          flutter-version-file: alfie_flutter/pubspec.yaml
           
       - name: Install dependencies
         run: flutter pub get
+        working-directory: alfie_flutter
 
       - name: Linting
         run: flutter analyze
+        working-directory: alfie_flutter
 
       - name: Run tests
         run: flutter test
+        working-directory: alfie_flutter
+
 
       # - name: Flutter build ipa
       #   run: |
