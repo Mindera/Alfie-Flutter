@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches-ignore: [main, 'release/**']
+
+jobs:
+  test-and-lint:
+    name: Test & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Create .env files from secrets
+        run: |
+          echo "${{ secrets.ENV_DEV }}" > .env.dev
+          echo "${{ secrets.ENV_PROD }}" > .env.prod
+        working-directory: alfie_flutter
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: alfie_flutter
+
+      - name: Linting
+        run: flutter analyze
+        working-directory: alfie_flutter
+
+      - name: Run tests
+        run: flutter test --coverage
+        working-directory: alfie_flutter
+
+      - name: Setup LCOV
+        uses: hrishikesh-kadam/setup-lcov@v1
+
+      - name: Report LCOV
+        uses: zgosalvez/github-actions-report-lcov@v6.0.0
+        with:
+          coverage-files: alfie_flutter/coverage/lcov.info
+          artifact-name: code-coverage-report
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: alfie_flutter
+
+  build:
+    name: Build ${{ matrix.platform }}
+    needs: test-and-lint 
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: Android
+            os: ubuntu-latest
+            build-cmd: flutter build apk --release
+            artifact-path: alfie_flutter/build/app/outputs/flutter-apk/app-release.apk
+            artifact-name: android-apk
+
+          - platform: iOS
+            os: macos-latest
+            build-cmd: flutter build ipa --release --no-codesign
+            artifact-path: alfie_flutter/build/ios/archive/Runner.xcarchive
+            artifact-name: ios-build-archive
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Create .env files from secrets
+        run: |
+          echo "${{ secrets.ENV_DEV }}" > .env.dev
+          echo "${{ secrets.ENV_PROD }}" > .env.prod
+        working-directory: alfie_flutter
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: alfie_flutter
+
+      - name: Build Application
+        run: ${{ matrix.build-cmd }}
+        working-directory: alfie_flutter
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ matrix.artifact-name }}
+          path: ${{ matrix.artifact-path }}
