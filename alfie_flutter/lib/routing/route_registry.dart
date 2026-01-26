@@ -19,6 +19,7 @@ class RouteRegistry {
       AppRoute.productDetail => ProductDetailScreen(
         id: state.pathParameters['id'] ?? '',
       ),
+      AppRoute.profile => const AccountScreen(),
     };
   }
 }

@@ -20,9 +20,8 @@ class WishlistScreen extends ConsumerWidget {
         return ListTile(
           title: Text('Store Item $value'),
           onTap: () {
-            context.goNamed(
-              AppRoute.productDetail.name,
-              pathParameters: {'id': '$value'},
+            context.push(
+              AppRoute.productDetail.path.replaceFirst(':id', '$value'),
             );
           },
         );

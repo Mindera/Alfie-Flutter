@@ -30,7 +30,6 @@ final routerProvider = Provider((ref) {
                 path: tab.path,
                 builder: (context, state) =>
                     RouteRegistry.getScreen(tab, state),
-                // Recursive-like mapping of children from the enum
                 routes: tab.children
                     .map(
                       (child) => GoRoute(
@@ -45,6 +44,12 @@ final routerProvider = Provider((ref) {
             ],
           );
         }).toList(),
+      ),
+      GoRoute(
+        path: AppRoute.productDetail.path,
+        builder: (context, state) {
+          return RouteRegistry.getScreen(AppRoute.productDetail, state);
+        },
       ),
     ],
   );
