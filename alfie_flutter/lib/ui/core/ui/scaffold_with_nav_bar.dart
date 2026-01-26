@@ -22,22 +22,4 @@ class ScaffoldWithNavBar extends ConsumerWidget {
       bottomNavigationBar: NavBar(navigationShell: navigationShell),
     );
   }
-
-  /// NOTE: For a slightly more sophisticated branch switching, change the onTap
-  /// handler on the BottomNavigationBar above to the following:
-  /// `onTap: (int index) => _onTap(context, index),`
-  // ignore: unused_element
-  void _onTap(BuildContext context, int index) {
-    // When navigating to a new branch, it's recommended to use the goBranch
-    // method, as doing so makes sure the last navigation state of the
-    // Navigator for the branch is restored.
-    navigationShell.goBranch(
-      index,
-      // A common pattern when using bottom navigation bars is to support
-      // navigating to the initial location when tapping the item that is
-      // already active. This example demonstrates how to support this behavior,
-      // using the initialLocation parameter of goBranch.
-      initialLocation: index == navigationShell.currentIndex,
-    );
-  }
 }
