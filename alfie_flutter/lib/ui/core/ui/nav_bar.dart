@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/routing/app_route.dart';
+import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/view_model/scroll_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,8 +30,13 @@ class NavBar extends ConsumerWidget {
     // Using the goBranch method makes sure the last navigation state of the
     // Navigator for the branch is restored.
     final isCurrentTab = index == navigationShell.currentIndex;
+    final router = ref.read(routerProvider);
+    final isSameRoute =
+        router.state.fullPath ==
+        router.namedLocation(AppRoute.tabs[index].name);
 
-    if (isCurrentTab) {
+    // If the user taps on the current tab and is already on the initial
+    if (isSameRoute) {
       ref
           .read(scrollProvider(AppRoute.tabs[index].name).notifier)
           .triggerReset();
