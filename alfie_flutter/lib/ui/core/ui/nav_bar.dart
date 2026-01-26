@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,13 +16,12 @@ class NavBar extends ConsumerWidget {
       // world scenario, the items would most likely be generated from the
       // branches of the shell route, which can be fetched using
       // `navigationShell.route.branches`.
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Section A'),
-        BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Section B'),
-        BottomNavigationBarItem(icon: Icon(Icons.tab), label: 'Section C'),
-        BottomNavigationBarItem(icon: Icon(Icons.tab), label: 'Section D'),
-        BottomNavigationBarItem(icon: Icon(Icons.tab), label: 'Section E'),
-      ],
+      items: AppRoute.tabs
+          .map(
+            (tab) =>
+                BottomNavigationBarItem(icon: Icon(tab.icon), label: tab.label),
+          )
+          .toList(),
       currentIndex: navigationShell.currentIndex,
       // Navigate to the current location of the branch at the provided index
       // when tapping an item in the BottomNavigationBar.
