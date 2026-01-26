@@ -6,6 +6,10 @@ class StoreScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Center(child: Text('Hello Store Screen!'));
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return ListTile(title: Text('Store Item $index'));
+      },
+    );
   }
 }
