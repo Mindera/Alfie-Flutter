@@ -9,6 +9,7 @@ class StoreScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListView.builder(
+      itemCount: 101,
       itemBuilder: (context, index) {
         return ListTile(
           title: Text('Store Item $index'),

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 enum AppRoute {
   // Tabs
-  home(path: 'home', isTab: true, icon: Icons.home, children: [productDetail]),
-  store(path: 'store', isTab: true, icon: Icons.store),
-  wishlist(path: 'wishlist', isTab: true, icon: Icons.favorite),
-  bag(path: 'bag', isTab: true, icon: Icons.shopping_bag),
-  account(path: 'account', isTab: true, icon: Icons.person),
+  home(path: '/home', isTab: true, icon: Icons.home, children: [productDetail]),
+  store(path: '/store', isTab: true, icon: Icons.store),
+  wishlist(path: '/wishlist', isTab: true, icon: Icons.favorite),
+  bag(path: '/bag', isTab: true, icon: Icons.shopping_bag),
+  account(path: '/account', isTab: true, icon: Icons.person),
   // Sub-pages
   productDetail(path: 'product/:id');
 

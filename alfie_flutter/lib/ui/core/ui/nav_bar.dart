@@ -12,10 +12,7 @@ class NavBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      // Here, the items of BottomNavigationBar are hard coded. In a real
-      // world scenario, the items would most likely be generated from the
-      // branches of the shell route, which can be fetched using
-      // `navigationShell.route.branches`.
+      // Modular items based on the tabs defined in AppRoute
       items: AppRoute.tabs
           .map(
             (tab) =>
@@ -23,15 +20,12 @@ class NavBar extends ConsumerWidget {
           )
           .toList(),
       currentIndex: navigationShell.currentIndex,
-      // Navigate to the current location of the branch at the provided index
-      // when tapping an item in the BottomNavigationBar.
       onTap: (int index) => _onTap(context, index),
     );
   }
 
   void _onTap(BuildContext context, int index) {
-    // When navigating to a new branch, it's recommended to use the goBranch
-    // method, as doing so makes sure the last navigation state of the
+    // Using the goBranch method makes sure the last navigation state of the
     // Navigator for the branch is restored.
     navigationShell.goBranch(
       index,
