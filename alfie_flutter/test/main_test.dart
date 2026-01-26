@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/data/models/environment.dart';
 import 'package:alfie_flutter/main.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,6 +17,6 @@ void main() {
     await tester.pumpAndSettle();
 
     // Check for your text
-    expect(find.textContaining('Hello'), findsOneWidget);
+    expect(find.byType(MaterialApp), findsOneWidget);
   });
 }

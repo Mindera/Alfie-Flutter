@@ -18,7 +18,7 @@ class ScaffoldWithNavBar extends ConsumerWidget {
     return Scaffold(
       // The StatefulNavigationShell from the associated StatefulShellRoute is
       // directly passed as the body of the Scaffold.
-      body: navigationShell,
+      body: SafeArea(child: navigationShell),
       bottomNavigationBar: NavBar(navigationShell: navigationShell),
     );
   }
