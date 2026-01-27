@@ -41,8 +41,4 @@ enum AppRoute {
       AppRoute.values.where((r) => r.isTab).toList();
   String get label => name[0].toUpperCase() + name.substring(1);
   int get tabIndex => tabs.indexOf(this);
-  static String getFullPath(AppRoute route, [String parentPath = '']) {
-    final fullPath = parentPath + route.path;
-    return fullPath;
-  }
 }
