@@ -10,6 +10,7 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
 );
 
 final routerProvider = Provider((ref) {
+  final registry = ref.watch(routeRegistryProvider);
   // GoRouter configuration
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
@@ -28,15 +29,14 @@ final routerProvider = Provider((ref) {
               GoRoute(
                 name: tab.name,
                 path: tab.path,
-                builder: (context, state) =>
-                    RouteRegistry.getScreen(tab, state),
+                builder: (context, state) => registry.getScreen(tab, state),
                 routes: tab.children
                     .map(
                       (child) => GoRoute(
                         name: '${tab.name}_${child.name}',
                         path: child.path,
                         builder: (context, state) =>
-                            RouteRegistry.getScreen(child, state),
+                            registry.getScreen(child, state),
                       ),
                     )
                     .toList(),
@@ -48,7 +48,7 @@ final routerProvider = Provider((ref) {
       GoRoute(
         path: AppRoute.productDetail.path,
         builder: (context, state) {
-          return RouteRegistry.getScreen(AppRoute.productDetail, state);
+          return registry.getScreen(AppRoute.productDetail, state);
         },
       ),
     ],

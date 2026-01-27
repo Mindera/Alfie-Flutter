@@ -29,7 +29,6 @@ class NavBarViewModel {
         _ref.read(scrollProvider(tabName).notifier).triggerReset();
       }
     }
-
     navigationShell.goBranch(index, initialLocation: isCurrentTab);
   }
 }

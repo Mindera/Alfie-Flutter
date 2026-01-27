@@ -7,9 +7,19 @@ import 'package:alfie_flutter/ui/store/view/store_screen.dart';
 import 'package:alfie_flutter/ui/wishlist/view/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RouteRegistry {
-  static Widget getScreen(AppRoute route, GoRouterState state) {
+/// Injectable contract for resolving routes to screens.
+abstract class RouteRegistry {
+  Widget getScreen(AppRoute route, GoRouterState state);
+}
+
+/// Default implementation used in production.
+class DefaultRouteRegistry implements RouteRegistry {
+  const DefaultRouteRegistry();
+
+  @override
+  Widget getScreen(AppRoute route, GoRouterState state) {
     return switch (route) {
       AppRoute.home => const HomeScreen(),
       AppRoute.store => const StoreScreen(),
@@ -22,3 +32,7 @@ class RouteRegistry {
     };
   }
 }
+
+final routeRegistryProvider = Provider<RouteRegistry>(
+  (ref) => const DefaultRouteRegistry(),
+);
