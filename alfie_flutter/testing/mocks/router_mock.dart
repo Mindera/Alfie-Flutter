@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:alfie_flutter/routing/app_route.dart';
+import 'package:alfie_flutter/data/models/app_route.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 
 /// This builds a real `GoRouter` and intentionally exercises the

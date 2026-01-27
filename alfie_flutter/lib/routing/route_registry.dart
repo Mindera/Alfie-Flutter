@@ -1,4 +1,4 @@
-import 'package:alfie_flutter/routing/app_route.dart';
+import 'package:alfie_flutter/data/models/app_route.dart';
 import 'package:alfie_flutter/ui/account/view/account_screen.dart';
 import 'package:alfie_flutter/ui/bag/view/bag_screen.dart';
 import 'package:alfie_flutter/ui/home/view/home_screen.dart';
