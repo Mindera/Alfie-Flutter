@@ -33,6 +33,7 @@ final routerProvider = Provider((ref) {
                 routes: tab.children
                     .map(
                       (child) => GoRoute(
+                        name: '${tab.name}_${child.name}',
                         path: child.path,
                         builder: (context, state) =>
                             RouteRegistry.getScreen(child, state),
