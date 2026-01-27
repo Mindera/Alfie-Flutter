@@ -16,6 +16,12 @@ final routerProvider = Provider((ref) {
     navigatorKey: _rootNavigatorKey,
     initialLocation: AppRoute.home.path,
     routes: [
+      GoRoute(
+        path: "/",
+        redirect: (context, state) {
+          return AppRoute.home.path;
+        },
+      ),
       StatefulShellRoute.indexedStack(
         builder:
             (
