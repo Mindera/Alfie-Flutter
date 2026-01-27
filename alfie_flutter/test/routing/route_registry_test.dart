@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-import '../testing/mocks.dart';
+import '../../testing/mocks.dart';
 
 void main() {
   late DefaultRouteRegistry registry;

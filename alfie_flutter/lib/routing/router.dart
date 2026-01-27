@@ -45,12 +45,6 @@ final routerProvider = Provider((ref) {
           );
         }).toList(),
       ),
-      GoRoute(
-        path: AppRoute.productDetail.path,
-        builder: (context, state) {
-          return registry.getScreen(AppRoute.productDetail, state);
-        },
-      ),
     ],
   );
 });
