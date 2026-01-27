@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../testing/mocks/scroll_widget_mock.dart';
+import '../../testing/fakes/scroll_widget_fake.dart';
 
 void main() {
   // Helper to reduce duplicated setup across tests.

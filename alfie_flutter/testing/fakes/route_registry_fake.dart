@@ -5,8 +5,8 @@ import 'package:alfie_flutter/data/models/app_route.dart';
 
 /// Shared test helper: lightweight RouteRegistry that returns simple pages
 /// identifiable by Keys so widget tests can assert navigation without real UI.
-class TestRouteRegistry implements RouteRegistry {
-  const TestRouteRegistry();
+class FakeRouteRegistry implements RouteRegistry {
+  const FakeRouteRegistry();
 
   @override
   Widget getScreen(AppRoute route, GoRouterState state) {

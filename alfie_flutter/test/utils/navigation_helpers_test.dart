@@ -1,14 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:alfie_flutter/data/models/app_route.dart';
-import '../../testing/mocks/router_mock.dart';
+import '../../testing/fakes/router_fake.dart';
 
 void main() {
   testWidgets('goToProduct builds path when current path has no trailing slash', (
     WidgetTester tester,
   ) async {
     const productId = '123';
-    final router = buildMockRouter(
+    final router = buildFakeRouter(
       baseRoute: AppRoute.store,
       initialLocation: AppRoute.store.path,
       productId: productId,
@@ -30,7 +30,7 @@ void main() {
   ) async {
     const productId = 'abc';
     // Start with a trailing slash to simulate the edge case
-    final router = buildMockRouter(
+    final router = buildFakeRouter(
       baseRoute: AppRoute.bag,
       initialLocation: '${AppRoute.bag.path}/',
       productId: productId,

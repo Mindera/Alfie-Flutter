@@ -5,7 +5,7 @@ import 'package:alfie_flutter/utils/navigation_helpers.dart';
 
 /// This builds a real `GoRouter` and intentionally exercises the
 /// `NavigationHelpers` extension. It's a lightweight shared test utility.
-GoRouter buildMockRouter({
+GoRouter buildFakeRouter({
   required AppRoute baseRoute,
   required String initialLocation,
   required String productId,

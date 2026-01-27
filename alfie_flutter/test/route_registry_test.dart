@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-import '../testing/mocks/go_router_state_mock.dart';
+import '../testing/mocks.dart';
 
 void main() {
   late DefaultRouteRegistry registry;
@@ -19,7 +19,6 @@ void main() {
 
   setUp(() {
     registry = const DefaultRouteRegistry();
-    // We mock GoRouterState because productDetail needs pathParameters
     mockState = MockGoRouterState();
   });
 
@@ -30,7 +29,6 @@ void main() {
     });
 
     test('returns ProductDetailScreen with correct ID from state', () {
-      // Setup the mock state with a specific ID
       when(() => mockState.pathParameters).thenReturn({'id': '123'});
 
       final result = registry.getScreen(AppRoute.productDetail, mockState);

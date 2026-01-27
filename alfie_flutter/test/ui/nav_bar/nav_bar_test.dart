@@ -1,133 +1,104 @@
-import 'package:alfie_flutter/routing/router.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:alfie_flutter/ui/nav_bar/view/nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'package:alfie_flutter/data/models/app_route.dart';
-import 'package:alfie_flutter/routing/route_registry.dart';
-import 'package:alfie_flutter/ui/core/view_model/scroll_view_model.dart';
+import 'package:alfie_flutter/ui/nav_bar/view_model/nav_bar_view_model.dart';
 
-import '../../../testing/models/test_route_registry.dart';
+import '../../../testing/mocks.dart';
 
 void main() {
-  testWidgets('navigates to selected tab when tapped', (tester) async {
-    final container = ProviderContainer(
-      overrides: [
-        routeRegistryProvider.overrideWithValue(const TestRouteRegistry()),
-      ],
-    );
-    addTearDown(container.dispose);
+  late MockNavBarViewModel mockViewModel;
+  late MockNavigationShell mockShell;
 
-    final router = container.read(routerProvider);
-    await tester.pumpWidget(
-      UncontrolledProviderScope(
-        container: container,
-        child: MaterialApp.router(
-          routerConfig: router,
-          debugShowCheckedModeBanner: false,
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    // Choose the store tab for the assertion
-    final tab = AppRoute.store;
-
-    // Initial screen should be home
-    expect(find.byKey(Key('screen:${AppRoute.home.name}')), findsOneWidget);
-
-    final storeIcon = find.byIcon(tab.icon!);
-    expect(storeIcon, findsOneWidget);
-    await tester.tap(storeIcon);
-    await tester.pumpAndSettle();
-
-    // We should be on the store screen now
-    expect(find.byKey(Key('screen:${tab.name}')), findsOneWidget);
+  setUp(() {
+    mockViewModel = MockNavBarViewModel();
+    mockShell = MockNavigationShell();
   });
 
-  testWidgets('tapping current tab while in sub-route returns to branch root', (
-    tester,
-  ) async {
-    final container = ProviderContainer(
-      overrides: [
-        routeRegistryProvider.overrideWithValue(const TestRouteRegistry()),
-      ],
-    );
-    addTearDown(container.dispose);
-
-    final router = container.read(routerProvider);
+  // Helper to build the widget under test
+  Future<void> pumpNavBar(WidgetTester tester) async {
     await tester.pumpWidget(
-      UncontrolledProviderScope(
-        container: container,
-        child: MaterialApp.router(
-          routerConfig: router,
-          debugShowCheckedModeBanner: false,
+      ProviderScope(
+        overrides: [
+          // Inject our Mock View Model instead of the real one
+          navBarViewModelProvider.overrideWithValue(mockViewModel),
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+            // pass the mock shell
+            bottomNavigationBar: NavBar(navigationShell: mockShell),
+          ),
         ),
       ),
     );
-    await tester.pumpAndSettle();
+  }
 
-    final tab = AppRoute.store;
-    final storeIcon = find.byIcon(tab.icon!);
-    expect(storeIcon, findsOneWidget);
-
-    // Deep-link to a child route inside the store branch (product detail)
-    router.go(
-      '${tab.path}/${AppRoute.productDetail.path.replaceAll(':id', '123')}',
-    );
-    await tester.pumpAndSettle();
-
-    // Verify we're on the product page
-    expect(find.byKey(Key('product:123')), findsOneWidget);
-
-    // Tap the store tab (current tab) - should return to branch root
-    await tester.tap(storeIcon);
-    await tester.pumpAndSettle();
-
-    // Now we should be at the root of the store branch
-    expect(find.byKey(Key('screen:${tab.name}')), findsOneWidget);
-  });
-
-  testWidgets('tapping current tab at root triggers scroll reset', (
-    tester,
-  ) async {
-    final container = ProviderContainer(
-      overrides: [
-        routeRegistryProvider.overrideWithValue(const TestRouteRegistry()),
-      ],
-    );
-    addTearDown(container.dispose);
-
-    final router = container.read(routerProvider);
-    await tester.pumpWidget(
-      UncontrolledProviderScope(
-        container: container,
-        child: MaterialApp.router(
-          routerConfig: router,
-          debugShowCheckedModeBanner: false,
+  group('NavBar UI Component -', () {
+    testWidgets('renders correct number of items from ViewModel', (
+      tester,
+    ) async {
+      // Setup: View Model returns 3 dummy items
+      final dummyItems = [
+        const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        const BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Store'),
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Profile',
         ),
-      ),
-    );
-    await tester.pumpAndSettle();
+      ];
 
-    final tab = AppRoute.store;
-    final tabName = tab.name;
-    final storeIcon = find.byIcon(tab.icon!);
-    expect(storeIcon, findsOneWidget);
+      when(() => mockViewModel.navBarItems).thenReturn(dummyItems);
+      when(() => mockShell.currentIndex).thenReturn(0);
 
-    // Navigate to the tab root first
-    await tester.tap(storeIcon);
-    await tester.pumpAndSettle();
-    expect(find.byKey(Key('screen:${tab.name}')), findsOneWidget);
+      await pumpNavBar(tester);
 
-    // Read scroll provider initial state
-    final initial = container.read(scrollProvider(tabName));
+      // Verify: 3 items are rendered
+      expect(find.byType(BottomNavigationBar), findsOneWidget);
+      expect(find.text('Home'), findsOneWidget);
+      expect(find.text('Store'), findsOneWidget);
+      expect(find.text('Profile'), findsOneWidget);
+    });
 
-    // Tap the same tab again to trigger reset
-    await tester.tap(storeIcon);
-    await tester.pumpAndSettle();
+    testWidgets('highlights the correct tab based on NavigationShell', (
+      tester,
+    ) async {
+      // Setup: View Model returns items
+      final dummyItems = [
+        const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        const BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Store'),
+      ];
+      when(() => mockViewModel.navBarItems).thenReturn(dummyItems);
 
-    final after = container.read(scrollProvider(tabName));
-    expect(after, initial + 1);
+      // Setup: Tell the UI that tab 1 (Store) is currently active
+      when(() => mockShell.currentIndex).thenReturn(1);
+
+      await pumpNavBar(tester);
+
+      final bottomNav = tester.widget<BottomNavigationBar>(
+        find.byType(BottomNavigationBar),
+      );
+      expect(bottomNav.currentIndex, 1);
+    });
+
+    testWidgets('delegates tap events to ViewModel', (tester) async {
+      // Setup
+      final dummyItems = [
+        const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        const BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Store'),
+      ];
+      when(() => mockViewModel.navBarItems).thenReturn(dummyItems);
+      when(() => mockShell.currentIndex).thenReturn(0);
+
+      await pumpNavBar(tester);
+
+      // Action: Tap the "Store" tab (index 1)
+      await tester.tap(find.text('Store'));
+
+      // Verify: The View Model's handleTap was called with the correct args
+      // We verify INTERACTION, not logic.
+      verify(() => mockViewModel.handleTap(mockShell, 1)).called(1);
+    });
   });
 }
