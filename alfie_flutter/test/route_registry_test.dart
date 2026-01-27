@@ -11,6 +11,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:mocktail/mocktail.dart';
 
+import '../testing/mocks/go_router_state_mock.dart';
+
 void main() {
   late DefaultRouteRegistry registry;
   late GoRouterState mockState;
@@ -57,5 +59,3 @@ void main() {
     });
   });
 }
-
-class MockGoRouterState extends Mock implements GoRouterState {}
