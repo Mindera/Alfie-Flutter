@@ -1,8 +1,7 @@
-import 'package:alfie_flutter/routing/app_route.dart';
+import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class WishlistScreen extends ConsumerWidget {
   const WishlistScreen({super.key});
@@ -20,9 +19,7 @@ class WishlistScreen extends ConsumerWidget {
         return ListTile(
           title: Text('Store Item $value'),
           onTap: () {
-            context.push(
-              AppRoute.productDetail.path.replaceFirst(':id', '$value'),
-            );
+            context.goToProduct('$index');
           },
         );
       },

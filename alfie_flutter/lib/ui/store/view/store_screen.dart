@@ -1,8 +1,8 @@
 import 'package:alfie_flutter/routing/app_route.dart';
+import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:alfie_flutter/utils/scroll_to_top_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 // Your screen remains lean and "Stateless-like" in appearance
 class StoreScreen extends ConsumerStatefulWidget {
@@ -27,9 +27,7 @@ class _StoreScreenState extends ConsumerState<StoreScreen>
         return ListTile(
           title: Text('Store Item $index'),
           onTap: () {
-            context.push(
-              AppRoute.productDetail.path.replaceFirst(':id', '$index'),
-            );
+            context.goToProduct('$index');
           },
         );
       },

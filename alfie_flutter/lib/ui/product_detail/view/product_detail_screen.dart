@@ -8,8 +8,6 @@ class ProductDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: Center(child: Text('Hello Product $id Detail Screen!')),
-    );
+    return Center(child: Text('Hello Product $id Detail Screen!'));
   }
 }
