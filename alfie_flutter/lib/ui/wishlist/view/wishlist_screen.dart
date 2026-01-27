@@ -19,7 +19,7 @@ class WishlistScreen extends ConsumerWidget {
         return ListTile(
           title: Text('Store Item $value'),
           onTap: () {
-            context.goToProduct('$index');
+            context.goToProduct('$value');
           },
         );
       },
