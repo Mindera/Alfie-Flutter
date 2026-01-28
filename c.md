@@ -1,6 +1,21 @@
 # C.MD
 A file with useful commands
 
+## Branching
+Remove deleted origin branches: 
+```bash
+git fetch -p
+```
+
+View branches with deleted origin: 
+```bash
+git branch -vv
+```
+
+Delete all branches with deleted origins
+```bash
+git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d
+```
 
 ## Testing
 
