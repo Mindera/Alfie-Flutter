@@ -49,5 +49,18 @@
 		<true/>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
+		<key>CFBundleURLTypes</key>
+		<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+			<string>app</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.alfie</string>
+		</dict>
+		</array>
+
 	</dict>
 </plist>
+
