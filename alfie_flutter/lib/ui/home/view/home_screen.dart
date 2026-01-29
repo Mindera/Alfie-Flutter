@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/ui/core/ui/app_button.dart';
 import 'package:alfie_flutter/ui/home/view_model/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,6 +30,8 @@ class HomeScreen extends ConsumerWidget {
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
+          SizedBox(height: 20),
+          AppButton.primary(label: "Olá"),
         ],
       ),
     );
