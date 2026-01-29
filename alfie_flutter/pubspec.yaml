@@ -32,3 +32,6 @@ flutter:
       fonts:
         - asset: assets/fonts/LibreBaskerville-Regular.ttf
           weight: 400
+    - family: AppIcons
+      fonts:
+        - asset: assets/fonts/AppIcons.ttf

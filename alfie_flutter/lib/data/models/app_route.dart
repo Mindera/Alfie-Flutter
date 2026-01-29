@@ -1,27 +1,28 @@
+import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:flutter/material.dart';
 
 enum AppRoute {
   // Tabs
-  home(path: '/home', isTab: true, icon: Icons.home, children: [productDetail]),
+  home(
+    path: '/home',
+    isTab: true,
+    icon: AppIcons.home,
+    children: [productDetail],
+  ),
   store(
     path: '/store',
     isTab: true,
-    icon: Icons.store,
+    icon: AppIcons.menu,
     children: [productDetail],
   ),
   wishlist(
     path: '/wishlist',
     isTab: true,
-    icon: Icons.favorite,
+    icon: AppIcons.wishlist,
     children: [productDetail],
   ),
-  bag(
-    path: '/bag',
-    isTab: true,
-    icon: Icons.shopping_bag,
-    children: [productDetail],
-  ),
-  account(path: '/account', isTab: true, icon: Icons.person),
+  bag(path: '/bag', isTab: true, icon: AppIcons.bag, children: [productDetail]),
+  account(path: '/account', isTab: true, icon: AppIcons.account),
   // Sub-pages
   productDetail(path: 'product/:id');
 

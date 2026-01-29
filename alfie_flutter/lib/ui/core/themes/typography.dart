@@ -30,19 +30,19 @@ final textThemeProvider = Provider<TextTheme>((ref) {
     headlineLarge: TextStyle(
       fontSize: 32,
       fontWeight: FontWeight.w500,
-      height: 40,
+      height: 40 / 32,
       letterSpacing: 0,
     ),
     headlineMedium: TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.w500,
-      height: 32,
+      height: 32 / 24,
       letterSpacing: -0.5,
     ),
     headlineSmall: TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.w500,
-      height: 28,
+      height: 28 / 20,
       letterSpacing: -0.5,
     ),
 
