@@ -26,3 +26,9 @@ flutter:
   assets:
     - .env.dev
     - .env.prod
+
+  fonts:
+    - family: LibreBaskerville
+      fonts:
+        - asset: assets/fonts/LibreBaskerville-Regular.ttf
+          weight: 400
