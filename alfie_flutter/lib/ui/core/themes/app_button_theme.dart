@@ -1,5 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
-import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/ui/core/themes/size_unit.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -130,16 +130,16 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
     ) = switch (size) {
       ButtonSize.medium => (
         EdgeInsets.symmetric(
-          vertical: Spacing.xs,
-          horizontal: Spacing.xs * horizontalPaddingMultiplier,
+          vertical: SizeUnit.xs,
+          horizontal: SizeUnit.xs * horizontalPaddingMultiplier,
         ),
         const Size(0, 40), // Standard Material height
         MaterialTapTargetSize.padded,
       ),
       ButtonSize.small => (
         EdgeInsets.symmetric(
-          vertical: Spacing.xxs,
-          horizontal: Spacing.xxs * horizontalPaddingMultiplier,
+          vertical: SizeUnit.xxs,
+          horizontal: SizeUnit.xxs * horizontalPaddingMultiplier,
         ),
         const Size(0, 32), // Allow shrinking down to 32px (or 0 to fit content)
         MaterialTapTargetSize.padded, // Removes extra touch-target spacing

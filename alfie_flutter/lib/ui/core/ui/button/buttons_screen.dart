@@ -1,6 +1,6 @@
 import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
-import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/ui/core/themes/size_unit.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,7 +62,7 @@ class ButtonsScreen extends ConsumerWidget {
             AppButton.primary(leading: AppIcons.add),
             AppButton.primary(leading: AppIcons.add, isLoading: true),
 
-            SizedBox(height: Spacing.xl),
+            SizedBox(height: SizeUnit.xl),
 
             Text('Secondary', style: TextTheme.of(context).headlineSmall),
             AppButton.secondary(
@@ -108,7 +108,7 @@ class ButtonsScreen extends ConsumerWidget {
             AppButton.secondary(leading: AppIcons.add),
             AppButton.secondary(leading: AppIcons.add, isLoading: true),
 
-            SizedBox(height: Spacing.xl),
+            SizedBox(height: SizeUnit.xl),
 
             Text('Tertiary', style: TextTheme.of(context).headlineSmall),
             AppButton.tertiary(
@@ -154,7 +154,7 @@ class ButtonsScreen extends ConsumerWidget {
             AppButton.tertiary(leading: AppIcons.add),
             AppButton.tertiary(leading: AppIcons.add, isLoading: true),
 
-            SizedBox(height: Spacing.xl),
+            SizedBox(height: SizeUnit.xl),
 
             Text('Destructive', style: TextTheme.of(context).headlineSmall),
             AppButton.destructive(

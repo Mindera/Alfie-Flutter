@@ -1,5 +1,5 @@
-class Spacing {
-  const Spacing._();
+class SizeUnit {
+  const SizeUnit._();
 
   static const double unit = 8.0;
 
