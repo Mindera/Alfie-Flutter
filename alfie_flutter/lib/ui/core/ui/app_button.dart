@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
   final String? label;
-  final Widget? leading;
-  final Widget? trailing;
+  final IconData? leading;
+  final IconData? trailing;
   final VoidCallback? onPressed;
   final bool isLoading;
   final ButtonSize _size;
   final ButtonVariant _variant;
+  final bool _isIconOnly;
 
   const AppButton._({
     this.label,
@@ -20,13 +21,14 @@ class AppButton extends StatelessWidget {
     required ButtonSize size,
     required ButtonVariant variant,
   }) : _size = size,
-       _variant = variant;
+       _variant = variant,
+       _isIconOnly = label == null && ((leading != null) ^ (trailing != null));
 
   /// Factory for Primary
   factory AppButton.primary({
     String? label,
-    Widget? leading,
-    Widget? trailing,
+    IconData? leading,
+    IconData? trailing,
     VoidCallback? onPressed,
     bool isLoading = false,
     ButtonSize size = ButtonSize.medium,
@@ -45,8 +47,8 @@ class AppButton extends StatelessWidget {
   /// Factory for Secundary
   factory AppButton.secondary({
     String? label,
-    Widget? leading,
-    Widget? trailing,
+    IconData? leading,
+    IconData? trailing,
     VoidCallback? onPressed,
     bool isLoading = false,
     ButtonSize size = ButtonSize.medium,
@@ -65,8 +67,8 @@ class AppButton extends StatelessWidget {
   /// Factory for Tertiary
   factory AppButton.tertiary({
     String? label,
-    Widget? leading,
-    Widget? trailing,
+    IconData? leading,
+    IconData? trailing,
     VoidCallback? onPressed,
     bool isLoading = false,
     ButtonSize size = ButtonSize.medium,
@@ -85,8 +87,8 @@ class AppButton extends StatelessWidget {
   /// Factory for Tertiary
   factory AppButton.destructive({
     String? label,
-    Widget? leading,
-    Widget? trailing,
+    IconData? leading,
+    IconData? trailing,
     VoidCallback? onPressed,
     bool isLoading = false,
     ButtonSize size = ButtonSize.medium,
@@ -108,11 +110,16 @@ class AppButton extends StatelessWidget {
     final theme = Theme.of(context).extension<AppButtonTheme>();
 
     // Select the style based on the internal variant
-    final style = theme?.styleWith(variant: _variant, size: _size);
+    final style = theme?.styleWith(
+      variant: _variant,
+      size: _size,
+      isIconOnly: _isIconOnly,
+    );
     return ElevatedButton(
       style: style,
       onPressed: (isLoading) ? null : onPressed,
       child: Row(
+        mainAxisSize: _isIconOnly ? MainAxisSize.min : MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: Spacing.xs,
@@ -123,12 +130,12 @@ class AppButton extends StatelessWidget {
                   height: Spacing.m,
                   child: CircularProgressIndicator(strokeWidth: 1),
                 )
-              : leading!,
+              : Icon(leading!, size: Spacing.m),
 
           // Label (always centered)
           if (label != null) Text(label!),
 
-          if (trailing != null && !isLoading) trailing!,
+          if (trailing != null && !isLoading) Icon(trailing!, size: Spacing.m),
         ],
       ),
     );

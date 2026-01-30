@@ -106,6 +106,7 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
   ButtonStyle styleWith({
     required ButtonVariant variant,
     required ButtonSize size,
+    required bool isIconOnly,
   }) {
     // 1. Get the base style
     final baseStyle = switch (variant) {
@@ -115,6 +116,8 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
       ButtonVariant.destructive => destructive,
     };
 
+    final horizontalPaddingMultiplier = isIconOnly ? 1 : 2;
+
     // 2. Define Padding AND Constraints based on size
     final (
       EdgeInsetsGeometry padding,
@@ -122,12 +125,18 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
       MaterialTapTargetSize tapTarget,
     ) = switch (size) {
       ButtonSize.medium => (
-        EdgeInsets.symmetric(vertical: Spacing.xs, horizontal: Spacing.s),
-        const Size(64, 40), // Standard Material height
+        EdgeInsets.symmetric(
+          vertical: Spacing.xs,
+          horizontal: Spacing.xs * horizontalPaddingMultiplier,
+        ),
+        const Size(0, 40), // Standard Material height
         MaterialTapTargetSize.padded,
       ),
       ButtonSize.small => (
-        EdgeInsets.symmetric(vertical: Spacing.xxs, horizontal: Spacing.xs),
+        EdgeInsets.symmetric(
+          vertical: Spacing.xxs,
+          horizontal: Spacing.xxs * horizontalPaddingMultiplier,
+        ),
         const Size(0, 32), // Allow shrinking down to 32px (or 0 to fit content)
         MaterialTapTargetSize.padded, // Removes extra touch-target spacing
       ),
