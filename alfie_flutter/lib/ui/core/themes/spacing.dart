@@ -1,4 +1,6 @@
-class AppSpacing {
+class Spacing {
+  const Spacing._();
+
   static const double unit = 8.0;
 
   /// 4

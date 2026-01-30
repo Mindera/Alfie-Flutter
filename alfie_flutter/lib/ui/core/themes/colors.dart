@@ -4,6 +4,8 @@ class AppColors {
   // Private constructor to prevent instantiation
   const AppColors._();
 
+  static const Color transparent = Colors.transparent;
+
   /// Neutrals: a grey scale that is used for the majority of UI elements.
   static const Color neutral = Color(0xFFFFFFFF);
   static const Color neutral100 = Color(0xFFF7F7F7);

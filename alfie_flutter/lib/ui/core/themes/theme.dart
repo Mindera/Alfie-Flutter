@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
+import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final themeProvider = Provider<ThemeData>((ref) {
   return ThemeData(
     brightness: Brightness.light,
+    primaryColor: AppColors.neutral800,
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: AppColors.neutral800,
+    ),
     textTheme: ref.read(textThemeProvider),
 
     extensions: [ref.read(appButtonThemeProvider)],
