@@ -18,9 +18,10 @@ class TextFieldScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Text Fields', style: TextTheme.of(context).displayLarge),
-            AppInputField(),
-            AppInputField(hintText: 'Some Placeholder'),
+            AppInputField('Label1'),
+            AppInputField('Label2', hintText: 'Some Placeholder'),
             AppInputField(
+              'Label3',
               hintText: 'Some Placeholder',
               leadingIcon: AppIcons.account,
             ),
