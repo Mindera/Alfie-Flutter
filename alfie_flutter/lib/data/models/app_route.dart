@@ -22,9 +22,16 @@ enum AppRoute {
     children: [productDetail],
   ),
   bag(path: '/bag', isTab: true, icon: AppIcons.bag, children: [productDetail]),
-  account(path: '/account', isTab: true, icon: AppIcons.account),
+  account(
+    path: '/account',
+    isTab: true,
+    icon: AppIcons.account,
+    children: [components],
+  ),
   // Sub-pages
-  productDetail(path: 'product/:id');
+  productDetail(path: 'product/:id'),
+  components(path: 'components', children: [buttons]),
+  buttons(path: 'buttons');
 
   final String path;
   final bool isTab;
@@ -42,4 +49,33 @@ enum AppRoute {
       AppRoute.values.where((r) => r.isTab).toList();
   String get label => name[0].toUpperCase() + name.substring(1);
   int get tabIndex => tabs.indexOf(this);
+
+  String get fullPath {
+    if (isTab) return path;
+
+    for (final tab in AppRoute.tabs) {
+      final calculatedPath = _searchPath(tab, this);
+      if (calculatedPath != null) return calculatedPath;
+    }
+
+    return path;
+  }
+
+  /// Helper to perform DFS (Depth First Search)
+  String? _searchPath(AppRoute current, AppRoute target) {
+    if (current == target) {
+      return current.path;
+    }
+
+    for (final child in current.children) {
+      final childResult = _searchPath(child, target);
+      if (childResult != null) {
+        final parentPath = current.path.endsWith('/')
+            ? current.path
+            : '${current.path}/';
+        return '$parentPath$childResult';
+      }
+    }
+    return null;
+  }
 }

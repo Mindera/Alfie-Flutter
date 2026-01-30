@@ -4,6 +4,10 @@ import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+enum ButtonSize { medium, small }
+
+enum ButtonVariant { primary, secondary, tertiary, destructive }
+
 final appButtonThemeProvider = Provider<AppButtonTheme>(
   (ref) => AppButtonTheme(
     primary:
@@ -177,7 +181,3 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
     );
   }
 }
-
-enum ButtonSize { medium, small }
-
-enum ButtonVariant { primary, secondary, tertiary, destructive }

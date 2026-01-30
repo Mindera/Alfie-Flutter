@@ -16,4 +16,9 @@ extension NavigationHelpers on BuildContext {
       '$basePath${AppRoute.productDetail.path.replaceFirst(':id', productId)}',
     );
   }
+
+  /// Navigates to an AppRoute dynamically without hardcoded paths.
+  void goTo(AppRoute target, {Map<String, String> params = const {}}) {
+    go(target.fullPath);
+  }
 }

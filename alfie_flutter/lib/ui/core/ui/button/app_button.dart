@@ -124,13 +124,14 @@ class AppButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: Spacing.xs,
         children: [
-          isLoading
-              ? SizedBox(
-                  width: Spacing.m,
-                  height: Spacing.m,
-                  child: CircularProgressIndicator(strokeWidth: 1),
-                )
-              : Icon(leading!, size: Spacing.m),
+          if (isLoading)
+            SizedBox(
+              width: Spacing.m,
+              height: Spacing.m,
+              child: CircularProgressIndicator(strokeWidth: 1),
+            )
+          else if (leading != null)
+            Icon(leading!, size: Spacing.m),
 
           // Label (always centered)
           if (label != null) Text(label!),
