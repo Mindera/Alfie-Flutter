@@ -8,14 +8,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ComponentsScreen extends ConsumerWidget {
   ComponentsScreen({super.key});
 
-  final componentsScreens = [('Buttons', AppRoute.buttons)];
+  final componentsScreens = [
+    ('Buttons', AppRoute.buttons),
+    ("Text Field", AppRoute.textField),
+  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(Spacing.l),
-        child: ListView.builder(
+        child: ListView.separated(
           itemCount: componentsScreens.length,
           itemBuilder: (context, index) {
             return ListTile(
@@ -28,6 +31,8 @@ class ComponentsScreen extends ConsumerWidget {
               onTap: () => context.goTo(componentsScreens[index].$2),
             );
           },
+          separatorBuilder: (BuildContext context, int index) =>
+              SizedBox(height: Spacing.xs),
         ),
       ),
     );
