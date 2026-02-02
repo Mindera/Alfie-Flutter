@@ -145,8 +145,6 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
       ),
     };
 
-    // 3. Merge everything
-    // Note: We use ! because we assume baseStyle is defined in your theme setup
     return baseStyle!.copyWith(
       padding: WidgetStatePropertyAll(padding),
       minimumSize: WidgetStatePropertyAll(minSize),

@@ -4,6 +4,7 @@ import 'package:alfie_flutter/ui/bag/view/bag_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/button/buttons_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/checkbox/checkboxes_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/components_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/radio_button/radio_buttons_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/test_field/text_field_screen.dart';
 import 'package:alfie_flutter/ui/home/view/home_screen.dart';
 import 'package:alfie_flutter/ui/product_detail/view/product_detail_screen.dart';
@@ -37,6 +38,7 @@ class DefaultRouteRegistry implements RouteRegistry {
       AppRoute.buttons => ButtonsScreen(),
       AppRoute.textField => TextFieldScreen(),
       AppRoute.checkboxes => CheckboxesScreen(),
+      AppRoute.radioButtons => RadioButtonsScreen(),
     };
   }
 }

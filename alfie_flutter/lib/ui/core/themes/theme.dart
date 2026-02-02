@@ -16,6 +16,17 @@ final themeProvider = Provider<ThemeData>((ref) {
       color: AppColors.neutral800,
     ),
 
+    radioTheme: RadioThemeData(
+      fillColor: WidgetStateProperty.resolveWith<Color?>((
+        Set<WidgetState> states,
+      ) {
+        if (states.contains(WidgetState.disabled)) {
+          return AppColors.neutral400;
+        }
+        return AppColors.neutral800;
+      }),
+    ),
+
     iconTheme: ref.read(iconThemeProvider),
     iconButtonTheme: ref.read(iconButtonThemeProvider),
 

@@ -1,6 +1,5 @@
-import 'package:alfie_flutter/ui/core/themes/colors.dart';
+import 'package:alfie_flutter/ui/core/themes/checkbox_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
-import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:flutter/material.dart';
 
 class CheckboxTile extends StatefulWidget {
@@ -53,18 +52,18 @@ class _CheckboxTileState extends State<CheckboxTile> {
   Widget build(BuildContext context) {
     final bool isDisabled = widget.onChanged == null;
 
-    final textStyle =
-        (_currentValue == true
-                ? Theme.of(context).textTheme.bodyMediumBold
-                : Theme.of(context).textTheme.bodyMedium)!
-            .copyWith(
-              color: isDisabled ? AppColors.neutral400 : AppColors.neutral800,
-            );
+    final labelStyle = Theme.of(
+      context,
+    ).checkboxTheme.getLabelStyle(context, isDisabled, _currentValue);
+
+    final infoStyle = Theme.of(
+      context,
+    ).checkboxTheme.getInfoStyle(context, isDisabled);
 
     return InkWell(
       onTap: isDisabled ? null : _handleToggle,
       child: Container(
-        color: Colors.transparent, // Ensures the whole row is tappable
+        color: Colors.transparent,
         padding: const EdgeInsets.symmetric(vertical: Spacing.extraExtraSmall),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,16 +72,8 @@ class _CheckboxTileState extends State<CheckboxTile> {
               child: Row(
                 spacing: Spacing.extraSmall,
                 children: [
-                  Text(widget.label, style: textStyle),
-                  if (widget.info != null)
-                    Text(
-                      widget.info!,
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: isDisabled
-                            ? AppColors.neutral400
-                            : AppColors.neutral500,
-                      ),
-                    ),
+                  Text(widget.label, style: labelStyle),
+                  if (widget.info != null) Text(widget.info!, style: infoStyle),
                 ],
               ),
             ),

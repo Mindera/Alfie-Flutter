@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
+import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -43,3 +44,24 @@ final checkBoxThemeProvider = Provider<CheckboxThemeData>(
     checkColor: WidgetStateProperty.all(AppColors.neutral),
   ),
 );
+
+extension CheckboxThemeExtension on CheckboxThemeData {
+  TextStyle getLabelStyle(
+    BuildContext context,
+    bool isDisabled,
+    bool? currentValue,
+  ) {
+    return (currentValue == true
+            ? Theme.of(context).textTheme.bodyMediumBold
+            : Theme.of(context).textTheme.bodyMedium)!
+        .copyWith(
+          color: isDisabled ? AppColors.neutral400 : AppColors.neutral800,
+        );
+  }
+
+  TextStyle getInfoStyle(BuildContext context, bool isDisabled) {
+    return Theme.of(context).textTheme.bodySmall!.copyWith(
+      color: isDisabled ? AppColors.neutral400 : AppColors.neutral500,
+    );
+  }
+}
