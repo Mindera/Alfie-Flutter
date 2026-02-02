@@ -92,12 +92,19 @@ class _AppSliderState extends State<AppSlider> {
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
-        prefixIcon: const Icon(AppIcons.creditCard),
+        prefixIcon: const Icon(AppIcons.currencyDollar),
       ),
 
       onFieldSubmitted: (value) {
         final double? parsed = double.tryParse(value);
-        if (parsed != null) onValidSubmit(parsed.clamp(widget.min, widget.max));
+        if (parsed != null) {
+          onValidSubmit(parsed.clamp(widget.min, widget.max));
+        } else {
+          // Reset to current value if parsing fails
+          controller.text = controller == _startController
+              ? _currentValues.start.round().toString()
+              : _currentValues.end.round().toString();
+        }
       },
     );
   }
