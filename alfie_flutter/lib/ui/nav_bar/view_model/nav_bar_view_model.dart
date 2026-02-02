@@ -1,4 +1,4 @@
-import 'package:alfie_flutter/data/models/app_route.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/view_model/scroll_view_model.dart';
 import 'package:flutter/material.dart';

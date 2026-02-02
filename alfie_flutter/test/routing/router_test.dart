@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 // Import your app code
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/routing/route_registry.dart';
-import 'package:alfie_flutter/data/models/app_route.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 
 import '../../testing/fakes/route_registry_fake.dart';
 

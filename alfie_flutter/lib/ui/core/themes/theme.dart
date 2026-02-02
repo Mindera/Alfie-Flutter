@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
+import 'package:alfie_flutter/ui/core/themes/checkbox_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/input_field_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/size_unit.dart';
@@ -19,6 +20,7 @@ final themeProvider = Provider<ThemeData>((ref) {
       style: IconButton.styleFrom(foregroundColor: AppColors.neutral800),
     ),
 
+    checkboxTheme: ref.read(checkBoxThemeProvider),
     textTheme: ref.read(textThemeProvider),
     inputDecorationTheme: ref.read(inputDecoratiomThemeProvider),
     textSelectionTheme: ref.read(textSelectionThemeProvider),

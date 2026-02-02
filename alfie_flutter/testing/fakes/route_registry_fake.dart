@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:alfie_flutter/routing/route_registry.dart';
-import 'package:alfie_flutter/data/models/app_route.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 
 /// Shared test helper: lightweight RouteRegistry that returns simple pages
 /// identifiable by Keys so widget tests can assert navigation without real UI.

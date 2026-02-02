@@ -15,6 +15,7 @@ class ButtonsScreen extends ConsumerWidget {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: SingleChildScrollView(
         child: Column(
+          spacing: 8,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Buttons', style: TextTheme.of(context).displayLarge),

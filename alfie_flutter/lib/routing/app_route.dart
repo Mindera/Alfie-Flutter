@@ -30,9 +30,10 @@ enum AppRoute {
   ),
   // Sub-pages
   productDetail(path: 'product/:id'),
-  components(path: 'components', children: [buttons, textField]),
+  components(path: 'components', children: [buttons, textField, checkboxes]),
   buttons(path: 'buttons'),
-  textField(path: 'textField');
+  textField(path: 'textField'),
+  checkboxes(path: 'checkboxes');
 
   final String path;
   final bool isTab;

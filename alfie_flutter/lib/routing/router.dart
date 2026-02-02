@@ -1,4 +1,4 @@
-import 'package:alfie_flutter/data/models/app_route.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/routing/route_registry.dart';
 import 'package:alfie_flutter/ui/core/ui/scaffold_with_nav_bar.dart';
 import 'package:flutter/material.dart';

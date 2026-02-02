@@ -126,8 +126,8 @@ class AppButton extends StatelessWidget {
         children: [
           if (isLoading)
             SizedBox(
-              width: SizeUnit.m,
-              height: SizeUnit.m,
+              width: 20,
+              height: 20,
               child: CircularProgressIndicator(strokeWidth: 1),
             )
           else if (leading != null)
