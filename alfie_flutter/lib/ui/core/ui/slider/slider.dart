@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
 
 class AppSlider extends StatefulWidget {
@@ -48,15 +49,17 @@ class _AppSliderState extends State<AppSlider> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: Spacing.extraSmall,
       children: [
         RangeSlider(
+          padding: EdgeInsets.zero,
           values: _currentValues,
           min: widget.min,
           max: widget.max,
           onChanged: _updateValues,
         ),
-        const SizedBox(height: 16),
         Row(
+          spacing: Spacing.small,
           children: [
             Expanded(
               child: _buildTextField(_startController, (val) {
@@ -67,7 +70,6 @@ class _AppSliderState extends State<AppSlider> {
                 }
               }),
             ),
-            const SizedBox(width: 16),
             Expanded(
               child: _buildTextField(_endController, (val) {
                 if (val >= _currentValues.start) {
