@@ -1,9 +1,28 @@
 import 'package:flutter/material.dart';
 
+/// A custom range slider thumb shape with a border and fill.
+///
+/// [BorderedRangeThumbShape] renders a circular thumb with a configurable
+/// border and inner fill, allowing styling that aligns
+/// with the design system.
+///
+/// The thumb is drawn as two concentric circles:
+/// - Outer circle: border color at [thumbRadius]
+/// - Inner circle: fill color at `[thumbRadius] - [borderWidth]`
 class BorderedRangeThumbShape extends RangeSliderThumbShape {
+  /// The radius of the thumb's outer boundary (including border).
   final double thumbRadius;
+
+  /// The color of the thumb's inner fill.
   final Color fillColor;
+
+  /// The color of the thumb's outer border.
   final Color borderColor;
+
+  /// The width of the border ring in logical pixels.
+  ///
+  /// This value is subtracted from [thumbRadius] to determine the
+  /// radius of the inner fill circle.
   final double borderWidth;
 
   const BorderedRangeThumbShape({
@@ -17,6 +36,11 @@ class BorderedRangeThumbShape extends RangeSliderThumbShape {
   Size getPreferredSize(bool isEnabled, bool isDiscrete) =>
       Size.fromRadius(thumbRadius);
 
+  /// Paints the bordered thumb as two concentric circles.
+  ///
+  /// The outer circle (border) is drawn at [thumbRadius], and the inner
+  /// circle (fill) is drawn at `[thumbRadius] - [borderWidth]`, creating
+  /// a ring effect. Both use fill style for crisp, solid rendering.
   @override
   void paint(
     PaintingContext context,
@@ -33,16 +57,22 @@ class BorderedRangeThumbShape extends RangeSliderThumbShape {
   }) {
     final Canvas canvas = context.canvas;
 
-    // 1. Draw the black border (the larger circle)
-    final Paint borderPaint = Paint()
-      ..color = borderColor
-      ..style = PaintingStyle.fill; // Using fill for a crisp outer ring
-    canvas.drawCircle(center, thumbRadius, borderPaint);
+    // Draw outer border circle
+    canvas.drawCircle(
+      center,
+      thumbRadius,
+      Paint()
+        ..color = borderColor
+        ..style = PaintingStyle.fill,
+    );
 
-    // 2. Draw the white inner fill
-    final Paint fillPaint = Paint()
-      ..color = fillColor
-      ..style = PaintingStyle.fill;
-    canvas.drawCircle(center, thumbRadius - borderWidth, fillPaint);
+    // Draw inner fill circle
+    canvas.drawCircle(
+      center,
+      thumbRadius - borderWidth,
+      Paint()
+        ..color = fillColor
+        ..style = PaintingStyle.fill,
+    );
   }
 }

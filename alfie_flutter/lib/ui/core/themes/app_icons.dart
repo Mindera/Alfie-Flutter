@@ -5,6 +5,8 @@ library;
 
 import 'dart:io';
 
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppIcons {
@@ -389,4 +391,16 @@ class AppIcons {
       return shareAndroid;
     }
   }
+
+  // Progress indicator dimensions
+  static const double _loaderSize = 24;
+  static const double _loaderStrokeWidth = 1;
+  static Widget get progressIndicator => SizedBox(
+    width: _loaderSize,
+    height: _loaderSize,
+    child: CircularProgressIndicator(
+      padding: EdgeInsets.all(Spacing.extraExtraExtraSmall),
+      strokeWidth: _loaderStrokeWidth,
+    ),
+  );
 }

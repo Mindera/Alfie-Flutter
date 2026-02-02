@@ -41,13 +41,6 @@ class RadioButtonsScreen extends ConsumerWidget {
               isDisabled: true,
               labelBuilder: (option) => option.name,
             ),
-            RadioButtons(
-              options: [Options.option1],
-              initialValue: Options.option1,
-              onChanged: (_) {},
-              hasError: true,
-              labelBuilder: (option) => option.name,
-            ),
           ],
         ),
       ),

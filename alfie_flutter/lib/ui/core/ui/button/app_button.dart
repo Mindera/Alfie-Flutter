@@ -1,7 +1,19 @@
 import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
+import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
 
+/// A customizable button widget supporting multiple variants, sizes, and states.
+///
+/// [AppButton] provides a unified button interface with support for:
+/// - Multiple visual variants: primary, secondary, tertiary, and destructive
+/// - Adjustable sizing through [ButtonSize]
+/// - Optional leading/trailing icons with automatic icon-only layout detection
+/// - Loading state with visual feedback
+///
+/// Use the factory constructors ([AppButton.primary], [AppButton.secondary], etc.)
+/// to create buttons with specific styling. The button automatically disables
+/// itself during loading states to prevent multiple actions.
 class AppButton extends StatelessWidget {
   final String? label;
   final IconData? leading;
@@ -22,9 +34,14 @@ class AppButton extends StatelessWidget {
     required ButtonVariant variant,
   }) : _size = size,
        _variant = variant,
+       // Icon-only layout when label is absent and exactly one icon (leading XOR trailing) exists
        _isIconOnly = label == null && ((leading != null) ^ (trailing != null));
 
-  /// Factory for Primary
+  /// Creates a primary [AppButton] with the standard button styling.
+  ///
+  /// It is intended to be used to move forward in a flow, acknowledge and dismiss,
+  /// or finish a task. Main buttons can be paired with secondary buttons to maintain
+  /// action hierarchy balance. There should be only one primary button on a screen.
   factory AppButton.primary({
     String? label,
     IconData? leading,
@@ -44,7 +61,10 @@ class AppButton extends StatelessWidget {
     );
   }
 
-  /// Factory for Secundary
+  /// Creates a secondary [AppButton] with subtle styling.
+  ///
+  /// The secondary variant is light weight. It is the most common and many times
+  /// combined with a primary button as a way to create action hierarchy.
   factory AppButton.secondary({
     String? label,
     IconData? leading,
@@ -64,7 +84,11 @@ class AppButton extends StatelessWidget {
     );
   }
 
-  /// Factory for Tertiary
+  /// Creates a tertiary [AppButton] with minimal styling.
+  ///
+  /// Tertiary variant buttons are the most subtle type of buttons. They can
+  /// be used for dismissive actions give users a way out of something,
+  /// letting them cancel, do nothing, dismiss, or skip.
   factory AppButton.tertiary({
     String? label,
     IconData? leading,
@@ -84,7 +108,11 @@ class AppButton extends StatelessWidget {
     );
   }
 
-  /// Factory for Tertiary
+  /// Creates a destructive [AppButton] indicating a dangerous action.
+  ///
+  /// The destructive variant should represent actions that permanently cause data
+  /// loss. Because these actions can not be undone, using button hierarchy is
+  /// essential to reduce errors.
   factory AppButton.destructive({
     String? label,
     IconData? leading,
@@ -106,42 +134,41 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Look up the style from the standard Flutter Theme
     final theme = Theme.of(context).extension<AppButtonTheme>();
-
-    // Select the style based on the internal variant
     final style = theme?.styleWith(
       variant: _variant,
       size: _size,
       isIconOnly: _isIconOnly,
     );
+
     return ElevatedButton(
       style: style,
-      onPressed: (isLoading) ? null : onPressed,
+      onPressed: isLoading ? null : onPressed,
       child: Row(
         mainAxisSize: _isIconOnly ? MainAxisSize.min : MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: Spacing.extraSmall,
-        children: [
-          if (isLoading)
-            SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(
-                padding: EdgeInsets.all(Spacing.extraExtraExtraSmall),
-                strokeWidth: 1,
-              ),
-            )
-          else if (leading != null)
-            Icon(leading!),
-
-          // Label (always centered)
-          if (label != null) Text(label!),
-
-          if (trailing != null && !isLoading) Icon(trailing!),
-        ],
+        children: _buildButtonContent(),
       ),
     );
+  }
+
+  /// Builds the button's content based on loading state and provided icons/label.
+  ///
+  /// Returns a list of widgets containing:
+  /// - A progress indicator if loading
+  /// - Leading icon if present and not loading
+  /// - Label text if present
+  /// - Trailing icon if present and not loading
+  List<Widget> _buildButtonContent() {
+    return [
+      if (isLoading)
+        AppIcons.progressIndicator
+      else if (leading != null)
+        Icon(leading!),
+      if (label != null) Text(label!),
+      if (trailing != null && !isLoading) Icon(trailing!),
+    ];
   }
 }
