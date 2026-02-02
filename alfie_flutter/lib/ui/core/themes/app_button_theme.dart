@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
+import 'package:alfie_flutter/ui/core/themes/icon_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ ButtonStyle _buildPrimaryStyle(Ref ref) =>
       foregroundColor: AppColors.neutral,
       disabledBackgroundColor: AppColors.neutral300,
       disabledForegroundColor: AppColors.neutral500,
+      iconSize: ref.read(iconThemeProvider).size,
     ).copyWith(
       side: WidgetStateProperty.resolveWith<BorderSide?>(
         (states) => states.contains(WidgetState.disabled)
@@ -56,6 +58,7 @@ ButtonStyle _buildSecondaryStyle(Ref ref) =>
       foregroundColor: AppColors.neutral800,
       disabledBackgroundColor: AppColors.transparent,
       disabledForegroundColor: AppColors.neutral500,
+      iconSize: ref.read(iconThemeProvider).size,
     ).copyWith(
       side: WidgetStateProperty.resolveWith<BorderSide?>(
         (states) => states.contains(WidgetState.disabled)
@@ -73,6 +76,7 @@ ButtonStyle _buildTertiaryStyle(Ref ref) => TextButton.styleFrom(
   foregroundColor: AppColors.neutral800,
   disabledBackgroundColor: AppColors.transparent,
   disabledForegroundColor: AppColors.neutral500,
+  iconSize: ref.read(iconThemeProvider).size,
 );
 
 /// Builds the destructive button style: filled with error color.
@@ -85,6 +89,7 @@ ButtonStyle _buildDestructiveStyle(Ref ref) =>
       foregroundColor: AppColors.neutral,
       disabledBackgroundColor: AppColors.neutral300,
       disabledForegroundColor: AppColors.neutral500,
+      iconSize: ref.read(iconThemeProvider).size,
     ).copyWith(
       side: WidgetStateProperty.resolveWith<BorderSide?>(
         (states) => states.contains(WidgetState.disabled)
