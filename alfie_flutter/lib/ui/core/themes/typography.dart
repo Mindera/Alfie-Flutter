@@ -26,7 +26,7 @@ final textThemeProvider = Provider<TextTheme>((ref) {
       letterSpacing: 0,
     ),
 
-    //// Headings
+    //// Headlines
     headlineLarge: TextStyle(
       fontSize: 32,
       fontWeight: FontWeight.w500,
