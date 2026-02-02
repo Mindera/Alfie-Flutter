@@ -1,6 +1,6 @@
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
-import 'package:alfie_flutter/ui/core/ui/test_field/app_text_field.dart';
+import 'package:alfie_flutter/ui/core/ui/text_field/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

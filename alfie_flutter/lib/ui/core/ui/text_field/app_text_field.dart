@@ -38,7 +38,7 @@ class _AppInputFieldState extends State<AppInputField> {
       spacing: Spacing.extraExtraSmall,
       children: [
         Text(widget.label, style: TextTheme.of(context).bodyMedium),
-        TextField(
+        TextFormField(
           controller: _controller,
           focusNode: _focusNode,
           onChanged: widget.onChanged,

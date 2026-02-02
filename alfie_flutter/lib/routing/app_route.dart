@@ -32,12 +32,13 @@ enum AppRoute {
   productDetail(path: 'product/:id'),
   components(
     path: 'components',
-    children: [buttons, textField, checkboxes, radioButtons],
+    children: [buttons, textField, checkboxes, radioButtons, slider],
   ),
   buttons(path: 'buttons'),
   textField(path: 'textField'),
   checkboxes(path: 'checkboxes'),
-  radioButtons(path: 'radioButtons');
+  radioButtons(path: 'radioButtons'),
+  slider(path: 'slider');
 
   final String path;
   final bool isTab;
