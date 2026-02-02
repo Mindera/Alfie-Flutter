@@ -30,15 +30,15 @@ Future<void> dummyInitialization() async {
   if (Environment.instance.isDevelopment) {
     debugPrint('ready in 3...');
   }
-  await Future.delayed(const Duration(milliseconds: 500));
+  await Future.delayed(const Duration(milliseconds: 100));
   if (Environment.instance.isDevelopment) {
     debugPrint('ready in 2...');
   }
-  await Future.delayed(const Duration(milliseconds: 500));
+  await Future.delayed(const Duration(milliseconds: 100));
   if (Environment.instance.isDevelopment) {
     debugPrint('ready in 1...');
   }
-  await Future.delayed(const Duration(milliseconds: 500));
+  await Future.delayed(const Duration(milliseconds: 100));
   if (Environment.instance.isDevelopment) {
     debugPrint('go!');
   }

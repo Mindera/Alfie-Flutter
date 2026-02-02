@@ -3,6 +3,7 @@ import 'package:alfie_flutter/ui/core/themes/checkbox_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/icon_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/input_field_theme.dart';
+import 'package:alfie_flutter/ui/core/themes/radio_button_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,16 +17,7 @@ final themeProvider = Provider<ThemeData>((ref) {
       color: AppColors.neutral800,
     ),
 
-    radioTheme: RadioThemeData(
-      fillColor: WidgetStateProperty.resolveWith<Color?>((
-        Set<WidgetState> states,
-      ) {
-        if (states.contains(WidgetState.disabled)) {
-          return AppColors.neutral400;
-        }
-        return AppColors.neutral800;
-      }),
-    ),
+    radioTheme: ref.read(radioButtonThemeProvider),
 
     iconTheme: ref.read(iconThemeProvider),
     iconButtonTheme: ref.read(iconButtonThemeProvider),
