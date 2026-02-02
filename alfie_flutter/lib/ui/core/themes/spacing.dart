@@ -1,5 +1,10 @@
 class Spacing {
+  const Spacing._();
+
   static const double unit = 8.0;
+
+  /// 2
+  static const double extraExtraExtraSmall = unit * 0.25;
 
   /// 4
   static const double extraExtraSmall = unit * 0.5;

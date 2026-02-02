@@ -1,4 +1,4 @@
-import 'package:alfie_flutter/ui/core/themes/size_unit.dart';
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/checkbox/checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +17,7 @@ class CheckboxesScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Check Boxes', style: TextTheme.of(context).displayLarge),
-            SizedBox(height: SizeUnit.s),
+            SizedBox(height: Spacing.small),
             CheckboxTile(
               label: 'Checkbox 1',
               value: false,

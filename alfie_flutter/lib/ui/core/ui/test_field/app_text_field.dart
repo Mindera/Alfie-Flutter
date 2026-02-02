@@ -1,5 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
-import 'package:alfie_flutter/ui/core/themes/size_unit.dart';
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
 
 class AppInputField extends StatefulWidget {
@@ -35,7 +35,7 @@ class _AppInputFieldState extends State<AppInputField> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: SizeUnit.xxs,
+      spacing: Spacing.extraExtraSmall,
       children: [
         Text(widget.label, style: TextTheme.of(context).bodyMedium),
         TextField(

@@ -1,5 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
-import 'package:alfie_flutter/ui/core/themes/size_unit.dart';
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:flutter/material.dart';
 
@@ -65,13 +65,13 @@ class _CheckboxTileState extends State<CheckboxTile> {
       onTap: isDisabled ? null : _handleToggle,
       child: Container(
         color: Colors.transparent, // Ensures the whole row is tappable
-        padding: const EdgeInsets.symmetric(vertical: SizeUnit.xxs),
+        padding: const EdgeInsets.symmetric(vertical: Spacing.extraExtraSmall),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Row(
-                spacing: SizeUnit.xs,
+                spacing: Spacing.extraSmall,
                 children: [
                   Text(widget.label, style: textStyle),
                   if (widget.info != null)

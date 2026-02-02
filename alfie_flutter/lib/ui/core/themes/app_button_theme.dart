@@ -1,5 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
-import 'package:alfie_flutter/ui/core/themes/size_unit.dart';
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -106,13 +106,11 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
     this.destructive,
   });
 
-  /// This is your custom "copyWith" logic for sizes
   ButtonStyle styleWith({
     required ButtonVariant variant,
     required ButtonSize size,
     required bool isIconOnly,
   }) {
-    // 1. Get the base style
     final baseStyle = switch (variant) {
       ButtonVariant.primary => primary,
       ButtonVariant.secondary => secondary,
@@ -120,9 +118,10 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
       ButtonVariant.destructive => destructive,
     };
 
-    final horizontalPaddingMultiplier = isIconOnly ? 1 : 2;
+    final horizontalPaddingMultiplier = isIconOnly
+        ? 1
+        : 2; // Less padding for icon-only buttons
 
-    // 2. Define Padding AND Constraints based on size
     final (
       EdgeInsetsGeometry padding,
       Size minSize,
@@ -130,18 +129,18 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
     ) = switch (size) {
       ButtonSize.medium => (
         EdgeInsets.symmetric(
-          vertical: SizeUnit.xs,
-          horizontal: SizeUnit.xs * horizontalPaddingMultiplier,
+          vertical: Spacing.extraSmall,
+          horizontal: Spacing.extraSmall * horizontalPaddingMultiplier,
         ),
         const Size(0, 40), // Standard Material height
         MaterialTapTargetSize.padded,
       ),
       ButtonSize.small => (
         EdgeInsets.symmetric(
-          vertical: SizeUnit.xxs,
-          horizontal: SizeUnit.xxs * horizontalPaddingMultiplier,
+          vertical: Spacing.extraExtraSmall,
+          horizontal: Spacing.extraExtraSmall * horizontalPaddingMultiplier,
         ),
-        const Size(0, 32), // Allow shrinking down to 32px (or 0 to fit content)
+        const Size(0, 32),
         MaterialTapTargetSize.padded, // Removes extra touch-target spacing
       ),
     };

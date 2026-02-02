@@ -1,5 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
-import 'package:alfie_flutter/ui/core/themes/size_unit.dart';
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
@@ -122,21 +122,24 @@ class AppButton extends StatelessWidget {
         mainAxisSize: _isIconOnly ? MainAxisSize.min : MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: SizeUnit.xs,
+        spacing: Spacing.extraSmall,
         children: [
           if (isLoading)
             SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(strokeWidth: 1),
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(
+                padding: EdgeInsets.all(Spacing.extraExtraExtraSmall),
+                strokeWidth: 1,
+              ),
             )
           else if (leading != null)
-            Icon(leading!, size: SizeUnit.m),
+            Icon(leading!),
 
           // Label (always centered)
           if (label != null) Text(label!),
 
-          if (trailing != null && !isLoading) Icon(trailing!, size: SizeUnit.m),
+          if (trailing != null && !isLoading) Icon(trailing!),
         ],
       ),
     );
