@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +15,16 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   // Load environment configurations
+  log("Loading environment configurations...");
   await Environment.load();
 
   // Required for HiveStore persistence
+  log("Loading Hive for GraphQL...");
   await initHiveForFlutter();
 
   // Start the main application wrapped in a ProviderScope so Riverpod
   // providers are available throughout the widget tree.
+  log("Starting the application...");
   runApp(const ProviderScope(child: MainApp()));
 
   // Perform initialization tasks
