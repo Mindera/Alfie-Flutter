@@ -8,22 +8,25 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final homeState = ref.watch(homeViewModelProvider);
-    final viewModel = ref.read(homeViewModelProvider.notifier);
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           TextField(
             decoration: const InputDecoration(
               labelText: 'Enter some text',
               border: OutlineInputBorder(),
             ),
-            onChanged: (value) => viewModel.updateText(value),
+            onChanged: (value) =>
+                ref.read(homeViewModelProvider.notifier).updateText(value),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           Text(
             'Display: ${homeState.displayedText}',
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         ],
