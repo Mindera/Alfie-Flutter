@@ -1,4 +1,4 @@
-import 'package:alfie_flutter/data/models/app_route.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,5 +15,10 @@ extension NavigationHelpers on BuildContext {
     go(
       '$basePath${AppRoute.productDetail.path.replaceFirst(':id', productId)}',
     );
+  }
+
+  /// Navigates to an AppRoute dynamically without hardcoded paths.
+  void goTo(AppRoute target, {Map<String, String> params = const {}}) {
+    go(target.fullPath);
   }
 }

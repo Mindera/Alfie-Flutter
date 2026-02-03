@@ -43,7 +43,7 @@ class MainApp extends ConsumerWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: "Alfie",
-      theme: ref.watch(themeProvider),
+      theme: ref.read(themeProvider),
       routerConfig: router,
     );
   }

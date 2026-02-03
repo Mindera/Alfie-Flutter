@@ -1,7 +1,7 @@
 import 'package:alfie_flutter/utils/scroll_to_top_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:alfie_flutter/data/models/app_route.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 
 class MockScrollWidget extends ConsumerStatefulWidget {
   const MockScrollWidget({super.key});

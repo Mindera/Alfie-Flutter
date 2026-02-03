@@ -1,10 +1,23 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
+/// Centralized color palette for the application.
+///
+/// Provides a consistent set of colors organized into semantic groups:
+/// - **Neutrals**: Grayscale for general UI elements
+/// - **Error**: Red tones for error states and validation feedback
+/// - **Success**: Green tones for success and confirmation states
+///
+/// All colors are defined as static constants and can be used directly
+/// without instantiation (the constructor is private to prevent this).
 class AppColors {
-  // Private constructor to prevent instantiation
   const AppColors._();
 
-  /// Neutrals: a grey scale that is used for the majority of UI elements.
+  static const Color transparent = Color.fromARGB(0, 0, 0, 0);
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Neutral Colors
+  // ─────────────────────────────────────────────────────────────────────────
+
   static const Color neutral = Color(0xFFFFFFFF);
   static const Color neutral100 = Color(0xFFF7F7F7);
   static const Color neutral200 = Color(0xFFE9E9E9);
@@ -16,9 +29,10 @@ class AppColors {
   static const Color neutral800 = Color(0xFF111111);
   static const Color neutral900 = Color(0xFF000000);
 
-  /// Semantic/Functional: to communicate error or success states.
+  // ─────────────────────────────────────────────────────────────────────────
+  // Semantic: Error Colors
+  // ─────────────────────────────────────────────────────────────────────────
 
-  /// Error colors
   static const Color error100 = Color(0xFFFEF2F1);
   static const Color error200 = Color(0xFFF9DEDC);
   static const Color error300 = Color(0xFFE99FA2);
@@ -28,7 +42,10 @@ class AppColors {
   static const Color error700 = Color(0xFF952525);
   static const Color error800 = Color(0xFF770500);
 
-  /// Success colors
+  // ─────────────────────────────────────────────────────────────────────────
+  // Semantic: Success Colors
+  // ─────────────────────────────────────────────────────────────────────────
+
   static const Color success100 = Color(0xFFEDF7E7);
   static const Color success200 = Color(0xFFD4EAC3);
   static const Color success300 = Color(0xFFA3CF82);

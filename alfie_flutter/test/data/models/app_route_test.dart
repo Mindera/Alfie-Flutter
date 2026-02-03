@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:alfie_flutter/data/models/app_route.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 
 void main() {
   group('AppRoute Tests -', () {
