@@ -3,7 +3,7 @@ import 'package:alfie_flutter/ui/nav_bar/view_model/nav_bar_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:alfie_flutter/data/models/app_route.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/core/view_model/scroll_view_model.dart';
 import 'package:mocktail/mocktail.dart';
 

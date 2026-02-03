@@ -11,25 +11,27 @@ class HomeScreen extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TextField(
-            decoration: const InputDecoration(
-              labelText: 'Enter some text',
-              border: OutlineInputBorder(),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TextField(
+              decoration: const InputDecoration(
+                labelText: 'Enter some text',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) =>
+                  ref.read(homeViewModelProvider.notifier).updateText(value),
             ),
-            onChanged: (value) =>
-                ref.read(homeViewModelProvider.notifier).updateText(value),
-          ),
-          SizedBox(height: 20),
-          Text(
-            'Display: ${homeState.displayedText}',
-            maxLines: 5,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-        ],
+            SizedBox(height: 20),
+            Text(
+              'Display: ${homeState.displayedText}',
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
       ),
     );
   }
