@@ -13,7 +13,6 @@ final gqlClientProvider = Provider<GraphQLClient>((ref) {
   );
 });
 
-// Define this globally (not inside a class)
 final schemaTypesProvider = FutureProvider<List<Query$GetTest$__schema$types>?>(
   (ref) async {
     final client = ref.read(gqlClientProvider);

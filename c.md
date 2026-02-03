@@ -13,7 +13,7 @@ You can combine **Fetching `schema.graphql`** and **Generate Type-safe Classes**
 #### Fetching `schema.graphql`
 ```bash
 # Using npx (Node.js required)
-npx get-graphql-schema http://localhost:4000/ > lib/schema.graphql
+npx get-graphql-schema http://localhost:4000/ > lib/data/services/schema.graphql
 ```
 
 #### Generate Type-safe Classes
