@@ -1,6 +1,19 @@
 # C.MD
 A file with useful commands
 
+## GraphQL
+
+### Fetching schema.graphql
+```bash
+# Using npx (Node.js required)
+npx get-graphql-schema http://localhost:4000/ > lib/schema.graphql
+```
+
+### Generate Type-safe Classes
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
 ## Branching
 Remove deleted origin branches: 
 ```bash
