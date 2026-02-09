@@ -1,5 +1,5 @@
 import 'package:alfie_flutter/data/models/environment.dart';
-import 'package:alfie_flutter/data/services/queries/test.graphql.dart';
+import 'package:alfie_flutter/graphql/generated/queries/test.graphql.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,7 +13,6 @@ final gqlClientProvider = Provider<GraphQLClient>((ref) {
   );
 });
 
-// Define this globally (not inside a class)
 final schemaTypesProvider = FutureProvider<List<Query$GetTest$__schema$types>?>(
   (ref) async {
     final client = ref.read(gqlClientProvider);

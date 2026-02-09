@@ -3,10 +3,7 @@ targets:
     builders:
       graphql_codegen:
         options:
+          outputDirectory: /lib/graphql/generated
+          assetsPath: lib/graphql/**.graphql
           clients:
               - graphql_flutter
-          schema_mapping:
-            - schema: lib/schema.graphql
-              queries_glob: lib/data/services/queries/**/*.graphql
-          # Useful for manual Riverpod: generates classes that are easier to use
-          output_directory: __generated__
