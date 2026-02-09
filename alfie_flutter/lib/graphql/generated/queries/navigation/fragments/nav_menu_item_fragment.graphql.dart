@@ -1,4 +1,4 @@
-import '../../../../../schema.graphql.dart';
+import '../../../schema.graphql.dart';
 import '../../fragments/attributes_fragment.graphql.dart';
 import '../../fragments/media_fragment.graphql.dart';
 import 'package:gql/ast.dart';
