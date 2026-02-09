@@ -35,7 +35,7 @@ class GraphQLExecutor {
         // Only retry on NetworkFailures
         if (e is NetworkFailure && attempt < maxRetries) {
           attempt++;
-          // Simple exponential backoff: 1s, 2s, 3s...
+          // Simple backoff: 1s, 2s, 3s...
           await Future.delayed(Duration(seconds: attempt));
           continue;
         }

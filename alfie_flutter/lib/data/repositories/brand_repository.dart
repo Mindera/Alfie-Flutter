@@ -15,11 +15,11 @@ final brandListProvider = FutureProvider<List<Fragment$BrandFragment>>((
   ref,
 ) async {
   final repository = ref.watch(brandRepositoryProvider);
-  return repository.fetchBrands();
+  return repository.getBrands();
 });
 
 abstract class IBrandRepository {
-  Future<List<Fragment$BrandFragment>> fetchBrands();
+  Future<List<Fragment$BrandFragment>> getBrands();
 }
 
 class BrandRepository implements IBrandRepository {
@@ -28,7 +28,7 @@ class BrandRepository implements IBrandRepository {
   BrandRepository(this._client);
 
   @override
-  Future<List<Fragment$BrandFragment>> fetchBrands() async {
+  Future<List<Fragment$BrandFragment>> getBrands() async {
     return GraphQLExecutor.execute(
       performQuery: () => _client.query$Brands(
         Options$Query$Brands(
