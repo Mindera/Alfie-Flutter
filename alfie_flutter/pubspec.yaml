@@ -31,6 +31,7 @@ flutter:
   assets:
     - .env.dev
     - .env.prod
+    - assets/images/
 
   fonts:
     - family: LibreBaskerville
