@@ -1,4 +1,4 @@
-import '../../../../schema.graphql.dart';
+import '../../schema.graphql.dart';
 import '../brands/fragments/brand_fragment.graphql.dart';
 import '../fragments/attributes_fragment.graphql.dart';
 import '../fragments/colour_fragment.graphql.dart';

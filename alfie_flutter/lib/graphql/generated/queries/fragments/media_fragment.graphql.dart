@@ -1,4 +1,4 @@
-import '../../../../schema.graphql.dart';
+import '../../schema.graphql.dart';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 
