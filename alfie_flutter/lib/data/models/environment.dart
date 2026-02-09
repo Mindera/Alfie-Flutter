@@ -54,4 +54,11 @@ class Environment {
   String get environmentType {
     return dotenv.env['ENV'] ?? 'ERROR NO ENV VARIABLE';
   }
+
+  /// Retrieves the value of the 'GRAPHQL_SERVER' key from the loaded `.env` file.
+  ///
+  /// Returns 'ERROR NO ENV VARIABLE' if the key is missing or the file is not loaded.
+  String get graphqlServerUrl {
+    return dotenv.env['GRAPHQL_SERVER'] ?? 'ERROR NO ENV VARIABLE';
+  }
 }

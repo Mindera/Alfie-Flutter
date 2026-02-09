@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'data/models/environment.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -12,36 +15,23 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   // Load environment configurations
+  log("Loading environment configurations...");
   await Environment.load();
+
+  // Required for HiveStore persistence
+  log("Loading Hive for GraphQL...");
+  await initHiveForFlutter();
 
   // Start the main application wrapped in a ProviderScope so Riverpod
   // providers are available throughout the widget tree.
+  log("Starting the application...");
   runApp(const ProviderScope(child: MainApp()));
 
   // Perform initialization tasks
   // Here we can load resources, initialize services, etc.
-  await dummyInitialization();
 
   // Remove the splash screen after initialization is complete
   FlutterNativeSplash.remove();
-}
-
-Future<void> dummyInitialization() async {
-  if (Environment.instance.isDevelopment) {
-    debugPrint('ready in 3...');
-  }
-  await Future.delayed(const Duration(milliseconds: 100));
-  if (Environment.instance.isDevelopment) {
-    debugPrint('ready in 2...');
-  }
-  await Future.delayed(const Duration(milliseconds: 100));
-  if (Environment.instance.isDevelopment) {
-    debugPrint('ready in 1...');
-  }
-  await Future.delayed(const Duration(milliseconds: 100));
-  if (Environment.instance.isDevelopment) {
-    debugPrint('go!');
-  }
 }
 
 class MainApp extends ConsumerWidget {

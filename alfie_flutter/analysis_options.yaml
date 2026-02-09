@@ -2,3 +2,9 @@ include: package:flutter_lints/flutter.yaml
 
 plugins:
   riverpod_lint: <latest version from https://pub.dev/packages/riverpod_lint>
+
+
+analyzer:
+  exclude: 
+    - "**/*.g.dart"
+    - "**/*.graphql.dart"
