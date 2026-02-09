@@ -1,0 +1,6 @@
+
+fragment ImageFragment on Image {
+    alt
+    mediaContentType
+    url
+}

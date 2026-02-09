@@ -15,9 +15,3 @@ fragment MediaFragment on Media {
         }
     }
 }
-
-fragment ImageFragment on Image {
-    alt
-    mediaContentType
-    url
-}
