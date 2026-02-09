@@ -1,10 +1,11 @@
 import 'package:alfie_flutter/data/services/graphql_client.dart';
-import 'package:alfie_flutter/data/services/queries/products/fragments/product_fragment.graphql.dart';
 import 'package:alfie_flutter/data/services/queries/products/products.graphql.dart';
-import 'package:alfie_flutter/data/services/schema.graphql.dart';
+import 'package:alfie_flutter/graphql/generated/schema.graphql.dart';
 import 'package:alfie_flutter/utils/graphql_executor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+
+import 'package:alfie_flutter/graphql/generated/queries/products/fragments/product_fragment.graphql.dart';
 
 /// Provider for the [ProductRepository] instance.
 ///
