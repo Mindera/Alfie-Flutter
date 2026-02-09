@@ -26,11 +26,13 @@ class GraphQLExecutor {
           throw _mapException(result.exception!);
         }
 
-        if (result.parsedData == null) {
+        final data = result.parsedData;
+
+        if (data == null) {
           throw const ServerFailure("Data returned null");
         }
 
-        return parseData(result.parsedData!);
+        return parseData(data);
       } catch (e) {
         // Only retry on NetworkFailures
         if (e is NetworkFailure && attempt < maxRetries) {
