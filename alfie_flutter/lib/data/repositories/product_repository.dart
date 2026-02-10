@@ -1,31 +1,30 @@
+import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/services/graphql_client.dart';
+import 'package:alfie_flutter/graphql/extensions/product_mapper.dart';
 import 'package:alfie_flutter/graphql/generated/queries/products/products.graphql.dart';
 import 'package:alfie_flutter/graphql/generated/schema.graphql.dart';
 import 'package:alfie_flutter/utils/graphql_executor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import 'package:alfie_flutter/graphql/generated/queries/products/fragments/product_fragment.graphql.dart';
-
-/// Provider for the [ProductRepository] instance.
+/// Provider for the [GraphQLProductRepository] instance.
 ///
 /// This manages the lifecycle of the repository and injects the GraphQL client.
-final productRepositoryProvider = Provider<IProductRepository>((ref) {
+final graphQLRepositoryProvider = Provider<IProductRepository>((ref) {
   final client = ref.watch(gqlClientProvider);
-  return ProductRepository(client);
+  return GraphQLProductRepository(client);
 });
 
 /// Provider that fetches a single product by its ID.
 ///
 /// Results are cached to avoid redundant network requests for the same product.
-final getProductProvider =
-    FutureProvider.family<Fragment$ProductFragment?, String>((
-      ref,
-      productId,
-    ) async {
-      final repository = ref.watch(productRepositoryProvider);
-      return repository.getProduct(productId);
-    });
+final getProductProvider = FutureProvider.family<Product?, String>((
+  ref,
+  productId,
+) async {
+  final repository = ref.watch(graphQLRepositoryProvider);
+  return repository.getProduct(productId);
+});
 
 /// Contract for product data operations.
 abstract class IProductRepository {
@@ -33,7 +32,7 @@ abstract class IProductRepository {
   ///
   /// Returns `null` if the product is not found.
   /// Results are cached using the GraphQL client's cache-first policy.
-  Future<Fragment$ProductFragment?> getProduct(String id);
+  Future<Product?> getProduct(String id);
 
   /// Fetches a paginated list of products with optional filtering and sorting.
   ///
@@ -55,14 +54,14 @@ abstract class IProductRepository {
 }
 
 /// Implementation of [IProductRepository] using GraphQL.
-class ProductRepository implements IProductRepository {
+class GraphQLProductRepository implements IProductRepository {
   final GraphQLClient _client;
 
   /// Creates a new instance with the provided GraphQL [client].
-  ProductRepository(this._client);
+  GraphQLProductRepository(this._client);
 
   @override
-  Future<Fragment$ProductFragment?> getProduct(String id) {
+  Future<Product?> getProduct(String id) {
     return GraphQLExecutor.execute(
       performQuery: () => _client.query$GetProduct(
         Options$Query$GetProduct(
@@ -70,7 +69,7 @@ class ProductRepository implements IProductRepository {
           fetchPolicy: FetchPolicy.cacheFirst,
         ),
       ),
-      parseData: (data) => data.product,
+      parseData: (data) => data.product?.toDomain(),
     );
   }
 
