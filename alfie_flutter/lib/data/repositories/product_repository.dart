@@ -1,8 +1,9 @@
 import 'package:alfie_flutter/data/models/product.dart';
+import 'package:alfie_flutter/data/models/product_listing.dart';
 import 'package:alfie_flutter/data/services/graphql_client.dart';
+import 'package:alfie_flutter/graphql/extensions/product_listing_mapper.dart';
 import 'package:alfie_flutter/graphql/extensions/product_mapper.dart';
 import 'package:alfie_flutter/graphql/generated/queries/products/products.graphql.dart';
-import 'package:alfie_flutter/graphql/generated/schema.graphql.dart';
 import 'package:alfie_flutter/utils/graphql_executor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -26,6 +27,21 @@ final getProductProvider = FutureProvider.family<Product?, String>((
   return repository.getProduct(productId);
 });
 
+final getProductListingProvider =
+    FutureProvider.family<ProductListing?, ProductListingParams>((
+      ref,
+      params,
+    ) async {
+      final repository = ref.watch(graphQLRepositoryProvider);
+      return repository.getProductListing(
+        offset: params.offset,
+        limit: params.limit,
+        categoryId: params.categoryId,
+        query: params.query,
+        sort: params.sort,
+      );
+    });
+
 /// Contract for product data operations.
 abstract class IProductRepository {
   /// Fetches a single product by its ID.
@@ -44,12 +60,12 @@ abstract class IProductRepository {
   /// - [sort]: Optional sorting order for the product listing.
   ///
   /// Returns `null` if the product listing is not available.
-  Future<Query$ProductListingQuery$productListing?> getProductListing({
+  Future<ProductListing?> getProductListing({
     required int offset,
     required int limit,
     String? categoryId,
     String? query,
-    Enum$ProductListingSort? sort,
+    ProductListingSort? sort,
   });
 }
 
@@ -74,12 +90,12 @@ class GraphQLProductRepository implements IProductRepository {
   }
 
   @override
-  Future<Query$ProductListingQuery$productListing?> getProductListing({
+  Future<ProductListing?> getProductListing({
     required int offset,
     required int limit,
     String? categoryId,
     String? query,
-    Enum$ProductListingSort? sort,
+    ProductListingSort? sort,
   }) {
     return GraphQLExecutor.execute(
       performQuery: () => _client.query$ProductListingQuery(
@@ -89,11 +105,27 @@ class GraphQLProductRepository implements IProductRepository {
             limit: limit,
             categoryId: categoryId,
             query: query,
-            sort: sort,
+            sort: sort?.toGraphQL(),
           ),
         ),
       ),
-      parseData: (data) => data.productListing,
+      parseData: (data) => data.productListing?.toDomain(),
     );
   }
+}
+
+class ProductListingParams {
+  final int offset;
+  final int limit;
+  final String? categoryId;
+  final String? query;
+  final ProductListingSort? sort;
+
+  ProductListingParams({
+    required this.offset,
+    required this.limit,
+    this.categoryId,
+    this.query,
+    this.sort,
+  });
 }

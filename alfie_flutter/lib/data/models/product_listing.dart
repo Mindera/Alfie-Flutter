@@ -12,3 +12,5 @@ class ProductListing {
     required this.products,
   });
 }
+
+enum ProductListingSort { lowToHigh, highToLow, aToZ, zToA, relevance }
