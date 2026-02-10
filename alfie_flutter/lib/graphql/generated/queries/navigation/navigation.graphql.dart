@@ -1,6 +1,6 @@
 import '../../schema.graphql.dart';
 import '../fragments/attributes_fragment.graphql.dart';
-import '../fragments/media_fragment.graphql.dart';
+import '../fragments/image_fragment.graphql.dart';
 import 'dart:async';
 import 'fragments/nav_menu_item_fragment.graphql.dart';
 import 'package:flutter/widgets.dart' as widgets;
