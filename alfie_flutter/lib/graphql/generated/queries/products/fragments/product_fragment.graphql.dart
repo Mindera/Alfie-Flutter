@@ -1,6 +1,7 @@
 import '../../brands/fragments/brand_fragment.graphql.dart';
 import '../../fragments/attributes_fragment.graphql.dart';
 import '../../fragments/colour_fragment.graphql.dart';
+import '../../fragments/image_fragment.graphql.dart';
 import '../../fragments/media_fragment.graphql.dart';
 import '../../fragments/money_fragment.graphql.dart';
 import '../../fragments/price_fragment.graphql.dart';
