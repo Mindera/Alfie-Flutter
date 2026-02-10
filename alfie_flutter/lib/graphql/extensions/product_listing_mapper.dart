@@ -4,7 +4,10 @@ import 'package:alfie_flutter/graphql/extensions/product_mapper.dart';
 import 'package:alfie_flutter/graphql/generated/queries/products/products.graphql.dart';
 import 'package:alfie_flutter/graphql/generated/schema.graphql.dart';
 
+/// Converts a GraphQL product listing response into a domain model.
 extension ProductListingMapper on Query$ProductListingQuery$productListing {
+  /// Converts this GraphQL product listing response to a [ProductListing]
+  /// domain model, delegating to specialized mappers for nested objects.
   ProductListing toDomain() {
     return ProductListing(
       title: title,
@@ -14,7 +17,12 @@ extension ProductListingMapper on Query$ProductListingQuery$productListing {
   }
 }
 
+/// Converts GraphQL product sorting enum to domain sorting enum.
 extension ProductSortMapper on Enum$ProductListingSort {
+  /// Converts this GraphQL sort enum to a [ProductListingSort] domain enum.
+  ///
+  /// Defaults to [ProductListingSort.relevance] for unknown sort values
+  /// to ensure type safety and graceful handling of API changes.
   ProductListingSort toDomain() {
     switch (this) {
       case Enum$ProductListingSort.LOW_TO_HIGH:
@@ -31,7 +39,16 @@ extension ProductSortMapper on Enum$ProductListingSort {
   }
 }
 
+/// Converts domain product sorting enum to GraphQL sorting enum.
+///
+/// This is the inverse of [ProductSortMapper] and is used when sending
+/// sort preferences to the GraphQL API.
 extension ProductListingSortMapper on ProductListingSort {
+  /// Converts this [ProductListingSort] domain enum to a GraphQL
+  /// [Enum$ProductListingSort] enum for API requests.
+  ///
+  /// Returns [Enum$ProductListingSort.$unknown] for unmapped values
+  /// to prevent invalid API calls.
   Enum$ProductListingSort toGraphQL() {
     switch (this) {
       case ProductListingSort.lowToHigh:

@@ -8,7 +8,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 /// Provider for the [GraphQLBrandRepository] instance.
 ///
-/// This manages the lifecycle of the repository and injects the GraphQL client.
+/// Manages the lifecycle of the brand repository and injects the GraphQL client dependency.
 final graphQLBrandRepositoryProvider = Provider<IBrandRepository>((ref) {
   final client = ref.watch(gqlClientProvider);
   return GraphQLBrandRepository(client);
@@ -16,22 +16,23 @@ final graphQLBrandRepositoryProvider = Provider<IBrandRepository>((ref) {
 
 /// Provider that fetches and caches the list of brands.
 ///
-/// Results are cached to avoid redundant network requests.
+/// Results are cached to avoid redundant network requests and improve performance.
 final brandListProvider = FutureProvider<List<Brand>>((ref) async {
   final repository = ref.watch(graphQLBrandRepositoryProvider);
   return repository.getBrands();
 });
 
 /// Contract for brand data operations.
-abstract class IBrandRepository {
+abstract interface class IBrandRepository {
   /// Fetches all available brands.
   Future<List<Brand>> getBrands();
 }
 
 /// Implementation of [IBrandRepository] using GraphQL.
 ///
-/// Uses cache-first strategy to optimize performance and reduce network calls.
-class GraphQLBrandRepository implements IBrandRepository {
+/// Uses a cache-first strategy to minimize network requests and improve performance.
+/// Transforms GraphQL response data into domain models using a mapper extension.
+final class GraphQLBrandRepository implements IBrandRepository {
   final GraphQLClient _client;
 
   /// Creates a new instance with the provided GraphQL [client].

@@ -1,25 +1,21 @@
 import 'package:alfie_flutter/data/models/suggestion.dart';
 import 'package:alfie_flutter/data/services/graphql_client.dart';
 import 'package:alfie_flutter/graphql/extensions/suggestion_mapper.dart';
-
+import 'package:alfie_flutter/graphql/generated/queries/search/search.graphql.dart';
 import 'package:alfie_flutter/utils/graphql_executor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import 'package:alfie_flutter/graphql/generated/queries/search/search.graphql.dart';
-
 /// Provider for the [GraphQLSearchRepository] instance.
 ///
-/// This manages the lifecycle of the repository and injects the GraphQL client.
+/// Manages the lifecycle of the search repository and injects the GraphQL client dependency.
 final graphQLSearchRepositoryProvider = Provider<ISearchRepository>((ref) {
   final client = ref.watch(gqlClientProvider);
   return GraphQLSearchRepository(client);
 });
 
-/// Provider that fetches search suggestions for a given search term.
-///
-/// Results are cached to avoid redundant network requests for the same term.
-final searchSuggestionsProvider = FutureProvider.family<Suggestion?, String>((
+/// Provider that fetches and caches search suggestions for a given search term.
+final searchSuggestionsProvider = FutureProvider.family<Suggestion, String>((
   ref,
   term,
 ) async {
@@ -28,15 +24,16 @@ final searchSuggestionsProvider = FutureProvider.family<Suggestion?, String>((
 });
 
 /// Contract for search data operations.
-abstract class ISearchRepository {
-  /// Fetches search suggestions for the given [term].
-  ///
-  /// Results are cached using the GraphQL client's cache-first policy.
+abstract interface class ISearchRepository {
+  /// Fetches search suggestions for the given [term]
   Future<Suggestion> getSuggestions(String term);
 }
 
 /// Implementation of [ISearchRepository] using GraphQL.
-class GraphQLSearchRepository implements ISearchRepository {
+///
+/// Transforms GraphQL response data into domain models using mapper extensions.
+/// Uses cache-first strategy to minimize network requests.
+final class GraphQLSearchRepository implements ISearchRepository {
   final GraphQLClient _client;
 
   /// Creates a new instance with the provided GraphQL [client].

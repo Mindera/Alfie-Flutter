@@ -6,7 +6,12 @@ import 'package:alfie_flutter/graphql/generated/queries/search/fragments/suggest
 import 'package:alfie_flutter/graphql/generated/queries/search/fragments/suggestion_product_fragment.graphql.dart';
 import 'package:alfie_flutter/graphql/generated/queries/search/search.graphql.dart';
 
+/// Converts a GraphQL suggestion response into a domain model.
+///
+/// Maps the nested GraphQL response structure into a clean [Suggestion]
+/// domain object by delegating to specialized mappers for each suggestion type.
 extension SuggestionMapper on Query$GetSuggestions$suggestion {
+  /// Converts this GraphQL suggestion response to a [Suggestion] domain model.
   Suggestion toDomain() {
     return Suggestion(
       brands: brands.toDomain(),
@@ -16,31 +21,43 @@ extension SuggestionMapper on Query$GetSuggestions$suggestion {
   }
 }
 
+/// Converts a list of brand suggestion fragments into domain models.
 extension SuggestionBrandMapper on List<Fragment$SuggestionBrandFragment> {
+  /// Converts this list to a list of [SuggestionBrand] domain models.
   List<SuggestionBrand> toDomain() {
     return map(
-      (s) => SuggestionBrand(value: s.value, results: s.results),
+      (brand) => SuggestionBrand(value: brand.value, results: brand.results),
     ).toList();
   }
 }
 
+/// Converts a list of keyword suggestion fragments into domain models.
 extension SuggestionKeywordMapper on List<Fragment$SuggestionKeywordFragment> {
+  /// Converts this list to a list of [SuggestionKeyword] domain models.
   List<SuggestionKeyword> toDomain() {
     return map(
-      (s) => SuggestionKeyword(value: s.value, results: s.results),
+      (keyword) =>
+          SuggestionKeyword(value: keyword.value, results: keyword.results),
     ).toList();
   }
 }
 
+/// Converts a list of product suggestion fragments into domain models.
+///
+/// Handles nested transformations for media and price objects using
+/// their respective mappers to ensure complete domain model conversion.
 extension SuggestionProductMapper on List<Fragment$SuggestionProductFragment> {
+  /// Converts this list to a list of [SuggestionProduct] domain models.
+  ///
+  /// Media and price objects are transformed using their dedicated mappers.
   List<SuggestionProduct> toDomain() {
     return map(
-      (s) => SuggestionProduct(
-        id: s.id,
-        name: s.name,
-        brandName: s.brandName,
-        media: s.media.map((m) => m.toDomain()).toList(),
-        price: s.price.toDomain(),
+      (product) => SuggestionProduct(
+        id: product.id,
+        name: product.name,
+        brandName: product.brandName,
+        media: product.media.map((m) => m.toDomain()).toList(),
+        price: product.price.toDomain(),
       ),
     ).toList();
   }
