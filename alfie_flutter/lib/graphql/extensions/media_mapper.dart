@@ -3,19 +3,19 @@ import 'package:alfie_flutter/graphql/generated/queries/fragments/media_fragment
 import 'package:alfie_flutter/graphql/generated/queries/fragments/image_fragment.graphql.dart';
 import 'package:alfie_flutter/graphql/generated/schema.graphql.dart';
 
-extension MediaImageMapper on Fragment$ImageFragment {
-  MediaImage toDomain() {
-    return MediaImage(url: url, alt: alt);
-  }
-}
-
 extension MediaMapper on Fragment$MediaFragment {
-  Media toMedia() {
+  Media toDomain() {
     return when(
-      image: (image) => image.toDomain(),
+      image: (image) => MediaImageMapper(image).toDomain(),
       video: (video) => video.toDomain(),
       orElse: () => Media(mediaContentType: MediaContentType.unknown),
     );
+  }
+}
+
+extension MediaImageMapper on Fragment$ImageFragment {
+  MediaImage toDomain() {
+    return MediaImage(url: url, alt: alt);
   }
 }
 
