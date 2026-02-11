@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,8 +19,8 @@ class ButtonsScreen extends ConsumerWidget {
           spacing: 8,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Buttons', style: TextTheme.of(context).displayLarge),
-            Text('Primary', style: TextTheme.of(context).headlineSmall),
+            Text('Buttons', style: context.textTheme.displayLarge),
+            Text('Primary', style: context.textTheme.headlineSmall),
             AppButton.primary(
               label: "Label",
               leading: AppIcons.minus,
@@ -65,7 +66,7 @@ class ButtonsScreen extends ConsumerWidget {
 
             SizedBox(height: Spacing.extraLarge),
 
-            Text('Secondary', style: TextTheme.of(context).headlineSmall),
+            Text('Secondary', style: context.textTheme.headlineSmall),
             AppButton.secondary(
               label: "Label",
               leading: AppIcons.minus,
@@ -111,7 +112,7 @@ class ButtonsScreen extends ConsumerWidget {
 
             SizedBox(height: Spacing.extraLarge),
 
-            Text('Tertiary', style: TextTheme.of(context).headlineSmall),
+            Text('Tertiary', style: context.textTheme.headlineSmall),
             AppButton.tertiary(
               label: "Label",
               leading: AppIcons.minus,
@@ -157,7 +158,7 @@ class ButtonsScreen extends ConsumerWidget {
 
             SizedBox(height: Spacing.extraLarge),
 
-            Text('Destructive', style: TextTheme.of(context).headlineSmall),
+            Text('Destructive', style: context.textTheme.headlineSmall),
             AppButton.destructive(
               label: "Label",
               leading: AppIcons.minus,

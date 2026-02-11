@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:flutter/material.dart';
 
 class ColorSwatchWidget extends StatelessWidget {
@@ -24,7 +25,7 @@ class ColorSwatchWidget extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(left: Spacing.extraExtraExtraSmall),
           alignment: Alignment.centerRight,
-          child: Text("+${size - 1}", style: TextTheme.of(context).bodyMedium),
+          child: Text("+${size - 1}", style: context.textTheme.bodyMedium),
         ),
       ],
     );

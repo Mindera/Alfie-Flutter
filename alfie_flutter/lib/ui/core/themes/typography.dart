@@ -148,3 +148,7 @@ extension ExtendedTextTheme on TextTheme {
     );
   }
 }
+
+extension TextThemeOfContext on BuildContext {
+  TextTheme get textTheme => TextTheme.of(this);
+}

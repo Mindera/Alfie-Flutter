@@ -27,19 +27,19 @@ class ProductMainInfo extends StatelessWidget {
               children: [
                 Text(
                   "Aditional Information 1",
-                  style: TextTheme.of(context).labelSmall,
+                  style: context.textTheme.labelSmall,
                 ),
                 Text(
                   product.name.capitalizeAll(),
-                  style: TextTheme.of(context).bodyMedium,
+                  style: context.textTheme.bodyMedium,
                 ),
                 Text(
                   product.defaultVariant.price.amount.formatted,
-                  style: TextTheme.of(context).bodyMediumBold,
+                  style: context.textTheme.bodyMediumBold,
                 ),
                 Text(
                   "Aditional Information 2",
-                  style: TextTheme.of(context).labelSmall,
+                  style: context.textTheme.labelSmall,
                 ),
               ],
             ),

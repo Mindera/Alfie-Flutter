@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:alfie_flutter/ui/core/ui/radio_button/radio_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,7 @@ class RadioButtonsScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Radio Buttons', style: TextTheme.of(context).displayLarge),
+            Text('Radio Buttons', style: context.textTheme.displayLarge),
             SizedBox(height: Spacing.small),
             RadioButtons(
               options: [Options.option1, Options.option2, Options.option3],
