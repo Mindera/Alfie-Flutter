@@ -5,19 +5,16 @@ class Fragment$SuggestionBrandFragment {
   Fragment$SuggestionBrandFragment({
     required this.value,
     required this.results,
-    required this.slug,
     this.$__typename = 'SuggestionBrand',
   });
 
   factory Fragment$SuggestionBrandFragment.fromJson(Map<String, dynamic> json) {
     final l$value = json['value'];
     final l$results = json['results'];
-    final l$slug = json['slug'];
     final l$$__typename = json['__typename'];
     return Fragment$SuggestionBrandFragment(
       value: (l$value as String),
       results: (l$results as int),
-      slug: (l$slug as String),
       $__typename: (l$$__typename as String),
     );
   }
@@ -25,8 +22,6 @@ class Fragment$SuggestionBrandFragment {
   final String value;
 
   final int results;
-
-  final String slug;
 
   final String $__typename;
 
@@ -36,8 +31,6 @@ class Fragment$SuggestionBrandFragment {
     _resultData['value'] = l$value;
     final l$results = results;
     _resultData['results'] = l$results;
-    final l$slug = slug;
-    _resultData['slug'] = l$slug;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -47,9 +40,8 @@ class Fragment$SuggestionBrandFragment {
   int get hashCode {
     final l$value = value;
     final l$results = results;
-    final l$slug = slug;
     final l$$__typename = $__typename;
-    return Object.hashAll([l$value, l$results, l$slug, l$$__typename]);
+    return Object.hashAll([l$value, l$results, l$$__typename]);
   }
 
   @override
@@ -69,11 +61,6 @@ class Fragment$SuggestionBrandFragment {
     final l$results = results;
     final lOther$results = other.results;
     if (l$results != lOther$results) {
-      return false;
-    }
-    final l$slug = slug;
-    final lOther$slug = other.slug;
-    if (l$slug != lOther$slug) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -100,7 +87,7 @@ abstract class CopyWith$Fragment$SuggestionBrandFragment<TRes> {
   factory CopyWith$Fragment$SuggestionBrandFragment.stub(TRes res) =
       _CopyWithStubImpl$Fragment$SuggestionBrandFragment;
 
-  TRes call({String? value, int? results, String? slug, String? $__typename});
+  TRes call({String? value, int? results, String? $__typename});
 }
 
 class _CopyWithImpl$Fragment$SuggestionBrandFragment<TRes>
@@ -116,7 +103,6 @@ class _CopyWithImpl$Fragment$SuggestionBrandFragment<TRes>
   TRes call({
     Object? value = _undefined,
     Object? results = _undefined,
-    Object? slug = _undefined,
     Object? $__typename = _undefined,
   }) => _then(
     Fragment$SuggestionBrandFragment(
@@ -126,9 +112,6 @@ class _CopyWithImpl$Fragment$SuggestionBrandFragment<TRes>
       results: results == _undefined || results == null
           ? _instance.results
           : (results as int),
-      slug: slug == _undefined || slug == null
-          ? _instance.slug
-          : (slug as String),
       $__typename: $__typename == _undefined || $__typename == null
           ? _instance.$__typename
           : ($__typename as String),
@@ -142,8 +125,7 @@ class _CopyWithStubImpl$Fragment$SuggestionBrandFragment<TRes>
 
   TRes _res;
 
-  call({String? value, int? results, String? slug, String? $__typename}) =>
-      _res;
+  call({String? value, int? results, String? $__typename}) => _res;
 }
 
 const fragmentDefinitionSuggestionBrandFragment = FragmentDefinitionNode(
@@ -166,13 +148,6 @@ const fragmentDefinitionSuggestionBrandFragment = FragmentDefinitionNode(
       ),
       FieldNode(
         name: NameNode(value: 'results'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
-      FieldNode(
-        name: NameNode(value: 'slug'),
         alias: null,
         arguments: [],
         directives: [],

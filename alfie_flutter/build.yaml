@@ -3,10 +3,10 @@ targets:
     builders:
       graphql_codegen:
         options:
-          scalars:
-              URL:
-                type: String!
           outputDirectory: /lib/graphql/generated
           assetsPath: lib/graphql/**.graphql
           clients:
               - graphql_flutter
+          scalars:
+            URL:
+              type: String
