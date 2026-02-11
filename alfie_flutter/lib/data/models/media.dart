@@ -16,6 +16,25 @@ class Media {
   Media({this.alt, required this.mediaContentType});
 }
 
+extension MediaWhenExtension on Media {
+  T when<T>({
+    required T Function(MediaImage) image,
+    required T Function(MediaVideo) video,
+    required T Function() orElse,
+  }) {
+    switch (mediaContentType) {
+      case MediaContentType.image:
+        return image(this as MediaImage);
+
+      case MediaContentType.video:
+        return video(this as MediaVideo);
+
+      default:
+        return orElse();
+    }
+  }
+}
+
 /// Represents image media content.
 ///
 /// An image media asset with a URL pointing to the image resource.
