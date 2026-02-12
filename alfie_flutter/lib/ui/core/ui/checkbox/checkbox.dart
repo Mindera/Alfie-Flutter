@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/ui/core/themes/checkbox_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 /// A checkbox tile widget with label, optional info text, and error state support.
 ///
@@ -23,7 +24,7 @@ import 'package:flutter/material.dart';
 ///   onChanged: (value) => print('Checkbox: $value'),
 /// )
 /// ```
-class CheckboxTile extends StatefulWidget {
+class CheckboxTile extends HookWidget {
   /// The main label text displayed next to the checkbox.
   final String label;
 
@@ -31,7 +32,7 @@ class CheckboxTile extends StatefulWidget {
   final String? info;
 
   /// The initial checkbox value (true, false, or null).
-  final bool? value;
+  final bool? initialValue;
 
   /// Whether the checkbox is in an error state.
   ///
@@ -47,46 +48,27 @@ class CheckboxTile extends StatefulWidget {
     super.key,
     required this.label,
     this.info,
-    this.value,
+    this.initialValue,
     this.onChanged,
     this.hasError = false,
   });
 
   @override
-  State<CheckboxTile> createState() => _CheckboxTileState();
-}
-
-class _CheckboxTileState extends State<CheckboxTile> {
-  late bool? _currentValue;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentValue = widget.value;
-  }
-
-  /// Toggles the checkbox value, cycling through true → false → true. null states change to false.
-  ///
-  /// Does nothing if [hasError] is true or if [onChanged] is null (disabled).
-  void _handleToggle() {
-    if (widget.hasError || widget.onChanged == null) return;
-
-    final nextValue = _currentValue == false ? true : false;
-
-    setState(() {
-      _currentValue = nextValue;
-    });
-
-    widget.onChanged?.call(nextValue);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final isDisabled = widget.onChanged == null;
+    final state = useState<bool?>(initialValue);
+    final isDisabled = onChanged == null;
     final checkboxTheme = Theme.of(context).checkboxTheme;
 
+    void handleToggle() {
+      if (hasError || isDisabled) return;
+      // Cycle logic: true/null -> false, false -> true
+      final nextValue = (state.value == false) ? true : false;
+      state.value = nextValue;
+      onChanged?.call(nextValue);
+    }
+
     return InkWell(
-      onTap: isDisabled ? null : _handleToggle,
+      onTap: isDisabled ? null : handleToggle,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: Spacing.extraExtraSmall),
         child: Row(
@@ -97,26 +79,26 @@ class _CheckboxTileState extends State<CheckboxTile> {
                 spacing: Spacing.extraSmall,
                 children: [
                   Text(
-                    widget.label,
+                    label,
                     style: checkboxTheme.getLabelStyle(
                       context,
                       isDisabled,
-                      _currentValue,
+                      state.value,
                     ),
                   ),
-                  if (widget.info != null)
+                  if (info != null)
                     Text(
-                      widget.info!,
+                      info!,
                       style: checkboxTheme.getInfoStyle(context, isDisabled),
                     ),
                 ],
               ),
             ),
             Checkbox(
-              value: _currentValue,
+              value: state.value,
               tristate: true,
-              onChanged: isDisabled ? null : (_) => _handleToggle(),
-              isError: widget.hasError,
+              onChanged: isDisabled ? null : (_) => handleToggle(),
+              isError: hasError,
             ),
           ],
         ),

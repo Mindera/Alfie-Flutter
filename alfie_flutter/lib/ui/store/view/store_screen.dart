@@ -1,36 +1,29 @@
-import 'package:alfie_flutter/routing/app_route.dart';
-import 'package:alfie_flutter/utils/navigation_helpers.dart';
-import 'package:alfie_flutter/utils/scroll_to_top_mixin.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:developer';
 
-// Your screen remains lean and "Stateless-like" in appearance
-class StoreScreen extends ConsumerStatefulWidget {
+import 'package:alfie_flutter/utils/navigation_helpers.dart';
+import 'package:alfie_flutter/utils/use_scroll_to_top.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+class StoreScreen extends HookConsumerWidget {
   const StoreScreen({super.key});
 
   @override
-  ConsumerState<StoreScreen> createState() => _StoreScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scrollController = useScrollToTop(ref, context.path);
+    log(context.path);
 
-// All the boilerplate logic is hidden in the Mixin
-class _StoreScreenState extends ConsumerState<StoreScreen>
-    with ScrollToTopMixin {
-  @override
-  AppRoute get route => AppRoute.store;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: scrollController,
-      itemCount: 101,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('Store Item $index'),
-          onTap: () {
-            context.goToProduct('$index');
-          },
-        );
-      },
+    return Scaffold(
+      body: ListView.builder(
+        controller: scrollController,
+        itemCount: 101,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('Store Item $index'),
+            onTap: () => context.goToProduct('$index'),
+          );
+        },
+      ),
     );
   }
 }
