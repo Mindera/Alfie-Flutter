@@ -3,6 +3,8 @@ import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/repositories/product_repository.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/ui/core/themes/typography.dart';
+import 'package:alfie_flutter/ui/core/ui/gallery.dart';
 import 'package:alfie_flutter/ui/product_detail/view/product_main_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,24 +45,12 @@ class ProductDetail extends StatelessWidget {
           ),
           expandedHeight: MediaQuery.of(context).size.width * 1.25,
           flexibleSpace: FlexibleSpaceBar(
-            background: FadeInImage.assetNetwork(
-              placeholder: "assets/images/fallback_image.png",
-              image: product.colours!.first.media!.first.when(
-                image: (MediaImage image) => image.url,
-                video: (MediaVideo video) => video.sources.first.url,
-                orElse: () => '',
-              ),
-              fit: BoxFit.cover,
-              placeholderFit: BoxFit.cover,
-
-              fadeInDuration: const Duration(milliseconds: 300),
-
-              imageErrorBuilder: (context, error, stackTrace) {
-                return Image.asset(
-                  "assets/images/fallback_image.png",
-                  fit: BoxFit.cover,
-                );
-              },
+            background: Gallery(
+              medias:
+                  product.colours
+                      ?.expand((color) => color.media ?? <Media>[])
+                      .toList() ??
+                  [],
             ),
           ),
         ),
@@ -70,11 +60,30 @@ class ProductDetail extends StatelessWidget {
             delegate: SliverChildListDelegate(<Widget>[
               Column(
                 spacing: Spacing.medium,
-                children: [ProductMainInfo(product: product)],
+                children: [
+                  ProductMainInfo(product: product),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: Spacing.small,
+                    children: [
+                      Text(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        style: context.textTheme.bodyMedium,
+                      ),
+                      Text(
+                        "Color Name | Ref. 0273/393",
+                        style: context.textTheme.labelSmall,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ]),
           ),
         ),
+        // SliverFillRemaining(
+        //   child: AppButton.tertiary(isLoading: true, label: "Loading More"),
+        // ),
       ],
     );
   }

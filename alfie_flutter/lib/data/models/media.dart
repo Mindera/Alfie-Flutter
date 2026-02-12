@@ -14,9 +14,7 @@ class Media {
 
   /// Creates a new [Media] instance.
   Media({this.alt, required this.mediaContentType});
-}
 
-extension MediaWhenExtension on Media {
   T when<T>({
     required T Function(MediaImage) image,
     required T Function(MediaVideo) video,

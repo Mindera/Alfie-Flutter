@@ -57,7 +57,7 @@ class ProductMainInfo extends StatelessWidget {
             Expanded(
               child: AppButton.primary(label: "Add to Bag", onPressed: () {}),
             ),
-            AppButton.secondary(leading: AppIcons.wishlist),
+            AppButton.secondary(leading: AppIcons.wishlist, onPressed: () {}),
           ],
         ),
       ],
