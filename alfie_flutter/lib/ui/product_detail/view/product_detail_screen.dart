@@ -18,7 +18,6 @@ class ProductDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncProduct = ref.watch(getProductProvider(id));
-    // final asyncProduct = ref.watch(getProductProviderTest);
     return asyncProduct.when(
       data: (product) => product == null
           ? Center(child: Text("Not Found"))
@@ -81,9 +80,6 @@ class ProductDetail extends StatelessWidget {
             ]),
           ),
         ),
-        // SliverFillRemaining(
-        //   child: AppButton.tertiary(isLoading: true, label: "Loading More"),
-        // ),
       ],
     );
   }
