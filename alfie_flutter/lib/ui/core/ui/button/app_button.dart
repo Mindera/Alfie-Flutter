@@ -145,7 +145,7 @@ class AppButton extends StatelessWidget {
       style: style,
       onPressed: isLoading ? null : onPressed,
       child: Row(
-        mainAxisSize: _isIconOnly ? MainAxisSize.min : MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: Spacing.extraSmall,
