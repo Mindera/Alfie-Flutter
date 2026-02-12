@@ -1,5 +1,4 @@
 import 'package:alfie_flutter/routing/app_route.dart';
-import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/view_model/scroll_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,8 +7,9 @@ import 'package:go_router/go_router.dart';
 final navBarViewModelProvider = Provider((ref) => NavBarViewModel(ref));
 
 class NavBarViewModel {
-  NavBarViewModel(this._ref);
   final Ref _ref;
+
+  NavBarViewModel(this._ref);
 
   List<BottomNavigationBarItem> get navBarItems {
     return AppRoute.tabs.map((tab) {
@@ -17,16 +17,18 @@ class NavBarViewModel {
     }).toList();
   }
 
-  void handleTap(StatefulNavigationShell navigationShell, int index) {
+  void handleTap(
+    StatefulNavigationShell navigationShell,
+    int index,
+    String currentPath,
+  ) {
     final isCurrentTab = index == navigationShell.currentIndex;
-    final tabName = AppRoute.tabs[index].name;
 
     if (isCurrentTab) {
-      final router = _ref.read(routerProvider);
-      final isAtRoot = router.state.fullPath == router.namedLocation(tabName);
+      final isAtRoot = currentPath == AppRoute.tabs[index].fullPath;
 
       if (isAtRoot) {
-        _ref.read(scrollProvider(tabName).notifier).triggerReset();
+        _ref.read(scrollProvider(currentPath).notifier).triggerReset();
       }
     }
     navigationShell.goBranch(index, initialLocation: isCurrentTab);

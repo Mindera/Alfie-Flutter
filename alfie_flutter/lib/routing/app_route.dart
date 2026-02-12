@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
+import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 
 enum AppRoute {
@@ -54,9 +55,12 @@ enum AppRoute {
 
   static List<AppRoute> get tabs =>
       AppRoute.values.where((r) => r.isTab).toList();
-  String get label => name[0].toUpperCase() + name.substring(1);
-  int get tabIndex => tabs.indexOf(this);
 
+  String get label => name.capitalize();
+
+  /// Gets the full path of a given route
+  ///
+  /// When a route can be instantiated over more than one base route, it returns the first match
   String get fullPath {
     if (isTab) return path;
 
