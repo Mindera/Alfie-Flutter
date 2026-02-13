@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches-ignore: [main, 'release/**']
+    branches-ignore: [main, "release/**"]
   pull_request:
 
 jobs:
@@ -35,7 +35,7 @@ jobs:
         working-directory: alfie_flutter
 
       - name: Run tests
-        run: flutter test --coverage
+        run: ./test_coverage.sh
         working-directory: alfie_flutter
 
       - name: Setup LCOV
@@ -52,7 +52,7 @@ jobs:
   build:
     name: Build ${{ matrix.platform }}
     if: github.event_name == 'pull_request'
-    needs: test-and-lint 
+    needs: test-and-lint
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
