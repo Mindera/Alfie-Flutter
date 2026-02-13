@@ -2,10 +2,10 @@ flutter test --coverage --branch-coverage
 
 lcov --remove coverage/lcov.info \
   'lib/graphql/generated/**' \
-  -o coverage/lcov.info --branch-coverage --ignore-errors inconsistent,corrupt
+  -o coverage/lcov.info --branch-coverage --ignore-errors inconsistent,inconsistent
 
 if [ "$GITHUB_ACTIONS" != "true" ]; then
-  genhtml coverage/lcov.info -o coverage/html --branch-coverage --ignore-errors inconsistent,corrupt
+  genhtml coverage/lcov.info -o coverage/html --branch-coverage --ignore-errors inconsistent,inconsistent
 
   open coverage/html/index.html
 fi
