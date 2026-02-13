@@ -1,5 +1,4 @@
 import 'package:alfie_flutter/ui/nav_bar/view_model/nav_bar_view_model.dart';
-import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,8 +19,7 @@ class NavBar extends ConsumerWidget {
       // The View now just consumes pre-formatted items
       items: viewModel.navBarItems,
       currentIndex: navigationShell.currentIndex,
-      onTap: (index) =>
-          viewModel.handleTap(navigationShell, index, context.path),
+      onTap: (index) => viewModel.handleTap(navigationShell, index),
     );
   }
 }

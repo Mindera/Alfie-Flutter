@@ -90,14 +90,13 @@ void main() {
     test('tapping CURRENT tab (at root) triggers scroll reset', () {
       final viewModel = getViewModel();
       final tabIndex = 0;
-      final tabName = AppRoute.tabs[tabIndex].name;
+      final tabPath = AppRoute.tabs[tabIndex].fullPath;
 
       // Setup: We are on tab 0, clicking tab 0
       when(() => mockShell.currentIndex).thenReturn(tabIndex);
 
       // Setup: Router says we are ALREADY at root
       when(() => mockRouterState.fullPath).thenReturn('/home');
-      when(() => mockRouter.namedLocation(tabName)).thenReturn('/home');
 
       // Action
       viewModel.handleTap(mockShell, tabIndex);
@@ -109,7 +108,7 @@ void main() {
 
       // Verify: Scroll provider state changed (reset triggered)
       // Assuming your scrollProvider logic increments on reset as per previous context
-      final scrollState = container.read(scrollProvider(tabName));
+      final scrollState = container.read(scrollProvider(tabPath));
       expect(scrollState, greaterThan(0));
     });
   });
