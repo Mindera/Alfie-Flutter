@@ -3,9 +3,9 @@ import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/repositories/product_repository.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
-import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:alfie_flutter/ui/core/ui/gallery.dart';
 import 'package:alfie_flutter/ui/product_detail/view/product_main_info.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -42,7 +42,7 @@ class ProductDetail extends StatelessWidget {
             icon: Icon(AppIcons.back),
             onPressed: () => context.pop(),
           ),
-          expandedHeight: MediaQuery.of(context).size.width * 1.25,
+          expandedHeight: context.mediaQuery.size.width * 1.25,
           flexibleSpace: FlexibleSpaceBar(
             background: Gallery(
               medias:

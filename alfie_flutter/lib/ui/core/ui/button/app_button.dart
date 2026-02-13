@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 
 /// A customizable button widget supporting multiple variants, sizes, and states.
@@ -134,7 +135,7 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).extension<AppButtonTheme>();
+    final theme = context.theme.extension<AppButtonTheme>();
     final style = theme?.styleWith(
       variant: _variant,
       size: _size,

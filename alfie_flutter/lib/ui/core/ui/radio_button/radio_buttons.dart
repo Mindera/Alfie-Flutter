@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/radio_button_theme.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -78,7 +79,7 @@ class RadioButtons<T extends Enum> extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final state = useState(initialValue);
-    final radioTheme = Theme.of(context).radioTheme;
+    final radioTheme = context.theme.radioTheme;
 
     /// Updates the selected value if the group is not disabled.
     ///

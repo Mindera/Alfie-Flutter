@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -67,7 +68,7 @@ class AppInputField extends HookWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: Spacing.extraExtraSmall,
       children: [
-        Text(label, style: Theme.of(context).textTheme.bodyMedium),
+        Text(label, style: context.textTheme.bodyMedium),
         TextFormField(
           controller: controller,
           focusNode: focusNode,

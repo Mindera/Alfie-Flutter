@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/ui/core/themes/checkbox_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -57,7 +58,7 @@ class CheckboxTile extends HookWidget {
   Widget build(BuildContext context) {
     final state = useState<bool?>(initialValue);
     final isDisabled = onChanged == null;
-    final checkboxTheme = Theme.of(context).checkboxTheme;
+    final checkboxTheme = context.theme.checkboxTheme;
 
     void handleToggle() {
       if (hasError || isDisabled) return;
