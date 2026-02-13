@@ -48,7 +48,7 @@ jobs:
           artifact-name: code-coverage-report
           github-token: ${{ secrets.GITHUB_TOKEN }}
           working-directory: alfie_flutter
-          genhtml-ignore-errors: inconsistent
+          genhtml-ignore-errors: inconsistent,corrupt
 
   build:
     name: Build ${{ matrix.platform }}
