@@ -35,7 +35,9 @@ jobs:
         working-directory: alfie_flutter
 
       - name: Run tests
-        run: ./test_coverage.sh
+        run: |
+          chmod +x ./test_coverage.sh
+          ./test_coverage.sh
         working-directory: alfie_flutter
 
       - name: Setup LCOV
