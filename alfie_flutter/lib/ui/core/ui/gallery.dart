@@ -2,21 +2,21 @@ import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class Gallery extends StatelessWidget {
-  Gallery({super.key, required this.medias});
+class Gallery extends HookWidget {
+  const Gallery({super.key, required this.medias});
   final List<Media> medias;
-
-  final ValueNotifier<int> _currentPage = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
+    final currentPage = useState(0);
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
         PageView.builder(
           itemCount: medias.length,
-          onPageChanged: (index) => _currentPage.value = index,
+          onPageChanged: (index) => currentPage.value = index,
           itemBuilder: (context, index) {
             return FadeInImage.assetNetwork(
               placeholder: "assets/images/fallback_image.png",
@@ -29,20 +29,15 @@ class Gallery extends StatelessWidget {
             );
           },
         ),
-        ValueListenableBuilder(
-          valueListenable: _currentPage,
-          builder: (context, value, child) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: Spacing.small),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: Spacing.extraSmall,
-                children: List.generate(medias.length, (index) {
-                  return _buildDot(value == index);
-                }),
-              ),
-            );
-          },
+        Padding(
+          padding: const EdgeInsets.only(bottom: Spacing.small),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: Spacing.extraSmall,
+            children: List.generate(medias.length, (index) {
+              return _buildDot(currentPage.value == index);
+            }),
+          ),
         ),
       ],
     );

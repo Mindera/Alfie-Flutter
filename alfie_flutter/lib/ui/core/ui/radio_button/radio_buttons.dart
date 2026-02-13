@@ -1,5 +1,7 @@
 import 'package:alfie_flutter/ui/core/themes/radio_button_theme.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 /// A generic radio button group widget for selecting a single option from a list.
 ///
@@ -26,7 +28,7 @@ import 'package:flutter/material.dart';
 ///   disabledOptions: [Status.pending],
 /// )
 /// ```
-class RadioButtons<T extends Enum> extends StatefulWidget {
+class RadioButtons<T extends Enum> extends HookWidget {
   /// The complete list of available options to display.
   final List<T> options;
 
@@ -66,55 +68,41 @@ class RadioButtons<T extends Enum> extends StatefulWidget {
     this.isDisabled = false,
   });
 
-  @override
-  State<RadioButtons<T>> createState() => _RadioButtonsState<T>();
-}
-
-class _RadioButtonsState<T extends Enum> extends State<RadioButtons<T>> {
-  late T _currentValue;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentValue = widget.initialValue;
-  }
-
-  /// Updates the selected value if the group is not disabled.
-  ///
-  /// Does nothing if [newValue] is null or if the entire group is disabled.
-  void _updateValue(T? newValue) {
-    if (newValue != null && !widget.isDisabled) {
-      setState(() {
-        _currentValue = newValue;
-      });
-      widget.onChanged(newValue);
-    }
-  }
-
   /// Determines if a specific option is disabled.
   ///
   /// An option is disabled if the entire group is disabled OR if it appears
   /// in the [disabledOptions] list.
   bool _isOptionDisabled(T option) {
-    return widget.isDisabled || widget.disabledOptions.contains(option);
+    return isDisabled || disabledOptions.contains(option);
   }
 
   @override
   Widget build(BuildContext context) {
-    final radioTheme = Theme.of(context).radioTheme;
+    final state = useState(initialValue);
+    final radioTheme = context.theme.radioTheme;
+
+    /// Updates the selected value if the group is not disabled.
+    ///
+    /// Does nothing if [newValue] is null or if the entire group is disabled.
+    void updateValue(T? newValue) {
+      if (newValue != null && !isDisabled) {
+        state.value = newValue;
+        onChanged(newValue);
+      }
+    }
 
     return RadioGroup<T>(
-      groupValue: _currentValue,
-      onChanged: _updateValue,
+      groupValue: state.value,
+      onChanged: updateValue,
       child: Column(
-        children: widget.options.map((option) {
+        children: options.map((option) {
           final isOptionDisabled = _isOptionDisabled(option);
-          final isSelected = _currentValue == option;
+          final isSelected = state.value == option;
 
           return ListTile(
             enabled: !isOptionDisabled,
             title: Text(
-              widget.labelBuilder(option),
+              labelBuilder(option),
               style: radioTheme.getLabelStyle(
                 context,
                 isOptionDisabled,
@@ -122,7 +110,7 @@ class _RadioButtonsState<T extends Enum> extends State<RadioButtons<T>> {
               ),
             ),
             leading: Radio<T>(value: option, enabled: !isOptionDisabled),
-            onTap: isOptionDisabled ? null : () => _updateValue(option),
+            onTap: isOptionDisabled ? null : () => updateValue(option),
           );
         }).toList(),
       ),

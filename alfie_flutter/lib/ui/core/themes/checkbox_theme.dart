@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -92,8 +93,8 @@ extension CheckboxThemeExtension on CheckboxThemeData {
     bool? currentValue,
   ) =>
       (currentValue == true
-              ? Theme.of(context).textTheme.bodyMediumBold
-              : Theme.of(context).textTheme.bodyMedium)!
+              ? context.textTheme.bodyMediumBold
+              : context.textTheme.bodyMedium)!
           .copyWith(
             color: isDisabled ? AppColors.neutral400 : AppColors.neutral800,
           );
@@ -109,7 +110,7 @@ extension CheckboxThemeExtension on CheckboxThemeData {
   ///
   /// Returns: A [TextStyle] with reduced emphasis appropriate for helper text.
   TextStyle getInfoStyle(BuildContext context, bool isDisabled) =>
-      Theme.of(context).textTheme.bodySmall!.copyWith(
+      context.textTheme.bodySmall!.copyWith(
         color: isDisabled ? AppColors.neutral400 : AppColors.neutral500,
       );
 }
