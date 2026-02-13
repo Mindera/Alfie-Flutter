@@ -34,14 +34,12 @@ jobs:
         run: flutter analyze
         working-directory: alfie_flutter
 
-      - name: Run tests
-        run: |
-          chmod +x ./test_coverage.sh
-          ./test_coverage.sh
-        working-directory: alfie_flutter
-
       - name: Setup LCOV
         uses: hrishikesh-kadam/setup-lcov@v1
+
+      - name: Run tests
+        run: ./test_coverage.sh
+        working-directory: alfie_flutter
 
       - name: Report LCOV
         uses: zgosalvez/github-actions-report-lcov@v6.0.0
