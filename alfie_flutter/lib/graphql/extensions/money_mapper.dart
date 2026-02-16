@@ -5,7 +5,7 @@ import 'package:alfie_flutter/graphql/generated/queries/fragments/money_fragment
 extension MoneyMapper on Fragment$MoneyFragment {
   /// Converts this money fragment to a [Money] domain model.
   Money toDomain() => Money(
-    amount: amount * 100,
+    amount: amount / 100,
     currencyCode: currencyCode,
     formatted: amountFormatted,
   );
