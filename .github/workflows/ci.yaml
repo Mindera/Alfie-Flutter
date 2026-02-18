@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches-ignore: [main, 'release/**']
+    branches-ignore: [main, "release/**"]
   pull_request:
 
 jobs:
@@ -34,12 +34,14 @@ jobs:
         run: flutter analyze
         working-directory: alfie_flutter
 
-      - name: Run tests
-        run: flutter test --coverage
-        working-directory: alfie_flutter
-
       - name: Setup LCOV
         uses: hrishikesh-kadam/setup-lcov@v1
+        with:
+          ref: HEAD
+
+      - name: Run tests
+        run: ./test_coverage.sh
+        working-directory: alfie_flutter
 
       - name: Report LCOV
         uses: zgosalvez/github-actions-report-lcov@v6.0.0
@@ -48,11 +50,12 @@ jobs:
           artifact-name: code-coverage-report
           github-token: ${{ secrets.GITHUB_TOKEN }}
           working-directory: alfie_flutter
+          genhtml-ignore-errors: inconsistent,inconsistent
 
   build:
     name: Build ${{ matrix.platform }}
     if: github.event_name == 'pull_request'
-    needs: test-and-lint 
+    needs: test-and-lint
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
