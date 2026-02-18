@@ -6,6 +6,7 @@ import 'package:alfie_flutter/ui/core/ui/header.dart';
 import 'package:alfie_flutter/ui/product_detail/view/product_main_info.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
+import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +45,7 @@ class ProductDetailScreen extends ConsumerWidget {
                   leading: IconButton(
                     padding: EdgeInsets.zero,
                     icon: Icon(AppIcons.back),
-                    onPressed: () => getViewModel().goBack(context),
+                    onPressed: () => context.safePop(),
                   ),
                   actions: [
                     IconButton(

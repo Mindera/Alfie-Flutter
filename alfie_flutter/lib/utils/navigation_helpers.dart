@@ -27,4 +27,8 @@ extension NavigationHelpers on BuildContext {
       '$basePath${AppRoute.productDetail.path.replaceFirst(':id', productId)}',
     );
   }
+
+  void safePop() {
+    if (canPop()) pop();
+  }
 }
