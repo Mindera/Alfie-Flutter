@@ -2,13 +2,8 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 
-class ProductDetailHeader extends StatelessWidget {
-  const ProductDetailHeader({
-    super.key,
-    required this.title,
-    this.leading,
-    this.actions,
-  });
+class Header extends StatelessWidget {
+  const Header({super.key, required this.title, this.leading, this.actions});
 
   final String title;
   final Widget? leading;

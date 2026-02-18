@@ -2,7 +2,7 @@ import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/gallery.dart';
-import 'package:alfie_flutter/ui/product_detail/view/product_detail_header.dart';
+import 'package:alfie_flutter/ui/core/ui/header.dart';
 import 'package:alfie_flutter/ui/product_detail/view/product_main_info.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
@@ -39,7 +39,7 @@ class ProductDetailScreen extends ConsumerWidget {
               automaticallyImplyLeading: false,
 
               flexibleSpace: FlexibleSpaceBar(
-                background: ProductDetailHeader(
+                background: Header(
                   title: product.name.capitalizeAll(),
                   leading: IconButton(
                     padding: EdgeInsets.zero,
