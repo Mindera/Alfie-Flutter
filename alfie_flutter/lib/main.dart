@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'data/models/environment.dart';
@@ -21,6 +22,12 @@ Future<void> main() async {
   // Required for HiveStore persistence
   log("Loading Hive for GraphQL...");
   await initHiveForFlutter();
+
+  // Maintaining the status bar visible
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.manual,
+    overlays: [SystemUiOverlay.top],
+  );
 
   // Start the main application wrapped in a ProviderScope so Riverpod
   // providers are available throughout the widget tree.
