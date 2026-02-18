@@ -18,13 +18,15 @@ class Header extends StatelessWidget {
         bottom: Spacing.extraExtraSmall,
         right: Spacing.extraExtraSmall,
       ),
-      child: Row(
-        spacing: Spacing.extraSmall,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Stack(
         children: [
-          ?leading,
-          Text(title, style: context.textTheme.headlineSmall),
-          ...?actions,
+          Row(
+            spacing: Spacing.extraSmall,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [?leading, ...?actions],
+          ),
+          Center(child: Text(title, style: context.textTheme.headlineSmall)),
         ],
       ),
     );
