@@ -1,3 +1,4 @@
+import 'image_fragment.graphql.dart';
 import 'media_fragment.graphql.dart';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
