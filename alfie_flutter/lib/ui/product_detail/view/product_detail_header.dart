@@ -27,9 +27,9 @@ class ProductDetailHeader extends StatelessWidget {
         spacing: Spacing.extraSmall,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (leading != null) leading!,
+          ?leading,
           Text(title, style: context.textTheme.headlineSmall),
-          if (actions != null) ...actions!,
+          ...?actions,
         ],
       ),
     );
