@@ -4,8 +4,10 @@ import 'package:alfie_flutter/data/repositories/product_repository.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/gallery.dart';
+import 'package:alfie_flutter/ui/product_detail/view/product_detail_header.dart';
 import 'package:alfie_flutter/ui/product_detail/view/product_main_info.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
+import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -38,12 +40,34 @@ class ProductDetail extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          leading: IconButton(
-            icon: Icon(AppIcons.back),
-            onPressed: () => context.pop(),
+          primary: true,
+
+          automaticallyImplyActions: false,
+          automaticallyImplyLeading: false,
+
+          flexibleSpace: FlexibleSpaceBar(
+            background: ProductDetailHeader(
+              title: product.name.capitalizeAll(),
+              leading: IconButton(
+                padding: EdgeInsets.zero,
+                icon: Icon(AppIcons.back),
+                onPressed: () => context.pop(),
+              ),
+              actions: [
+                IconButton(onPressed: () {}, icon: Icon(AppIcons.share)),
+              ],
+            ),
           ),
+        ),
+        SliverAppBar(
+          primary: false,
+
+          automaticallyImplyActions: false,
+          automaticallyImplyLeading: false,
+
           expandedHeight: context.mediaQuery.size.width * 1.25,
           flexibleSpace: FlexibleSpaceBar(
+            collapseMode: CollapseMode.parallax,
             background: Gallery(
               medias:
                   product.colours
