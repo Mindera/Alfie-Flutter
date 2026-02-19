@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
+import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/gallery.dart';
 import 'package:alfie_flutter/ui/core/ui/header.dart';
@@ -15,7 +16,7 @@ class ProductDetailScreen extends ConsumerWidget {
   const ProductDetailScreen({required this.id, super.key});
 
   final String id;
-  static const double _galleryAspectRatio = 1.25;
+  static const double _galleryAspectRatio = 4 / 3; // 3 : 4
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,78 +32,81 @@ class ProductDetailScreen extends ConsumerWidget {
         if (product == null) {
           return const Center(child: Text("Not Found"));
         }
-        return CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              primary: true,
+        return Container(
+          color: AppColors.neutral,
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                primary: true,
 
-              automaticallyImplyActions: false,
-              automaticallyImplyLeading: false,
+                automaticallyImplyActions: false,
+                automaticallyImplyLeading: false,
 
-              flexibleSpace: FlexibleSpaceBar(
-                background: Header(
-                  title: product.name.capitalizeAll(),
-                  leading: IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(AppIcons.back),
-                    onPressed: () => context.safePop(),
-                  ),
-                  actions: [
-                    IconButton(
-                      onPressed: () => getViewModel().shareProduct(),
-                      icon: Icon(AppIcons.share),
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Header(
+                    title: product.name.capitalizeAll(),
+                    leading: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(AppIcons.back),
+                      onPressed: () => context.safePop(),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            SliverAppBar(
-              primary: false,
-
-              automaticallyImplyActions: false,
-              automaticallyImplyLeading: false,
-
-              expandedHeight:
-                  context.mediaQuery.size.width * _galleryAspectRatio,
-              flexibleSpace: FlexibleSpaceBar(
-                collapseMode: CollapseMode.parallax,
-                background: Gallery(
-                  medias:
-                      product.colours
-                          ?.expand((color) => color.media ?? <Media>[])
-                          .toList() ??
-                      [],
-                ),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.all(Spacing.small),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate(<Widget>[
-                  Column(
-                    spacing: Spacing.medium,
-                    children: [
-                      ProductMainInfo(product: product),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: Spacing.small,
-                        children: [
-                          Text(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                            style: context.textTheme.bodyMedium,
-                          ),
-                          Text(
-                            "Color Name | Ref. 0273/393",
-                            style: context.textTheme.labelSmall,
-                          ),
-                        ],
+                    actions: [
+                      IconButton(
+                        onPressed: () => getViewModel().shareProduct(),
+                        icon: Icon(AppIcons.share),
                       ),
                     ],
                   ),
-                ]),
+                ),
               ),
-            ),
-          ],
+              SliverAppBar(
+                primary: false,
+
+                automaticallyImplyActions: false,
+                automaticallyImplyLeading: false,
+
+                expandedHeight:
+                    context.mediaQuery.size.width * _galleryAspectRatio,
+                flexibleSpace: FlexibleSpaceBar(
+                  collapseMode: CollapseMode.parallax,
+                  background: Gallery(
+                    medias:
+                        product.colours
+                            ?.expand((color) => color.media ?? <Media>[])
+                            .toList() ??
+                        [],
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.all(Spacing.small),
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate(<Widget>[
+                    Column(
+                      spacing: Spacing.medium,
+                      children: [
+                        ProductMainInfo(product: product),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: Spacing.small,
+                          children: [
+                            Text(
+                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                              style: context.textTheme.bodyMedium,
+                            ),
+                            Text(
+                              "Color Name | Ref. 0273/393",
+                              style: context.textTheme.labelSmall,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ]),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
