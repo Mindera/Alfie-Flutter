@@ -132,4 +132,21 @@ final class ProductListingParams {
     this.query,
     this.sort,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ProductListingParams &&
+        other.offset == offset &&
+        other.limit == limit &&
+        other.categoryId == categoryId &&
+        other.query == query &&
+        other.sort == sort;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(offset, limit, categoryId, query, sort);
+  }
 }
