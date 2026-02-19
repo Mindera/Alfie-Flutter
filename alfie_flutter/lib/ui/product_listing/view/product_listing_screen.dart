@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:alfie_flutter/data/models/product_listing.dart';
 import 'package:alfie_flutter/data/repositories/product_repository.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
@@ -27,7 +24,7 @@ class ProductListingScreen extends HookConsumerWidget {
           limit: 4,
           query: null,
           categoryId: null,
-          sort: ProductListingSort.highToLow,
+          sort: null,
         ),
       ),
     );
@@ -59,34 +56,21 @@ class ProductListingScreen extends HookConsumerWidget {
                 ),
               ),
             ),
+
             SliverPadding(
               padding: EdgeInsetsGeometry.all(Spacing.small),
-              sliver: SliverList.separated(
-                itemCount: columns == 1
-                    ? productListing.products.length
-                    : ((productListing.products.length) / 2).ceil(),
-                separatorBuilder: (BuildContext context, int index) =>
-                    SizedBox(height: Spacing.small),
-                itemBuilder: (context, index) {
-                  if (columns == 1) {
-                    return VerticalProductCard();
-                  }
-
-                  final leftIndex = index * 2;
-                  final rightIndex = leftIndex + 1;
-                  log(productListing.products.length.toString());
-
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: Spacing.extraSmall,
-                    children: [
-                      Expanded(child: VerticalProductCard()),
-                      rightIndex >= productListing.products.length
-                          ? Expanded(child: SizedBox(width: double.maxFinite))
-                          : Expanded(child: VerticalProductCard()),
-                    ],
+              sliver: SliverGrid(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return VerticalProductCard(
+                    product: productListing.products[index],
                   );
-                },
+                }, childCount: productListing.products.length),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: columns,
+                  crossAxisSpacing: Spacing.extraSmall,
+                  mainAxisSpacing: Spacing.small,
+                  childAspectRatio: 112.72 / 229.19,
+                ),
               ),
             ),
           ],
