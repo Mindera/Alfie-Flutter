@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'dart:math' hide log;
+import 'dart:developer';
 
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:alfie_flutter/utils/error/failures.dart';
@@ -54,6 +55,10 @@ class GraphQLExecutor {
         }
 
         final data = result.parsedData;
+
+        log(
+          "Recieved raw data from GraphQLExecutor:\n${result.data.toString().substring(0, 100)}...",
+        );
 
         if (data == null) {
           throw const ServerFailure("Data returned null");

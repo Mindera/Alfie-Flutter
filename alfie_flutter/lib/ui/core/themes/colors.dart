@@ -18,15 +18,34 @@ class AppColors {
   // Neutral Colors
   // ─────────────────────────────────────────────────────────────────────────
 
+  /// #FFFFFF
   static const Color neutral = Color(0xFFFFFFFF);
+
+  /// #F7F7F7
   static const Color neutral100 = Color(0xFFF7F7F7);
+
+  /// #E9E9E9
   static const Color neutral200 = Color(0xFFE9E9E9);
+
+  /// #CDCDCD
   static const Color neutral300 = Color(0xFFCDCDCD);
+
+  /// #A5A5A5
   static const Color neutral400 = Color(0xFFA5A5A5);
+
+  /// #767676
   static const Color neutral500 = Color(0xFF767676);
+
+  /// #4A4A4A
   static const Color neutral600 = Color(0xFF4A4A4A);
+
+  /// #2B2B2B
   static const Color neutral700 = Color(0xFF2B2B2B);
+
+  /// #111111
   static const Color neutral800 = Color(0xFF111111);
+
+  /// #000000
   static const Color neutral900 = Color(0xFF000000);
 
   // ─────────────────────────────────────────────────────────────────────────

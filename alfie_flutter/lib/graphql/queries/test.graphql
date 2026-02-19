@@ -1,7 +1,0 @@
-query GetTest {
-  __schema {
-    types {
-      name
-    }
-  }
-}

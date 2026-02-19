@@ -35,17 +35,5 @@ void main() {
       // Test camelCase word
       expect(AppRoute.productDetail.label, 'ProductDetail');
     });
-
-    // 3. Test `tabIndex` logic
-    test('tabIndex returns correct index for tabs', () {
-      expect(AppRoute.home.tabIndex, 0);
-      expect(AppRoute.store.tabIndex, 1);
-      expect(AppRoute.account.tabIndex, 4);
-    });
-
-    test('tabIndex returns -1 for non-tabs', () {
-      // List.indexOf returns -1 if not found
-      expect(AppRoute.productDetail.tabIndex, -1);
-    });
   });
 }

@@ -1,7 +1,11 @@
 # C.MD
 A file with useful commands
 
+
+
 ## GraphQL
+
+26582921
 
 ### Updating Generated Code
 You can combine **Fetching `schema.graphql`** and **Generate Type-safe Classes** with this script

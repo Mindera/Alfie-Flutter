@@ -21,7 +21,6 @@ class Fragment$ProductFragment {
     required this.shortDescription,
     this.longDescription,
     required this.slug,
-    this.labels,
     this.attributes,
     required this.defaultVariant,
     required this.variants,
@@ -38,7 +37,6 @@ class Fragment$ProductFragment {
     final l$shortDescription = json['shortDescription'];
     final l$longDescription = json['longDescription'];
     final l$slug = json['slug'];
-    final l$labels = json['labels'];
     final l$attributes = json['attributes'];
     final l$defaultVariant = json['defaultVariant'];
     final l$variants = json['variants'];
@@ -57,7 +55,6 @@ class Fragment$ProductFragment {
       shortDescription: (l$shortDescription as String),
       longDescription: (l$longDescription as String?),
       slug: (l$slug as String),
-      labels: (l$labels as List<dynamic>?)?.map((e) => (e as String)).toList(),
       attributes: (l$attributes as List<dynamic>?)
           ?.map(
             (e) => Fragment$AttributesFragment.fromJson(
@@ -100,9 +97,6 @@ class Fragment$ProductFragment {
 
   final String slug;
 
-  @Deprecated('Unavailable from iSAMS, do not use')
-  final List<String>? labels;
-
   final List<Fragment$AttributesFragment>? attributes;
 
   final Fragment$VariantFragment defaultVariant;
@@ -131,8 +125,6 @@ class Fragment$ProductFragment {
     _resultData['longDescription'] = l$longDescription;
     final l$slug = slug;
     _resultData['slug'] = l$slug;
-    final l$labels = labels;
-    _resultData['labels'] = l$labels?.map((e) => e).toList();
     final l$attributes = attributes;
     _resultData['attributes'] = l$attributes?.map((e) => e.toJson()).toList();
     final l$defaultVariant = defaultVariant;
@@ -156,7 +148,6 @@ class Fragment$ProductFragment {
     final l$shortDescription = shortDescription;
     final l$longDescription = longDescription;
     final l$slug = slug;
-    final l$labels = labels;
     final l$attributes = attributes;
     final l$defaultVariant = defaultVariant;
     final l$variants = variants;
@@ -171,7 +162,6 @@ class Fragment$ProductFragment {
       l$shortDescription,
       l$longDescription,
       l$slug,
-      l$labels == null ? null : Object.hashAll(l$labels.map((v) => v)),
       l$attributes == null ? null : Object.hashAll(l$attributes.map((v) => v)),
       l$defaultVariant,
       Object.hashAll(l$variants.map((v) => v)),
@@ -227,22 +217,6 @@ class Fragment$ProductFragment {
     final l$slug = slug;
     final lOther$slug = other.slug;
     if (l$slug != lOther$slug) {
-      return false;
-    }
-    final l$labels = labels;
-    final lOther$labels = other.labels;
-    if (l$labels != null && lOther$labels != null) {
-      if (l$labels.length != lOther$labels.length) {
-        return false;
-      }
-      for (int i = 0; i < l$labels.length; i++) {
-        final l$labels$entry = l$labels[i];
-        final lOther$labels$entry = lOther$labels[i];
-        if (l$labels$entry != lOther$labels$entry) {
-          return false;
-        }
-      }
-    } else if (l$labels != lOther$labels) {
       return false;
     }
     final l$attributes = attributes;
@@ -327,7 +301,6 @@ abstract class CopyWith$Fragment$ProductFragment<TRes> {
     String? shortDescription,
     String? longDescription,
     String? slug,
-    List<String>? labels,
     List<Fragment$AttributesFragment>? attributes,
     Fragment$VariantFragment? defaultVariant,
     List<Fragment$VariantFragment>? variants,
@@ -378,7 +351,6 @@ class _CopyWithImpl$Fragment$ProductFragment<TRes>
     Object? shortDescription = _undefined,
     Object? longDescription = _undefined,
     Object? slug = _undefined,
-    Object? labels = _undefined,
     Object? attributes = _undefined,
     Object? defaultVariant = _undefined,
     Object? variants = _undefined,
@@ -409,9 +381,6 @@ class _CopyWithImpl$Fragment$ProductFragment<TRes>
       slug: slug == _undefined || slug == null
           ? _instance.slug
           : (slug as String),
-      labels: labels == _undefined
-          ? _instance.labels
-          : (labels as List<String>?),
       attributes: attributes == _undefined
           ? _instance.attributes
           : (attributes as List<Fragment$AttributesFragment>?),
@@ -510,7 +479,6 @@ class _CopyWithStubImpl$Fragment$ProductFragment<TRes>
     String? shortDescription,
     String? longDescription,
     String? slug,
-    List<String>? labels,
     List<Fragment$AttributesFragment>? attributes,
     Fragment$VariantFragment? defaultVariant,
     List<Fragment$VariantFragment>? variants,
@@ -621,13 +589,6 @@ const fragmentDefinitionProductFragment = FragmentDefinitionNode(
       ),
       FieldNode(
         name: NameNode(value: 'slug'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
-      FieldNode(
-        name: NameNode(value: 'labels'),
         alias: null,
         arguments: [],
         directives: [],

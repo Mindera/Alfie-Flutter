@@ -8,8 +8,9 @@ import 'package:go_router/go_router.dart';
 final navBarViewModelProvider = Provider((ref) => NavBarViewModel(ref));
 
 class NavBarViewModel {
-  NavBarViewModel(this._ref);
   final Ref _ref;
+
+  NavBarViewModel(this._ref);
 
   List<BottomNavigationBarItem> get navBarItems {
     return AppRoute.tabs.map((tab) {
@@ -19,14 +20,15 @@ class NavBarViewModel {
 
   void handleTap(StatefulNavigationShell navigationShell, int index) {
     final isCurrentTab = index == navigationShell.currentIndex;
-    final tabName = AppRoute.tabs[index].name;
 
     if (isCurrentTab) {
       final router = _ref.read(routerProvider);
-      final isAtRoot = router.state.fullPath == router.namedLocation(tabName);
+      final isAtRoot = router.state.fullPath == AppRoute.tabs[index].fullPath;
 
       if (isAtRoot) {
-        _ref.read(scrollProvider(tabName).notifier).triggerReset();
+        _ref
+            .read(scrollProvider(AppRoute.tabs[index].fullPath).notifier)
+            .triggerReset();
       }
     }
     navigationShell.goBranch(index, initialLocation: isCurrentTab);

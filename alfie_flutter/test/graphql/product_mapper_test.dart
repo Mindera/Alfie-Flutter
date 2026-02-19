@@ -29,7 +29,7 @@ void main() {
           name: 'Classic Tee',
           shortDescription: 'A comfortable cotton tee.',
           longDescription: 'Detailed description of the classic cotton tee...',
-          brand: Fragment$BrandFragment(id: 'b1', name: 'Alfie', slug: ''),
+          brand: Fragment$BrandFragment(id: 'b1', name: 'Alfie'),
           priceRange: Fragment$PriceRangeFragment(
             low: Fragment$MoneyFragment(
               amount: 2550,
@@ -77,7 +77,7 @@ void main() {
         name: 'Classic Tee',
         shortDescription: 'A comfortable cotton tee.',
         longDescription: null,
-        brand: Fragment$BrandFragment(id: 'b1', name: 'Alfie', slug: ''),
+        brand: Fragment$BrandFragment(id: 'b1', name: 'Alfie'),
         priceRange: null,
         attributes: [],
         defaultVariant: variant,

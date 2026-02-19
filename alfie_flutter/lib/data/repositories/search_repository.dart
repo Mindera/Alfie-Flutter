@@ -32,7 +32,6 @@ abstract interface class ISearchRepository {
 /// Implementation of [ISearchRepository] using GraphQL.
 ///
 /// Transforms GraphQL response data into domain models using mapper extensions.
-/// Uses cache-first strategy to minimize network requests.
 final class GraphQLSearchRepository implements ISearchRepository {
   final GraphQLClient _client;
 
@@ -45,7 +44,7 @@ final class GraphQLSearchRepository implements ISearchRepository {
       performQuery: () => _client.query$GetSuggestions(
         Options$Query$GetSuggestions(
           variables: Variables$Query$GetSuggestions(term: term),
-          fetchPolicy: FetchPolicy.cacheFirst,
+          fetchPolicy: globalFetchPolicy,
         ),
       ),
       parseData: (data) => data.suggestion.toDomain(),

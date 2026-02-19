@@ -8,5 +8,4 @@ fragment SuggestionProductFragment on SuggestionProduct {
       price {
         ...PriceFragment
       }
-      slug
 }

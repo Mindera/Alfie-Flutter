@@ -14,6 +14,23 @@ class Media {
 
   /// Creates a new [Media] instance.
   Media({this.alt, required this.mediaContentType});
+
+  T when<T>({
+    required T Function(MediaImage) image,
+    required T Function(MediaVideo) video,
+    required T Function() orElse,
+  }) {
+    switch (mediaContentType) {
+      case MediaContentType.image:
+        return image(this as MediaImage);
+
+      case MediaContentType.video:
+        return video(this as MediaVideo);
+
+      default:
+        return orElse();
+    }
+  }
 }
 
 /// Represents image media content.

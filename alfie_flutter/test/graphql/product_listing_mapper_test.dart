@@ -33,11 +33,7 @@ void main() {
               id: "0",
               styleNumber: "2123",
               name: "name",
-              brand: Fragment$BrandFragment(
-                id: "0",
-                name: "name",
-                slug: "slug",
-              ),
+              brand: Fragment$BrandFragment(id: "0", name: "name"),
               shortDescription: "shortDescription",
               slug: "slug",
               defaultVariant: Fragment$VariantFragment(

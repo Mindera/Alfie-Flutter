@@ -13,8 +13,8 @@ void main() {
   group('Suggestion Brand Mapper Tests -', () {
     test('should map a List of Suggestion Brand Fragments to domain', () {
       final fragments = [
-        Fragment$SuggestionBrandFragment(value: 'Nike', results: 10, slug: ''),
-        Fragment$SuggestionBrandFragment(value: 'Adidas', results: 5, slug: ''),
+        Fragment$SuggestionBrandFragment(value: 'Nike', results: 10),
+        Fragment$SuggestionBrandFragment(value: 'Adidas', results: 5),
       ];
 
       final result = fragments.toDomain();
@@ -56,7 +56,6 @@ void main() {
               amountFormatted: r'$120.00',
             ),
           ),
-          slug: '',
         ),
       ];
 
@@ -74,13 +73,7 @@ void main() {
   group('Suggestion Mapper Tests -', () {
     test('should map a query Suggestion to domain', () {
       final fragment = Query$GetSuggestions$suggestion(
-        brands: [
-          Fragment$SuggestionBrandFragment(
-            value: 'Brand',
-            results: 1,
-            slug: '',
-          ),
-        ],
+        brands: [Fragment$SuggestionBrandFragment(value: 'Brand', results: 1)],
         keywords: [
           Fragment$SuggestionKeywordFragment(value: 'Key', results: 2),
         ],

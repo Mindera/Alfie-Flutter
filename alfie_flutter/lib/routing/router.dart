@@ -36,7 +36,7 @@ final routerProvider = Provider((ref) {
                 name: tab.name,
                 path: tab.path,
                 builder: (context, state) => registry.getScreen(tab, state),
-                routes: _buildRecursiveRoutes(tab.children, registry),
+                routes: _buildRecursiveRoutes(tab.children, registry, tab.name),
               ),
             ],
           );
@@ -49,6 +49,7 @@ final routerProvider = Provider((ref) {
 List<RouteBase> _buildRecursiveRoutes(
   List<AppRoute> routes,
   RouteRegistry registry,
+  String name,
 ) {
   if (routes.isEmpty) {
     return [];
@@ -57,8 +58,11 @@ List<RouteBase> _buildRecursiveRoutes(
     return GoRoute(
       path: route.path,
       builder: (context, state) => registry.getScreen(route, state),
-      // RECURSION: This enables infinite nesting (components -> buttons -> etc)
-      routes: _buildRecursiveRoutes(route.children, registry),
+      routes: _buildRecursiveRoutes(
+        route.children,
+        registry,
+        "$name-${route.name}",
+      ),
     );
   }).toList();
 }
