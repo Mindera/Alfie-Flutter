@@ -23,26 +23,26 @@ class ProductMainInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Aditional Information 1",
-                  style: context.textTheme.labelSmall,
-                ),
-                Text(
-                  product.name.capitalizeAll(),
-                  style: context.textTheme.bodyMedium,
-                ),
-                Text(
-                  product.defaultVariant.price.amount.formatted,
-                  style: context.textTheme.bodyMediumBold,
-                ),
-                Text(
-                  "Aditional Information 2",
-                  style: context.textTheme.labelSmall,
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(product.brand.name, style: context.textTheme.labelSmall),
+                  Text(
+                    product.name.capitalizeAll(),
+                    style: context.textTheme.bodyMedium,
+                  ),
+                  Text(
+                    product.defaultVariant.price.amount.formatted,
+                    style: context.textTheme.bodyMediumBold,
+                  ),
+                  // In Figma Desgin it is not used
+                  // Text(
+                  //   "Aditional Information 2",
+                  //   style: context.textTheme.labelSmall,
+                  // ),
+                ],
+              ),
             ),
             ColorSwatchWidget(
               color: AppColors.neutral,
