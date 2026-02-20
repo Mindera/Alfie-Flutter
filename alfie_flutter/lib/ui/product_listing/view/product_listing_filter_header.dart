@@ -1,17 +1,49 @@
+import 'dart:developer';
+
 import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
+import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_view_model.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ProductListingFilterHeader extends StatelessWidget {
-  const ProductListingFilterHeader({super.key, required this.totalItems});
+class ProductListingFilterHeader extends ConsumerWidget {
+  const ProductListingFilterHeader({super.key, required this.categoryId});
+
+  final String categoryId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    log("built header");
+    final productCount = ref.watch(
+      productListingViewModelProvider(
+        categoryId,
+      ).select((s) => s.value?.listing?.products.length),
+    );
+    return SliverAppBar(
+      pinned: true,
+      primary: false,
+      automaticallyImplyLeading: false,
+      backgroundColor: AppColors.neutral,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
+
+      toolbarHeight: _ProductListingFilterHeader.headerHeight,
+
+      flexibleSpace: _ProductListingFilterHeader(totalItems: productCount),
+    );
+  }
+}
+
+class _ProductListingFilterHeader extends StatelessWidget {
+  const _ProductListingFilterHeader({required this.totalItems});
 
   static const labels = ["Slim Fit", "Linen", "Cotton", "Straight Fit"];
-  final int totalItems;
+  final int? totalItems;
   static const double headerHeight = 82.0;
 
   @override
@@ -43,7 +75,7 @@ class ProductListingFilterHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              Text("$totalItems items"),
+              if (totalItems != null) Text("$totalItems items"),
               Text("Refine", style: context.textTheme.linkMedium),
             ],
           ),
