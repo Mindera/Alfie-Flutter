@@ -149,4 +149,20 @@ final class ProductListingParams {
   int get hashCode {
     return Object.hash(offset, limit, categoryId, query, sort);
   }
+
+  ProductListingParams copyWith({
+    int? offset,
+    int? limit,
+    String? categoryId,
+    String? query,
+    ProductListingSort? sort,
+  }) {
+    return ProductListingParams(
+      offset: offset ?? this.offset,
+      limit: limit ?? this.limit,
+      categoryId: categoryId ?? this.categoryId,
+      query: query ?? this.query,
+      sort: sort ?? this.sort,
+    );
+  }
 }
