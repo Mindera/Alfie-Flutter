@@ -39,8 +39,10 @@ class ProductListingContent extends ConsumerWidget {
           padding: EdgeInsetsGeometry.symmetric(horizontal: Spacing.small),
           sliver: SliverGrid(
             delegate: SliverChildBuilderDelegate((context, index) {
+              String? label = index == 0 ? "Best Seller" : null;
               return VerticalProductCard(
                 product: productListing.products[index],
+                label: label,
               );
             }, childCount: productListing.products.length),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
