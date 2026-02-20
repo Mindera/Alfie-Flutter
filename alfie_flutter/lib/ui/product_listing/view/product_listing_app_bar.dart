@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/ui/header.dart';
@@ -16,7 +14,6 @@ class ProductListingAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    log("rebuilt navbar");
     final productListingTitle = ref.watch(
       productListingViewModelProvider(
         categoryId,
