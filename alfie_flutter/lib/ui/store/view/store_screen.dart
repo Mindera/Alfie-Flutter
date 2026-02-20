@@ -1,6 +1,5 @@
-import 'dart:developer';
-
-import 'package:alfie_flutter/utils/navigation_helpers.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
+import 'package:alfie_flutter/ui/product_listing/view/product_listing_screen.dart';
 import 'package:alfie_flutter/utils/use_scroll_to_top.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,20 +9,7 @@ class StoreScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scrollController = useScrollToTop(ref, context.path);
-    log(context.path);
-
-    return Scaffold(
-      body: ListView.builder(
-        controller: scrollController,
-        itemCount: 101,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text('Store Item $index'),
-            onTap: () => context.goToProduct('$index'),
-          );
-        },
-      ),
-    );
+    final controller = useScrollToTop(ref, AppRoute.store.fullPath);
+    return ProductListingScreen(categoryId: '', controller: controller);
   }
 }

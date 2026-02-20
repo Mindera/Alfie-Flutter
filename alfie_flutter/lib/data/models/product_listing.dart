@@ -37,6 +37,6 @@ enum ProductListingSort {
   /// Sort alphabetically from Z to A.
   zToA,
 
-  /// Sort by relevance (default).
-  relevance,
+  /// Sort type unknown.
+  unknown,
 }
