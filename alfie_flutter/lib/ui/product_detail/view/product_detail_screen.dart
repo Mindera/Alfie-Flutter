@@ -25,17 +25,18 @@ class ProductDetailScreen extends ConsumerWidget {
     ProductDetailViewModel getViewModel() =>
         ref.read(productDetailViewModelProvider(id).notifier);
 
-    return state.product.when(
-      loading: () => Center(),
-      error: (error, stackTrace) => Center(child: Text(error.toString())),
-      data: (product) {
-        if (product == null) {
-          return const Center(child: Text("Not Found"));
-        }
-        return Container(
-          color: AppColors.neutral,
-          child: CustomScrollView(
+    return Container(
+      color: AppColors.neutral,
+      child: state.product.when(
+        loading: () => Center(),
+        error: (error, stackTrace) => Center(child: Text(error.toString())),
+        data: (product) {
+          if (product == null) {
+            return const Center(child: Text("Not Found"));
+          }
+          return CustomScrollView(
             slivers: [
+              // 1. Header Sliver
               SliverAppBar(
                 primary: true,
 
@@ -59,6 +60,8 @@ class ProductDetailScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+
+              // 2. Gallery Sliver
               SliverAppBar(
                 primary: false,
 
@@ -78,20 +81,25 @@ class ProductDetailScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+
+              // 3. Product Content Sliver
               SliverPadding(
                 padding: const EdgeInsets.all(Spacing.small),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate(<Widget>[
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: Spacing.medium,
                       children: [
                         ProductMainInfo(product: product),
+
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           spacing: Spacing.small,
                           children: [
                             Text(
-                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                              product.longDescription ??
+                                  product.shortDescription,
                               style: context.textTheme.bodyMedium,
                             ),
                             Text(
@@ -106,9 +114,9 @@ class ProductDetailScreen extends ConsumerWidget {
                 ),
               ),
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

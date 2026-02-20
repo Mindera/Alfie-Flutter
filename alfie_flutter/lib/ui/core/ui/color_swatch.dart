@@ -3,29 +3,48 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 
+/// Displays a primary color swatch alongside an indicator of additional available colors.
+///
+/// Shows the main item [color]
+/// and how many *other* color options exist.
 class ColorSwatchWidget extends StatelessWidget {
+  /// The primary color to display in the square swatch.
   final Color color;
-  final int size;
 
-  const ColorSwatchWidget({required this.color, required this.size, super.key});
+  /// The total number of available colors.
+  ///
+  /// The text indicator will display this value minus one (e.g., "+3" if total size is 4).
+  final int totalColors;
+
+  static const double _swatchSize = 24.0;
+
+  const ColorSwatchWidget({
+    required this.color,
+    required this.totalColors,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           margin: EdgeInsets.all(Spacing.extraExtraExtraSmall),
-          width: 24,
-          height: 24,
+          width: _swatchSize,
+          height: _swatchSize,
           decoration: BoxDecoration(
-            border: Border.all(color: AppColors.neutral300),
             color: color,
+            border: Border.all(color: AppColors.neutral300),
           ),
         ),
-        Container(
+
+        Padding(
           padding: EdgeInsets.only(left: Spacing.extraExtraExtraSmall),
-          alignment: Alignment.centerRight,
-          child: Text("+${size - 1}", style: context.textTheme.bodyMedium),
+          child: Text(
+            '+${totalColors - 1}',
+            style: context.textTheme.bodyMedium,
+          ),
         ),
       ],
     );

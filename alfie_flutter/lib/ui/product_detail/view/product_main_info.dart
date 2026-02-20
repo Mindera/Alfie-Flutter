@@ -9,10 +9,12 @@ import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 
+/// Displays the primary metadata for a [Product], including brand, name,
+/// price, available colors, and call-to-action buttons.
 class ProductMainInfo extends StatelessWidget {
-  const ProductMainInfo({super.key, required this.product});
-
   final Product product;
+
+  const ProductMainInfo({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -36,29 +38,34 @@ class ProductMainInfo extends StatelessWidget {
                     product.defaultVariant.price.amount.formatted,
                     style: context.textTheme.bodyMediumBold,
                   ),
-                  // In Figma Desgin it is not used
-                  // Text(
-                  //   "Aditional Information 2",
-                  //   style: context.textTheme.labelSmall,
-                  // ),
                 ],
               ),
             ),
             ColorSwatchWidget(
               color: AppColors.neutral,
-              size: product.colours?.length ?? 1,
+              totalColors: product.colours?.length ?? 1,
             ),
           ],
         ),
+
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: Spacing.extraSmall,
           children: [
             Expanded(
-              child: AppButton.primary(label: "Add to Bag", onPressed: () {}),
+              child: AppButton.primary(
+                label: "Add to Bag",
+                onPressed: () {
+                  // TODO: Wire up to ViewModel
+                },
+              ),
             ),
-            AppButton.secondary(leading: AppIcons.wishlist, onPressed: () {}),
+            AppButton.secondary(
+              leading: AppIcons.wishlist,
+              onPressed: () {
+                // TODO: Wire up to ViewModel
+              },
+            ),
           ],
         ),
       ],
