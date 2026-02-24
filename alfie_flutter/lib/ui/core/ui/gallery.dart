@@ -1,6 +1,8 @@
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/ui/core/themes/typography.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -14,7 +16,16 @@ class Gallery extends HookWidget {
   /// The collection of media items to display in the gallery.
   final List<Media> medias;
 
-  const Gallery({super.key, required this.medias});
+  final MainAxisAlignment dotsAlignment;
+
+  final String? title;
+
+  const Gallery({
+    super.key,
+    required this.medias,
+    this.dotsAlignment = MainAxisAlignment.center,
+    this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +51,8 @@ class Gallery extends HookWidget {
                 fit: BoxFit.cover,
               );
             }
-
             return FadeInImage.assetNetwork(
+              imageCacheHeight: 550,
               placeholder: 'assets/images/fallback_image.png',
               image: mediaUrl,
               fit: BoxFit.cover,
@@ -54,20 +65,60 @@ class Gallery extends HookWidget {
             );
           },
         ),
-
-        // Only show pagination dots if there are multiple items to swipe through.
-        if (medias.length > 1)
-          Padding(
-            padding: const EdgeInsets.only(bottom: Spacing.small),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: Spacing.extraSmall,
-              children: List.generate(
-                medias.length,
-                (index) => _DotIndicator(isActive: currentPage.value == index),
+        if (title != null)
+          Positioned.fill(
+            child: IgnorePointer(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.transparent, AppColors.neutral800],
+                  ),
+                ),
               ),
             ),
           ),
+
+        // Only show pagination dots if there are multiple items to swipe through.
+        Padding(
+          padding: const EdgeInsets.all(Spacing.small),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            spacing: Spacing.medium,
+            children: [
+              if (title != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title!,
+                      style: context.textTheme.displayMedium?.copyWith(
+                        color: AppColors.neutral,
+                      ),
+                    ),
+                    Text(
+                      "Explore Collection",
+                      style: context.textTheme.linkMedium?.copyWith(
+                        color: AppColors.neutral,
+                        decorationColor: AppColors.neutral,
+                      ),
+                    ),
+                  ],
+                ),
+              if (medias.length > 1)
+                Row(
+                  mainAxisAlignment: dotsAlignment,
+                  spacing: Spacing.extraSmall,
+                  children: List.generate(
+                    medias.length,
+                    (index) =>
+                        _DotIndicator(isActive: currentPage.value == index),
+                  ),
+                ),
+            ],
+          ),
+        ),
       ],
     );
   }
