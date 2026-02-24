@@ -80,9 +80,7 @@ class ProductDetailScreen extends ConsumerWidget {
                             .map((media) {
                               final mediaUrl = media.firstUrl;
 
-                              return GalleryItem(
-                                child: ImageFactory.network(mediaUrl),
-                              );
+                              return ImageFactory.network(mediaUrl);
                             })
                             .toList() ??
                         [],

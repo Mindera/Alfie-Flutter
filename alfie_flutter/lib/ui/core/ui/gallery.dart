@@ -1,8 +1,6 @@
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
-import 'package:alfie_flutter/ui/core/themes/typography.dart';
-import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -14,7 +12,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 /// TO BE DONE: Video support is not yet implemented
 class Gallery extends HookWidget {
   /// The collection of media items to display in the gallery.
-  final List<GalleryItem> children;
+  final List<Widget> children;
 
   final MainAxisAlignment dotsAlignment;
 
@@ -81,70 +79,6 @@ class _DotIndicator extends StatelessWidget {
         color: isActive ? AppColors.neutral : AppColors.neutral400,
         borderRadius: BorderRadius.circular(4),
       ),
-    );
-  }
-}
-
-class GalleryItem extends StatelessWidget {
-  final Widget child;
-  final String? title;
-  final VoidCallback? onTap; // Added for interactivity
-
-  const GalleryItem({super.key, required this.child, this.title, this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        child,
-        if (title != null) ...[
-          Positioned.fill(
-            child: IgnorePointer(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.transparent, AppColors.neutral800],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.small,
-              vertical: Spacing.extraExtraLarge,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  title!,
-                  style: context.textTheme.displayMedium?.copyWith(
-                    color: AppColors.neutral,
-                  ),
-                ),
-                Text(
-                  "Explore Collection",
-                  style: context.textTheme.linkMedium?.copyWith(
-                    color: AppColors.neutral,
-                    decorationColor: AppColors.neutral,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-        // Transparent inkwell for actions
-        if (onTap != null)
-          Material(
-            color: Colors.transparent,
-            child: InkWell(onTap: onTap),
-          ),
-      ],
     );
   }
 }
