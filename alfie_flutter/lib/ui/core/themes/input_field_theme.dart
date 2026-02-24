@@ -22,6 +22,12 @@ final _errorBorderColor = BorderSide(color: AppColors.error700);
 final inputDecorationThemeProvider = Provider<InputDecorationTheme>(
   (ref) => InputDecorationTheme(
     filled: true,
+    isDense: true,
+
+    prefixIconConstraints: BoxConstraints(minHeight: 40, minWidth: 40),
+    constraints: BoxConstraints(minHeight: 40, minWidth: 40),
+    suffixIconConstraints: BoxConstraints(minHeight: 40, minWidth: 40),
+
     suffixIconColor: AppColors.neutral800,
     prefixIconColor: AppColors.neutral800,
     iconColor: AppColors.neutral800,
