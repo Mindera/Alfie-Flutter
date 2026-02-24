@@ -7,6 +7,7 @@ import 'package:alfie_flutter/ui/core/ui/header.dart';
 import 'package:alfie_flutter/ui/product_detail/view/product_main_info.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
+import 'package:alfie_flutter/utils/image_utils.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
@@ -73,9 +74,16 @@ class ProductDetailScreen extends ConsumerWidget {
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   background: Gallery(
-                    medias:
+                    children:
                         product.colours
                             ?.expand((color) => color.media ?? <Media>[])
+                            .map((media) {
+                              final mediaUrl = media.firstUrl;
+
+                              return GalleryItem(
+                                child: ImageFactory.network(mediaUrl),
+                              );
+                            })
                             .toList() ??
                         [],
                   ),

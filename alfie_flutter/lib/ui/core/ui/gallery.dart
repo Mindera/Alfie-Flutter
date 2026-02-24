@@ -14,22 +14,19 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 /// TO BE DONE: Video support is not yet implemented
 class Gallery extends HookWidget {
   /// The collection of media items to display in the gallery.
-  final List<Media> medias;
+  final List<GalleryItem> children;
 
   final MainAxisAlignment dotsAlignment;
 
-  final String? title;
-
   const Gallery({
     super.key,
-    required this.medias,
+    required this.children,
     this.dotsAlignment = MainAxisAlignment.center,
-    this.title,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (medias.isEmpty) {
+    if (children.isEmpty) {
       return const SizedBox.shrink();
     }
 
@@ -39,86 +36,26 @@ class Gallery extends HookWidget {
       alignment: Alignment.bottomCenter,
       children: [
         PageView.builder(
-          itemCount: medias.length,
+          itemCount: children.length,
           onPageChanged: (index) => currentPage.value = index,
           itemBuilder: (context, index) {
-            final mediaUrl = medias[index].firstUrl;
-
-            // Prevent network exceptions if the media URL is empty.
-            if (mediaUrl.isEmpty) {
-              return Image.asset(
-                'assets/images/fallback_image.png',
-                fit: BoxFit.cover,
-              );
-            }
-            return FadeInImage.assetNetwork(
-              imageCacheHeight: 550,
-              placeholder: 'assets/images/fallback_image.png',
-              image: mediaUrl,
-              fit: BoxFit.cover,
-              imageErrorBuilder: (context, error, stackTrace) {
-                return Image.asset(
-                  'assets/images/fallback_image.png',
-                  fit: BoxFit.cover,
-                );
-              },
-            );
+            return children[index];
           },
         ),
-        if (title != null)
-          Positioned.fill(
-            child: IgnorePointer(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.transparent, AppColors.neutral800],
-                  ),
-                ),
+
+        // Only show pagination dots if there are multiple items to swipe through.
+        if (children.length > 1)
+          Padding(
+            padding: const EdgeInsets.all(Spacing.small),
+            child: Row(
+              mainAxisAlignment: dotsAlignment,
+              spacing: Spacing.extraSmall,
+              children: List.generate(
+                children.length,
+                (index) => _DotIndicator(isActive: currentPage.value == index),
               ),
             ),
           ),
-
-        // Only show pagination dots if there are multiple items to swipe through.
-        Padding(
-          padding: const EdgeInsets.all(Spacing.small),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            spacing: Spacing.medium,
-            children: [
-              if (title != null)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title!,
-                      style: context.textTheme.displayMedium?.copyWith(
-                        color: AppColors.neutral,
-                      ),
-                    ),
-                    Text(
-                      "Explore Collection",
-                      style: context.textTheme.linkMedium?.copyWith(
-                        color: AppColors.neutral,
-                        decorationColor: AppColors.neutral,
-                      ),
-                    ),
-                  ],
-                ),
-              if (medias.length > 1)
-                Row(
-                  mainAxisAlignment: dotsAlignment,
-                  spacing: Spacing.extraSmall,
-                  children: List.generate(
-                    medias.length,
-                    (index) =>
-                        _DotIndicator(isActive: currentPage.value == index),
-                  ),
-                ),
-            ],
-          ),
-        ),
       ],
     );
   }
@@ -144,6 +81,70 @@ class _DotIndicator extends StatelessWidget {
         color: isActive ? AppColors.neutral : AppColors.neutral400,
         borderRadius: BorderRadius.circular(4),
       ),
+    );
+  }
+}
+
+class GalleryItem extends StatelessWidget {
+  final Widget child;
+  final String? title;
+  final VoidCallback? onTap; // Added for interactivity
+
+  const GalleryItem({super.key, required this.child, this.title, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        child,
+        if (title != null) ...[
+          Positioned.fill(
+            child: IgnorePointer(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.transparent, AppColors.neutral800],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Spacing.small,
+              vertical: Spacing.extraExtraLarge,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  title!,
+                  style: context.textTheme.displayMedium?.copyWith(
+                    color: AppColors.neutral,
+                  ),
+                ),
+                Text(
+                  "Explore Collection",
+                  style: context.textTheme.linkMedium?.copyWith(
+                    color: AppColors.neutral,
+                    decorationColor: AppColors.neutral,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+        // Transparent inkwell for actions
+        if (onTap != null)
+          Material(
+            color: Colors.transparent,
+            child: InkWell(onTap: onTap),
+          ),
+      ],
     );
   }
 }
