@@ -179,7 +179,7 @@ class AppIcons {
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
-  static const IconData grid3 = IconData(
+  static const IconData grid2 = IconData(
     0xe821,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
@@ -266,7 +266,7 @@ class AppIcons {
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
-  static const IconData grid2 = IconData(
+  static const IconData grid1 = IconData(
     0xe834,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,

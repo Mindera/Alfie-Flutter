@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
@@ -16,9 +14,11 @@ class ProductListingFilterHeader extends ConsumerWidget {
 
   final String categoryId;
 
+  static const labels = ["Slim Fit", "Linen", "Cotton", "Straight Fit"];
+  static const double _headerHeight = 88.0;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    log("built header");
     final productCount = ref.watch(
       productListingViewModelProvider(
         categoryId,
@@ -32,80 +32,76 @@ class ProductListingFilterHeader extends ConsumerWidget {
       surfaceTintColor: Colors.transparent,
       elevation: 0,
 
-      toolbarHeight: _ProductListingFilterHeader.headerHeight,
+      toolbarHeight: _headerHeight,
 
-      flexibleSpace: _ProductListingFilterHeader(totalItems: productCount),
-    );
-  }
-}
-
-class _ProductListingFilterHeader extends StatelessWidget {
-  const _ProductListingFilterHeader({required this.totalItems});
-
-  static const labels = ["Slim Fit", "Linen", "Cotton", "Straight Fit"];
-  final int? totalItems;
-  static const double headerHeight = 82.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: Spacing.small,
-        right: Spacing.small,
-        bottom: Spacing.extraSmall,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AppButton.tertiary(
-                    leading: AppIcons.grid2,
-                    size: ButtonSize.small,
-                    onPressed: () {},
+      flexibleSpace: Padding(
+        padding: const EdgeInsets.only(
+          left: Spacing.small,
+          right: Spacing.small,
+          bottom: Spacing.extraSmall,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: Spacing.extraExtraSmall,
                   ),
-                  AppButton.tertiary(
-                    leading: AppIcons.grid3,
-                    size: ButtonSize.small,
-                    onPressed: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AppButton.tertiary(
+                        leading: AppIcons.grid1,
+                        size: ButtonSize.small,
+                        onPressed: () {},
+                      ),
+                      AppButton.tertiary(
+                        leading: AppIcons.grid2,
+                        size: ButtonSize.small,
+                        onPressed: () {},
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              if (totalItems != null) Text("$totalItems items"),
-              Text("Refine", style: context.textTheme.linkMedium),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: Spacing.extraExtraSmall),
-            child: SingleChildScrollView(
+                ),
+                if (productCount != null) Text("$productCount items"),
+                Text("Refine", style: context.textTheme.linkMedium),
+              ],
+            ),
+            SingleChildScrollView(
               scrollDirection: Axis.horizontal,
 
-              child: Row(
-                spacing: Spacing.extraSmall,
-                children: labels
-                    .map(
-                      (label) => Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Spacing.small,
-                          vertical: Spacing.extraExtraSmall,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.neutral800),
-                          borderRadius: BorderRadius.circular(Spacing.medium),
-                        ),
-
-                        child: Center(child: Text(label)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Spacing.extraExtraSmall,
+                ),
+                child: Row(
+                  spacing: Spacing.extraSmall,
+                  children: labels.map((label) {
+                    final double borderWidth = 1;
+                    return Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Spacing.small - borderWidth,
+                        vertical: Spacing.extraExtraSmall - borderWidth,
                       ),
-                    )
-                    .toList(),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.neutral800,
+                          width: borderWidth,
+                        ),
+                        borderRadius: BorderRadius.circular(Spacing.medium),
+                      ),
+
+                      child: Center(child: Text(label)),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
