@@ -31,6 +31,16 @@ class Media {
         return orElse();
     }
   }
+
+  /// Safely extracts the first URL from the [Media] union type.
+  String get firstUrl {
+    return when(
+      image: (image) => image.url,
+      // Avoids a StateError by ensuring sources list is not empty before accessing .first
+      video: (video) => video.sources.isNotEmpty ? video.sources.first.url : '',
+      orElse: () => '',
+    );
+  }
 }
 
 /// Represents image media content.

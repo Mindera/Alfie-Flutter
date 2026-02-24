@@ -58,6 +58,7 @@ abstract interface class IProductRepository {
 
 /// Implementation of [IProductRepository] using GraphQL.
 ///
+/// Uses a cache-first strategy to minimize network requests and improve performance.
 /// Transforms GraphQL response data into domain models using mapper extensions.
 final class GraphQLProductRepository implements IProductRepository {
   final GraphQLClient _client;
