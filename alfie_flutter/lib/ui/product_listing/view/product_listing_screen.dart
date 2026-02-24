@@ -10,16 +10,18 @@ class ProductListingScreen extends HookConsumerWidget {
   final ScrollController? controller;
   final String categoryId;
   static const pullToRefreshEdgeOffset = 182.0;
+  final int initialColumns;
 
   const ProductListingScreen({
     super.key,
     required this.categoryId,
     this.controller,
+    this.initialColumns = 2,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ValueNotifier<int> columns = useState(2);
+    final ValueNotifier<int> columns = useState(initialColumns);
 
     return RefreshIndicator.adaptive(
       edgeOffset: pullToRefreshEdgeOffset,
