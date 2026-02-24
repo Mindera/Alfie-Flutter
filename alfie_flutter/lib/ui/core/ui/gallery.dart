@@ -31,7 +31,7 @@ class Gallery extends HookWidget {
           itemCount: medias.length,
           onPageChanged: (index) => currentPage.value = index,
           itemBuilder: (context, index) {
-            final mediaUrl = _extractMediaUrl(medias[index]);
+            final mediaUrl = medias[index].firstUrl;
 
             // Prevent network exceptions if the media URL is empty.
             if (mediaUrl.isEmpty) {
@@ -69,16 +69,6 @@ class Gallery extends HookWidget {
             ),
           ),
       ],
-    );
-  }
-
-  /// Safely extracts the primary display URL from the [Media] union type.
-  String _extractMediaUrl(Media media) {
-    return media.when(
-      image: (image) => image.url,
-      // Avoids a StateError by ensuring sources list is not empty before accessing .first
-      video: (video) => video.sources.isNotEmpty ? video.sources.first.url : '',
-      orElse: () => '',
     );
   }
 }
