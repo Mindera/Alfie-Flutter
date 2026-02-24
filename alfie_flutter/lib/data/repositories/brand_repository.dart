@@ -28,6 +28,7 @@ abstract interface class IBrandRepository {
 
 /// Implementation of [IBrandRepository] using GraphQL.
 ///
+/// Uses a cache-first strategy to minimize network requests and improve performance.
 /// Transforms GraphQL response data into domain models using a mapper extension.
 final class GraphQLBrandRepository implements IBrandRepository {
   final GraphQLClient _client;
