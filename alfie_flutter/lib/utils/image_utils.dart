@@ -21,7 +21,14 @@ abstract class ImageFactory {
     );
   }
 
-  static Stack networkWithGradient(String url, {Widget? foreground}) {
+  static Stack networkWithGradient(
+    String url, {
+    Widget? foreground,
+    EdgeInsets padding = const EdgeInsets.symmetric(
+      horizontal: Spacing.small,
+      vertical: Spacing.extraExtraLarge - 2,
+    ),
+  }) {
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -41,10 +48,7 @@ abstract class ImageFactory {
         ),
         if (foreground != null) ...[
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.small,
-              vertical: Spacing.extraExtraLarge - 2,
-            ),
+            padding: padding,
             child: Align(alignment: Alignment.bottomLeft, child: foreground),
           ),
         ],
