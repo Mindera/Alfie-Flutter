@@ -22,7 +22,7 @@ class ProductListingFilterHeader extends ConsumerWidget {
   final int columns;
 
   static const labels = ["Slim Fit", "Linen", "Cotton", "Straight Fit"];
-  static const double headerHeight = 82.0;
+  static const double _headerHeight = 88.0;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,7 +39,7 @@ class ProductListingFilterHeader extends ConsumerWidget {
       surfaceTintColor: Colors.transparent,
       elevation: 0,
 
-      toolbarHeight: headerHeight,
+      toolbarHeight: _headerHeight,
 
       flexibleSpace: Padding(
         padding: const EdgeInsets.only(
@@ -53,52 +53,61 @@ class ProductListingFilterHeader extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    AppButton.tertiary(
-                      leading: columns == 1
-                          ? AppIcons.grid1Fill
-                          : AppIcons.grid1,
-                      size: ButtonSize.small,
-                      onPressed: () => onColumnsChanged(1),
-                    ),
-                    AppButton.tertiary(
-                      leading: columns == 2
-                          ? AppIcons.grid2Fill
-                          : AppIcons.grid2,
-                      size: ButtonSize.small,
-                      onPressed: () => onColumnsChanged(2),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: Spacing.extraExtraSmall,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AppButton.tertiary(
+                        leading: columns == 1
+                            ? AppIcons.grid1Fill
+                            : AppIcons.grid1,
+                        size: ButtonSize.small,
+                        onPressed: () => onColumnsChanged(1),
+                      ),
+                      AppButton.tertiary(
+                        leading: columns == 2
+                            ? AppIcons.grid2Fill
+                            : AppIcons.grid2,
+                        size: ButtonSize.small,
+                        onPressed: () => onColumnsChanged(2),
+                      ),
+                    ],
+                  ),
                 ),
                 if (productCount != null) Text("$productCount items"),
                 Text("Refine", style: context.textTheme.linkMedium),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: Spacing.extraExtraSmall),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
 
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Spacing.extraExtraSmall,
+                ),
                 child: Row(
                   spacing: Spacing.extraSmall,
-                  children: labels
-                      .map(
-                        (label) => Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Spacing.small,
-                            vertical: Spacing.extraExtraSmall,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.neutral800),
-                            borderRadius: BorderRadius.circular(Spacing.medium),
-                          ),
-
-                          child: Center(child: Text(label)),
+                  children: labels.map((label) {
+                    final double borderWidth = 1;
+                    return Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Spacing.small - borderWidth,
+                        vertical: Spacing.extraExtraSmall - borderWidth,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.neutral800,
+                          width: borderWidth,
                         ),
-                      )
-                      .toList(),
+                        borderRadius: BorderRadius.circular(Spacing.medium),
+                      ),
+
+                      child: Center(child: Text(label)),
+                    );
+                  }).toList(),
                 ),
               ),
             ),
