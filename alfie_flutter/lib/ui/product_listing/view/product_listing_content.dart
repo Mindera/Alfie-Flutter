@@ -14,7 +14,7 @@ class ProductListingContent extends ConsumerWidget {
   final String categoryId;
 
   final int columns;
-  static const ratios = {1: 0.58, 2: 0.49};
+  static const ratios = {1: 0.58, 2: 0.48};
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModelState = ref.watch(
