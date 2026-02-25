@@ -74,6 +74,7 @@ class ProductDetailScreen extends ConsumerWidget {
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   background: Gallery(
+                    aspectRatio: 2 / 3,
                     children:
                         product.colours
                             ?.expand((color) => color.media ?? <Media>[])

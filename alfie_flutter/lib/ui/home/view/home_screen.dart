@@ -2,6 +2,7 @@ import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/gallery.dart';
+import 'package:alfie_flutter/ui/core/ui/promotion_badge.dart';
 import 'package:alfie_flutter/ui/core/ui/search/search.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/image_utils.dart';
@@ -24,17 +25,35 @@ class HomeScreen extends HookConsumerWidget {
           ),
         ),
       ),
-      ImageFactory.network(
+      ImageFactory.networkWithGradient(
         'https://images.pexels.com/photos/1381553/pexels-photo-1381553.jpeg',
       ),
-      ImageFactory.network(
+      ImageFactory.networkWithGradient(
         'https://images.pexels.com/photos/10679191/pexels-photo-10679191.jpeg',
       ),
-      ImageFactory.network(
+      ImageFactory.networkWithGradient(
         'https://images.pexels.com/photos/10037708/pexels-photo-10037708.jpeg',
       ),
-      ImageFactory.network(
+      ImageFactory.networkWithGradient(
         'https://images.pexels.com/photos/247908/pexels-photo-247908.jpeg',
+      ),
+    ];
+
+    final List<Widget> promotions = [
+      PromotionBadge(
+        title: "Get 50% off your first purchase!",
+        description:
+            "New subscribers receive 50% off their entire order. Activate message notifications and receive special discounts and updates.",
+      ),
+      PromotionBadge(
+        title: "Get 30% off your second purchase!",
+        description:
+            "New subscribers receive 30% off their entire order. Activate message notifications and receive special discounts and updates.",
+      ),
+      PromotionBadge(
+        title: "Get 99% off your third purchase!",
+        description:
+            "New subscribers receive 99% off their entire order. Activate message notifications and receive special discounts and updates. This is a long text. This is a long text. This is a long text. And you'll give us a lot of money. This is a long text. This is a long text. This is a long text. This is a long text. This is a long text. This is a long text. This is a long text. This is a long text. ",
       ),
     ];
 
@@ -59,14 +78,33 @@ class HomeScreen extends HookConsumerWidget {
           ),
         ),
         SliverToBoxAdapter(
-          child: SizedBox(
-            height: 500,
-            child: Gallery(
-              dotsAlignment: MainAxisAlignment.start,
-              children: highlights,
+          child: Gallery(
+            aspectRatio: 3 / 4,
+            dotsAlignment: MainAxisAlignment.start,
+            autoScroll: true,
+            children: highlights,
+          ),
+        ),
+        SliverPadding(
+          padding: EdgeInsetsGeometry.symmetric(
+            horizontal: Spacing.small,
+            vertical: Spacing.large,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: Spacing.extraLarge,
+              children: [
+                Gallery(
+                  overlayDots: false,
+                  darkDots: true,
+                  children: promotions,
+                ),
+              ],
             ),
           ),
         ),
+        SliverFillRemaining(child: Container(color: AppColors.error300)),
       ],
     );
   }
