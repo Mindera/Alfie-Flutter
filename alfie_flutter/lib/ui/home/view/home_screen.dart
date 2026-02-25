@@ -4,6 +4,7 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/gallery.dart';
 import 'package:alfie_flutter/ui/core/ui/promotion_badge.dart';
 import 'package:alfie_flutter/ui/core/ui/search/search.dart';
+import 'package:alfie_flutter/ui/home/view/brand_carousel.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/image_utils.dart';
 import 'package:alfie_flutter/utils/use_scroll_to_top.dart';
@@ -58,6 +59,7 @@ class HomeScreen extends HookConsumerWidget {
     ];
 
     final controller = useScrollToTop(ref, AppRoute.home.fullPath);
+
     return CustomScrollView(
       controller: controller,
       slivers: [
@@ -100,6 +102,7 @@ class HomeScreen extends HookConsumerWidget {
                   darkDots: true,
                   children: promotions,
                 ),
+                BrandCarousel(),
               ],
             ),
           ),
