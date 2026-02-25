@@ -1,5 +1,5 @@
 import 'package:alfie_flutter/data/models/environment.dart';
-import 'package:alfie_flutter/graphql/generated/queries/test.graphql.dart';
+import 'package:alfie_flutter/graphql/generated/schema.graphql.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -16,22 +16,9 @@ final gqlClientProvider = Provider<GraphQLClient>((ref) {
 
   return GraphQLClient(
     link: httpLink,
-    cache: GraphQLCache(store: HiveStore()),
+    cache: GraphQLCache(store: HiveStore(), possibleTypes: possibleTypesMap),
   );
 });
 
-final schemaTypesProvider = FutureProvider<List<Query$GetTest$__schema$types>?>(
-  (ref) async {
-    final client = ref.read(gqlClientProvider);
-
-    final result = await client.query$GetTest(
-      Options$Query$GetTest(fetchPolicy: FetchPolicy.networkOnly),
-    );
-
-    if (result.hasException) {
-      throw result.exception!;
-    }
-
-    return result.parsedData?.$__schema.types;
-  },
-);
+/// Uses a cache-first strategy to minimize network requests and improve performance.
+final globalFetchPolicy = FetchPolicy.cacheFirst;

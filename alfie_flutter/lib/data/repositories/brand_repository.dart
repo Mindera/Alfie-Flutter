@@ -15,8 +15,6 @@ final graphQLBrandRepositoryProvider = Provider<IBrandRepository>((ref) {
 });
 
 /// Provider that fetches and caches the list of brands.
-///
-/// Results are cached to avoid redundant network requests and improve performance.
 final brandListProvider = FutureProvider<List<Brand>>((ref) async {
   final repository = ref.watch(graphQLBrandRepositoryProvider);
   return repository.getBrands();
@@ -42,7 +40,7 @@ final class GraphQLBrandRepository implements IBrandRepository {
   Future<List<Brand>> getBrands() async {
     return GraphQLExecutor.execute(
       performQuery: () => _client.query$Brands(
-        Options$Query$Brands(fetchPolicy: FetchPolicy.cacheFirst),
+        Options$Query$Brands(fetchPolicy: globalFetchPolicy),
       ),
       parseData: (data) {
         return data.brands.map((fragment) => fragment.toDomain()).toList();

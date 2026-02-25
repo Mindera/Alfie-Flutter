@@ -3,13 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 extension NavigationHelpers on BuildContext {
+  String get path {
+    return GoRouterState.of(this).uri.path;
+  }
+
+  /// Navigates to an AppRoute dynamically without hardcoded paths.
+  void goTo(AppRoute target, {Map<String, dynamic> params = const {}}) {
+    String goToPath = target.fullPath;
+    for (String parameter in params.keys) {
+      goToPath.replaceFirst(parameter, params[parameter]!);
+    }
+    go(goToPath);
+  }
+
   void goToProduct(String productId) {
-    final state = GoRouterState.of(this);
-    // Get the current base path (e.g., /store or /bag)
-    final currentPath = state.uri.path;
+    // Get the current base path
+    final currentPath = path;
 
     // Construct the relative path
-    // We ensure we don't double up on slashes
     final basePath = currentPath.endsWith('/') ? currentPath : '$currentPath/';
 
     go(
@@ -17,8 +28,7 @@ extension NavigationHelpers on BuildContext {
     );
   }
 
-  /// Navigates to an AppRoute dynamically without hardcoded paths.
-  void goTo(AppRoute target, {Map<String, String> params = const {}}) {
-    go(target.fullPath);
+  void safePop() {
+    if (canPop()) pop();
   }
 }

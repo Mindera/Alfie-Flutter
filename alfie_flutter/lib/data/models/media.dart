@@ -14,6 +14,33 @@ class Media {
 
   /// Creates a new [Media] instance.
   Media({this.alt, required this.mediaContentType});
+
+  T when<T>({
+    required T Function(MediaImage) image,
+    required T Function(MediaVideo) video,
+    required T Function() orElse,
+  }) {
+    switch (mediaContentType) {
+      case MediaContentType.image:
+        return image(this as MediaImage);
+
+      case MediaContentType.video:
+        return video(this as MediaVideo);
+
+      default:
+        return orElse();
+    }
+  }
+
+  /// Safely extracts the first URL from the [Media] union type.
+  String get firstUrl {
+    return when(
+      image: (image) => image.url,
+      // Avoids a StateError by ensuring sources list is not empty before accessing .first
+      video: (video) => video.sources.isNotEmpty ? video.sources.first.url : '',
+      orElse: () => '',
+    );
+  }
 }
 
 /// Represents image media content.

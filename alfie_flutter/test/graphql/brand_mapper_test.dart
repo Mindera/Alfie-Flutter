@@ -9,7 +9,6 @@ void main() {
       final brandFragment = Fragment$BrandFragment(
         id: 'brand_123',
         name: 'Alfie Brand',
-        slug: 'alfiebrand',
       );
 
       final result = brandFragment.toDomain();

@@ -58,8 +58,8 @@ abstract interface class IProductRepository {
 
 /// Implementation of [IProductRepository] using GraphQL.
 ///
+/// Uses a cache-first strategy to minimize network requests and improve performance.
 /// Transforms GraphQL response data into domain models using mapper extensions.
-/// Uses cache-first strategy to minimize network requests.
 final class GraphQLProductRepository implements IProductRepository {
   final GraphQLClient _client;
 
@@ -72,7 +72,7 @@ final class GraphQLProductRepository implements IProductRepository {
       performQuery: () => _client.query$GetProduct(
         Options$Query$GetProduct(
           variables: Variables$Query$GetProduct(productId: id),
-          fetchPolicy: FetchPolicy.cacheFirst,
+          fetchPolicy: globalFetchPolicy,
         ),
       ),
       parseData: (data) => data.product?.toDomain(),
@@ -97,6 +97,7 @@ final class GraphQLProductRepository implements IProductRepository {
             query: query,
             sort: sort?.toGraphQL(),
           ),
+          fetchPolicy: globalFetchPolicy,
         ),
       ),
       parseData: (data) => data.productListing?.toDomain(),

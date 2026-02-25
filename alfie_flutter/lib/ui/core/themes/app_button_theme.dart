@@ -156,7 +156,7 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
           horizontal: Spacing.extraSmall * horizontalPaddingMultiplier,
         ),
         const Size(0, 40),
-        MaterialTapTargetSize.padded,
+        MaterialTapTargetSize.shrinkWrap,
       ),
       ButtonSize.small => (
         EdgeInsets.symmetric(
@@ -164,7 +164,7 @@ class AppButtonTheme extends ThemeExtension<AppButtonTheme> {
           horizontal: Spacing.extraExtraSmall * horizontalPaddingMultiplier,
         ),
         const Size(0, 32),
-        MaterialTapTargetSize.padded,
+        MaterialTapTargetSize.shrinkWrap,
       ),
     };
 

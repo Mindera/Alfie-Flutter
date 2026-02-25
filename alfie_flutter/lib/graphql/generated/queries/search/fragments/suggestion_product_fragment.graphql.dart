@@ -12,7 +12,6 @@ class Fragment$SuggestionProductFragment {
     required this.brandName,
     required this.media,
     required this.price,
-    required this.slug,
     this.$__typename = 'SuggestionProduct',
   });
 
@@ -24,7 +23,6 @@ class Fragment$SuggestionProductFragment {
     final l$brandName = json['brandName'];
     final l$media = json['media'];
     final l$price = json['price'];
-    final l$slug = json['slug'];
     final l$$__typename = json['__typename'];
     return Fragment$SuggestionProductFragment(
       id: (l$id as String),
@@ -36,7 +34,6 @@ class Fragment$SuggestionProductFragment {
           )
           .toList(),
       price: Fragment$PriceFragment.fromJson((l$price as Map<String, dynamic>)),
-      slug: (l$slug as String),
       $__typename: (l$$__typename as String),
     );
   }
@@ -50,8 +47,6 @@ class Fragment$SuggestionProductFragment {
   final List<Fragment$MediaFragment> media;
 
   final Fragment$PriceFragment price;
-
-  final String slug;
 
   final String $__typename;
 
@@ -67,8 +62,6 @@ class Fragment$SuggestionProductFragment {
     _resultData['media'] = l$media.map((e) => e.toJson()).toList();
     final l$price = price;
     _resultData['price'] = l$price.toJson();
-    final l$slug = slug;
-    _resultData['slug'] = l$slug;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -81,7 +74,6 @@ class Fragment$SuggestionProductFragment {
     final l$brandName = brandName;
     final l$media = media;
     final l$price = price;
-    final l$slug = slug;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -89,7 +81,6 @@ class Fragment$SuggestionProductFragment {
       l$brandName,
       Object.hashAll(l$media.map((v) => v)),
       l$price,
-      l$slug,
       l$$__typename,
     ]);
   }
@@ -135,11 +126,6 @@ class Fragment$SuggestionProductFragment {
     if (l$price != lOther$price) {
       return false;
     }
-    final l$slug = slug;
-    final lOther$slug = other.slug;
-    if (l$slug != lOther$slug) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -172,7 +158,6 @@ abstract class CopyWith$Fragment$SuggestionProductFragment<TRes> {
     String? brandName,
     List<Fragment$MediaFragment>? media,
     Fragment$PriceFragment? price,
-    String? slug,
     String? $__typename,
   });
   TRes media(
@@ -200,7 +185,6 @@ class _CopyWithImpl$Fragment$SuggestionProductFragment<TRes>
     Object? brandName = _undefined,
     Object? media = _undefined,
     Object? price = _undefined,
-    Object? slug = _undefined,
     Object? $__typename = _undefined,
   }) => _then(
     Fragment$SuggestionProductFragment(
@@ -217,9 +201,6 @@ class _CopyWithImpl$Fragment$SuggestionProductFragment<TRes>
       price: price == _undefined || price == null
           ? _instance.price
           : (price as Fragment$PriceFragment),
-      slug: slug == _undefined || slug == null
-          ? _instance.slug
-          : (slug as String),
       $__typename: $__typename == _undefined || $__typename == null
           ? _instance.$__typename
           : ($__typename as String),
@@ -255,7 +236,6 @@ class _CopyWithStubImpl$Fragment$SuggestionProductFragment<TRes>
     String? brandName,
     List<Fragment$MediaFragment>? media,
     Fragment$PriceFragment? price,
-    String? slug,
     String? $__typename,
   }) => _res;
 
@@ -338,13 +318,6 @@ const fragmentDefinitionSuggestionProductFragment = FragmentDefinitionNode(
             ),
           ],
         ),
-      ),
-      FieldNode(
-        name: NameNode(value: 'slug'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
       ),
       FieldNode(
         name: NameNode(value: '__typename'),
