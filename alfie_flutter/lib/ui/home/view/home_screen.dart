@@ -80,12 +80,16 @@ class HomeScreen extends HookConsumerWidget {
             title: Search(),
           ),
         ),
-        SliverToBoxAdapter(
-          child: Gallery(
-            aspectRatio: 3 / 4,
-            dotsAlignment: MainAxisAlignment.start,
-            autoScroll: true,
-            children: highlights,
+        SliverAppBar(
+          primary: false,
+          expandedHeight: context.mediaQuery.size.width * 4 / 3,
+          flexibleSpace: FlexibleSpaceBar(
+            background: Gallery(
+              aspectRatio: 3 / 4,
+              dotsAlignment: MainAxisAlignment.start,
+              autoScroll: true,
+              children: highlights,
+            ),
           ),
         ),
         SliverPadding(
