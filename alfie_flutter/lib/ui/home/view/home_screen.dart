@@ -5,6 +5,7 @@ import 'package:alfie_flutter/ui/core/ui/gallery.dart';
 import 'package:alfie_flutter/ui/core/ui/promotion_badge.dart';
 import 'package:alfie_flutter/ui/core/ui/search/search.dart';
 import 'package:alfie_flutter/ui/home/view/brand_carousel.dart';
+import 'package:alfie_flutter/ui/home/view/category_carousel.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/image_utils.dart';
 import 'package:alfie_flutter/utils/use_scroll_to_top.dart';
@@ -102,12 +103,18 @@ class HomeScreen extends HookConsumerWidget {
                   darkDots: true,
                   children: promotions,
                 ),
+                CategoryCarousel(),
                 BrandCarousel(),
               ],
             ),
           ),
         ),
-        SliverFillRemaining(child: Container(color: AppColors.error300)),
+        SliverFillRemaining(
+          child: Image.asset(
+            'assets/images/random_image.png',
+            fit: BoxFit.cover,
+          ),
+        ),
       ],
     );
   }
