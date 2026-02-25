@@ -3,21 +3,28 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
 
 abstract class ImageFactory {
-  static StatefulWidget network(String url) {
+  static Widget network(String url) {
     if (url.isEmpty) {
-      return Image.asset('assets/images/fallback_image.png', fit: BoxFit.cover);
+      return Image.asset(
+        'assets/images/fallback_image.png',
+        fit: BoxFit.fitHeight,
+      );
     }
-    return FadeInImage.assetNetwork(
-      imageCacheHeight: 550,
-      placeholder: 'assets/images/fallback_image.png',
-      image: url,
-      fit: BoxFit.cover,
-      imageErrorBuilder: (context, error, stackTrace) {
-        return Image.asset(
-          'assets/images/fallback_image.png',
-          fit: BoxFit.cover,
-        );
-      },
+    return LayoutBuilder(
+      builder: (context, constraints) => FadeInImage.assetNetwork(
+        imageCacheHeight: constraints.maxHeight.isFinite
+            ? constraints.maxHeight.toInt()
+            : null,
+        placeholder: 'assets/images/fallback_image.png',
+        image: url,
+        fit: BoxFit.cover,
+        imageErrorBuilder: (context, error, stackTrace) {
+          return Image.asset(
+            'assets/images/fallback_image.png',
+            fit: BoxFit.cover,
+          );
+        },
+      ),
     );
   }
 
