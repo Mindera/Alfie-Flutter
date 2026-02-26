@@ -10,9 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProductListingFilterHeader extends ConsumerWidget {
-  const ProductListingFilterHeader({super.key, required this.categoryId});
+  const ProductListingFilterHeader({
+    super.key,
+    required this.categoryId,
+    required this.onColumnsChanged,
+    required this.columns,
+  });
 
   final String categoryId;
+  final ValueChanged<int> onColumnsChanged;
+  final int columns;
 
   static const labels = ["Slim Fit", "Linen", "Cotton", "Straight Fit"];
   static const double _headerHeight = 88.0;
@@ -54,14 +61,18 @@ class ProductListingFilterHeader extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       AppButton.tertiary(
-                        leading: AppIcons.grid1,
+                        leading: columns == 1
+                            ? AppIcons.grid1Fill
+                            : AppIcons.grid1,
                         size: ButtonSize.small,
-                        onPressed: () {},
+                        onPressed: () => onColumnsChanged(1),
                       ),
                       AppButton.tertiary(
-                        leading: AppIcons.grid2,
+                        leading: columns == 2
+                            ? AppIcons.grid2Fill
+                            : AppIcons.grid2,
                         size: ButtonSize.small,
-                        onPressed: () {},
+                        onPressed: () => onColumnsChanged(2),
                       ),
                     ],
                   ),

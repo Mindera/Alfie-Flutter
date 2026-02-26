@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/product_card/product_card.dart';
@@ -8,14 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProductListingContent extends ConsumerWidget {
-  const ProductListingContent({super.key, required this.categoryId});
+  const ProductListingContent({
+    super.key,
+    required this.categoryId,
+    required this.columns,
+  });
   final String categoryId;
 
-  final int columns = 2;
-  static const ratios = {2: 0.49};
+  final int columns;
+  static const ratios = {1: 0.58, 2: 0.48};
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    log("rebuilt content");
     final viewModelState = ref.watch(
       productListingViewModelProvider(categoryId),
     );
@@ -39,17 +40,28 @@ class ProductListingContent extends ConsumerWidget {
           padding: EdgeInsetsGeometry.symmetric(horizontal: Spacing.small),
           sliver: SliverGrid(
             delegate: SliverChildBuilderDelegate((context, index) {
+              final product = productListing.products[index];
               String? label = index == 0 ? "Best Seller" : null;
-              return VerticalProductCard(
-                product: productListing.products[index],
-                label: label,
+
+              return TweenAnimationBuilder<double>(
+                key: ValueKey('anim-${product.id}-$columns'),
+
+                duration: Duration(milliseconds: 300),
+
+                curve: Curves.easeOut,
+
+                tween: Tween(begin: 0.3, end: 1.0),
+                builder: (context, value, child) {
+                  return Transform.scale(scale: value, child: child);
+                },
+                child: VerticalProductCard(product: product, label: label),
               );
             }, childCount: productListing.products.length),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: columns,
               crossAxisSpacing: Spacing.extraSmall,
               mainAxisSpacing: Spacing.small,
-              childAspectRatio: 0.49,
+              childAspectRatio: ratios[columns]!,
             ),
           ),
         );

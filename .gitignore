@@ -9,6 +9,8 @@
 .DS_Store
 
 
+.vscode/
+
 
 # Flutter repo-specific
 /bin/cache/
