@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {
   final String title;
-  final String textLink;
+  final String linkText;
   final String? textLinkPath;
 
   const SectionHeader({
     super.key,
     required this.title,
-    required this.textLink,
+    required this.linkText,
     this.textLinkPath,
   });
 
@@ -20,7 +20,7 @@ class SectionHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: context.textTheme.headlineSmall),
-        Text(textLink, style: context.textTheme.linkMedium),
+        Text(linkText, style: context.textTheme.linkMedium),
       ],
     );
   }

@@ -1,4 +1,6 @@
+import 'package:alfie_flutter/data/models/brand.dart';
 import 'package:alfie_flutter/ui/home/view_model/highlight.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeState {
   final List<Highlight> highlights = [
@@ -24,4 +26,20 @@ class HomeState {
           'https://images.pexels.com/photos/247908/pexels-photo-247908.jpeg',
     ),
   ];
+
+  final List<String> categories = const [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+  ];
+
+  final AsyncValue<List<Brand>> brands;
+
+  HomeState({required this.brands});
 }
