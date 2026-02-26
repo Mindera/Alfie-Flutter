@@ -133,4 +133,37 @@ final class ProductListingParams {
     this.query,
     this.sort,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ProductListingParams &&
+        other.offset == offset &&
+        other.limit == limit &&
+        other.categoryId == categoryId &&
+        other.query == query &&
+        other.sort == sort;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(offset, limit, categoryId, query, sort);
+  }
+
+  ProductListingParams copyWith({
+    int? offset,
+    int? limit,
+    String? categoryId,
+    String? query,
+    ProductListingSort? sort,
+  }) {
+    return ProductListingParams(
+      offset: offset ?? this.offset,
+      limit: limit ?? this.limit,
+      categoryId: categoryId ?? this.categoryId,
+      query: query ?? this.query,
+      sort: sort ?? this.sort,
+    );
+  }
 }

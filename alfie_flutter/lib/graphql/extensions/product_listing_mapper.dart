@@ -21,7 +21,7 @@ extension ProductListingMapper on Query$ProductListingQuery$productListing {
 extension ProductSortMapper on Enum$ProductListingSort {
   /// Converts this GraphQL sort enum to a [ProductListingSort] domain enum.
   ///
-  /// Defaults to [ProductListingSort.relevance] for unknown sort values
+  /// Defaults to [ProductListingSort.unknown] for unknown sort values
   /// to ensure type safety and graceful handling of API changes.
   ProductListingSort toDomain() {
     switch (this) {
@@ -34,7 +34,7 @@ extension ProductSortMapper on Enum$ProductListingSort {
       case Enum$ProductListingSort.Z_A:
         return ProductListingSort.zToA;
       default:
-        return ProductListingSort.relevance;
+        return ProductListingSort.unknown;
     }
   }
 }

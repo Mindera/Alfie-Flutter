@@ -87,7 +87,7 @@ void main() {
     test("should default to relevance for unknown or unmapped values", () {
       expect(
         Enum$ProductListingSort.$unknown.toDomain(),
-        ProductListingSort.relevance,
+        ProductListingSort.unknown,
       );
     });
   });
@@ -117,7 +117,7 @@ void main() {
 
     test("should return \$unknown for relevance or unhandled cases", () {
       expect(
-        ProductListingSort.relevance.toGraphQL(),
+        ProductListingSort.unknown.toGraphQL(),
         Enum$ProductListingSort.$unknown,
       );
     });
