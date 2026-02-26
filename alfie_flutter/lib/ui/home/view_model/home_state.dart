@@ -3,7 +3,12 @@ import 'package:alfie_flutter/ui/core/ui/promotion_badge.dart';
 import 'package:alfie_flutter/ui/home/view_model/highlight.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// Represents the complete UI state for the Home screen.
+///
+/// This state is emitted by the [HomeViewModel]
+/// and consumed by the Home View.
 class HomeState {
+  /// Featured content for the top gallery.
   final List<Highlight> highlights = [
     Highlight(
       imageUrl:
@@ -28,6 +33,7 @@ class HomeState {
     ),
   ];
 
+  /// Product categories displayed in the category carousel.
   final List<String> categories = const [
     "A",
     "B",
@@ -40,6 +46,7 @@ class HomeState {
     "I",
   ];
 
+  /// Promotional banners displayed in the promotion gallery.
   final List<PromotionBadge> promotions = const [
     PromotionBadge(
       title: "Get 50% off your first purchase!",
@@ -58,6 +65,7 @@ class HomeState {
     ),
   ];
 
+  /// Asynchronous list of brands, managed via Riverpod's [AsyncValue].
   final AsyncValue<List<Brand>> brands;
 
   HomeState({required this.brands});

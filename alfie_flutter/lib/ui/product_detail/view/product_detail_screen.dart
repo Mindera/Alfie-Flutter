@@ -17,7 +17,7 @@ class ProductDetailScreen extends ConsumerWidget {
   const ProductDetailScreen({required this.id, super.key});
 
   final String id;
-  static const double _galleryAspectRatio = 4 / 3; // 3 : 4
+  static const double _galleryAspectRatio = 2 / 3; // 2 : 3
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -70,11 +70,11 @@ class ProductDetailScreen extends ConsumerWidget {
                 automaticallyImplyLeading: false,
 
                 expandedHeight:
-                    context.mediaQuery.size.width * _galleryAspectRatio,
+                    context.mediaQuery.size.width / _galleryAspectRatio,
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   background: Gallery(
-                    aspectRatio: 2 / 3,
+                    aspectRatio: _galleryAspectRatio,
                     children:
                         product.colours
                             ?.expand((color) => color.media ?? <Media>[])

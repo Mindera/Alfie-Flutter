@@ -1,28 +1,38 @@
 import 'dart:async';
 
-import 'package:alfie_flutter/data/models/media.dart';
-import 'package:alfie_flutter/ui/core/themes/colors.dart';
-import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:expandable_page_view/expandable_page_view.dart';
 
-/// A swipeable gallery that displays a paginated list of [Media] items.
+import 'package:alfie_flutter/ui/core/themes/colors.dart';
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+
+/// A swipeable gallery that displays a paginated list of widgets.
 ///
-/// Supports both image and video models, displaying the video's first source URL
-/// as a thumbnail. Automatically hides pagination indicators if there is only one item.
-///
-/// TO BE DONE: Video support is not yet implemented
+/// It accepts pre-built [children]
+/// and handles its own internal presentation state,
+/// such as auto-scrolling and pagination indicators.
 class Gallery extends HookWidget {
-  /// The collection of media items to display in the gallery.
+  /// The collection of widgets to display in the gallery.
   final List<Widget> children;
+
+  /// An optional aspect ratio to consistently enforce on each child. If this is null, the gallery will try to have the height of its children.
   final double? aspectRatio;
 
+  /// Whether the gallery should automatically transition between pages.
   final bool autoScroll;
+
+  /// The time interval between automatic page transitions.
   final Duration scrollDuration;
 
+  /// The alignment of the pagination dots.
   final MainAxisAlignment dotsAlignment;
+
+  /// If true, pagination dots are drawn layered over the gallery items.
+  /// If false, they are placed directly below the items.
   final bool overlayDots;
+
+  /// If true, uses a darker color palette for the active pagination dot.
   final bool darkDots;
 
   const Gallery({
@@ -44,39 +54,33 @@ class Gallery extends HookWidget {
 
     final currentPage = useState(0);
     final pageController = usePageController();
+
+    // Tracks user interaction to temporarily pause auto-scrolling.
     final isInteracting = useState(false);
 
     useEffect(() {
-      if (!autoScroll || children.length <= 1) return null;
-
-      Timer? timer;
-
-      void startTimer() {
-        timer?.cancel();
-
-        timer = Timer.periodic(scrollDuration, (_) {
-          final nextPage = (currentPage.value + 1) % children.length;
-
-          pageController.animateToPage(
-            nextPage,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.easeInOut,
-          );
-
-          currentPage.value = nextPage;
-        });
+      // Avoid setting up the timer if auto-scroll is disabled,
+      // there aren't enough items, or the user is actively touching the gallery.
+      if (!autoScroll || children.length <= 1 || isInteracting.value) {
+        return null;
       }
 
-      if (!isInteracting.value) {
-        startTimer();
-      }
+      final timer = Timer.periodic(scrollDuration, (_) {
+        if (!pageController.hasClients) return;
 
-      return () {
-        timer?.cancel();
-      };
+        final nextPage = (currentPage.value + 1) % children.length;
+
+        pageController.animateToPage(
+          nextPage,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+        );
+      });
+
+      return timer.cancel;
     }, [autoScroll, children.length, isInteracting.value]);
 
-    Widget dots = Row(
+    final Widget dots = Row(
       mainAxisAlignment: dotsAlignment,
       spacing: Spacing.extraSmall,
       children: List.generate(
@@ -88,22 +92,29 @@ class Gallery extends HookWidget {
       ),
     );
 
-    Widget pageView = ExpandablePageView.builder(
+    final Widget pageView = ExpandablePageView.builder(
       controller: pageController,
       itemCount: children.length,
       onPageChanged: (index) => currentPage.value = index,
       itemBuilder: (context, index) {
+        final child = aspectRatio == null
+            ? children[index]
+            : AspectRatio(aspectRatio: aspectRatio!, child: children[index]);
+
         return Listener(
           onPointerDown: (_) => isInteracting.value = true,
           onPointerUp: (_) => isInteracting.value = false,
-          child: aspectRatio == null
-              ? children[index]
-              : AspectRatio(aspectRatio: aspectRatio!, child: children[index]),
+          onPointerCancel: (_) => isInteracting.value = false,
+          child: child,
         );
       },
     );
 
-    if (!overlayDots && children.length > 1) {
+    if (children.length <= 1) {
+      return pageView;
+    }
+
+    if (!overlayDots) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -120,17 +131,13 @@ class Gallery extends HookWidget {
       alignment: Alignment.bottomCenter,
       children: [
         pageView,
-        if (children.length > 1)
-          Padding(padding: const EdgeInsets.all(Spacing.small), child: dots),
+        Padding(padding: const EdgeInsets.all(Spacing.small), child: dots),
       ],
     );
   }
 }
 
 /// An animated dot indicator for the gallery pagination.
-///
-/// Extracted into its own [StatelessWidget] to prevent the entire [Gallery]
-/// from rebuilding unnecessarily when a single dot's state changes.
 class _DotIndicator extends StatelessWidget {
   final bool isActive;
   final bool darkDots;

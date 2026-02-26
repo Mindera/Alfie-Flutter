@@ -3,6 +3,10 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/search/search.dart';
 import 'package:flutter/material.dart';
 
+/// A persistent top navigation bar designed for the home screen.
+///
+/// It utilizes a [SliverAppBar] to transition from a branded background
+/// to a pinned [Search] field during scrolling.
 class HomeAppBar extends StatelessWidget {
   final double expandedHeight = 150;
   final String logoImagePath = 'assets/images/doc_branding.png';
@@ -22,6 +26,7 @@ class HomeAppBar extends StatelessWidget {
       expandedHeight: expandedHeight,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.all(Spacing.small),
+        // Setting scale to 1 prevents the Search field from resizing
         expandedTitleScale: 1,
         background: Image.asset(logoImagePath, fit: BoxFit.scaleDown),
         title: Search(),

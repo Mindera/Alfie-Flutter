@@ -1,26 +1,43 @@
-import 'package:alfie_flutter/ui/core/themes/typography.dart';
-import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 
+import 'package:alfie_flutter/ui/core/themes/typography.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
+
+/// A standardized header for screen sections, featuring a title and an optional action link.
 class SectionHeader extends StatelessWidget {
   final String title;
+
+  /// The label displayed for the action link (e.g., "See all").
   final String linkText;
-  final String? textLinkPath;
+
+  /// An optional callback triggered when the action link is pressed.
+  final VoidCallback? onLinkPressed;
 
   const SectionHeader({
     super.key,
     required this.title,
     required this.linkText,
-    this.textLinkPath,
+    this.onLinkPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(title, style: context.textTheme.headlineSmall),
-        Text(linkText, style: context.textTheme.linkMedium),
+        Expanded(
+          child: Text(
+            title,
+            style: context.textTheme.headlineSmall,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        GestureDetector(
+          onTap: onLinkPressed,
+          child: Text(linkText, style: context.textTheme.linkMedium),
+        ),
       ],
     );
   }
