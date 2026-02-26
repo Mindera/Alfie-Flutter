@@ -4,6 +4,9 @@ import 'package:alfie_flutter/ui/core/ui/search/search.dart';
 import 'package:flutter/material.dart';
 
 class HomeAppBar extends StatelessWidget {
+  final double expandedHeight = 150;
+  final String logoImagePath = 'assets/images/doc_branding.png';
+
   const HomeAppBar({super.key});
 
   @override
@@ -16,11 +19,11 @@ class HomeAppBar extends StatelessWidget {
 
       backgroundColor: AppColors.neutral,
       surfaceTintColor: AppColors.transparent,
-      expandedHeight: 150,
+      expandedHeight: expandedHeight,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.all(Spacing.small),
         expandedTitleScale: 1,
-        background: Image.asset('assets/images/doc_branding.png'),
+        background: Image.asset(logoImagePath, fit: BoxFit.scaleDown),
         title: Search(),
       ),
     );
