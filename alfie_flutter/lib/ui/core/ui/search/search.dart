@@ -14,6 +14,7 @@ class Search extends HookWidget {
   ///
   /// Receives the current text value.
   final ValueChanged<String>? onChanged;
+  final bool autofocus;
 
   static const icon = AppIcons.search;
 
@@ -21,6 +22,7 @@ class Search extends HookWidget {
     super.key,
     this.hintText = 'What are you looking for?',
     this.onChanged,
+    this.autofocus = false,
   });
 
   @override
@@ -44,20 +46,48 @@ class Search extends HookWidget {
       controller: controller,
       focusNode: focusNode,
       onChanged: onChanged,
+      autofocus: autofocus,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.zero,
-        fillColor: focusNode.hasFocus
-            ? AppColors.neutral
-            : AppColors.neutral100,
+        hintText: hintText,
+        prefixIcon: const Icon(icon),
+        suffixIcon: showClearButton
+            ? AppButton.tertiary(onPressed: clearInput, leading: AppIcons.clear)
+            : null,
+      ),
+    );
+  }
+}
+
+/// A search input field placeholder button.
+class SearchDummy extends StatelessWidget {
+  final String hintText;
+  final VoidCallback onTap;
+
+  static const icon = AppIcons.search;
+
+  const SearchDummy({
+    super.key,
+    this.hintText = 'What are you looking for?',
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      onTap: onTap,
+      readOnly: true,
+      decoration: InputDecoration(
+        hintText: hintText,
+        prefixIcon: const Icon(icon),
+        fillColor: AppColors.neutral100,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(Spacing.extraExtraSmall),
           borderSide: BorderSide(color: AppColors.neutral100),
         ),
-        hintText: hintText,
-        prefixIcon: Icon(icon),
-        suffixIcon: showClearButton
-            ? AppButton.tertiary(onPressed: clearInput, leading: AppIcons.clear)
-            : null,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Spacing.extraExtraSmall),
+          borderSide: BorderSide(color: AppColors.neutral100),
+        ),
       ),
     );
   }
