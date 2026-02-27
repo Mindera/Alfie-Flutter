@@ -5,10 +5,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class SearchViewModel extends Notifier<List<SearchItem>> {
   late SearchHistoryRepository _repository;
 
+  static const int maxSearchItemsPresented = 5;
+
+  List<SearchItem> _getSearches() {
+    return _repository
+        .getRecentSearches()
+        .take(maxSearchItemsPresented)
+        .toList();
+  }
+
   @override
   List<SearchItem> build() {
     _repository = ref.watch(searchHistoryRepositoryProvider);
-    return _repository.getRecentSearches();
+    return _getSearches();
   }
 
   Future<void> submitSearch(String query) async {
@@ -16,17 +25,17 @@ class SearchViewModel extends Notifier<List<SearchItem>> {
 
     await _repository.addSearchQuery(query.trim());
 
-    state = _repository.getRecentSearches();
+    state = _getSearches();
   }
 
   Future<void> removeSearch(String query) async {
     await _repository.removeSearch(query);
-    state = _repository.getRecentSearches();
+    state = _getSearches();
   }
 
   Future<void> clearHistory() async {
     await _repository.clearAll();
-    state = _repository.getRecentSearches();
+    state = _getSearches();
   }
 }
 

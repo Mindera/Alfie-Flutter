@@ -9,6 +9,8 @@ final searchHistoryRepositoryProvider = Provider<SearchHistoryRepository>(
 class SearchHistoryRepository {
   final HiveService _hiveService;
 
+  static const int maxSearchItemsStored = 10;
+
   SearchHistoryRepository(this._hiveService);
 
   List<SearchItem> getRecentSearches() {
@@ -25,7 +27,7 @@ class SearchHistoryRepository {
     final newItem = SearchItem(query: query, timestamp: DateTime.now());
     currentHistory.insert(0, newItem);
 
-    if (currentHistory.length > 5) {
+    if (currentHistory.length > maxSearchItemsStored) {
       currentHistory.removeLast();
     }
 
