@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:alfie_flutter/data/services/hive_service.dart';
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,10 @@ Future<void> main() async {
   log("Loading Hive for GraphQL...");
   await initHiveForFlutter();
 
+  // Load Hive Service
+  log("Loading Hive Service...");
+  HiveService().init();
+
   // Maintaining the status bar visible
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual,
@@ -34,11 +39,9 @@ Future<void> main() async {
   log("Starting the application...");
   runApp(const ProviderScope(child: MainApp()));
 
-  // Perform initialization tasks
-  // Here we can load resources, initialize services, etc.
-
   // Remove the splash screen after initialization is complete
   FlutterNativeSplash.remove();
+  log("Running Alfie!");
 }
 
 class MainApp extends ConsumerWidget {

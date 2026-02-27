@@ -1,10 +1,10 @@
-import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
-import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/ui/core/ui/search/search.dart';
-import 'package:alfie_flutter/ui/core/ui/section_header.dart';
+import 'package:alfie_flutter/ui/search/view/default_search_body.dart';
+import 'package:alfie_flutter/ui/search/view/search_suggestions.dart';
+import 'package:alfie_flutter/ui/search/view_model/search_view_model.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,6 +16,8 @@ class SearchScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searchQuery = useState<String>('');
+
+    final recentSearches = ref.watch(searchViewModelProvider);
 
     return Scaffold(
       body: CustomScrollView(
@@ -41,6 +43,11 @@ class SearchScreen extends HookConsumerWidget {
                     child: Search(
                       onChanged: (value) => searchQuery.value = value,
                       autofocus: true,
+                      onSubmitted: (value) {
+                        ref
+                            .read(searchViewModelProvider.notifier)
+                            .submitSearch(value);
+                      },
                     ),
                   ),
                 ],
@@ -51,60 +58,12 @@ class SearchScreen extends HookConsumerWidget {
             padding: EdgeInsetsGeometry.all(Spacing.small),
             sliver: SliverToBoxAdapter(
               child: searchQuery.value.isEmpty
-                  ? _buildDefaultSearchViews(context)
-                  : _buildSuggestions(context, searchQuery.value),
+                  ? DefaultSearchBody(recentSearches: recentSearches)
+                  : SearchSuggestions(),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  /// What shows when the user hasn't typed anything yet
-  Widget _buildDefaultSearchViews(BuildContext context) {
-    return Column(
-      spacing: Spacing.extraLarge,
-      children: [
-        // --- Recent Searches Section ---
-        Column(
-          spacing: Spacing.extraSmall,
-          children: [
-            SectionHeader(title: "Your Recent Searches", linkText: "Clear"),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: Spacing.extraExtraSmall,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("recent search"),
-                  AppButton.tertiary(
-                    onPressed: () {},
-                    leading: AppIcons.clear,
-                    size: ButtonSize.small,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-
-        // --- Popular Items Section ---
-        SectionHeader(title: "Popular Items"),
-      ],
-    );
-  }
-
-  /// What shows as the user is typing
-  Widget _buildSuggestions(BuildContext context, String query) {
-    return Column(
-      children: [
-        // ListTile(
-        //   leading: const Icon(Icons.search),
-        //   title: Text('Search for "$query"'),
-        //   onTap: () {},
-        // ),
-      ],
     );
   }
 }
