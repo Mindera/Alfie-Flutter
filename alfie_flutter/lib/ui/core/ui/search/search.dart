@@ -14,6 +14,7 @@ class Search extends HookWidget {
   ///
   /// Receives the current text value.
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
   final bool autofocus;
 
   static const icon = AppIcons.search;
@@ -23,6 +24,7 @@ class Search extends HookWidget {
     this.hintText = 'What are you looking for?',
     this.onChanged,
     this.autofocus = false,
+    this.onSubmitted,
   });
 
   @override
@@ -47,6 +49,7 @@ class Search extends HookWidget {
       focusNode: focusNode,
       onChanged: onChanged,
       autofocus: autofocus,
+      onFieldSubmitted: onSubmitted,
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: const Icon(icon),
