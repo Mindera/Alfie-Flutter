@@ -4,31 +4,6 @@ import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.d
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// class ProductListingViewModel extends Notifier<ProductListingParams> {
-//   final String categoryId;
-
-//   ProductListingViewModel(this.categoryId);
-
-//   @override
-//   ProductListingParams build() {
-//     return ProductListingParams(
-//       categoryId: categoryId,
-//       limit: 10,
-//       offset: 0,
-//       sort: null,
-//     );
-//   }
-
-//   void updateSort(ProductListingSort sort) {
-//     state = state.copyWith(sort: sort);
-//   }
-// }
-
-// final productListingViewModelProvider = NotifierProvider.autoDispose
-//     .family<ProductListingViewModel, ProductListingParams, String>(
-//       ProductListingViewModel.new,
-//     );
-
 class ProductListingViewModel extends AsyncNotifier<ProductListingState> {
   final ProductListingId listingId;
   ProductListingSort? _currentSort;
