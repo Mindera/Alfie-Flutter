@@ -17,7 +17,7 @@ class SearchScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final searchQuery = useState<String>('');
 
-    final recentSearches = ref.watch(searchViewModelProvider);
+    final state = ref.watch(searchViewModelProvider);
 
     return Scaffold(
       body: CustomScrollView(
@@ -58,7 +58,7 @@ class SearchScreen extends HookConsumerWidget {
             padding: EdgeInsetsGeometry.all(Spacing.small),
             sliver: SliverToBoxAdapter(
               child: searchQuery.value.isEmpty
-                  ? DefaultSearchBody(recentSearches: recentSearches)
+                  ? DefaultSearchBody(recentSearches: state.recentSearches)
                   : SearchSuggestions(),
             ),
           ),

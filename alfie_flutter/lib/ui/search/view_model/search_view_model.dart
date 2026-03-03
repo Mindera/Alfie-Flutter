@@ -1,23 +1,25 @@
-import 'package:alfie_flutter/data/models/search_item.dart';
 import 'package:alfie_flutter/data/repositories/search_history_repository.dart';
+import 'package:alfie_flutter/ui/search/view_model/search_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SearchViewModel extends Notifier<List<SearchItem>> {
+class SearchViewModel extends Notifier<SearchState> {
   late SearchHistoryRepository _repository;
 
   static const int maxSearchItemsPresented = 5;
 
-  List<SearchItem> _getSearches() {
-    return _repository
-        .getRecentSearches()
-        .take(maxSearchItemsPresented)
-        .toList();
+  SearchState _updateSearches() {
+    return SearchState(
+      recentSearches: _repository
+          .getRecentSearches()
+          .take(maxSearchItemsPresented)
+          .toList(),
+    );
   }
 
   @override
-  List<SearchItem> build() {
+  SearchState build() {
     _repository = ref.watch(searchHistoryRepositoryProvider);
-    return _getSearches();
+    return _updateSearches();
   }
 
   Future<void> submitSearch(String query) async {
@@ -25,19 +27,20 @@ class SearchViewModel extends Notifier<List<SearchItem>> {
 
     await _repository.addSearchQuery(query.trim());
 
-    state = _getSearches();
+    state = _updateSearches();
   }
 
   Future<void> removeSearch(String query) async {
     await _repository.removeSearch(query);
-    state = _getSearches();
+    state = _updateSearches();
   }
 
   Future<void> clearHistory() async {
     await _repository.clearAll();
-    state = _getSearches();
+    state = _updateSearches();
   }
 }
 
-final searchViewModelProvider =
-    NotifierProvider<SearchViewModel, List<SearchItem>>(SearchViewModel.new);
+final searchViewModelProvider = NotifierProvider<SearchViewModel, SearchState>(
+  SearchViewModel.new,
+);
