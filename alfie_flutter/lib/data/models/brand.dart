@@ -10,5 +10,5 @@ class Brand {
   final String name;
 
   /// Creates a new [Brand] instance.
-  Brand({required this.id, required this.name});
+  const Brand({required this.id, required this.name});
 }

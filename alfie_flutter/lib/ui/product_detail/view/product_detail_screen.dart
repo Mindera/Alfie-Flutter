@@ -7,6 +7,7 @@ import 'package:alfie_flutter/ui/core/ui/header.dart';
 import 'package:alfie_flutter/ui/product_detail/view/product_main_info.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
+import 'package:alfie_flutter/utils/image_utils.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class ProductDetailScreen extends ConsumerWidget {
   const ProductDetailScreen({required this.id, super.key});
 
   final String id;
-  static const double _galleryAspectRatio = 4 / 3; // 3 : 4
+  static const double _galleryAspectRatio = 2 / 3; // 2 : 3
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,13 +70,19 @@ class ProductDetailScreen extends ConsumerWidget {
                 automaticallyImplyLeading: false,
 
                 expandedHeight:
-                    context.mediaQuery.size.width * _galleryAspectRatio,
+                    context.mediaQuery.size.width / _galleryAspectRatio,
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   background: Gallery(
-                    medias:
+                    aspectRatio: _galleryAspectRatio,
+                    children:
                         product.colours
                             ?.expand((color) => color.media ?? <Media>[])
+                            .map((media) {
+                              final mediaUrl = media.firstUrl;
+
+                              return ImageFactory.network(mediaUrl);
+                            })
                             .toList() ??
                         [],
                   ),
