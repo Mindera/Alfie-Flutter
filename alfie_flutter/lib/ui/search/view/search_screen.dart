@@ -21,6 +21,13 @@ class SearchScreen extends HookConsumerWidget {
     final localQuery = useState<String>('');
 
     final state = ref.watch(searchViewModelProvider);
+    final searchController = useTextEditingController();
+
+    void submitSearch(String query) {
+      localQuery.value = query;
+      ref.read(searchViewModelProvider.notifier).submitSearch(query);
+      searchController.text = query;
+    }
 
     return Scaffold(
       body: CustomScrollView(
@@ -44,14 +51,10 @@ class SearchScreen extends HookConsumerWidget {
                   ),
                   Expanded(
                     child: Search(
+                      controller: searchController,
                       onChanged: (value) => localQuery.value = value,
                       autofocus: true,
-                      onSubmitted: (value) {
-                        localQuery.value = value;
-                        ref
-                            .read(searchViewModelProvider.notifier)
-                            .submitSearch(value);
-                      },
+                      onSubmitted: submitSearch,
                     ),
                   ),
                 ],
@@ -65,7 +68,10 @@ class SearchScreen extends HookConsumerWidget {
               padding: EdgeInsetsGeometry.all(Spacing.small),
               sliver: SliverToBoxAdapter(
                 child: localQuery.value.isEmpty
-                    ? DefaultSearchBody(recentSearches: state.recentSearches)
+                    ? DefaultSearchBody(
+                        recentSearches: state.recentSearches,
+                        onSearchItemTapped: submitSearch,
+                      )
                     : SearchSuggestions(),
               ),
             ),

@@ -16,6 +16,7 @@ class Search extends HookWidget {
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
   final bool autofocus;
+  final TextEditingController? controller;
 
   static const icon = AppIcons.search;
 
@@ -25,11 +26,13 @@ class Search extends HookWidget {
     this.onChanged,
     this.autofocus = false,
     this.onSubmitted,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = useTextEditingController();
+    final TextEditingController controller =
+        this.controller ?? useTextEditingController();
     final FocusNode focusNode = useFocusNode();
 
     // Rebuild the widget when focus changes or text is typed to toggle the clear button.

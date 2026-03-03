@@ -9,9 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DefaultSearchBody extends ConsumerWidget {
-  const DefaultSearchBody({super.key, required this.recentSearches});
+  const DefaultSearchBody({
+    super.key,
+    required this.recentSearches,
+    this.onSearchItemTapped,
+  });
 
   final List<SearchItem> recentSearches;
+  final void Function(String query)? onSearchItemTapped;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,24 +37,27 @@ class DefaultSearchBody extends ConsumerWidget {
               ),
 
               ...recentSearches.map(
-                (item) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Spacing.extraExtraSmall,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: Text(item.query)),
-                      AppButton.tertiary(
-                        onPressed: () {
-                          ref
-                              .read(searchViewModelProvider.notifier)
-                              .removeSearch(item.query);
-                        },
-                        leading: AppIcons.clear,
-                        size: ButtonSize.small,
-                      ),
-                    ],
+                (item) => GestureDetector(
+                  onTap: () => onSearchItemTapped?.call(item.query),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Spacing.extraExtraSmall,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(child: Text(item.query)),
+                        AppButton.tertiary(
+                          onPressed: () {
+                            ref
+                                .read(searchViewModelProvider.notifier)
+                                .removeSearch(item.query);
+                          },
+                          leading: AppIcons.clear,
+                          size: ButtonSize.small,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
