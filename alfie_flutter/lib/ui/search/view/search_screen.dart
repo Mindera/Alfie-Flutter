@@ -1,7 +1,10 @@
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/ui/core/ui/search/search.dart';
+import 'package:alfie_flutter/ui/product_listing/view/product_listing_view.dart';
+import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.dart';
 import 'package:alfie_flutter/ui/search/view/default_search_body.dart';
 import 'package:alfie_flutter/ui/search/view/search_suggestions.dart';
 import 'package:alfie_flutter/ui/search/view_model/search_view_model.dart';
@@ -15,7 +18,7 @@ class SearchScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchQuery = useState<String>('');
+    final localQuery = useState<String>('');
 
     final state = ref.watch(searchViewModelProvider);
 
@@ -35,15 +38,16 @@ class SearchScreen extends HookConsumerWidget {
               ),
               child: Row(
                 children: [
-                  IconButton(
+                  AppButton.tertiary(
                     onPressed: () => context.safePop(),
-                    icon: Icon(AppIcons.back),
+                    leading: AppIcons.back,
                   ),
                   Expanded(
                     child: Search(
-                      onChanged: (value) => searchQuery.value = value,
+                      onChanged: (value) => localQuery.value = value,
                       autofocus: true,
                       onSubmitted: (value) {
+                        localQuery.value = value;
                         ref
                             .read(searchViewModelProvider.notifier)
                             .submitSearch(value);
@@ -54,14 +58,17 @@ class SearchScreen extends HookConsumerWidget {
               ),
             ),
           ),
-          SliverPadding(
-            padding: EdgeInsetsGeometry.all(Spacing.small),
-            sliver: SliverToBoxAdapter(
-              child: searchQuery.value.isEmpty
-                  ? DefaultSearchBody(recentSearches: state.recentSearches)
-                  : SearchSuggestions(),
+          if (localQuery.value == state.currentSearchQuery)
+            ProductListingView(id: ProductListingId(query: localQuery.value))
+          else
+            SliverPadding(
+              padding: EdgeInsetsGeometry.all(Spacing.small),
+              sliver: SliverToBoxAdapter(
+                child: localQuery.value.isEmpty
+                    ? DefaultSearchBody(recentSearches: state.recentSearches)
+                    : SearchSuggestions(),
+              ),
             ),
-          ),
         ],
       ),
     );
