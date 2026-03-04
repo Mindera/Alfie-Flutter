@@ -6,7 +6,7 @@ import 'package:alfie_flutter/data/models/size.dart';
 /// A product variant is a distinct combination of attributes (size, color, etc.)
 /// that can be purchased separately. Each variant has its own SKU, pricing,
 /// and stock information.
-final class ProductVariant {
+class ProductVariant {
   /// The stock keeping unit (SKU) uniquely identifying this variant.
   final String sku;
 

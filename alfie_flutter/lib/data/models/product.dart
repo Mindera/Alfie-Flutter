@@ -8,7 +8,7 @@ import 'package:alfie_flutter/data/models/product_variant.dart';
 /// A product is a high-level item with general information (name, description, brand)
 /// and multiple variants that differ by size, color, or other attributes.
 /// Each variant has its own SKU, pricing, and stock information.
-final class Product {
+class Product {
   /// The unique identifier for this product.
   final String id;
 

@@ -2,7 +2,7 @@ import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BagNotifier extends Notifier<List<BagItem>> {
+class BagViewModel extends Notifier<List<BagItem>> {
   late final BagRepository _repository;
 
   @override
@@ -40,6 +40,6 @@ class BagNotifier extends Notifier<List<BagItem>> {
   }
 }
 
-final bagViewModelProvider = NotifierProvider<BagNotifier, List<BagItem>>(
-  BagNotifier.new,
+final bagViewModelProvider = NotifierProvider<BagViewModel, List<BagItem>>(
+  BagViewModel.new,
 );
