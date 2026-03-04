@@ -30,7 +30,7 @@ class ProductListingScreen extends HookConsumerWidget {
         controller: controller,
         slivers: [
           ProductListingAppBar(id: id),
-          ProductListingView(id: id),
+          ProductListingView(id: id, initialColumns: initialColumns),
         ],
       ),
     );
