@@ -8,6 +8,10 @@ import 'package:alfie_flutter/ui/search/view_model/search_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Displays the default state of the search screen before a user starts typing.
+///
+/// Includes the user's recent search history and popular items. Actions to
+/// clear or remove history communicate directly with the [searchViewModelProvider].
 class DefaultSearchBody extends ConsumerWidget {
   const DefaultSearchBody({
     super.key,

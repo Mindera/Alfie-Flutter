@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:alfie_flutter/data/services/hive_service.dart';
+import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +24,6 @@ Future<void> main() async {
   log("Loading Hive for GraphQL...");
   await initHiveForFlutter();
 
-  // Load Hive Service
-  log("Loading Hive Service...");
-  HiveService().init();
-
   // Maintaining the status bar visible
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual,
@@ -49,6 +45,13 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Load Persistent Storage Service
+    log("Loading Persistent Storage Service...");
+    final persistentStorageService = ref.watch(
+      persistentStorageServiceProvider,
+    );
+    persistentStorageService.init();
+
     final router = ref.watch(routerProvider);
     final theme = ref.watch(themeProvider);
     return MaterialApp.router(

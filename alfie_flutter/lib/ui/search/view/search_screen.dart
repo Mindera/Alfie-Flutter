@@ -13,6 +13,13 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+/// The primary search interface.
+///
+/// Manages the local text input state and coordinates with the
+/// [searchViewModelProvider] to transition between three distinct visual states:
+/// 1. Default (Empty input): Shows recent searches.
+/// 2. Suggestions (Typing): Shows predictive search suggestions.
+/// 3. Results (Submitted): Shows the [ProductListingView] for the active query.
 class SearchScreen extends HookConsumerWidget {
   const SearchScreen({super.key});
 

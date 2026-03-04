@@ -3,14 +3,20 @@ import 'package:alfie_flutter/data/repositories/search_history_repository.dart';
 import 'package:alfie_flutter/ui/search/view_model/search_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// ViewModel responsible for orchestrating search logic and UI state.
+///
+/// It acts as the mediator between the UI and the [SearchHistoryRepository],
+/// handling user input, updating local persistence, and mutating the [SearchState].
 class SearchViewModel extends Notifier<SearchState> {
   late SearchHistoryRepository _repository;
 
-  static const int maxSearchItemsPresented = 5;
+  /// Limits the visual clutter in the UI by capping the number of displayed
+  /// recent searches, without deleting the actual persisted history in the repository.
+  static const int _maxSearchItemsPresented = 5;
   List<SearchItem> _getSearches() {
     return _repository
         .getRecentSearches()
-        .take(maxSearchItemsPresented)
+        .take(_maxSearchItemsPresented)
         .toList();
   }
 
@@ -45,6 +51,7 @@ class SearchViewModel extends Notifier<SearchState> {
   }
 }
 
+/// Exposes the [SearchViewModel] and its current [SearchState].
 final searchViewModelProvider = NotifierProvider<SearchViewModel, SearchState>(
   SearchViewModel.new,
 );
