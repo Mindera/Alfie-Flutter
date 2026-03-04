@@ -29,10 +29,10 @@ abstract interface class IPersistentStorageService {
   Future<void> saveSearchHistory(List<SearchItem> history);
 
   /// Retrieves saved bag products.
-  List<BagItem> getBagProducts();
+  List<BagItem> getBagItems();
 
   /// Overwrites the current bag products with a new [products] list.
-  Future<void> saveBagProducts(List<BagItem> products);
+  Future<void> saveBagItems(List<BagItem> products);
 }
 
 /// A Hive-based implementation of [IPersistentStorageService].
@@ -50,34 +50,33 @@ class HiveService implements IPersistentStorageService {
   Future<void> init() async {
     await Hive.initFlutter();
 
-    final adapters = <TypeAdapter>[
-      SearchItemAdapter(), // Assuming typeId: 0
-      BrandAdapter(), // typeId: 1
-      MoneyAdapter(), // typeId: 2
-      PriceRangeAdapter(), // typeId: 3
-      PriceAdapter(), // typeId: 4
-      MediaContentTypeAdapter(), // typeId: 5
-      VideoFormatAdapter(), // typeId: 6
-      MediaImageAdapter(), // typeId: 7
-      VideoSourceAdapter(), // typeId: 8
-      MediaVideoAdapter(), // typeId: 9
-      SizeGuideAdapter(), // typeId: 10
-      ProductSizeAdapter(), // typeId: 11
-      ProductColorAdapter(), // typeId: 12
-      ProductVariantAdapter(), // typeId: 13
-      ProductAdapter(), // typeId: 14
-      BagItemAdapter(), // typeId: 15
-    ];
+    registerSafe(SearchItemAdapter()); // typeId: 0
+    registerSafe(BrandAdapter()); // typeId: 1
+    registerSafe(MoneyAdapter()); // typeId: 2
+    registerSafe(PriceRangeAdapter()); // typeId: 3
+    registerSafe(PriceAdapter()); // typeId: 4
+    registerSafe(MediaContentTypeAdapter()); // typeId: 5
+    registerSafe(VideoFormatAdapter()); // typeId: 6
+    registerSafe(MediaImageAdapter()); // typeId: 7
+    registerSafe(VideoSourceAdapter()); // typeId: 8
+    registerSafe(MediaVideoAdapter()); // typeId: 9
+    registerSafe(SizeGuideAdapter()); // typeId: 10
+    registerSafe(ProductSizeAdapter()); // typeId: 11
+    registerSafe(ProductColorAdapter()); // typeId: 12
+    registerSafe(ProductVariantAdapter()); // typeId: 13
+    registerSafe(ProductAdapter()); // typeId: 14
+    registerSafe(BagItemAdapter()); // typeId: 15
 
-    // Prevent redundant registration errors during hot restarts or widget tests.
-    for (final adapter in adapters) {
-      if (!Hive.isAdapterRegistered(adapter.typeId)) {
-        Hive.registerAdapter(adapter);
-      }
-    }
-
+    await Hive.deleteBoxFromDisk(_recentSearchesBoxName);
+    await Hive.deleteBoxFromDisk(_bagBoxName);
     await Hive.openBox<List<SearchItem>>(_recentSearchesBoxName);
     await Hive.openBox<List<BagItem>>(_bagBoxName);
+  }
+
+  void registerSafe<T>(TypeAdapter<T> adapter) {
+    if (!Hive.isAdapterRegistered(adapter.typeId)) {
+      Hive.registerAdapter<T>(adapter);
+    }
   }
 
   Box<List<SearchItem>> get _recentSearchesBox =>
@@ -99,13 +98,13 @@ class HiveService implements IPersistentStorageService {
   }
 
   @override
-  List<BagItem> getBagProducts() {
+  List<BagItem> getBagItems() {
     final data = _bagBox.get(_bagKey, defaultValue: <BagItem>[]);
     return data ?? <BagItem>[];
   }
 
   @override
-  Future<void> saveBagProducts(List<BagItem> products) async {
+  Future<void> saveBagItems(List<BagItem> products) async {
     await _bagBox.put(_bagKey, products);
   }
 }
