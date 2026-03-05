@@ -79,24 +79,28 @@ class HorizontalProductCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            bagItem.product.name.capitalizeAll(),
-                            style: context.textTheme.bodyMedium,
-                          ),
-                          Text('Ref. 0273/393', style: labelSmallTextStyle),
-                          Text(
-                            "Color: ${bagItem.product.colours!.first.name}",
-                            style: labelSmallTextStyle,
-                          ),
-                          Text(
-                            "Size: ${bagItem.product.defaultVariant.size?.value}",
-                            style: labelSmallTextStyle,
-                          ),
-                        ],
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              bagItem.product.name.capitalizeAll(),
+                              style: context.textTheme.bodyMedium,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text('Ref. 0273/393', style: labelSmallTextStyle),
+                            Text(
+                              "Color: ${bagItem.product.colours!.first.name}",
+                              style: labelSmallTextStyle,
+                            ),
+                            Text(
+                              "Size: ${bagItem.product.defaultVariant.size?.value}",
+                              style: labelSmallTextStyle,
+                            ),
+                          ],
+                        ),
                       ),
                       AppButton.tertiary(
                         size: ButtonSize.small,
