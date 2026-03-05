@@ -67,10 +67,9 @@ class HiveService implements IPersistentStorageService {
     registerSafe(ProductAdapter()); // typeId: 14
     registerSafe(BagItemAdapter()); // typeId: 15
 
-    await Hive.deleteBoxFromDisk(_recentSearchesBoxName);
-    await Hive.deleteBoxFromDisk(_bagBoxName);
-    await Hive.openBox<List<SearchItem>>(_recentSearchesBoxName);
-    await Hive.openBox<List<BagItem>>(_bagBoxName);
+    // This should be dynamic because Hive doesn't store the generic type of the box
+    await Hive.openBox<List<dynamic>>(_recentSearchesBoxName);
+    await Hive.openBox<List<dynamic>>(_bagBoxName);
   }
 
   void registerSafe<T>(TypeAdapter<T> adapter) {
@@ -79,9 +78,9 @@ class HiveService implements IPersistentStorageService {
     }
   }
 
-  Box<List<SearchItem>> get _recentSearchesBox =>
-      Hive.box<List<SearchItem>>(_recentSearchesBoxName);
-  Box<List<BagItem>> get _bagBox => Hive.box<List<BagItem>>(_bagBoxName);
+  Box<List<dynamic>> get _recentSearchesBox =>
+      Hive.box<List<dynamic>>(_recentSearchesBoxName);
+  Box<List<dynamic>> get _bagBox => Hive.box<List<dynamic>>(_bagBoxName);
 
   @override
   List<SearchItem> getSearchHistory() {
@@ -89,7 +88,7 @@ class HiveService implements IPersistentStorageService {
       _recentSearchesKey,
       defaultValue: <SearchItem>[],
     );
-    return data ?? <SearchItem>[];
+    return List<SearchItem>.from(data ?? []);
   }
 
   @override
@@ -100,7 +99,7 @@ class HiveService implements IPersistentStorageService {
   @override
   List<BagItem> getBagItems() {
     final data = _bagBox.get(_bagKey, defaultValue: <BagItem>[]);
-    return data ?? <BagItem>[];
+    return List<BagItem>.from(data ?? []);
   }
 
   @override
