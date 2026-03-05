@@ -30,6 +30,14 @@ Future<void> main() async {
     overlays: [SystemUiOverlay.top],
   );
 
+  // Load Persistent Storage Service
+  log("Loading Persistent Storage Service...");
+  final container = ProviderContainer();
+  final persistentStorageService = container.read(
+    persistentStorageServiceProvider,
+  );
+  await persistentStorageService.init();
+
   // Start the main application wrapped in a ProviderScope so Riverpod
   // providers are available throughout the widget tree.
   log("Starting the application...");
@@ -45,13 +53,6 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Load Persistent Storage Service
-    log("Loading Persistent Storage Service...");
-    final persistentStorageService = ref.watch(
-      persistentStorageServiceProvider,
-    );
-    persistentStorageService.init();
-
     final router = ref.watch(routerProvider);
     final theme = ref.watch(themeProvider);
     return MaterialApp.router(
