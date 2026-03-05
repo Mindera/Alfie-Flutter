@@ -4,6 +4,7 @@ import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
+import 'package:alfie_flutter/ui/core/ui/product_card/quantity_selector_modal.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/image_utils.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
@@ -80,6 +81,15 @@ class HorizontalProductCard extends StatelessWidget {
                           AppButton.tertiary(
                             leading: AppIcons.chevronDown,
                             size: ButtonSize.small,
+                            onPressed: () {
+                              showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(),
+                                context: context,
+                                builder: (context) {
+                                  return QuantitySelectorModal(item: bagItem);
+                                },
+                              );
+                            },
                           ),
                         ],
                       ),
