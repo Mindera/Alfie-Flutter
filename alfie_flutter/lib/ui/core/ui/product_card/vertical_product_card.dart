@@ -5,6 +5,7 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
+import 'package:alfie_flutter/utils/image_utils.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
@@ -34,15 +35,8 @@ class VerticalProductCard extends StatelessWidget {
             children: [
               AspectRatio(
                 aspectRatio: aspectRatio,
-                child: FadeInImage.assetNetwork(
-                  fadeInDuration: Duration(milliseconds: 300),
-                  placeholder: "assets/images/fallback_image.png",
-                  image: product.colours!.first.media!.first.when(
-                    image: (image) => image.url,
-                    video: (video) => video.sources.first.url,
-                    orElse: () => '',
-                  ),
-                  fit: BoxFit.cover,
+                child: ImageFactory.network(
+                  product.colours!.first.media!.first.firstUrl,
                 ),
               ),
               Column(
