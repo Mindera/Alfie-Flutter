@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/product_card/product_card.dart';
+import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.dart';
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,18 +9,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ProductListingContent extends ConsumerWidget {
   const ProductListingContent({
     super.key,
-    required this.categoryId,
+    required this.id,
     required this.columns,
   });
-  final String categoryId;
+  final ProductListingId id;
 
   final int columns;
   static const ratios = {1: 0.58, 2: 0.48};
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModelState = ref.watch(
-      productListingViewModelProvider(categoryId),
-    );
+    final viewModelState = ref.watch(productListingViewModelProvider(id));
     return viewModelState.when(
       skipLoadingOnRefresh: true,
       skipLoadingOnReload: true,

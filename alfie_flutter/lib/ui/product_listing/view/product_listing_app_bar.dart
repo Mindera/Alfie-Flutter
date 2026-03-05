@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/ui/header.dart';
+import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.dart';
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_view_model.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
@@ -8,15 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProductListingAppBar extends ConsumerWidget {
-  const ProductListingAppBar({super.key, required this.categoryId});
+  const ProductListingAppBar({super.key, required this.id});
 
-  final String categoryId;
+  final ProductListingId id;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productListingTitle = ref.watch(
       productListingViewModelProvider(
-        categoryId,
+        id,
       ).select((s) => s.value?.listing?.title.capitalizeAll()),
     );
     return SliverAppBar(

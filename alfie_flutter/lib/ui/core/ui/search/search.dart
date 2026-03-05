@@ -14,6 +14,9 @@ class Search extends HookWidget {
   ///
   /// Receives the current text value.
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final bool autofocus;
+  final TextEditingController? controller;
 
   static const icon = AppIcons.search;
 
@@ -21,11 +24,15 @@ class Search extends HookWidget {
     super.key,
     this.hintText = 'What are you looking for?',
     this.onChanged,
+    this.autofocus = false,
+    this.onSubmitted,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = useTextEditingController();
+    final TextEditingController controller =
+        this.controller ?? useTextEditingController();
     final FocusNode focusNode = useFocusNode();
 
     // Rebuild the widget when focus changes or text is typed to toggle the clear button.
@@ -44,20 +51,49 @@ class Search extends HookWidget {
       controller: controller,
       focusNode: focusNode,
       onChanged: onChanged,
+      autofocus: autofocus,
+      onFieldSubmitted: onSubmitted,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.zero,
-        fillColor: focusNode.hasFocus
-            ? AppColors.neutral
-            : AppColors.neutral100,
+        hintText: hintText,
+        prefixIcon: const Icon(icon),
+        suffixIcon: showClearButton
+            ? AppButton.tertiary(onPressed: clearInput, leading: AppIcons.clear)
+            : null,
+      ),
+    );
+  }
+}
+
+/// A search input field placeholder button.
+class SearchDummy extends StatelessWidget {
+  final String hintText;
+  final VoidCallback onTap;
+
+  static const icon = AppIcons.search;
+
+  const SearchDummy({
+    super.key,
+    this.hintText = 'What are you looking for?',
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      onTap: onTap,
+      readOnly: true,
+      decoration: InputDecoration(
+        hintText: hintText,
+        prefixIcon: const Icon(icon),
+        fillColor: AppColors.neutral100,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(Spacing.extraExtraSmall),
           borderSide: BorderSide(color: AppColors.neutral100),
         ),
-        hintText: hintText,
-        prefixIcon: Icon(icon),
-        suffixIcon: showClearButton
-            ? AppButton.tertiary(onPressed: clearInput, leading: AppIcons.clear)
-            : null,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Spacing.extraExtraSmall),
+          borderSide: BorderSide(color: AppColors.neutral100),
+        ),
       ),
     );
   }

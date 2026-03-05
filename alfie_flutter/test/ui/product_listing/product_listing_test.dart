@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
+import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -106,7 +107,7 @@ final dummyProducts = [
 ];
 
 void main() {
-  const testCategoryId = 'test-category-123';
+  final testCategoryId = ProductListingId(categoryId: "test-category");
   late MockProductListingViewModel mockViewModel;
   setUp(() {
     HttpOverrides.global = null;
@@ -115,7 +116,7 @@ void main() {
     when(() => mockViewModel.build()).thenAnswer(
       (_) async => ProductListingState(
         params: ProductListingParams(
-          categoryId: testCategoryId,
+          categoryId: testCategoryId.categoryId,
           limit: 10,
           offset: 0,
           sort: null,
@@ -150,8 +151,8 @@ void main() {
                 final theme = ref.watch(themeProvider);
                 return MaterialApp(
                   theme: theme,
-                  home: const Scaffold(
-                    body: ProductListingScreen(categoryId: testCategoryId),
+                  home: Scaffold(
+                    body: ProductListingScreen(id: testCategoryId),
                   ),
                 );
               },
@@ -194,9 +195,9 @@ void main() {
                 final theme = ref.watch(themeProvider);
                 return MaterialApp(
                   theme: theme,
-                  home: const Scaffold(
+                  home: Scaffold(
                     body: ProductListingScreen(
-                      categoryId: testCategoryId,
+                      id: testCategoryId,
                       initialColumns: 1,
                     ),
                   ),

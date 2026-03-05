@@ -1,18 +1,20 @@
 import 'package:alfie_flutter/data/models/product_listing.dart';
 import 'package:alfie_flutter/data/repositories/product_repository.dart';
+import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.dart';
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProductListingViewModel extends AsyncNotifier<ProductListingState> {
-  final String categoryId;
+  final ProductListingId listingId;
   ProductListingSort? _currentSort;
 
-  ProductListingViewModel(this.categoryId);
+  ProductListingViewModel(this.listingId);
 
   @override
   Future<ProductListingState> build() async {
     final params = ProductListingParams(
-      categoryId: categoryId,
+      categoryId: listingId.categoryId,
+      query: listingId.query,
       limit: 10,
       offset: 0,
       sort: _currentSort,
@@ -44,6 +46,6 @@ class ProductListingViewModel extends AsyncNotifier<ProductListingState> {
 }
 
 final productListingViewModelProvider = AsyncNotifierProvider.autoDispose
-    .family<ProductListingViewModel, ProductListingState, String>(
+    .family<ProductListingViewModel, ProductListingState, ProductListingId>(
       ProductListingViewModel.new,
     );

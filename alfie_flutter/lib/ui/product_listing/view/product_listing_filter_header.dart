@@ -4,6 +4,7 @@ import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
+import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.dart';
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_view_model.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +13,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class ProductListingFilterHeader extends ConsumerWidget {
   const ProductListingFilterHeader({
     super.key,
-    required this.categoryId,
+    required this.id,
     required this.onColumnsChanged,
     required this.columns,
   });
 
-  final String categoryId;
+  final ProductListingId id;
   final ValueChanged<int> onColumnsChanged;
   final int columns;
 
@@ -28,7 +29,7 @@ class ProductListingFilterHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final productCount = ref.watch(
       productListingViewModelProvider(
-        categoryId,
+        id,
       ).select((s) => s.value?.listing?.products.length),
     );
     return SliverAppBar(

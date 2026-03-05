@@ -8,7 +8,7 @@ enum AppRoute {
     path: '/home',
     isTab: true,
     icon: AppIcons.home,
-    children: [productDetail],
+    children: [productDetail, search],
   ),
   store(
     path: '/store',
@@ -31,6 +31,7 @@ enum AppRoute {
   ),
   // Sub-pages
   productDetail(path: 'product/:id'),
+  search(path: 'search'),
   components(
     path: 'components',
     children: [buttons, textField, checkboxes, radioButtons, slider],

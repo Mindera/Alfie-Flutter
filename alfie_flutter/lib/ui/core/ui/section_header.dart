@@ -8,7 +8,7 @@ class SectionHeader extends StatelessWidget {
   final String title;
 
   /// The label displayed for the action link (e.g., "See all").
-  final String linkText;
+  final String? linkText;
 
   /// An optional callback triggered when the action link is pressed.
   final VoidCallback? onLinkPressed;
@@ -16,7 +16,7 @@ class SectionHeader extends StatelessWidget {
   const SectionHeader({
     super.key,
     required this.title,
-    required this.linkText,
+    this.linkText,
     this.onLinkPressed,
   });
 
@@ -34,10 +34,11 @@ class SectionHeader extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        GestureDetector(
-          onTap: onLinkPressed,
-          child: Text(linkText, style: context.textTheme.linkMedium),
-        ),
+        if (linkText != null)
+          GestureDetector(
+            onTap: onLinkPressed,
+            child: Text(linkText!, style: context.textTheme.linkMedium),
+          ),
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +35,9 @@ Future<void> main() async {
   log("Starting the application...");
   runApp(const ProviderScope(child: MainApp()));
 
-  // Perform initialization tasks
-  // Here we can load resources, initialize services, etc.
-
   // Remove the splash screen after initialization is complete
   FlutterNativeSplash.remove();
+  log("Running Alfie!");
 }
 
 class MainApp extends ConsumerWidget {
@@ -46,6 +45,13 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Load Persistent Storage Service
+    log("Loading Persistent Storage Service...");
+    final persistentStorageService = ref.watch(
+      persistentStorageServiceProvider,
+    );
+    persistentStorageService.init();
+
     final router = ref.watch(routerProvider);
     final theme = ref.watch(themeProvider);
     return MaterialApp.router(

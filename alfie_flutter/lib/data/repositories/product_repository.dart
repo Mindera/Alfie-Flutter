@@ -127,8 +127,8 @@ final class ProductListingParams {
 
   /// Creates a new [ProductListingParams] instance.
   ProductListingParams({
-    required this.offset,
-    required this.limit,
+    this.offset = 0,
+    this.limit = 10,
     this.categoryId,
     this.query,
     this.sort,
