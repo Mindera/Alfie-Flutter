@@ -43,10 +43,23 @@ class BagScreen extends ConsumerWidget {
                 ? SliverToBoxAdapter(
                     child: const Center(child: Text('Your bag is empty.')),
                   )
-                : SliverList.builder(
+                : SliverList.separated(
                     itemCount: bagItems.length,
                     itemBuilder: (context, index) {
-                      return HorizontalProductCard(bagItem: bagItems[index]);
+                      return HorizontalProductCard(
+                        bagItem: bagItems[index],
+                        onDismiss: (item) {
+                          ref
+                              .read(bagViewModelProvider.notifier)
+                              .removeItem(item.product.id);
+                        },
+                        onSave: (item) {
+                          //TODO Add to wishlist
+                        },
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(height: Spacing.small);
                     },
                   ),
           ),
