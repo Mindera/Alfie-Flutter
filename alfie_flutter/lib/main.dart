@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
+import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,7 @@ class MainApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     final theme = ref.watch(themeProvider);
     return MaterialApp.router(
+      scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
       debugShowCheckedModeBanner: false,
       title: "Alfie",
       theme: theme,
