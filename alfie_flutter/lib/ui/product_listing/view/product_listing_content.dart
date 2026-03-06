@@ -1,6 +1,6 @@
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
-import 'package:alfie_flutter/ui/core/ui/product_card/product_card.dart';
+import 'package:alfie_flutter/ui/core/ui/product_card/vertical_product_card.dart';
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.dart';
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_view_model.dart';
 import 'package:flutter/material.dart';

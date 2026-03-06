@@ -12,9 +12,6 @@ abstract class ImageFactory {
     }
     return LayoutBuilder(
       builder: (context, constraints) => FadeInImage.assetNetwork(
-        imageCacheHeight: constraints.maxHeight.isFinite
-            ? constraints.maxHeight.toInt()
-            : null,
         placeholder: 'assets/images/fallback_image.png',
         image: url,
         fit: BoxFit.cover,
