@@ -82,50 +82,59 @@ class BagScreen extends ConsumerWidget {
                 },
               ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: AppColors.neutral,
-          border: Border(top: BorderSide(color: AppColors.neutral200)),
-        ),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            Spacing.small,
-            Spacing.extraSmall,
-            Spacing.small,
-            Spacing.extraSmall + MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: Spacing.extraSmall,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Total', style: context.textTheme.bodyMediumBold),
-                      Text(
-                        '\$${ref.read(bagViewModelProvider.notifier).total.toStringAsFixed(2)}',
-                        style: context.textTheme.bodyMediumBold,
+
+      bottomNavigationBar: bagItems.isNotEmpty
+          ? Container(
+              decoration: BoxDecoration(
+                color: AppColors.neutral,
+                border: Border(top: BorderSide(color: AppColors.neutral200)),
+              ),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  Spacing.small,
+                  Spacing.extraSmall,
+                  Spacing.small,
+                  Spacing.extraSmall + MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: Spacing.extraSmall,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total',
+                              style: context.textTheme.bodyMediumBold,
+                            ),
+                            Text(
+                              '\$${ref.read(bagViewModelProvider.notifier).total.toStringAsFixed(2)}',
+                              style: context.textTheme.bodyMediumBold,
+                            ),
+                          ],
+                        ),
+                        Text(
+                          "Shipping and taxes are calculated in checkout.",
+                          style: context.textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: AppButton.primary(
+                        label: "Continue",
+                        onPressed: () {},
                       ),
-                    ],
-                  ),
-                  Text(
-                    "Shipping and taxes are calculated in checkout.",
-                    style: context.textTheme.bodySmall,
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(
-                width: double.infinity,
-                child: AppButton.primary(label: "Continue", onPressed: () {}),
-              ),
-            ],
-          ),
-        ),
-      ),
+            )
+          : SizedBox.shrink(),
     );
   }
 }
