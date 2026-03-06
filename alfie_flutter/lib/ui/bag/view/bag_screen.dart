@@ -39,7 +39,16 @@ class BagScreen extends ConsumerWidget {
           horizontal: Spacing.small,
         ).add(EdgeInsets.only(bottom: Spacing.small)),
         child: bagItems.isEmpty
-            ? const Center(child: Text('Your bag is empty.'))
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: Spacing.small,
+                  children: const [
+                    Icon(AppIcons.bag),
+                    Text("Your bag is empty."),
+                  ],
+                ),
+              )
             : ListView.separated(
                 itemCount: bagItems.length,
                 itemBuilder: (context, index) {
