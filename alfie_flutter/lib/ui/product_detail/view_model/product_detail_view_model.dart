@@ -1,4 +1,7 @@
+import 'package:alfie_flutter/data/models/bag_item.dart';
+import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/repositories/product_repository.dart';
+import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,6 +24,12 @@ class ProductDetailViewModel extends Notifier<ProductDetailState> {
   /// Triggers the share dialog for the current product.
   void shareProduct() {
     // TODO: Implement share logic
+  }
+
+  void addToBag(Product product) {
+    ref
+        .read(bagViewModelProvider.notifier)
+        .addItem(BagItem(product: product, quantity: 1));
   }
 }
 
