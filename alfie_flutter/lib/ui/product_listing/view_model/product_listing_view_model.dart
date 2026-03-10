@@ -1,17 +1,18 @@
 import 'package:alfie_flutter/data/models/product_listing.dart';
 import 'package:alfie_flutter/data/repositories/product_repository.dart';
+import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.dart';
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ProductListingViewModel extends AsyncNotifier<ProductListingState> {
+class ProductListingViewModel extends Notifier<ProductListingState> {
   final ProductListingId listingId;
   ProductListingSort? _currentSort;
 
   ProductListingViewModel(this.listingId);
 
   @override
-  Future<ProductListingState> build() async {
+  ProductListingState build() {
     final params = ProductListingParams(
       categoryId: listingId.categoryId,
       query: listingId.query,
@@ -20,32 +21,35 @@ class ProductListingViewModel extends AsyncNotifier<ProductListingState> {
       sort: _currentSort,
     );
 
-    final result = await ref.watch(getProductListingProvider(params).future);
+    final resultAsync = ref.watch(getProductListingProvider(params));
 
-    return ProductListingState(params: params, listing: result);
+    return ProductListingState(
+      params: params,
+      listing: resultAsync,
+      layoutPreference: ref
+          .watch(persistentStorageServiceProvider)
+          .getPlpLayoutPreference(),
+    );
   }
 
-  Future<void> updateSort(ProductListingSort sort) async {
-    if (_currentSort == sort) return;
-
-    _currentSort = sort;
-
-    ref.invalidateSelf();
-
-    await future;
-  }
-
-  Future<void> updateCount() async {
-    ProductListing? listing = state.value?.listing;
+  void updateCount() {
+    ProductListing? listing = state.listing.value;
     listing?.products.removeLast();
-    state = AsyncValue.data(state.value!.copyWith(listing: listing));
-    ref.invalidateSelf();
+    state = state.copyWith(listing: AsyncValue.loading());
 
-    await future;
+    ref.invalidateSelf();
+  }
+
+  void updateLayoutPreference(int columns) async {
+    await ref
+        .read(persistentStorageServiceProvider)
+        .savePlpLayoutPreference(columns);
+
+    state = state.copyWith(layoutPreference: columns);
   }
 }
 
-final productListingViewModelProvider = AsyncNotifierProvider.autoDispose
+final productListingViewModelProvider = NotifierProvider.autoDispose
     .family<ProductListingViewModel, ProductListingState, ProductListingId>(
       ProductListingViewModel.new,
     );

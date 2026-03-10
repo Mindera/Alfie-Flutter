@@ -18,7 +18,7 @@ class ProductListingAppBar extends ConsumerWidget {
     final productListingTitle = ref.watch(
       productListingViewModelProvider(
         id,
-      ).select((s) => s.value?.listing?.title.capitalizeAll()),
+      ).select((s) => s.listing.value?.title.capitalizeAll()),
     );
     return SliverAppBar(
       primary: true,
