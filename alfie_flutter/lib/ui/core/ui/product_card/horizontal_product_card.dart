@@ -8,6 +8,7 @@ import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/ui/core/ui/product_card/quantity_selector_modal.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/image_utils.dart';
+import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -55,94 +56,110 @@ class HorizontalProductCard extends StatelessWidget {
           ),
         ],
       ),
-      child: IntrinsicHeight(
-        child: Row(
-          spacing: Spacing.extraSmall,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: context.mediaQuery.size.width * 0.25,
-              child: AspectRatio(
-                aspectRatio: aspectRatio,
-                child: ImageFactory.network(
-                  bagItem.product.colours!.first.media!.first.firstUrl,
+      child: GestureDetector(
+        onTap: () => context.goToProduct(bagItem.product.id),
+        child: IntrinsicHeight(
+          child: Container(
+            color: AppColors.neutral,
+            child: Row(
+              spacing: Spacing.extraSmall,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: context.mediaQuery.size.width * 0.25,
+                  child: AspectRatio(
+                    aspectRatio: aspectRatio,
+                    child: ImageFactory.network(
+                      bagItem.product.colours!.first.media!.first.firstUrl,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+                Expanded(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  bagItem.product.name.capitalizeAll(),
+                                  style: context.textTheme.bodyMedium,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  'Ref. 0273/393',
+                                  style: labelSmallTextStyle,
+                                ),
+                                Text(
+                                  "Color: ${bagItem.product.colours!.first.name}",
+                                  style: labelSmallTextStyle,
+                                ),
+                                Text(
+                                  "Size: ${bagItem.product.defaultVariant.size?.value}",
+                                  style: labelSmallTextStyle,
+                                ),
+                              ],
+                            ),
+                          ),
+                          AppButton.tertiary(
+                            size: ButtonSize.small,
+                            leading: AppIcons.more,
+                          ),
+                        ],
+                      ),
+                      GestureDetector(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              bagItem.product.name.capitalizeAll(),
-                              style: context.textTheme.bodyMedium,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                            Row(
+                              spacing: Spacing.extraExtraExtraSmall,
+                              children: [
+                                Text("Quantity:"),
+                                Text(bagItem.quantity.toString()),
+                                AppButton.tertiary(
+                                  leading: AppIcons.chevronDown,
+                                  size: ButtonSize.small,
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      shape: const RoundedRectangleBorder(),
+                                      context: context,
+                                      builder: (context) {
+                                        return QuantitySelectorModal(
+                                          item: bagItem,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                            Text('Ref. 0273/393', style: labelSmallTextStyle),
                             Text(
-                              "Color: ${bagItem.product.colours!.first.name}",
-                              style: labelSmallTextStyle,
-                            ),
-                            Text(
-                              "Size: ${bagItem.product.defaultVariant.size?.value}",
-                              style: labelSmallTextStyle,
+                              bagItem
+                                  .product
+                                  .defaultVariant
+                                  .price
+                                  .amount
+                                  .formatted,
+                              style: context.textTheme.bodyMediumBold,
                             ),
                           ],
                         ),
-                      ),
-                      AppButton.tertiary(
-                        size: ButtonSize.small,
-                        leading: AppIcons.more,
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          spacing: Spacing.extraExtraExtraSmall,
-                          children: [
-                            Text("Quantity:"),
-                            Text(bagItem.quantity.toString()),
-                            AppButton.tertiary(
-                              leading: AppIcons.chevronDown,
-                              size: ButtonSize.small,
-                              onPressed: () {
-                                showModalBottomSheet(
-                                  shape: const RoundedRectangleBorder(),
-                                  context: context,
-                                  builder: (context) {
-                                    return QuantitySelectorModal(item: bagItem);
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        Text(
-                          bagItem.product.defaultVariant.price.amount.formatted,
-                          style: context.textTheme.bodyMediumBold,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
