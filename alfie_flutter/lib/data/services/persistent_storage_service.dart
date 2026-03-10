@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/data/models/bag_item.dart';
+import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/models/search_item.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/bag_item_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/brand_adapter.dart';
@@ -33,6 +34,12 @@ abstract interface class IPersistentStorageService {
 
   /// Overwrites the current bag products with a new [products] list.
   Future<void> saveBagItems(List<BagItem> products);
+
+  /// Retrieves saved wishlist products.
+  List<Product> getWishlist();
+
+  /// Overwrites the current wishlist products with a new [products] list.
+  Future<void> saveWishlist(List<Product> products);
 }
 
 /// A Hive-based implementation of [IPersistentStorageService].
@@ -45,6 +52,9 @@ class HiveService implements IPersistentStorageService {
 
   static const String _bagBoxName = 'bagBox';
   static const String _bagKey = 'bag';
+
+  static const String _wishlistBoxName = 'wishlistBox';
+  static const String _wishlistKey = 'wishlist';
 
   @override
   Future<void> init() async {
@@ -70,6 +80,7 @@ class HiveService implements IPersistentStorageService {
     // This should be dynamic because Hive doesn't store the generic type of the box
     await Hive.openBox<List<dynamic>>(_recentSearchesBoxName);
     await Hive.openBox<List<dynamic>>(_bagBoxName);
+    await Hive.openBox<List<dynamic>>(_wishlistBoxName);
   }
 
   void registerSafe<T>(TypeAdapter<T> adapter) {
@@ -81,6 +92,8 @@ class HiveService implements IPersistentStorageService {
   Box<List<dynamic>> get _recentSearchesBox =>
       Hive.box<List<dynamic>>(_recentSearchesBoxName);
   Box<List<dynamic>> get _bagBox => Hive.box<List<dynamic>>(_bagBoxName);
+  Box<List<dynamic>> get _wishlistBox =>
+      Hive.box<List<dynamic>>(_wishlistBoxName);
 
   @override
   List<SearchItem> getSearchHistory() {
@@ -105,6 +118,17 @@ class HiveService implements IPersistentStorageService {
   @override
   Future<void> saveBagItems(List<BagItem> products) async {
     await _bagBox.put(_bagKey, products);
+  }
+
+  @override
+  List<Product> getWishlist() {
+    final data = _wishlistBox.get(_wishlistKey, defaultValue: <Product>[]);
+    return List<Product>.from(data ?? []);
+  }
+
+  @override
+  Future<void> saveWishlist(List<Product> products) async {
+    await _wishlistBox.put(_wishlistKey, products);
   }
 }
 
