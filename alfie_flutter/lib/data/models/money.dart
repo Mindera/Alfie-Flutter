@@ -2,7 +2,7 @@
 ///
 /// Contains the currency code, numeric amount, and a pre-formatted string
 /// representation suitable for display in the UI.
-final class Money {
+class Money {
   /// 3-letter currency code (e.g., "USD", "EUR").
   final String currencyCode;
 

@@ -4,7 +4,7 @@ import 'package:alfie_flutter/data/models/money.dart';
 ///
 /// Contains the current price and an optional previous price used to display
 /// discounts or promotional pricing (e.g., "was $10, now $8").
-final class Price {
+class Price {
   /// The current selling price.
   final Money amount;
 
