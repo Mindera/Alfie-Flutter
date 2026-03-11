@@ -18,7 +18,9 @@ class ProductListingContent extends ConsumerWidget {
   static const ratios = {1: 0.58, 2: 0.48};
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModelState = ref.watch(productListingViewModelProvider(id));
+    final viewModelState = ref.watch(
+      productListingViewModelProvider(id).select((state) => state.listing),
+    );
     return viewModelState.when(
       skipLoadingOnRefresh: true,
       skipLoadingOnReload: true,
@@ -29,8 +31,7 @@ class ProductListingContent extends ConsumerWidget {
       ),
       error: (error, stackTrace) =>
           SliverToBoxAdapter(child: Center(child: Text(error.toString()))),
-      data: (state) {
-        final productListing = state.listing;
+      data: (productListing) {
         if (productListing == null) {
           return Center(child: Text("Not Foumd"));
         }
