@@ -10,14 +10,7 @@ class ProductListingScreen extends HookConsumerWidget {
   final ProductListingId id;
   static const pullToRefreshEdgeOffset = 182.0;
 
-  final int initialColumns;
-
-  const ProductListingScreen({
-    super.key,
-    required this.id,
-    this.controller,
-    this.initialColumns = 2,
-  });
+  const ProductListingScreen({super.key, required this.id, this.controller});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +23,7 @@ class ProductListingScreen extends HookConsumerWidget {
         controller: controller,
         slivers: [
           ProductListingAppBar(id: id),
-          ProductListingView(id: id, initialColumns: initialColumns),
+          ProductListingView(id: id),
         ],
       ),
     );

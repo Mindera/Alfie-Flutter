@@ -19,9 +19,8 @@ import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/pagination.dart';
 import 'package:alfie_flutter/data/repositories/product_repository.dart';
-import 'package:mocktail/mocktail.dart';
 
-import '../../../testing/mocks.dart';
+import '../../../testing/fakes/product_listing_view_model_fale.dart';
 
 final dummyProducts = [
   Product(
@@ -108,20 +107,20 @@ final dummyProducts = [
 
 void main() {
   final testCategoryId = ProductListingId(categoryId: "test-category");
-  late MockProductListingViewModel mockViewModel;
+  late FakeProductListingViewModel fakeProductListingViewModel;
+  late ProductListingState currentState;
   setUp(() {
     HttpOverrides.global = null;
-    mockViewModel = MockProductListingViewModel();
 
-    when(() => mockViewModel.build()).thenAnswer(
-      (_) async => ProductListingState(
-        params: ProductListingParams(
-          categoryId: testCategoryId.categoryId,
-          limit: 10,
-          offset: 0,
-          sort: null,
-        ),
-        listing: ProductListing(
+    currentState = ProductListingState(
+      params: ProductListingParams(
+        categoryId: testCategoryId.categoryId,
+        limit: 10,
+        offset: 0,
+        sort: null,
+      ),
+      listing: AsyncValue.data(
+        ProductListing(
           title: 'Test Category',
           pagination: Pagination(
             total: 2,
@@ -133,18 +132,20 @@ void main() {
           products: dummyProducts,
         ),
       ),
+      layoutPreference: 2,
     );
   });
   group("Product Listing Tests -", () {
     testWidgets(
       'Tapping 1-column button switches grid layout from 2 to 1 column',
       (WidgetTester tester) async {
+        fakeProductListingViewModel = FakeProductListingViewModel(currentState);
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
               productListingViewModelProvider(
                 testCategoryId,
-              ).overrideWith(() => mockViewModel),
+              ).overrideWith(() => fakeProductListingViewModel),
             ],
             child: Consumer(
               builder: (context, ref, child) {
@@ -183,12 +184,16 @@ void main() {
     testWidgets(
       'Tapping 2-column button switches grid layout from 1 to 2 column',
       (WidgetTester tester) async {
+        fakeProductListingViewModel = FakeProductListingViewModel(
+          currentState.copyWith(layoutPreference: 1),
+        );
+
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
               productListingViewModelProvider(
                 testCategoryId,
-              ).overrideWith(() => mockViewModel),
+              ).overrideWith(() => fakeProductListingViewModel),
             ],
             child: Consumer(
               builder: (context, ref, child) {
@@ -196,10 +201,7 @@ void main() {
                 return MaterialApp(
                   theme: theme,
                   home: Scaffold(
-                    body: ProductListingScreen(
-                      id: testCategoryId,
-                      initialColumns: 1,
-                    ),
+                    body: ProductListingScreen(id: testCategoryId),
                   ),
                 );
               },

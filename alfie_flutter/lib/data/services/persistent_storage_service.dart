@@ -40,6 +40,12 @@ abstract interface class IPersistentStorageService {
 
   /// Overwrites the current wishlist products with a new [products] list.
   Future<void> saveWishlist(List<Product> products);
+
+  /// Retrieves saved plp layout preference.
+  int? getPlpLayoutPreference();
+
+  /// Updates the current preference with a new [preference].
+  Future<void> savePlpLayoutPreference(int preference);
 }
 
 /// A Hive-based implementation of [IPersistentStorageService].
@@ -55,6 +61,9 @@ class HiveService implements IPersistentStorageService {
 
   static const String _wishlistBoxName = 'wishlistBox';
   static const String _wishlistKey = 'wishlist';
+
+  static const String _preferencesBoxName = 'preferencesBox';
+  static const String _plpLayoutPreferenceKey = 'plpLayoutKey';
 
   @override
   Future<void> init() async {
@@ -78,9 +87,13 @@ class HiveService implements IPersistentStorageService {
     registerSafe(BagItemAdapter()); // typeId: 15
 
     // This should be dynamic because Hive doesn't store the generic type of the box
+
     await Hive.openBox<List<dynamic>>(_recentSearchesBoxName);
     await Hive.openBox<List<dynamic>>(_bagBoxName);
     await Hive.openBox<List<dynamic>>(_wishlistBoxName);
+
+    await Hive.openBox(_preferencesBoxName);
+    await _preferencesBox.clear();
   }
 
   void registerSafe<T>(TypeAdapter<T> adapter) {
@@ -94,6 +107,7 @@ class HiveService implements IPersistentStorageService {
   Box<List<dynamic>> get _bagBox => Hive.box<List<dynamic>>(_bagBoxName);
   Box<List<dynamic>> get _wishlistBox =>
       Hive.box<List<dynamic>>(_wishlistBoxName);
+  Box get _preferencesBox => Hive.box(_preferencesBoxName);
 
   @override
   List<SearchItem> getSearchHistory() {
@@ -129,6 +143,16 @@ class HiveService implements IPersistentStorageService {
   @override
   Future<void> saveWishlist(List<Product> products) async {
     await _wishlistBox.put(_wishlistKey, products);
+  }
+
+  @override
+  int? getPlpLayoutPreference() {
+    return _preferencesBox.get(_plpLayoutPreferenceKey) as int?;
+  }
+
+  @override
+  Future<void> savePlpLayoutPreference(int preference) async {
+    await _preferencesBox.put(_plpLayoutPreferenceKey, preference);
   }
 }
 
