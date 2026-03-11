@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
@@ -6,6 +7,7 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/ui/core/ui/product_card/horizontal_product_card.dart';
+import 'package:alfie_flutter/ui/core/ui/snack_bar.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +49,19 @@ class BagScreen extends ConsumerWidget {
                       ref
                           .read(bagViewModelProvider.notifier)
                           .removeItem(item.product.id);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        AppSnackBar.build(
+                          context: context,
+                          infoText: "Removed.",
+                          actionText: "Undo",
+                          messengerKey: ref.watch(scaffoldMessengerKeyProvider),
+                          onTapAction: () {
+                            ref
+                                .read(bagViewModelProvider.notifier)
+                                .addItem(item);
+                          },
+                        ),
+                      );
                     },
                     onSave: (item) {
                       //TODO Add to wishlist
