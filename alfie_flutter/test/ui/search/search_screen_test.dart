@@ -1,4 +1,10 @@
+import 'package:alfie_flutter/data/models/pagination.dart';
+import 'package:alfie_flutter/data/models/product_listing.dart';
+import 'package:alfie_flutter/data/repositories/product_repository.dart';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
+import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.dart';
+import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_state.dart';
+import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_view_model.dart';
 import 'package:alfie_flutter/ui/search/view/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,6 +17,8 @@ import 'package:alfie_flutter/ui/search/view/default_search_body.dart';
 import 'package:alfie_flutter/ui/search/view/search_suggestions.dart';
 import 'package:alfie_flutter/ui/product_listing/view/product_listing_view.dart';
 
+import '../../../testing/fakes/product_listing_view_model_fale.dart';
+
 /// 1. Mock the Repository, NOT the Notifier.
 /// This prevents Riverpod Notifier lifecycle errors.
 class MockSearchHistoryRepository extends Mock
@@ -18,6 +26,7 @@ class MockSearchHistoryRepository extends Mock
 
 void main() {
   late MockSearchHistoryRepository mockRepository;
+  final String query = 'sneakers';
 
   setUp(() {
     mockRepository = MockSearchHistoryRepository();
@@ -33,8 +42,28 @@ void main() {
         // Inject the mock repository so the real SearchViewModel uses it
         searchHistoryRepositoryProvider.overrideWithValue(mockRepository),
 
-        // NOTE: If ProductListingView or other child widgets depend on
-        // other providers, you must override them here with mocks as well.
+        productListingViewModelProvider(
+          ProductListingId(query: query),
+        ).overrideWith(
+          () => FakeProductListingViewModel(
+            ProductListingState(
+              params: ProductListingParams(),
+              listing: AsyncValue.data(
+                ProductListing(
+                  title: '',
+                  pagination: Pagination(
+                    offset: 0,
+                    limit: 10,
+                    total: 10,
+                    pages: 10,
+                    page: 0,
+                  ),
+                  products: [],
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
       child: Consumer(
         builder: (context, ref, child) {
@@ -86,7 +115,7 @@ void main() {
         await tester.pumpWidget(createWidgetUnderTest());
 
         // Enter text and simulate submitting the keyboard action
-        await tester.enterText(find.byType(TextField), 'sneakers');
+        await tester.enterText(find.byType(TextField), query);
         await tester.testTextInput.receiveAction(TextInputAction.done);
         await tester.pumpAndSettle();
 
@@ -96,7 +125,7 @@ void main() {
         expect(find.byType(DefaultSearchBody), findsNothing);
 
         // Verify the repository was called to save the search history
-        verify(() => mockRepository.addSearchQuery('sneakers')).called(1);
+        verify(() => mockRepository.addSearchQuery(query)).called(1);
       },
     );
   });
