@@ -9,7 +9,6 @@ import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/routing/route_registry.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:riverpod/src/framework.dart';
 
 import '../../testing/fakes/route_registry_fake.dart';
 import '../../testing/mocks.dart';
