@@ -44,79 +44,62 @@ void main() {
 
   group('WishlistViewModel Tests -', () {
     test('initial state is loaded from the repository', () {
-      // Arrange
       final initialItems = [mockProduct1];
       when(() => mockRepository.getWishlist()).thenReturn(initialItems);
 
-      // Act
       final container = createContainer();
-      // Note: Using the exact provider name from your file (wihslistViewModelProviders)
       final state = container.read(wihslistViewModelProviders);
 
-      // Assert
       expect(state, initialItems);
       verify(() => mockRepository.getWishlist()).called(1);
     });
 
     test('addProduct calls repository and updates state', () async {
-      // Arrange
-      when(() => mockRepository.getWishlist()).thenReturn([]); // Initial state
+      when(() => mockRepository.getWishlist()).thenReturn([]);
       final container = createContainer();
 
       when(() => mockRepository.addToWishlist(any())).thenAnswer((_) async {});
-      when(
-        () => mockRepository.getWishlist(),
-      ).thenReturn([mockProduct1]); // State after addition
+      when(() => mockRepository.getWishlist()).thenReturn([mockProduct1]);
 
-      // Act
       await container
           .read(wihslistViewModelProviders.notifier)
           .addProduct(mockProduct1);
 
-      // Assert
       verify(() => mockRepository.addToWishlist(mockProduct1)).called(1);
       expect(container.read(wihslistViewModelProviders), [mockProduct1]);
     });
 
     test('removeProduct calls repository and updates state', () async {
-      // Arrange
       when(
         () => mockRepository.getWishlist(),
-      ).thenReturn([mockProduct1, mockProduct2]); // Initial
+      ).thenReturn([mockProduct1, mockProduct2]);
       final container = createContainer();
 
       when(
         () => mockRepository.removeFromWishlist('prod-1'),
       ).thenAnswer((_) async {});
-      when(
-        () => mockRepository.getWishlist(),
-      ).thenReturn([mockProduct2]); // State after removal
+      when(() => mockRepository.getWishlist()).thenReturn([mockProduct2]);
 
-      // Act
       await container
           .read(wihslistViewModelProviders.notifier)
           .removeProduct('prod-1');
 
-      // Assert
       verify(() => mockRepository.removeFromWishlist('prod-1')).called(1);
       expect(container.read(wihslistViewModelProviders), [mockProduct2]);
     });
 
     test('clearWishlist calls repository and empties state', () async {
-      // Arrange
       when(
         () => mockRepository.getWishlist(),
-      ).thenReturn([mockProduct1, mockProduct2]); // Initial
+      ).thenReturn([mockProduct1, mockProduct2]);
       final container = createContainer();
 
       when(() => mockRepository.clearWishlists()).thenAnswer((_) async {});
 
-      // Act
       await container.read(wihslistViewModelProviders.notifier).clearWishlist();
 
-      // Assert
       verify(() => mockRepository.clearWishlists()).called(1);
-      // The state is explicitly set to [] in the view model, so we expect isEmpty
+
       expect(container.read(wihslistViewModelProviders), isEmpty);
     });
   });
