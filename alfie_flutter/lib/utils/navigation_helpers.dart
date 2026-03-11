@@ -28,7 +28,11 @@ extension NavigationHelpers on BuildContext {
     );
   }
 
-  void safePop() {
-    if (canPop()) pop();
+  bool safePop() {
+    if (canPop()) {
+      pop();
+      return true;
+    }
+    return false;
   }
 }
