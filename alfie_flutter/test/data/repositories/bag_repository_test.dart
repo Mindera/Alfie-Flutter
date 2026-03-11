@@ -4,18 +4,12 @@ import 'package:alfie_flutter/data/models/product_variant.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-// Adjust these imports to match your actual project structure
 import 'package:alfie_flutter/data/models/bag_item.dart';
-import 'package:alfie_flutter/data/models/product.dart';
-import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
-import 'package:alfie_flutter/data/repositories/bag_repository.dart'; // Assuming this is the path
+import 'package:alfie_flutter/data/repositories/bag_repository.dart';
+
+import '../../../testing/mocks.dart';
 
 // --- Mocks ---
-class MockPersistentStorageService extends Mock
-    implements IPersistentStorageService {}
-
-class MockProduct extends Mock implements Product {}
-
 class MockProductVariant extends Mock implements ProductVariant {}
 
 class MockPrice extends Mock implements Price {}

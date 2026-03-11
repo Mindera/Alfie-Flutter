@@ -1,3 +1,5 @@
+import 'package:alfie_flutter/data/models/product.dart';
+import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
 import 'package:alfie_flutter/ui/nav_bar/view_model/nav_bar_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -15,3 +17,8 @@ class MockNavigationShell extends Mock implements StatefulNavigationShell {
 }
 
 class MockNavBarViewModel extends Mock implements NavBarViewModel {}
+
+class MockPersistentStorageService extends Mock
+    implements IPersistentStorageService {}
+
+class MockProduct extends Mock implements Product {}

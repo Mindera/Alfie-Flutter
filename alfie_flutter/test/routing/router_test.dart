@@ -1,3 +1,5 @@
+import 'package:alfie_flutter/data/models/bag_item.dart';
+import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,8 +8,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/routing/route_registry.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../testing/fakes/route_registry_fake.dart';
+import '../../testing/mocks.dart';
 
 void main() {
   // Helper to pump the app with the specific router config
@@ -26,14 +30,28 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  late ProviderContainer container;
+  late MockPersistentStorageService mockPersistentStorageService;
+  setUp(() {
+    mockPersistentStorageService = MockPersistentStorageService();
+
+    when(
+      () => mockPersistentStorageService.getBagItems(),
+    ).thenReturn(<BagItem>[]);
+
+    container = ProviderContainer(
+      overrides: [
+        // Inject our fake registry
+        routeRegistryProvider.overrideWithValue(const FakeRouteRegistry()),
+        persistentStorageServiceProvider.overrideWithValue(
+          mockPersistentStorageService,
+        ),
+      ],
+    );
+  });
+
   group('Router Configuration -', () {
     testWidgets('Initial route is Home', (tester) async {
-      final container = ProviderContainer(
-        overrides: [
-          // Inject our fake registry
-          routeRegistryProvider.overrideWithValue(const FakeRouteRegistry()),
-        ],
-      );
       addTearDown(container.dispose);
 
       await pumpRouterApp(tester, container);
@@ -43,11 +61,6 @@ void main() {
     });
 
     testWidgets('Can navigate to tabs (Store)', (tester) async {
-      final container = ProviderContainer(
-        overrides: [
-          routeRegistryProvider.overrideWithValue(const FakeRouteRegistry()),
-        ],
-      );
       addTearDown(container.dispose);
 
       await pumpRouterApp(tester, container);
@@ -64,11 +77,6 @@ void main() {
     testWidgets('Can navigate to nested route (Store -> Product Detail)', (
       tester,
     ) async {
-      final container = ProviderContainer(
-        overrides: [
-          routeRegistryProvider.overrideWithValue(const FakeRouteRegistry()),
-        ],
-      );
       addTearDown(container.dispose);
 
       await pumpRouterApp(tester, container);
