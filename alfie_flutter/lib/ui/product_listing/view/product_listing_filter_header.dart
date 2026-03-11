@@ -30,7 +30,7 @@ class ProductListingFilterHeader extends ConsumerWidget {
     final productCount = ref.watch(
       productListingViewModelProvider(
         id,
-      ).select((s) => s.value?.listing?.products.length),
+      ).select((s) => s.listing.value?.products.length),
     );
     return SliverAppBar(
       pinned: true,

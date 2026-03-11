@@ -7,9 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-final navBarViewModelProvider = Provider(
-  (ref) => NavBarViewModel(ref, ref.watch(bagViewModelProvider).length),
-);
+final navBarViewModelProvider = Provider((ref) {
+  final bagItems = ref.watch(bagViewModelProvider);
+
+  final bagCount = bagItems.fold<int>(
+    0,
+    (combinedValue, item) => combinedValue + item.quantity,
+  );
+  return NavBarViewModel(ref, bagCount);
+});
 
 class NavBarViewModel {
   final Ref _ref;
