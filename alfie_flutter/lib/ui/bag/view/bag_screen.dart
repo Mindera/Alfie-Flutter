@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
@@ -21,102 +22,124 @@ class BagScreen extends ConsumerWidget {
     final bagItems = ref.watch(bagViewModelProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            if (!context.safePop()) context.goTo(AppRoute.home);
-          },
-          icon: Icon(AppIcons.back),
-        ),
-        title: Text('Bag', style: context.textTheme.headlineSmall),
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.neutral,
-        surfaceTintColor: AppColors.transparent,
-        elevation: 0,
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: Spacing.small,
-        ).add(EdgeInsets.only(bottom: Spacing.small)),
-        child: bagItems.isEmpty
-            ? const Center(child: Text('Your bag is empty.'))
-            : ListView.separated(
-                itemCount: bagItems.length,
-                itemBuilder: (context, index) {
-                  return HorizontalProductCard(
-                    bagItem: bagItems[index],
-                    onDismiss: (item) {
-                      ref
-                          .read(bagViewModelProvider.notifier)
-                          .removeItem(item.product.id);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        AppSnackBar.build(
-                          context: context,
-                          infoText: "Removed.",
-                          actionText: "Undo",
-                          messengerKey: ref.watch(scaffoldMessengerKeyProvider),
-                          onTapAction: () {
-                            ref
-                                .read(bagViewModelProvider.notifier)
-                                .addItem(item);
-                          },
-                        ),
-                      );
-                    },
-                    onSave: (item) {
-                      //TODO Add to wishlist
-                    },
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(height: Spacing.small);
-                },
-              ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: AppColors.neutral,
-          border: Border(top: BorderSide(color: AppColors.neutral200)),
-        ),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            Spacing.small,
-            Spacing.extraSmall,
-            Spacing.small,
-            Spacing.extraSmall + MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: Spacing.extraSmall,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Total', style: context.textTheme.bodyMediumBold),
-                      Text(
-                        '\$${ref.read(bagViewModelProvider.notifier).total.toStringAsFixed(2)}',
-                        style: context.textTheme.bodyMediumBold,
-                      ),
-                    ],
-                  ),
-                  Text(
-                    "Shipping and taxes are calculated in checkout.",
-                    style: context.textTheme.bodySmall,
-                  ),
+      appBar: _bagAppBar(context),
+      body: _bagBody(bagItems, ref),
+
+      bottomNavigationBar: bagItems.isNotEmpty
+          ? _bagBottomBar(context, ref)
+          : SizedBox.shrink(),
+    );
+  }
+
+  Widget _bagBody(List<BagItem> bagItems, WidgetRef ref) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: Spacing.small,
+      ).add(EdgeInsets.only(bottom: Spacing.small)),
+      child: bagItems.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: Spacing.small,
+                children: const [
+                  Icon(AppIcons.bag),
+                  Text("Your bag is empty."),
                 ],
               ),
-              SizedBox(
-                width: double.infinity,
-                child: AppButton.primary(label: "Continue", onPressed: () {}),
-              ),
-            ],
-          ),
+            )
+          : ListView.separated(
+              itemCount: bagItems.length,
+              itemBuilder: (context, index) {
+                return HorizontalProductCard(
+                  bagItem: bagItems[index],
+                  onDismiss: (item) {
+                    ref
+                        .read(bagViewModelProvider.notifier)
+                        .removeItem(item.product.id);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      AppSnackBar.build(
+                        context: context,
+                        infoText: "Removed.",
+                        actionText: "Undo",
+                        messengerKey: ref.watch(scaffoldMessengerKeyProvider),
+                        onTapAction: () {
+                          ref.read(bagViewModelProvider.notifier).addItem(item);
+                        },
+                      ),
+                    );
+                  },
+                  onSave: (item) {
+                    //TODO Add to wishlist
+                  },
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: Spacing.small);
+              },
+            ),
+    );
+  }
+
+  Widget _bagBottomBar(BuildContext context, WidgetRef ref) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.neutral,
+        border: Border(top: BorderSide(color: AppColors.neutral200)),
+      ),
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(
+          Spacing.small,
+          Spacing.extraSmall,
+          Spacing.small,
+          Spacing.extraSmall + MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: Spacing.extraSmall,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total', style: context.textTheme.bodyMediumBold),
+                    Text(
+                      '\$${ref.read(bagViewModelProvider.notifier).total.toStringAsFixed(2)}',
+                      style: context.textTheme.bodyMediumBold,
+                    ),
+                  ],
+                ),
+                Text(
+                  "Shipping and taxes are calculated in checkout.",
+                  style: context.textTheme.bodySmall,
+                ),
+              ],
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: AppButton.primary(label: "Continue", onPressed: () {}),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  AppBar _bagAppBar(BuildContext context) {
+    return AppBar(
+      leading: IconButton(
+        onPressed: () {
+          if (!context.safePop()) context.goTo(AppRoute.home);
+        },
+        icon: Icon(AppIcons.back),
+      ),
+      title: Text('Bag', style: context.textTheme.headlineSmall),
+      automaticallyImplyLeading: false,
+      backgroundColor: AppColors.neutral,
+      surfaceTintColor: AppColors.transparent,
+      elevation: 0,
     );
   }
 }
