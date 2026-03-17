@@ -36,15 +36,18 @@ class WishlistButton extends ConsumerWidget {
       onPressed: () {
         late String infoText;
         late String? actionText;
+        late VoidCallback action;
 
         if (state.isOnWishlist) {
           viewModel.removeFromWishlist(product);
           infoText = "Removed from Wishlist.";
-          actionText = null;
+          actionText = "Undo";
+          action = () => viewModel.addToWishlist(product);
         } else {
           viewModel.addToWishlist(product);
           infoText = "Added to Wishlist.";
           actionText = "Go to Wishlist";
+          action = () => context.goTo(AppRoute.wishlist);
         }
 
         ScaffoldMessenger.of(context).showSnackBar(
@@ -53,9 +56,7 @@ class WishlistButton extends ConsumerWidget {
             infoText: infoText,
             actionText: actionText,
             messengerKey: ref.watch(scaffoldMessengerKeyProvider),
-            onTapAction: () {
-              context.goTo(AppRoute.wishlist);
-            },
+            onTapAction: action,
           ),
         );
       },

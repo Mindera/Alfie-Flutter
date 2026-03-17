@@ -3,6 +3,7 @@ import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
+import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/ui/product_detail/view/wishlist_button.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/image_utils.dart';
@@ -17,12 +18,14 @@ class VerticalProductCard extends ConsumerWidget {
     required this.product,
     this.aditionalInfo,
     this.label,
+    this.actionButton,
   });
 
   final Product product;
   final String? aditionalInfo;
   static const aspectRatio = 2 / 3;
   final String? label;
+  final AppButton? actionButton;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,6 +65,8 @@ class VerticalProductCard extends ConsumerWidget {
                     Text(aditionalInfo!, style: context.textTheme.labelSmall),
                 ],
               ),
+
+              SizedBox(width: double.maxFinite, child: actionButton),
             ],
           ),
           Align(
