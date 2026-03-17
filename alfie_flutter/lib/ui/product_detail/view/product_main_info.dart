@@ -19,8 +19,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// price, available colors, and call-to-action buttons.
 class ProductMainInfo extends ConsumerWidget {
   final Product product;
+  final bool isOnWishlist;
 
-  const ProductMainInfo({super.key, required this.product});
+  const ProductMainInfo({
+    super.key,
+    required this.product,
+    required this.isOnWishlist,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -81,9 +86,35 @@ class ProductMainInfo extends ConsumerWidget {
               ),
             ),
             AppButton.secondary(
-              leading: AppIcons.wishlist,
+              leading: isOnWishlist ? AppIcons.wishlistFill : AppIcons.wishlist,
               onPressed: () {
-                // TODO: Wire up to ViewModel
+                late String infoText;
+                late String? actionText;
+                if (isOnWishlist) {
+                  ref
+                      .read(productDetailViewModelProvider(product.id).notifier)
+                      .removeFromWishlist(product);
+                  infoText = "Removed from Wishlist.";
+                  actionText = null;
+                } else {
+                  ref
+                      .read(productDetailViewModelProvider(product.id).notifier)
+                      .addToWishlist(product);
+                  infoText = "Added to Wishlist.";
+                  actionText = "Go to Wishlist";
+                }
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  AppSnackBar.build(
+                    context: context,
+                    infoText: infoText,
+                    actionText: actionText,
+                    messengerKey: ref.watch(scaffoldMessengerKeyProvider),
+                    onTapAction: () {
+                      context.goTo(AppRoute.wishlist);
+                    },
+                  ),
+                );
               },
             ),
           ],

@@ -59,4 +59,16 @@ class Product {
     required this.variants,
     this.colours,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Product && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash("Product", id);
+  }
 }
