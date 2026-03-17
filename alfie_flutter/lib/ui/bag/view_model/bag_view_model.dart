@@ -1,5 +1,7 @@
 import 'package:alfie_flutter/data/models/bag_item.dart';
+import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
+import 'package:alfie_flutter/ui/wishlist/view_model/wishlist_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BagViewModel extends Notifier<List<BagItem>> {
@@ -37,6 +39,14 @@ class BagViewModel extends Notifier<List<BagItem>> {
   Future<void> clearBag() async {
     await _repository.clearBag();
     state = [];
+  }
+
+  void addToWishlist(Product product) {
+    ref.read(wishlistViewModelProvider.notifier).addProduct(product);
+  }
+
+  void removeFromWishlist(Product product) {
+    ref.read(wishlistViewModelProvider.notifier).removeProduct(product.id);
   }
 }
 
