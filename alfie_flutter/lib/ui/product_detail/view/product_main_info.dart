@@ -1,13 +1,13 @@
 import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
-import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/ui/core/ui/color_swatch.dart';
 import 'package:alfie_flutter/ui/core/ui/snack_bar.dart';
+import 'package:alfie_flutter/ui/product_detail/view/wishlist_button.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
@@ -85,38 +85,7 @@ class ProductMainInfo extends ConsumerWidget {
                 },
               ),
             ),
-            AppButton.secondary(
-              leading: isOnWishlist ? AppIcons.wishlistFill : AppIcons.wishlist,
-              onPressed: () {
-                late String infoText;
-                late String? actionText;
-                if (isOnWishlist) {
-                  ref
-                      .read(productDetailViewModelProvider(product.id).notifier)
-                      .removeFromWishlist(product);
-                  infoText = "Removed from Wishlist.";
-                  actionText = null;
-                } else {
-                  ref
-                      .read(productDetailViewModelProvider(product.id).notifier)
-                      .addToWishlist(product);
-                  infoText = "Added to Wishlist.";
-                  actionText = "Go to Wishlist";
-                }
-
-                ScaffoldMessenger.of(context).showSnackBar(
-                  AppSnackBar.build(
-                    context: context,
-                    infoText: infoText,
-                    actionText: actionText,
-                    messengerKey: ref.watch(scaffoldMessengerKeyProvider),
-                    onTapAction: () {
-                      context.goTo(AppRoute.wishlist);
-                    },
-                  ),
-                );
-              },
-            ),
+            WishlistButton(product: product),
           ],
         ),
       ],
