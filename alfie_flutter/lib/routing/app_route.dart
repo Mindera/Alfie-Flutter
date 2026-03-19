@@ -21,13 +21,21 @@ enum AppRoute {
     isTab: true,
     icon: AppIcons.wishlist,
     children: [productDetail],
+    needsAuth: true,
   ),
-  bag(path: '/bag', isTab: true, icon: AppIcons.bag, children: [productDetail]),
+  bag(
+    path: '/bag',
+    isTab: true,
+    icon: AppIcons.bag,
+    children: [productDetail],
+    needsAuth: true,
+  ),
   account(
     path: '/account',
     isTab: true,
     icon: AppIcons.account,
     children: [components],
+    needsAuth: true,
   ),
   // Sub-pages
   productDetail(path: 'product/:id'),
@@ -47,12 +55,14 @@ enum AppRoute {
   final bool isTab;
   final List<AppRoute> children;
   final IconData? icon;
+  final bool needsAuth;
 
   const AppRoute({
     required this.path,
     this.isTab = false,
     this.icon,
     this.children = const [],
+    this.needsAuth = false,
   });
 
   static List<AppRoute> get tabs =>
@@ -90,5 +100,10 @@ enum AppRoute {
       }
     }
     return null;
+  }
+
+  /// Finds an AppRoute by its path string
+  static AppRoute? findByPath(String path) {
+    return AppRoute.values.where((route) => route.path == path).firstOrNull;
   }
 }
