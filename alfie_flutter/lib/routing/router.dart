@@ -11,6 +11,7 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
 
 final routerProvider = Provider((ref) {
   final registry = ref.watch(routeRegistryProvider);
+
   // GoRouter configuration
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
@@ -22,6 +23,7 @@ final routerProvider = Provider((ref) {
           return AppRoute.home.path;
         },
       ),
+      ..._buildRecursiveRoutes([AppRoute.login], registry, AppRoute.login.name),
       StatefulShellRoute.indexedStack(
         builder:
             (

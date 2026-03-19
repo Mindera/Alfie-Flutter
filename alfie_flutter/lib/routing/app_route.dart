@@ -32,6 +32,7 @@ enum AppRoute {
   // Sub-pages
   productDetail(path: 'product/:id'),
   search(path: 'search'),
+  login(path: '/login'),
   components(
     path: 'components',
     children: [buttons, textField, checkboxes, radioButtons, slider],
