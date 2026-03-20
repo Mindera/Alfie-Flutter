@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/routing/route_registry.dart';
 import 'package:alfie_flutter/ui/core/ui/scaffold_with_nav_bar.dart';
@@ -11,10 +12,42 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
 
 final routerProvider = Provider((ref) {
   final registry = ref.watch(routeRegistryProvider);
+
+  final authStateNotifier = ValueNotifier<bool>(
+    ref.read(authRepositoryProvider),
+  );
+
+  ref.listen<bool>(authRepositoryProvider, (_, next) {
+    authStateNotifier.value = next;
+  });
+
+  ref.onDispose(authStateNotifier.dispose);
+
   // GoRouter configuration
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: AppRoute.home.path,
+
+    refreshListenable: authStateNotifier,
+
+    // router.dart inside the GoRouter configuration
+    redirect: (context, state) {
+      final isLoggedIn = authStateNotifier.value;
+      final isGoingToLogin = state.matchedLocation == AppRoute.login.path;
+
+      final currentRoute = AppRoute.findByPath(state.matchedLocation);
+      final needsAuth = currentRoute?.needsAuth ?? false;
+
+      if (needsAuth && !isLoggedIn) {
+        return AppRoute.login.path;
+      }
+
+      if (isLoggedIn && isGoingToLogin) {
+        return AppRoute.home.path;
+      }
+
+      return null;
+    },
     routes: [
       GoRoute(
         path: "/",
@@ -22,6 +55,7 @@ final routerProvider = Provider((ref) {
           return AppRoute.home.path;
         },
       ),
+      ..._buildRecursiveRoutes([AppRoute.login], registry, AppRoute.login.name),
       StatefulShellRoute.indexedStack(
         builder:
             (
