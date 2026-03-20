@@ -19,53 +19,82 @@ class WishlistScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(appBar: _wishlistAppBar(context), body: _wishlistBody(ref));
+    return Scaffold(
+      appBar: _wishlistAppBar(context),
+      body: _wishlistBody(context, ref),
+    );
   }
 
-  Widget _wishlistBody(WidgetRef ref) {
+  Widget _wishlistBody(BuildContext context, WidgetRef ref) {
     final wishlist = ref.watch(wishlistViewModelProvider);
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: Spacing.small,
-      ).add(EdgeInsets.only(bottom: Spacing.small)),
+    return wishlist.isEmpty
+        ? Padding(
+            padding: const EdgeInsets.all(Spacing.large),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: Spacing.small,
+                children: [
+                  Icon(AppIcons.wishlist),
+                  Column(
+                    spacing: Spacing.extraExtraSmall,
+                    children: [
+                      Text("Your wishlist is empty."),
+                      Text(
+                        "Tap this icon in the products you like to see them here.",
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.neutral500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )
+        : Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Spacing.small,
+            ).add(EdgeInsets.only(bottom: Spacing.small)),
 
-      child: GridView.builder(
-        itemCount: wishlist.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.43,
-          crossAxisSpacing: Spacing.extraSmall,
-          mainAxisSpacing: Spacing.small,
-        ),
-        itemBuilder: (context, index) {
-          final product = wishlist[index];
-          return VerticalProductCard(
-            product: product,
-            actionButton: AppButton.secondary(
-              label: "Add to Bag",
-              onPressed: () {
-                ref
-                    .watch(bagViewModelProvider.notifier)
-                    .addItem(BagItem(product: product, quantity: 1));
-                ref
-                    .watch(wishlistViewModelProvider.notifier)
-                    .removeProduct(product.id);
+            child: GridView.builder(
+              itemCount: wishlist.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.43,
+                crossAxisSpacing: Spacing.extraSmall,
+                mainAxisSpacing: Spacing.small,
+              ),
+              itemBuilder: (context, index) {
+                final product = wishlist[index];
+                return VerticalProductCard(
+                  product: product,
+                  actionButton: AppButton.secondary(
+                    label: "Add to Bag",
+                    onPressed: () {
+                      ref
+                          .watch(bagViewModelProvider.notifier)
+                          .addItem(BagItem(product: product, quantity: 1));
+                      ref
+                          .watch(wishlistViewModelProvider.notifier)
+                          .removeProduct(product.id);
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  AppSnackBar.build(
-                    context: context,
-                    infoText: "Added to Bag.",
-                    actionText: "Go to Bag",
-                    messengerKey: ref.watch(scaffoldMessengerKeyProvider),
-                    onTapAction: () => context.goTo(AppRoute.bag),
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        AppSnackBar.build(
+                          context: context,
+                          infoText: "Added to Bag.",
+                          actionText: "Go to Bag",
+                          messengerKey: ref.watch(scaffoldMessengerKeyProvider),
+                          onTapAction: () => context.goTo(AppRoute.bag),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
             ),
           );
-        },
-      ),
-    );
   }
 
   AppBar _wishlistAppBar(BuildContext context) {
