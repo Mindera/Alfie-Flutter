@@ -27,5 +27,5 @@ class WishlistViewModel extends Notifier<List<Product>> {
   }
 }
 
-final wihslistViewModelProviders =
+final wishlistViewModelProvider =
     NotifierProvider<WishlistViewModel, List<Product>>(WishlistViewModel.new);

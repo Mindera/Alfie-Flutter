@@ -48,7 +48,7 @@ void main() {
       when(() => mockRepository.getWishlist()).thenReturn(initialItems);
 
       final container = createContainer();
-      final state = container.read(wihslistViewModelProviders);
+      final state = container.read(wishlistViewModelProvider);
 
       expect(state, initialItems);
       verify(() => mockRepository.getWishlist()).called(1);
@@ -62,11 +62,11 @@ void main() {
       when(() => mockRepository.getWishlist()).thenReturn([mockProduct1]);
 
       await container
-          .read(wihslistViewModelProviders.notifier)
+          .read(wishlistViewModelProvider.notifier)
           .addProduct(mockProduct1);
 
       verify(() => mockRepository.addToWishlist(mockProduct1)).called(1);
-      expect(container.read(wihslistViewModelProviders), [mockProduct1]);
+      expect(container.read(wishlistViewModelProvider), [mockProduct1]);
     });
 
     test('removeProduct calls repository and updates state', () async {
@@ -81,11 +81,11 @@ void main() {
       when(() => mockRepository.getWishlist()).thenReturn([mockProduct2]);
 
       await container
-          .read(wihslistViewModelProviders.notifier)
+          .read(wishlistViewModelProvider.notifier)
           .removeProduct('prod-1');
 
       verify(() => mockRepository.removeFromWishlist('prod-1')).called(1);
-      expect(container.read(wihslistViewModelProviders), [mockProduct2]);
+      expect(container.read(wishlistViewModelProvider), [mockProduct2]);
     });
 
     test('clearWishlist calls repository and empties state', () async {
@@ -96,11 +96,11 @@ void main() {
 
       when(() => mockRepository.clearWishlists()).thenAnswer((_) async {});
 
-      await container.read(wihslistViewModelProviders.notifier).clearWishlist();
+      await container.read(wishlistViewModelProvider.notifier).clearWishlist();
 
       verify(() => mockRepository.clearWishlists()).called(1);
 
-      expect(container.read(wihslistViewModelProviders), isEmpty);
+      expect(container.read(wishlistViewModelProvider), isEmpty);
     });
   });
 }
