@@ -35,8 +35,8 @@ class AuthRepository extends Notifier<bool> {
     if (success) ref.invalidateSelf();
   }
 
-  void logout() {
-    _authService.logout();
+  void logout() async {
+    await _authService.logout();
     state = false;
     ref.invalidateSelf();
   }

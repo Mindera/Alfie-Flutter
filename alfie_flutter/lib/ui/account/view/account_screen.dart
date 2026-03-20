@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/ui/account/view/account_menu_item.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
@@ -23,6 +26,13 @@ class AccountScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final AccountMenuItem signOutMenuItem = AccountMenuItem(
+      icon: AppIcons.exit,
+      label: "Sign Out",
+      onTap: () {
+        ref.read(authRepositoryProvider.notifier).logout();
+      },
+    );
     return SafeArea(
       child: Column(
         children: [
@@ -64,7 +74,7 @@ class AccountScreen extends ConsumerWidget {
               spacing: Spacing.medium,
               children: [
                 Column(mainAxisSize: MainAxisSize.min, children: items),
-                AccountMenuItem(icon: AppIcons.exit, label: "Sign Out"),
+                signOutMenuItem,
               ],
             ),
           ),
