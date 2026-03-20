@@ -1,16 +1,17 @@
 import 'package:alfie_flutter/data/models/product.dart';
-import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
+import 'package:alfie_flutter/ui/core/themes/app_button_theme.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
-import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
+import 'package:alfie_flutter/ui/product_detail/view/wishlist_button.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/image_utils.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class VerticalProductCard extends StatelessWidget {
+class VerticalProductCard extends ConsumerWidget {
   const VerticalProductCard({
     super.key,
     required this.product,
@@ -24,7 +25,7 @@ class VerticalProductCard extends StatelessWidget {
   final String? label;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () => context.goToProduct(product.id),
       child: Stack(
@@ -65,9 +66,9 @@ class VerticalProductCard extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.topRight,
-            child: AppButton.tertiary(
-              leading: AppIcons.wishlist,
-              onPressed: () {},
+            child: WishlistButton(
+              product: product,
+              buttonVariant: ButtonVariant.tertiary,
             ),
           ),
           if (label != null)

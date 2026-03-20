@@ -98,7 +98,7 @@ class ProductDetailScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: Spacing.medium,
                       children: [
-                        ProductMainInfo(product: product),
+                        ProductMainInfo(product: product, isOnWishlist: state.isOnWishlist),
 
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

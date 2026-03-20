@@ -1,13 +1,13 @@
 import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
-import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/ui/core/ui/color_swatch.dart';
 import 'package:alfie_flutter/ui/core/ui/snack_bar.dart';
+import 'package:alfie_flutter/ui/product_detail/view/wishlist_button.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
@@ -19,8 +19,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// price, available colors, and call-to-action buttons.
 class ProductMainInfo extends ConsumerWidget {
   final Product product;
+  final bool isOnWishlist;
 
-  const ProductMainInfo({super.key, required this.product});
+  const ProductMainInfo({
+    super.key,
+    required this.product,
+    required this.isOnWishlist,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -80,12 +85,7 @@ class ProductMainInfo extends ConsumerWidget {
                 },
               ),
             ),
-            AppButton.secondary(
-              leading: AppIcons.wishlist,
-              onPressed: () {
-                // TODO: Wire up to ViewModel
-              },
-            ),
+            WishlistButton(product: product),
           ],
         ),
       ],

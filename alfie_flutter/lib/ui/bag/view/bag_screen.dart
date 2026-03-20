@@ -69,7 +69,28 @@ class BagScreen extends ConsumerWidget {
                     );
                   },
                   onSave: (item) {
-                    //TODO Add to wishlist
+                    ref
+                        .read(bagViewModelProvider.notifier)
+                        .addToWishlist(item.product);
+
+                    ref
+                        .read(bagViewModelProvider.notifier)
+                        .removeItem(item.product.id);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      AppSnackBar.build(
+                        context: context,
+                        infoText: "Added to Wishlist.",
+                        actionText: "Undo",
+                        messengerKey: ref.watch(scaffoldMessengerKeyProvider),
+                        onTapAction: () {
+                          ref
+                              .read(bagViewModelProvider.notifier)
+                              .removeFromWishlist(item.product);
+                          ref.read(bagViewModelProvider.notifier).addItem(item);
+                        },
+                      ),
+                    );
                   },
                 );
               },

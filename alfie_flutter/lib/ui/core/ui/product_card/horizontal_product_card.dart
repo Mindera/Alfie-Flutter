@@ -42,7 +42,6 @@ class HorizontalProductCard extends StatelessWidget {
             backgroundColor: AppColors.neutral,
             onPressed: (context) {
               onSave?.call(bagItem);
-              onDismiss?.call(bagItem);
             },
             icon: AppIcons.wishlist,
             label: "Save",
@@ -50,7 +49,9 @@ class HorizontalProductCard extends StatelessWidget {
           SlidableAction(
             backgroundColor: AppColors.error600,
             foregroundColor: AppColors.neutral,
-            onPressed: (context) => onDismiss?.call(bagItem),
+            onPressed: (context) {
+              onDismiss?.call(bagItem);
+            },
             icon: AppIcons.close,
             label: "Remove",
           ),

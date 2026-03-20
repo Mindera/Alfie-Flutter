@@ -25,7 +25,8 @@ class AppButton extends StatelessWidget {
   final ButtonVariant _variant;
   final bool _isIconOnly;
 
-  const AppButton._({
+  const AppButton({
+    super.key,
     this.label,
     this.leading,
     this.trailing,
@@ -51,7 +52,7 @@ class AppButton extends StatelessWidget {
     bool isLoading = false,
     ButtonSize size = ButtonSize.medium,
   }) {
-    return AppButton._(
+    return AppButton(
       label: label,
       leading: leading,
       trailing: trailing,
@@ -74,7 +75,7 @@ class AppButton extends StatelessWidget {
     bool isLoading = false,
     ButtonSize size = ButtonSize.medium,
   }) {
-    return AppButton._(
+    return AppButton(
       label: label,
       leading: leading,
       trailing: trailing,
@@ -98,7 +99,7 @@ class AppButton extends StatelessWidget {
     bool isLoading = false,
     ButtonSize size = ButtonSize.medium,
   }) {
-    return AppButton._(
+    return AppButton(
       label: label,
       leading: leading,
       trailing: trailing,
@@ -122,7 +123,7 @@ class AppButton extends StatelessWidget {
     bool isLoading = false,
     ButtonSize size = ButtonSize.medium,
   }) {
-    return AppButton._(
+    return AppButton(
       label: label,
       leading: leading,
       trailing: trailing,
