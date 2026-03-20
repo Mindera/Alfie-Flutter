@@ -7,7 +7,6 @@ import 'dart:io';
 
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppIcons {
   AppIcons._();
