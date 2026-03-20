@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/ui/account/view/account_menu_item.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
