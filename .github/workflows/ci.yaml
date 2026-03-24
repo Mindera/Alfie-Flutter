@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Environment
-        uses: ./.github/actions/setup-flutter
+        uses: ./.github/actions/setup-env
         env: 
           ENV_DEV: ${{ secrets.ENV_DEV }}
           ENV_PROD: ${{ secrets.ENV_PROD }}
@@ -71,7 +71,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Environment
-        uses: ./.github/actions/setup-flutter
+        uses: ./.github/actions/setup-env
         env: 
           ENV_DEV: ${{ secrets.ENV_DEV }}
           ENV_PROD: ${{ secrets.ENV_PROD }}
