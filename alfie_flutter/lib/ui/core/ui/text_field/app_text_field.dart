@@ -41,12 +41,18 @@ class AppInputField extends HookWidget {
   /// Receives the current text value.
   final ValueChanged<String>? onChanged;
 
+  final String? Function(String?)? validator;
+
+  final TextInputType? keyboardType;
+
   const AppInputField(
     this.label, {
     super.key,
     this.hintText = 'Placeholder',
     this.leadingIcon,
     this.onChanged,
+    this.validator,
+    this.keyboardType,
   });
 
   @override
@@ -83,6 +89,8 @@ class AppInputField extends HookWidget {
                   )
                 : null,
           ),
+          validator: validator,
+          keyboardType: keyboardType,
         ),
       ],
     );
