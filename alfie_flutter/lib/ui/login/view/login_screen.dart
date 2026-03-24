@@ -15,7 +15,9 @@ class LoginScreen extends ConsumerWidget {
           child: AppButton.primary(
             label: "Log in",
             onPressed: () {
-              ref.read(authRepositoryProvider.notifier).login('alfie', 'pass');
+              ref
+                  .read(authRepositoryProvider.notifier)
+                  .login('admin@alfie.com', 'pass');
             },
           ),
         ),

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 abstract interface class IAuthService {
-  bool login(String username, String password);
+  bool login(String email, String password);
   Future<void> logout();
   DateTime? getTokenExpiration();
 }
@@ -19,8 +19,8 @@ class AuthService implements IAuthService {
   });
 
   @override
-  bool login(String username, String password) {
-    final String? accessToken = authBackend.login(username, password);
+  bool login(String email, String password) {
+    final String? accessToken = authBackend.login(email, password);
     if (accessToken == null) return false;
 
     persistentStorageService.saveAccessToken(accessToken);
