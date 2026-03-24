@@ -8,13 +8,12 @@ runs:
       uses: subosito/flutter-action@0ca7a949e71ae44c8e688a51c5e7e93b2c87e295 # v2.22.0
       with:
         channel: stable
-        cache: true    
           
     - name: Create .env files from secrets
       shell: bash
       run: |
-          echo "${{ secrets.ENV_DEV }}" > .env.dev
-          echo "${{ secrets.ENV_PROD }}" > .env.prod
+          echo "${{ env.ENV_DEV }}" > .env.dev
+          echo "${{ env.ENV_PROD }}" > .env.prod
       working-directory: alfie_flutter
 
     - name: Install dependencies

@@ -17,6 +17,9 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup-flutter
+        env: 
+          ENV_DEV: ${{ secrets.ENV_DEV }}
+          ENV_PROD: ${{ secrets.ENV_PROD }}
 
       - name: Linting
         run: flutter analyze
@@ -66,9 +69,12 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-          
+
       - name: Setup Environment
         uses: ./.github/actions/setup-flutter
+        env: 
+          ENV_DEV: ${{ secrets.ENV_DEV }}
+          ENV_PROD: ${{ secrets.ENV_PROD }}
 
       - name: Build Application
         run: ${{ matrix.build-cmd }}
