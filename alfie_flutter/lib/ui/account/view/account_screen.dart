@@ -28,7 +28,10 @@ class AccountScreen extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Hi, Alfie!", style: context.textTheme.displaySmall),
+                    Text(
+                      "Hi, ${state.user?.data.firstName}!",
+                      style: context.textTheme.displaySmall,
+                    ),
                     AppButton.tertiary(
                       leading: AppIcons.profileId,
                       onPressed: () {},

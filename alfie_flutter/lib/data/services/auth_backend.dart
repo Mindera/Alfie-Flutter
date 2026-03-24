@@ -19,8 +19,6 @@ class LocalAuthBackend implements IAuthBackend {
 
   static const String _mockServerSecret = 'super_secret_local_dev_key_123!';
 
-  List<String> validTokens = [];
-
   @override
   String? login(String email, String password) {
     try {
@@ -44,11 +42,6 @@ class LocalAuthBackend implements IAuthBackend {
   @override
   bool verifyToken(String token) {
     try {
-      if (!validTokens.contains(token)) {
-        log("Token rejected: Not found in active sessions.");
-        return false;
-      }
-
       final jwt = JWT.verify(token, SecretKey(_mockServerSecret));
 
       final userId = jwt.payload['sub'] as String?;
@@ -62,7 +55,6 @@ class LocalAuthBackend implements IAuthBackend {
         log(
           "Token rejected: User associated with this token no longer exists.",
         );
-        validTokens.remove(token);
         return false;
       }
 
@@ -70,7 +62,6 @@ class LocalAuthBackend implements IAuthBackend {
       return true;
     } on JWTExpiredException {
       log("Token expired");
-      validTokens.remove(token);
       return false;
     }
   }
@@ -89,7 +80,6 @@ class LocalAuthBackend implements IAuthBackend {
     });
 
     final token = jwt.sign(SecretKey(_mockServerSecret), expiresIn: duration);
-    validTokens.add(token);
 
     return token;
   }

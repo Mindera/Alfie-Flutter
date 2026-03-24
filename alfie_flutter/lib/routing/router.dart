@@ -14,11 +14,11 @@ final routerProvider = Provider((ref) {
   final registry = ref.watch(routeRegistryProvider);
 
   final authStateNotifier = ValueNotifier<bool>(
-    ref.read(authRepositoryProvider),
+    ref.read(authRepositoryProvider) != null,
   );
 
-  ref.listen<bool>(authRepositoryProvider, (_, next) {
-    authStateNotifier.value = next;
+  ref.listen(authRepositoryProvider, (_, next) {
+    authStateNotifier.value = next != null;
   });
 
   ref.onDispose(authStateNotifier.dispose);

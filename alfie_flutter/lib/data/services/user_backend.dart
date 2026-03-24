@@ -13,7 +13,7 @@ abstract interface class IUserBackend {
 class LocalUserBackend implements IUserBackend {
   static final List<User> _mockDb = [
     User(
-      id: uuid.v4(),
+      id: "0a9895ff-8973-4007-b0e0-9533ac82c506",
       data: UserData(
         firstName: 'Alfie',
         lastName: 'Admin',
