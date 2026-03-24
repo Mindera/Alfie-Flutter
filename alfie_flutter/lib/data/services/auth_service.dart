@@ -5,7 +5,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 abstract interface class IAuthService {
   bool login(String username, String password);
-  void logout();
+  Future<void> logout();
   DateTime? getTokenExpiration();
 }
 
@@ -28,8 +28,8 @@ class AuthService implements IAuthService {
   }
 
   @override
-  void logout() {
-    persistentStorageService.deleteAccessToken();
+  Future<void> logout() async {
+    await persistentStorageService.deleteAccessToken();
   }
 
   @override
