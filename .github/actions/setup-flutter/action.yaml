@@ -1,0 +1,26 @@
+name: 'Setup Flutter'
+description: 'Sets up Flutter and creates .env files'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        fetch-depth: 0
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@0ca7a949e71ae44c8e688a51c5e7e93b2c87e295 # v2.22.0
+      with:
+        channel: stable
+        cache: true    
+          
+    - name: Create .env files from secrets
+      run: |
+          echo "${{ secrets.ENV_DEV }}" > .env.dev
+          echo "${{ secrets.ENV_PROD }}" > .env.prod
+      working-directory: alfie_flutter
+
+    - name: Install dependencies
+      run: flutter pub get
+      working-directory: alfie_flutter
