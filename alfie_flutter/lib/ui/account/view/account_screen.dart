@@ -1,5 +1,4 @@
-import 'package:alfie_flutter/data/repositories/auth_repository.dart';
-import 'package:alfie_flutter/ui/account/view/account_menu_item.dart';
+import 'package:alfie_flutter/ui/account/view_model/account_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
@@ -11,26 +10,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class AccountScreen extends ConsumerWidget {
   const AccountScreen({super.key});
 
-  static const List<AccountMenuItem> items = [
-    AccountMenuItem(icon: AppIcons.account, label: "Personal Information"),
-    AccountMenuItem(icon: AppIcons.package, label: "Orders"),
-    AccountMenuItem(icon: AppIcons.returnIcon, label: "Returns & Refunds"),
-    AccountMenuItem(icon: AppIcons.wishlist, label: "Wishlist"),
-    AccountMenuItem(icon: AppIcons.creditCard, label: "Wallet"),
-    AccountMenuItem(icon: AppIcons.home, label: "Promotions"),
-    AccountMenuItem(icon: AppIcons.settings, label: "Settings"),
-    AccountMenuItem(icon: AppIcons.help, label: "Help"),
-  ];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AccountMenuItem signOutMenuItem = AccountMenuItem(
-      icon: AppIcons.exit,
-      label: "Sign Out",
-      onTap: () {
-        ref.read(authRepositoryProvider.notifier).logout();
-      },
-    );
+    final state = ref.watch(accountViewModelProvider);
     return SafeArea(
       child: Column(
         children: [
@@ -71,8 +53,11 @@ class AccountScreen extends ConsumerWidget {
             child: Column(
               spacing: Spacing.medium,
               children: [
-                Column(mainAxisSize: MainAxisSize.min, children: items),
-                signOutMenuItem,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: state.menuItems,
+                ),
+                state.signOutItem,
               ],
             ),
           ),
