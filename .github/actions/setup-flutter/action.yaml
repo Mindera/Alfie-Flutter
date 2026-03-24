@@ -11,11 +11,13 @@ runs:
         cache: true    
           
     - name: Create .env files from secrets
+      shell: bash
       run: |
           echo "${{ secrets.ENV_DEV }}" > .env.dev
           echo "${{ secrets.ENV_PROD }}" > .env.prod
       working-directory: alfie_flutter
 
     - name: Install dependencies
+      shell: bash
       run: flutter pub get
       working-directory: alfie_flutter
