@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
@@ -12,11 +13,22 @@ class AccountScreen extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Center(
-        child: AppButton.primary(
-          label: "Components",
-          onPressed: () {
-            context.goTo(AppRoute.components);
-          },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppButton.primary(
+              label: "Components",
+              onPressed: () {
+                context.goTo(AppRoute.components);
+              },
+            ),
+            AppButton.primary(
+              label: "Log out",
+              onPressed: () {
+                ref.read(authRepositoryProvider.notifier).logout();
+              },
+            ),
+          ],
         ),
       ),
     );
