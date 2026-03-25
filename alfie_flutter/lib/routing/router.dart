@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
+import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/routing/route_registry.dart';
 import 'package:alfie_flutter/ui/core/ui/scaffold_with_nav_bar.dart';
@@ -6,12 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(
-  debugLabel: 'root',
-);
-
 final routerProvider = Provider((ref) {
   final registry = ref.watch(routeRegistryProvider);
+  final navigatorKey = ref.watch(navigatorKeyProvider);
 
   final authStateNotifier = ValueNotifier<bool>(
     ref.read(authRepositoryProvider) != null,
@@ -25,7 +23,7 @@ final routerProvider = Provider((ref) {
 
   // GoRouter configuration
   return GoRouter(
-    navigatorKey: rootNavigatorKey,
+    navigatorKey: navigatorKey,
     initialLocation: AppRoute.home.path,
 
     refreshListenable: authStateNotifier,
