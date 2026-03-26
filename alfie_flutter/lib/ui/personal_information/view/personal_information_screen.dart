@@ -1,21 +1,15 @@
-import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/text_field/app_text_field.dart';
+import 'package:alfie_flutter/ui/personal_information/view_model/personal_information_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PersonalInformationScreen extends ConsumerWidget {
   const PersonalInformationScreen({super.key});
-  static final nameRegex = RegExp(r"^[a-zA-Z\s\-']{2,30}$");
-  static final emailRegex = RegExp(
-    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-  );
-
-  static final phoneRegex = RegExp(r'^\+?[0-9]{7,15}$');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authRepositoryProvider);
+    final user = ref.watch(personalInformationViewModelProvider);
 
     return Scaffold(
       body: Padding(
@@ -28,65 +22,37 @@ class PersonalInformationScreen extends ConsumerWidget {
               children: [
                 AppInputField(
                   "First Name",
-                  hintText: user?.data.firstName ?? "First Name",
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your first name';
-                    }
-
-                    if (!nameRegex.hasMatch(value)) {
-                      return 'Please enter a valid name';
-                    }
-
-                    return null;
-                  },
+                  hintText: "Your First Name",
+                  initialValue: user?.data.firstName,
+                  validator: ref
+                      .read(personalInformationViewModelProvider.notifier)
+                      .validateName,
                 ),
                 AppInputField(
                   "Last Name",
-                  hintText: user?.data.lastName ?? "Last Name",
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your last name';
-                    }
-
-                    if (!nameRegex.hasMatch(value)) {
-                      return 'Please enter a valid name';
-                    }
-
-                    return null;
-                  },
+                  hintText: "Your Last Name",
+                  initialValue: user?.data.lastName,
+                  validator: ref
+                      .read(personalInformationViewModelProvider.notifier)
+                      .validateName,
                 ),
                 AppInputField(
                   "Email",
-                  hintText: user?.data.email ?? "Email",
+                  hintText: "e.g. example@email.com",
+                  initialValue: user?.data.email,
                   keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter an email';
-                    }
-
-                    if (!emailRegex.hasMatch(value)) {
-                      return 'Please enter a valid email';
-                    }
-
-                    return null;
-                  },
+                  validator: ref
+                      .read(personalInformationViewModelProvider.notifier)
+                      .validateEmail,
                 ),
                 AppInputField(
                   "Phone Number",
-                  hintText: user?.data.phoneNumber ?? "Phone Number",
+                  hintText: "e.g. 919 191 191",
+                  initialValue: user?.data.phoneNumber,
                   keyboardType: TextInputType.phone,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a phone number';
-                    }
-
-                    if (!phoneRegex.hasMatch(value)) {
-                      return 'Please enter a valid phone number';
-                    }
-
-                    return null;
-                  },
+                  validator: ref
+                      .read(personalInformationViewModelProvider.notifier)
+                      .validatePhoneNumber,
                 ),
               ],
             ),
