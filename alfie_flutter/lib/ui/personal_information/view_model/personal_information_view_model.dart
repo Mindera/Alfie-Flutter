@@ -1,14 +1,9 @@
 import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
+import 'package:alfie_flutter/utils/app_regex.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PersonalInformationViewModel extends Notifier<User?> {
-  static final nameRegex = RegExp(r"^[a-zA-Z\s\-']{2,30}$");
-  static final emailRegex = RegExp(
-    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-  );
-
-  static final phoneRegex = RegExp(r'^\+?[0-9]{7,15}$');
   @override
   User? build() {
     return ref.watch(authRepositoryProvider);
@@ -20,7 +15,7 @@ class PersonalInformationViewModel extends Notifier<User?> {
   }) {
     return _validate(
       value: value,
-      regex: nameRegex,
+      regex: AppRegex.name,
       errorMessage: errorMessage,
     );
   }
@@ -31,7 +26,7 @@ class PersonalInformationViewModel extends Notifier<User?> {
   }) {
     return _validate(
       value: value,
-      regex: emailRegex,
+      regex: AppRegex.email,
       errorMessage: errorMessage,
     );
   }
@@ -42,7 +37,7 @@ class PersonalInformationViewModel extends Notifier<User?> {
   }) {
     return _validate(
       value: value,
-      regex: phoneRegex,
+      regex: AppRegex.phone,
       errorMessage: errorMessage,
     );
   }
