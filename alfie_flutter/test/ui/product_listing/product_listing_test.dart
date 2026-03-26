@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:alfie_flutter/data/repositories/wishlist_repository.dart';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,10 @@ import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/pagination.dart';
 import 'package:alfie_flutter/data/repositories/product_repository.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../testing/fakes/product_listing_view_model_fale.dart';
+import '../../../testing/mocks.dart';
 
 final dummyProducts = [
   Product(
@@ -109,8 +112,11 @@ void main() {
   final testCategoryId = ProductListingId(categoryId: "test-category");
   late FakeProductListingViewModel fakeProductListingViewModel;
   late ProductListingState currentState;
+  late MockWishlistRepository mockWishlistRepository;
   setUp(() {
     HttpOverrides.global = null;
+    mockWishlistRepository = MockWishlistRepository();
+    when(() => mockWishlistRepository.getWishlist()).thenReturn([]);
 
     currentState = ProductListingState(
       params: ProductListingParams(
@@ -146,6 +152,9 @@ void main() {
               productListingViewModelProvider(
                 testCategoryId,
               ).overrideWith(() => fakeProductListingViewModel),
+              wishlistRepositoryProvider.overrideWithValue(
+                mockWishlistRepository,
+              ),
             ],
             child: Consumer(
               builder: (context, ref, child) {
@@ -194,6 +203,9 @@ void main() {
               productListingViewModelProvider(
                 testCategoryId,
               ).overrideWith(() => fakeProductListingViewModel),
+              wishlistRepositoryProvider.overrideWithValue(
+                mockWishlistRepository,
+              ),
             ],
             child: Consumer(
               builder: (context, ref, child) {
