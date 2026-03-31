@@ -3,8 +3,8 @@ import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginScreen extends ConsumerWidget {
-  const LoginScreen({super.key});
+class SignInScreen extends ConsumerWidget {
+  const SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,7 +17,7 @@ class LoginScreen extends ConsumerWidget {
             onPressed: () {
               ref
                   .read(authRepositoryProvider.notifier)
-                  .login('admin@alfie.com', 'pass');
+                  .signIn('admin@alfie.com', 'pass');
             },
           ),
         ),

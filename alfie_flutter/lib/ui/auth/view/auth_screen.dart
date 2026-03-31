@@ -58,7 +58,7 @@ class AuthScreen extends StatelessWidget {
                   child: AppButton.primary(
                     label: "Sign in",
                     onPressed: () {
-                      context.goTo(AppRoute.login);
+                      context.goTo(AppRoute.signIn);
                     },
                   ),
                 ),

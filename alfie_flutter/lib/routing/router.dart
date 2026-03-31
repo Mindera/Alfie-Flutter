@@ -48,7 +48,16 @@ final routerProvider = Provider((ref) {
           return AppRoute.home.path;
         },
       ),
-      ..._buildRecursiveRoutes([AppRoute.login], registry, AppRoute.login.name),
+      ..._buildRecursiveRoutes(
+        [AppRoute.signIn],
+        registry,
+        AppRoute.signIn.name,
+      ),
+      ..._buildRecursiveRoutes(
+        [AppRoute.createAccount],
+        registry,
+        AppRoute.createAccount.name,
+      ),
       StatefulShellRoute.indexedStack(
         builder:
             (

@@ -17,7 +17,7 @@ class CreateAccountScreen extends ConsumerWidget {
             onPressed: () {
               ref
                   .read(authRepositoryProvider.notifier)
-                  .login('admin@alfie.com', 'pass');
+                  .signIn('admin@alfie.com', 'pass');
             },
           ),
         ),

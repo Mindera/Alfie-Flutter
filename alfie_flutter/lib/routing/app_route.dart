@@ -40,8 +40,10 @@ enum AppRoute {
   // Sub-pages
   productDetail(path: 'product/:id'),
   search(path: 'search'),
-  login(path: '/login'),
+
   auth(path: 'auth'),
+  signIn(path: '/signIn'),
+  createAccount(path: "/createAccount"),
   personalInformation(path: 'personalInformation'),
   components(
     path: 'components',
