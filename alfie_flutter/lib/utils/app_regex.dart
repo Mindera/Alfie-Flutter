@@ -5,4 +5,5 @@ class AppRegex {
     r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
   );
   static final phone = RegExp(r'^\+?[0-9]{7,15}$');
+  static final password = RegExp(r'^.{4,}$');
 }

@@ -15,6 +15,7 @@ final checkBoxThemeProvider = Provider<CheckboxThemeData>(
     fillColor: _resolveFillColor(),
     side: _resolveBorderSide(),
     checkColor: WidgetStateProperty.all(AppColors.neutral),
+    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
   ),
 );
 

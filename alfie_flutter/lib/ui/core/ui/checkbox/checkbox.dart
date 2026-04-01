@@ -35,15 +35,14 @@ class CheckboxTile extends HookWidget {
   /// The initial checkbox value (true, false, or null).
   final bool? initialValue;
 
-  /// Whether the checkbox is in an error state.
-  ///
-  /// When true, prevents toggling and applies error styling to the checkbox.
-  final bool hasError;
-
   /// Called when the checkbox value changes.
   ///
   /// If null, the checkbox is disabled and cannot be toggled.
   final ValueChanged<bool?>? onChanged;
+
+  final bool leftCheckbox;
+
+  final String? Function(bool?)? validator;
 
   const CheckboxTile({
     super.key,
@@ -51,59 +50,82 @@ class CheckboxTile extends HookWidget {
     this.info,
     this.initialValue,
     this.onChanged,
-    this.hasError = false,
+    this.leftCheckbox = false,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    final state = useState<bool?>(initialValue);
-    final isDisabled = onChanged == null;
     final checkboxTheme = context.theme.checkboxTheme;
+    final isDisabled = onChanged == null;
 
-    void handleToggle() {
-      if (hasError || isDisabled) return;
-      // Cycle logic: true/null -> false, false -> true
-      final nextValue = (state.value == false) ? true : false;
-      state.value = nextValue;
-      onChanged?.call(nextValue);
-    }
+    return FormField<bool>(
+      initialValue: initialValue,
+      validator: validator,
+      builder: (FormFieldState<bool> field) {
+        void handleToggle() {
+          if (isDisabled) return;
 
-    return InkWell(
-      onTap: isDisabled ? null : handleToggle,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: Spacing.extraExtraSmall),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Row(
-                spacing: Spacing.extraSmall,
+          final nextValue = (field.value == false) ? true : false;
+
+          field.didChange(nextValue);
+          onChanged?.call(nextValue);
+        }
+
+        final checkBox = SizedBox(
+          width: 24,
+          height: 24,
+          child: Checkbox(
+            value: field.value,
+            tristate: true,
+            onChanged: isDisabled ? null : (_) => handleToggle(),
+            isError: field.hasError,
+          ),
+        );
+
+        return InkWell(
+          onTap: isDisabled ? null : handleToggle,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    label,
-                    style: checkboxTheme.getLabelStyle(
-                      context,
-                      isDisabled,
-                      state.value,
+                  if (leftCheckbox) checkBox,
+                  const SizedBox(width: Spacing.extraSmall),
+
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            label,
+                            style: checkboxTheme.getLabelStyle(
+                              context,
+                              isDisabled,
+                              field.value,
+                            ),
+                          ),
+                        ),
+                        if (info != null)
+                          Text(
+                            info!,
+                            style: checkboxTheme.getInfoStyle(
+                              context,
+                              isDisabled,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
-                  if (info != null)
-                    Text(
-                      info!,
-                      style: checkboxTheme.getInfoStyle(context, isDisabled),
-                    ),
+
+                  if (!leftCheckbox) checkBox,
                 ],
               ),
-            ),
-            Checkbox(
-              value: state.value,
-              tristate: true,
-              onChanged: isDisabled ? null : (_) => handleToggle(),
-              isError: hasError,
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
