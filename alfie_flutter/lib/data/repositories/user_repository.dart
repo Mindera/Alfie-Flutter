@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/data/models/user.dart';
-import 'package:alfie_flutter/data/services/user_backend.dart';
+import 'package:alfie_flutter/data/backend/user_backend.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserRepository {
   final IUserBackend _userBackend;
@@ -27,3 +28,7 @@ class UserRepository {
     return _userBackend.deleteUser(id);
   }
 }
+
+final userRepositoryProvider = Provider<UserRepository>(
+  (ref) => UserRepository(userBackend: ref.watch(userBackendProvider)),
+);

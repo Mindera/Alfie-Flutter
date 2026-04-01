@@ -1,4 +1,4 @@
-import 'package:alfie_flutter/data/repositories/auth_repository.dart';
+import 'package:alfie_flutter/ui/auth/view_model/auth_view_model.dart';
 import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
@@ -79,7 +79,7 @@ class SignInScreen extends ConsumerWidget {
                     label: "Log in",
                     onPressed: () {
                       final success = ref
-                          .read(authRepositoryProvider.notifier)
+                          .read(authViewModelProvider.notifier)
                           .signIn(email, password);
 
                       if (!success) {

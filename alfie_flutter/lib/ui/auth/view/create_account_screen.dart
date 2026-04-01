@@ -1,3 +1,5 @@
+import 'package:alfie_flutter/data/models/user.dart';
+import 'package:alfie_flutter/ui/auth/view_model/auth_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
@@ -120,10 +122,30 @@ class CreateAccountScreen extends HookConsumerWidget {
               final isValid = formKey.currentState!.validate();
               if (!isValid) return;
 
-              debugPrint("Accepted terms: ${acceptedTerms.value}");
-              // ref
-              //     .read(authRepositoryProvider.notifier)
-              //     .signIn('admin@alfie.com', 'pass');
+              try {
+                final newUser = UserData(
+                  firstName: firstName.value!.trim(),
+                  lastName: lastName.value!.trim(),
+                  email: email.value!.trim(),
+                  phoneNumber: phone.value!.trim(),
+                );
+
+                ref.read(authViewModelProvider.notifier).createAccount(newUser);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Account created successfully!'),
+                  ),
+                );
+
+                context.safePop();
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Could not create account: ${e.toString()}'),
+                  ),
+                );
+              }
             },
           ),
         ),
