@@ -1,7 +1,7 @@
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/text_field/app_text_field.dart';
 import 'package:alfie_flutter/ui/personal_information/view_model/personal_information_view_model.dart';
-import 'package:alfie_flutter/utils/build_context_extensions.dart';
+import 'package:alfie_flutter/utils/form_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
