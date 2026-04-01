@@ -48,6 +48,8 @@ class AppInputField extends HookWidget {
 
   final String? initialValue;
 
+  final bool obscureText;
+
   const AppInputField(
     this.label, {
     super.key,
@@ -57,6 +59,7 @@ class AppInputField extends HookWidget {
     this.validator,
     this.keyboardType,
     this.initialValue,
+    this.obscureText = false,
   });
 
   @override
@@ -98,6 +101,7 @@ class AppInputField extends HookWidget {
           ),
           validator: validator,
           keyboardType: keyboardType,
+          obscureText: obscureText,
         ),
       ],
     );

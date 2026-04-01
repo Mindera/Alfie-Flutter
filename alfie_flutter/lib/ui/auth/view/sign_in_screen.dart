@@ -58,6 +58,7 @@ class SignInScreen extends ConsumerWidget {
                   ),
                   AppInputField(
                     "Password",
+                    obscureText: true,
                     onChanged: (value) {
                       password = value;
                     },
