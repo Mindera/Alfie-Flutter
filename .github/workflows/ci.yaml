@@ -35,7 +35,7 @@ jobs:
         working-directory: alfie_flutter
 
       - name: Report LCOV
-        uses: zgosalvez/github-actions-report-lcov@3df2a2c4b06b3c7a4ab97e8936f7a7d62712dad3
+        uses: zgosalvez/github-actions-report-lcov@242badeaf8e48cbad6254e03c270bc80d1a72cc5
         with:
           coverage-files: alfie_flutter/coverage/lcov.info
           artifact-name: code-coverage-report
