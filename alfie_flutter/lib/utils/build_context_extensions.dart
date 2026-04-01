@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/utils/app_regex.dart';
 import 'package:flutter/material.dart';
 
 /// Provides convenient shorthand access to frequently used [InheritedWidget]
@@ -11,4 +12,53 @@ extension AppContextExtension on BuildContext {
 
   /// Shorthand for [MediaQuery.of(context)].
   MediaQueryData get mediaQuery => MediaQuery.of(this);
+
+  String? validateName(
+    String? value, {
+    String errorMessage = 'Please enter a valid name',
+  }) {
+    return _validate(
+      value: value,
+      regex: AppRegex.name,
+      errorMessage: errorMessage,
+    );
+  }
+
+  String? validateEmail(
+    String? value, {
+    String errorMessage = 'Please enter a valid email',
+  }) {
+    return _validate(
+      value: value,
+      regex: AppRegex.email,
+      errorMessage: errorMessage,
+    );
+  }
+
+  String? validatePhoneNumber(
+    String? value, {
+    String errorMessage = 'Please enter a valid phone number',
+  }) {
+    return _validate(
+      value: value,
+      regex: AppRegex.phone,
+      errorMessage: errorMessage,
+    );
+  }
+
+  String? _validate({
+    required String? value,
+    required RegExp regex,
+    required String errorMessage,
+  }) {
+    if (value == null || value.isEmpty) {
+      return errorMessage;
+    }
+
+    if (!regex.hasMatch(value)) {
+      return errorMessage;
+    }
+
+    return null;
+  }
 }
