@@ -23,7 +23,7 @@ class LocalAuthBackend implements IAuthBackend {
       return _generateJwt(
         userId: '1',
         username: username,
-        duration: Duration(seconds: 30),
+        duration: Duration(minutes: 30),
       );
     }
     return null;
