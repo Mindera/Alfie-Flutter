@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -41,17 +42,28 @@ class AppInputField extends HookWidget {
   /// Receives the current text value.
   final ValueChanged<String>? onChanged;
 
+  final String? Function(String?)? validator;
+
+  final TextInputType? keyboardType;
+
+  final String? initialValue;
+
   const AppInputField(
     this.label, {
     super.key,
     this.hintText = 'Placeholder',
     this.leadingIcon,
     this.onChanged,
+    this.validator,
+    this.keyboardType,
+    this.initialValue,
   });
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = useTextEditingController();
+    final TextEditingController controller = useTextEditingController(
+      text: initialValue,
+    );
     final FocusNode focusNode = useFocusNode();
 
     useListenable(Listenable.merge([controller, focusNode]));
@@ -74,15 +86,18 @@ class AppInputField extends HookWidget {
           focusNode: focusNode,
           onChanged: onChanged,
           decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: Spacing.extraSmall),
             hintText: hintText,
             prefixIcon: leadingIcon != null ? Icon(leadingIcon) : null,
             suffixIcon: showClearButton
-                ? IconButton(
-                    icon: const Icon(AppIcons.clear),
+                ? AppButton.tertiary(
+                    leading: AppIcons.clear,
                     onPressed: clearInput,
                   )
                 : null,
           ),
+          validator: validator,
+          keyboardType: keyboardType,
         ),
       ],
     );
