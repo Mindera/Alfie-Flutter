@@ -27,6 +27,7 @@ class AccountViewModel extends Notifier<AccountState> {
           ref.read(authRepositoryProvider.notifier).logout();
         },
       ),
+      user: ref.watch(authRepositoryProvider),
     );
   }
 }

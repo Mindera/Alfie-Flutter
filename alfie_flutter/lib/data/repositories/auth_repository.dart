@@ -1,43 +1,41 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/services/auth_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AuthRepository extends Notifier<bool> {
+class AuthRepository extends Notifier<User?> {
   late IAuthService _authService;
   Timer? _timer;
 
   @override
-  bool build() {
+  User? build() {
     _authService = ref.watch(authServiceProvider);
 
     _timer?.cancel();
 
     final expiration = _authService.getTokenExpiration();
     if (expiration == null) {
-      return false;
+      return null;
     }
 
     final now = DateTime.now();
     if (expiration.isAfter(now)) {
       _timer = Timer(expiration.difference(now), () => ref.invalidateSelf());
-      return true;
     }
-
-    _authService.logout();
-    ref.onDispose(() => _timer?.cancel());
-    return false;
+    final user = _authService.getCurrentUser();
+    log("User: ${user?.id ?? 'null'}");
+    return user;
   }
 
-  void login(String username, String password) {
-    final success = _authService.login(username, password);
-    state = success;
+  void login(String email, String password) {
+    final success = _authService.login(email, password);
     if (success) ref.invalidateSelf();
   }
 
   void logout() async {
     await _authService.logout();
-    state = false;
     ref.invalidateSelf();
   }
 }
