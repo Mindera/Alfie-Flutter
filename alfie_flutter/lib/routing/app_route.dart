@@ -34,13 +34,14 @@ enum AppRoute {
     path: '/account',
     isTab: true,
     icon: AppIcons.account,
-    children: [components],
+    children: [components, personalInformation],
     needsAuth: true,
   ),
   // Sub-pages
   productDetail(path: 'product/:id'),
   search(path: 'search'),
   login(path: '/login'),
+  personalInformation(path: 'personalInformation'),
   components(
     path: 'components',
     children: [buttons, textField, checkboxes, radioButtons, slider],
