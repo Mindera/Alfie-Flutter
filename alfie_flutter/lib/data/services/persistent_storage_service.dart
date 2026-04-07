@@ -46,6 +46,15 @@ abstract interface class IPersistentStorageService {
 
   /// Updates the current preference with a new [preference].
   Future<void> savePlpLayoutPreference(int preference);
+
+  /// Retrieves saved authentication access token.
+  String? getAccessToken();
+
+  /// Updates the current access token with a new [token].
+  Future<void> saveAccessToken(String token);
+
+  /// Deletes the current access token
+  Future<void> deleteAccessToken();
 }
 
 /// A Hive-based implementation of [IPersistentStorageService].
@@ -64,6 +73,9 @@ class HiveService implements IPersistentStorageService {
 
   static const String _preferencesBoxName = 'preferencesBox';
   static const String _plpLayoutPreferenceKey = 'plpLayoutKey';
+
+  static const String _authBoxName = 'authBox';
+  static const String _accessTokenKey = 'accessTokenKey';
 
   @override
   Future<void> init() async {
@@ -91,9 +103,8 @@ class HiveService implements IPersistentStorageService {
     await Hive.openBox<List<dynamic>>(_recentSearchesBoxName);
     await Hive.openBox<List<dynamic>>(_bagBoxName);
     await Hive.openBox<List<dynamic>>(_wishlistBoxName);
-
     await Hive.openBox(_preferencesBoxName);
-    await _preferencesBox.clear();
+    await Hive.openBox(_authBoxName);
   }
 
   void registerSafe<T>(TypeAdapter<T> adapter) {
@@ -108,6 +119,7 @@ class HiveService implements IPersistentStorageService {
   Box<List<dynamic>> get _wishlistBox =>
       Hive.box<List<dynamic>>(_wishlistBoxName);
   Box get _preferencesBox => Hive.box(_preferencesBoxName);
+  Box get _authBox => Hive.box(_authBoxName);
 
   @override
   List<SearchItem> getSearchHistory() {
@@ -153,6 +165,21 @@ class HiveService implements IPersistentStorageService {
   @override
   Future<void> savePlpLayoutPreference(int preference) async {
     await _preferencesBox.put(_plpLayoutPreferenceKey, preference);
+  }
+
+  @override
+  String? getAccessToken() {
+    return _authBox.get(_accessTokenKey) as String?;
+  }
+
+  @override
+  Future<void> saveAccessToken(String token) async {
+    await _authBox.put(_accessTokenKey, token);
+  }
+
+  @override
+  Future<void> deleteAccessToken() async {
+    await _authBox.clear();
   }
 }
 
