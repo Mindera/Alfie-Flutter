@@ -62,6 +62,7 @@ class CheckboxTile extends HookWidget {
     return FormField<bool>(
       initialValue: initialValue,
       validator: validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       builder: (FormFieldState<bool> field) {
         void handleToggle() {
           if (isDisabled) return;
