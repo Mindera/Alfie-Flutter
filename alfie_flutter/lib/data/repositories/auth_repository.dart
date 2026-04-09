@@ -29,8 +29,8 @@ class AuthRepository extends Notifier<User?> {
     return user;
   }
 
-  void login(String email, String password) {
-    final success = _authService.login(email, password);
+  void signIn(String email, String password) {
+    final success = _authService.signIn(email, password);
     if (success) ref.invalidateSelf();
   }
 

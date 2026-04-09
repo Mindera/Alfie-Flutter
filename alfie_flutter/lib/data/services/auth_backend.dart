@@ -7,7 +7,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 abstract interface class IAuthBackend {
   /// Returns Access token if successful and null if not
-  String? login(String email, String password);
+  String? signIn(String email, String password);
 
   bool verifyToken(String token);
 }
@@ -20,13 +20,13 @@ class LocalAuthBackend implements IAuthBackend {
   static const String _mockServerSecret = 'super_secret_local_dev_key_123!';
 
   @override
-  String? login(String email, String password) {
+  String? signIn(String email, String password) {
     try {
       final users = _userBackend.getAllUsers();
       final user = users.firstWhere((u) => u.data.email == email);
 
       if (password == 'pass') {
-        log("Logged in user: ${user.data.email}");
+        log("Signed in user: ${user.data.email}");
         return _generateJwt(
           userId: user.id,
           email: user.data.firstName,
@@ -34,7 +34,7 @@ class LocalAuthBackend implements IAuthBackend {
         );
       }
     } catch (e) {
-      log("Login failed: User not found or incorrect credentials.");
+      log("Sign In failed: User not found or incorrect credentials.");
     }
     return null;
   }

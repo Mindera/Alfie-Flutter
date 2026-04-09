@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
 import 'package:alfie_flutter/ui/nav_bar/view_model/nav_bar_view_model.dart';
@@ -30,6 +31,7 @@ void main() {
       overrides: [
         routerProvider.overrideWithValue(mockRouter),
         bagViewModelProvider.overrideWithBuild((ref, viewModel) => []),
+        authRepositoryProvider.overrideWithBuild((ref, authRepository) => null),
       ],
     );
   });
