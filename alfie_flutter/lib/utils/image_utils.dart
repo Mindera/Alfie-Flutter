@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
@@ -11,17 +13,27 @@ abstract class ImageFactory {
       );
     }
     return LayoutBuilder(
-      builder: (context, constraints) => FadeInImage.assetNetwork(
-        placeholder: 'assets/images/fallback_image.png',
-        image: url,
-        fit: BoxFit.cover,
-        imageErrorBuilder: (context, error, stackTrace) {
-          return Image.asset(
-            'assets/images/fallback_image.png',
-            fit: BoxFit.cover,
-          );
-        },
-      ),
+      builder: (context, constraints) {
+        bool isPortrait = constraints.maxHeight > constraints.maxWidth;
+
+        return FadeInImage.assetNetwork(
+          placeholder: 'assets/images/fallback_image.png',
+          image: url,
+          fit: BoxFit.cover,
+          imageCacheHeight: isPortrait
+              ? max(constraints.maxHeight.toInt(), 600)
+              : null,
+          imageCacheWidth: !isPortrait
+              ? max(constraints.maxWidth.toInt(), 600)
+              : null,
+          imageErrorBuilder: (context, error, stackTrace) {
+            return Image.asset(
+              'assets/images/fallback_image.png',
+              fit: BoxFit.cover,
+            );
+          },
+        );
+      },
     );
   }
 

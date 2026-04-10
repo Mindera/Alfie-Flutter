@@ -35,15 +35,15 @@ class HomeState {
 
   /// Product categories displayed in the category carousel.
   final List<String> categories = const [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
+    "Category A",
+    "Category B",
+    "Category C",
+    "Category D",
+    "Category E",
+    "Category F",
+    "Category G",
+    "Category H",
+    "Category I",
   ];
 
   /// Promotional banners displayed in the promotion gallery.
