@@ -53,8 +53,7 @@ jobs:
           api-level: 30
           arch: x86_64
           script: |
-            cd alfie_flutter
-            flutter test integration_test --tags=smoke
+            cd alfie_flutter && flutter test integration_test
 
       - uses: futureware-tech/simulator-action@e89aa8f93d3aec35083ff49d2854d07f7186f7f5
         if: matrix.platform == 'ios'

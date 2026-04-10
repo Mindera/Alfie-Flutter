@@ -55,8 +55,7 @@ jobs:
           api-level: 30
           arch: x86_64
           script: |
-            cd alfie_flutter
-            flutter test integration_test --tags=smoke
+            cd alfie_flutter && flutter test integration_test --tags=smoke
 
       - name: Report LCOV
         uses: zgosalvez/github-actions-report-lcov@242badeaf8e48cbad6254e03c270bc80d1a72cc5
