@@ -39,6 +39,13 @@ jobs:
           ENV_DEV: ${{ secrets.ENV_DEV }}
           ENV_PROD: ${{ secrets.ENV_PROD }}
 
+      - name: Enable KVM
+        if: matrix.platform == 'Android'
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
       - name: Run Android Integration Tests 
         if: matrix.platform == 'Android'
         uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a
