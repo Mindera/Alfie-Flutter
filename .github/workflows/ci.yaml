@@ -34,6 +34,14 @@ jobs:
         run: ./test_coverage.sh
         working-directory: alfie_flutter
 
+      - name: Run Smoke Integration Tests
+        uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a
+        with:
+          api-level: 30
+          script: |
+            cd alfie_flutter
+            flutter test integration_test --tags=smoke
+
       - name: Report LCOV
         uses: zgosalvez/github-actions-report-lcov@242badeaf8e48cbad6254e03c270bc80d1a72cc5
         with:
@@ -42,46 +50,3 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           working-directory: alfie_flutter
           genhtml-ignore-errors: inconsistent,inconsistent
-
-  build:
-    name: Build ${{ matrix.platform }}
-    if: github.event_name == 'pull_request'
-    needs: test-and-lint
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: Android
-            os: ubuntu-latest
-            build-cmd: flutter build apk --release
-            artifact-path: alfie_flutter/build/app/outputs/flutter-apk/app-release.apk
-            artifact-name: android-apk
-
-          - platform: iOS
-            os: macos-latest
-            build-cmd: flutter build ipa --release --no-codesign
-            artifact-path: alfie_flutter/build/ios/archive/Runner.xcarchive
-            artifact-name: ios-build-archive
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 0
-
-      - name: Setup Environment
-        uses: ./.github/actions/setup-env
-        env: 
-          ENV_DEV: ${{ secrets.ENV_DEV }}
-          ENV_PROD: ${{ secrets.ENV_PROD }}
-
-      - name: Build Application
-        run: ${{ matrix.build-cmd }}
-        working-directory: alfie_flutter
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
-        with:
-          name: ${{ matrix.artifact-name }}
-          path: ${{ matrix.artifact-path }}
