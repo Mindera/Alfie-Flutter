@@ -66,7 +66,7 @@ class WishlistScreen extends ConsumerWidget {
                 crossAxisSpacing: Spacing.extraSmall,
                 mainAxisSpacing: Spacing.small,
               ),
-              itemBuilder: (context, index) {
+              itemBuilder: (_, index) {
                 final product = wishlist[index];
                 return VerticalProductCard(
                   product: product,
