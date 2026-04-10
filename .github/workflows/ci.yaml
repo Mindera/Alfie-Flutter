@@ -7,46 +7,7 @@ on:
 
 jobs:
   test-and-lint:
-    name: Test & Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 0
-
-      - name: Setup Environment
-        uses: ./.github/actions/setup-env
-        env: 
-          ENV_DEV: ${{ secrets.ENV_DEV }}
-          ENV_PROD: ${{ secrets.ENV_PROD }}
-
-      - name: Linting
-        run: flutter analyze
-        working-directory: alfie_flutter
-
-      - name: Setup LCOV
-        uses: hrishikesh-kadam/setup-lcov@6c1aa0cc9e1c02f9f58f01ac599f1064ccc83470
-        with:
-          ref: HEAD
-
-      - name: Run tests
-        run: ./test_coverage.sh
-        working-directory: alfie_flutter
-
-      - name: Run Smoke Integration Tests
-        uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a
-        with:
-          api-level: 30
-          script: |
-            cd alfie_flutter
-            flutter test integration_test --tags=smoke
-
-      - name: Report LCOV
-        uses: zgosalvez/github-actions-report-lcov@242badeaf8e48cbad6254e03c270bc80d1a72cc5
-        with:
-          coverage-files: alfie_flutter/coverage/lcov.info
-          artifact-name: code-coverage-report
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: alfie_flutter
-          genhtml-ignore-errors: inconsistent,inconsistent
+    uses: ./.github/workflows/test-and-lint.yaml
+    secrets:
+      ENV_DEV: ${{ secrets.ENV_DEV }}
+      ENV_PROD: ${{ secrets.ENV_PROD }}
