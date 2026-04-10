@@ -16,6 +16,18 @@ extension NavigationHelpers on BuildContext {
     go(goToPath);
   }
 
+  /// Pushes a route onto the stack instead of replacing the current state
+  void pushTo(AppRoute target, {Map<String, dynamic> params = const {}}) {
+    String pushPath = target.fullPath;
+    for (String parameter in params.keys) {
+      pushPath = pushPath.replaceFirst(
+        parameter,
+        params[parameter]!,
+      ); // Fixed assignment
+    }
+    push(pushPath);
+  }
+
   void goToProduct(String productId) {
     // Get the current base path
     final currentPath = path;

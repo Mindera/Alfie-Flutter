@@ -1,20 +1,24 @@
-import 'package:alfie_flutter/ui/personal_information/view_model/personal_information_view_model.dart';
+import 'package:alfie_flutter/utils/form_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+class MockBuildContext extends Mock implements BuildContext {}
 
 void main() {
-  late PersonalInformationViewModel viewModel;
+  late MockBuildContext mockContext;
 
   setUp(() {
-    viewModel = PersonalInformationViewModel();
+    mockContext = MockBuildContext();
   });
 
-  group('PersonalInformationViewModel Validation Tests', () {
+  group('FormUtils Validation Tests', () {
     // --- Name Validation ---
     group('validateName', () {
       test('should return null when a valid name is provided', () {
         const validName = 'John Doe';
 
-        final result = viewModel.validateName(validName);
+        final result = mockContext.validateName(validName);
 
         expect(result, isNull);
       });
@@ -22,7 +26,7 @@ void main() {
       test('should return error message when an invalid name is provided', () {
         const invalidName = 'J4359';
 
-        final result = viewModel.validateName(invalidName);
+        final result = mockContext.validateName(invalidName);
 
         expect(result, 'Please enter a valid name');
       });
@@ -33,7 +37,7 @@ void main() {
       test('should return null when a valid email is provided', () {
         const validEmail = 'test.user@example.com';
 
-        final result = viewModel.validateEmail(validEmail);
+        final result = mockContext.validateEmail(validEmail);
 
         expect(result, isNull);
       });
@@ -41,7 +45,7 @@ void main() {
       test('should return error message when an invalid email is provided', () {
         const invalidEmail = 'test.user@invalid'; // Missing domain extension
 
-        final result = viewModel.validateEmail(invalidEmail);
+        final result = mockContext.validateEmail(invalidEmail);
 
         expect(result, 'Please enter a valid email');
       });
@@ -52,7 +56,7 @@ void main() {
       test('should return null when a valid phone number is provided', () {
         const validPhone = '+1234567890';
 
-        final result = viewModel.validatePhoneNumber(validPhone);
+        final result = mockContext.validatePhoneNumber(validPhone);
 
         expect(result, isNull);
       });
@@ -62,7 +66,7 @@ void main() {
         () {
           const invalidPhone = '12345'; // Too short (min 7 digits)
 
-          final result = viewModel.validatePhoneNumber(invalidPhone);
+          final result = mockContext.validatePhoneNumber(invalidPhone);
 
           expect(result, 'Please enter a valid phone number');
         },
