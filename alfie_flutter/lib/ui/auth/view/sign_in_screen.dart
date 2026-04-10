@@ -12,13 +12,15 @@ import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/form_utils.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SignInScreen extends ConsumerWidget {
+class SignInScreen extends HookConsumerWidget {
   const SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = useMemoized(() => GlobalKey<FormState>());
     String email = '';
     String password = '';
 
@@ -35,71 +37,81 @@ class SignInScreen extends ConsumerWidget {
         automaticallyImplyActions: false,
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(Spacing.small),
-        child: Form(
-          autovalidateMode: AutovalidateMode.onUnfocus,
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Padding(
+          padding: const EdgeInsets.all(Spacing.small),
+          child: Form(
+            key: formKey,
+            autovalidateMode: AutovalidateMode.onUnfocus,
 
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                spacing: Spacing.medium,
-                children: [
-                  AppInputField(
-                    "Email",
-                    keyboardType: TextInputType.emailAddress,
-                    validator: context.validateEmail,
-                    onChanged: (value) {
-                      email = value;
-                    },
-                  ),
-                  AppInputField(
-                    "Password",
-                    obscureText: true,
-                    onChanged: (value) {
-                      password = value;
-                    },
-                  ),
-                  GestureDetector(
-                    child: Text(
-                      "Forgot password?",
-                      style: context.textTheme.linkMedium,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: Spacing.medium,
+                  children: [
+                    AppInputField(
+                      "Email",
+                      keyboardType: TextInputType.emailAddress,
+                      validator: context.validateEmail,
+                      onChanged: (value) {
+                        email = value;
+                      },
                     ),
-                    onTap: () {},
-                  ),
-                ],
-              ),
-              SafeArea(
-                child: SizedBox(
-                  width: double.maxFinite,
-                  child: AppButton.primary(
-                    label: "Log in",
-                    onPressed: () {
-                      final success = ref
-                          .read(authViewModelProvider.notifier)
-                          .signIn(email, password);
+                    AppInputField(
+                      "Password",
+                      obscureText: true,
+                      onChanged: (value) {
+                        password = value;
+                      },
+                      validator: context.validatePassword,
+                    ),
+                    GestureDetector(
+                      child: Text(
+                        "Forgot password?",
+                        style: context.textTheme.linkMedium,
+                      ),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+                SafeArea(
+                  child: SizedBox(
+                    width: double.maxFinite,
+                    child: AppButton.primary(
+                      label: "Log in",
+                      onPressed: () {
+                        if (formKey.currentState == null) return;
 
-                      if (!success) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          AppSnackBar.build(
-                            context: context,
-                            infoText: 'Invalid email or password',
-                            messengerKey: ref.watch(
-                              scaffoldMessengerKeyProvider,
+                        if (!formKey.currentState!.validate()) return;
+
+                        final success = ref
+                            .read(authViewModelProvider.notifier)
+                            .signIn(email, password);
+
+                        if (!success) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            AppSnackBar.build(
+                              context: context,
+                              infoText: 'Invalid email or password',
+                              messengerKey: ref.watch(
+                                scaffoldMessengerKeyProvider,
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        context.goTo(AppRoute.account);
-                      }
-                    },
+                          );
+                        } else {
+                          context.goTo(AppRoute.account);
+                        }
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
