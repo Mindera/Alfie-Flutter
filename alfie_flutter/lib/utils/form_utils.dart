@@ -13,6 +13,27 @@ extension FormUtils on BuildContext {
     );
   }
 
+  String? validatePassword(
+    String? value, {
+    String errorMessage = 'Password must be at least 4 characters',
+  }) {
+    return _validate(
+      value: value,
+      regex: AppRegex.password,
+      errorMessage: errorMessage,
+    );
+  }
+
+  String? validateCheckbox(
+    bool? value, {
+    String errorMessage = 'This field is required',
+  }) {
+    if (value != true) {
+      return errorMessage;
+    }
+    return null;
+  }
+
   String? validateEmail(
     String? value, {
     String errorMessage = 'Please enter a valid email',

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:alfie_flutter/data/services/user_backend.dart';
+import 'package:alfie_flutter/data/backend/user_backend.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
