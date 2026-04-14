@@ -1,9 +1,7 @@
 import 'package:alfie_flutter/utils/form_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
-class MockBuildContext extends Mock implements BuildContext {}
+import '../../testing/mocks.dart';
 
 void main() {
   late MockBuildContext mockContext;
