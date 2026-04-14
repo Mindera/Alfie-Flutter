@@ -2,6 +2,7 @@ import 'package:alfie_flutter/data/models/money.dart';
 import 'package:alfie_flutter/data/models/price.dart';
 import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
+import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 import 'package:alfie_flutter/data/repositories/wishlist_repository.dart';
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
@@ -46,5 +47,7 @@ class MockMoney extends Mock implements Money {}
 class MockBinaryReader extends Mock implements BinaryReader {}
 
 class MockBinaryWriter extends Mock implements BinaryWriter {}
+
+class MockAuthRepository extends Mock implements AuthRepository {}
 
 class MockBagRepository extends Mock implements BagRepository {}

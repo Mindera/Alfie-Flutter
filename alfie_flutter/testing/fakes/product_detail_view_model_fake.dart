@@ -1,4 +1,6 @@
 import 'package:alfie_flutter/data/models/product.dart';
+import 'package:alfie_flutter/data/models/user.dart';
+import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_state.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
 
@@ -32,5 +34,17 @@ class FakeProductDetailViewModel extends ProductDetailViewModel {
   @override
   void shareProduct() {
     // No-op for testing
+  }
+}
+
+/// Fake implementation of AuthRepository for testing
+class FakeAuthRepository extends AuthRepository {
+  final User? user;
+
+  FakeAuthRepository(this.user) : super();
+
+  @override
+  User? build() {
+    return user;
   }
 }

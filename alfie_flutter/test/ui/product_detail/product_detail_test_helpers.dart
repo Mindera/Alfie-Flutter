@@ -5,6 +5,7 @@ import 'package:alfie_flutter/data/models/price.dart';
 import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
+import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -80,4 +81,17 @@ ProductDetailState createDummyProductDetailState({
   }
 
   return ProductDetailState(product: productAsync, isOnWishlist: isOnWishlist);
+}
+
+/// Creates a dummy user for testing
+User createDummyUser() {
+  return User(
+    id: "test-user-1",
+    data: UserData(
+      firstName: "Test",
+      lastName: "User",
+      email: "test@example.com",
+      phoneNumber: "+1234567890",
+    ),
+  );
 }
