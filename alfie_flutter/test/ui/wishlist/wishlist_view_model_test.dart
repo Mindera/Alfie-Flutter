@@ -1,14 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/repositories/wishlist_repository.dart';
 import 'package:alfie_flutter/ui/wishlist/view_model/wishlist_view_model.dart';
 
-// --- Mocks ---
-class MockWishlistRepository extends Mock implements WishlistRepository {}
-
-class MockProduct extends Mock implements Product {}
+import '../../../testing/mocks.dart';
 
 void main() {
   late MockWishlistRepository mockRepository;

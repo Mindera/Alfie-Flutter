@@ -29,14 +29,21 @@ class AuthRepository extends Notifier<User?> {
     return user;
   }
 
-  void signIn(String email, String password) {
+  bool signIn(String email, String password) {
     final success = _authService.signIn(email, password);
     if (success) ref.invalidateSelf();
+    return success;
   }
 
-  void logout() async {
+  Future<void> logout() async {
     await _authService.logout();
     ref.invalidateSelf();
+  }
+
+  User createAccount(UserData userData) {
+    final user = _authService.createAccount(userData);
+    ref.invalidateSelf();
+    return user;
   }
 }
 

@@ -1,7 +1,8 @@
 import 'package:alfie_flutter/data/models/user.dart';
-import 'package:alfie_flutter/data/services/auth_backend.dart';
+import 'package:alfie_flutter/data/backend/auth_backend.dart';
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
-import 'package:alfie_flutter/data/services/user_backend.dart';
+import 'package:alfie_flutter/data/backend/user_backend.dart';
+import 'package:alfie_flutter/data/repositories/user_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -10,17 +11,20 @@ abstract interface class IAuthService {
   Future<void> logout();
   User? getCurrentUser();
   DateTime? getTokenExpiration();
+  User createAccount(UserData userData);
 }
 
 class AuthService implements IAuthService {
   final IAuthBackend authBackend;
   final IUserBackend userBackend;
   final IPersistentStorageService persistentStorageService;
+  final UserRepository userRepository;
 
   AuthService({
     required this.authBackend,
     required this.persistentStorageService,
     required this.userBackend,
+    required this.userRepository,
   });
 
   @override
@@ -30,6 +34,19 @@ class AuthService implements IAuthService {
 
     persistentStorageService.saveAccessToken(accessToken);
     return true;
+  }
+
+  @override
+  User createAccount(UserData userData) {
+    final isExistingEmail = userRepository.getAllUsers().any(
+      (user) => user.data.email.toLowerCase() == userData.email.toLowerCase(),
+    );
+
+    if (isExistingEmail) {
+      throw Exception('A user with this email already exists.');
+    }
+
+    return userRepository.addUser(userData);
   }
 
   @override
@@ -71,5 +88,6 @@ final authServiceProvider = Provider<IAuthService>(
     authBackend: ref.watch(authBackendProvider),
     persistentStorageService: ref.watch(persistentStorageServiceProvider),
     userBackend: ref.watch(userBackendProvider),
+    userRepository: ref.watch(userRepositoryProvider),
   ),
 );

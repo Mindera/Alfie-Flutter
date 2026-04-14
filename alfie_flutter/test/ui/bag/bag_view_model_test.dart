@@ -3,13 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:alfie_flutter/data/models/bag_item.dart';
-import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 
-// --- Mocks ---
-class MockBagRepository extends Mock implements BagRepository {}
-
-class MockProduct extends Mock implements Product {}
+import '../../../testing/mocks.dart';
 
 void main() {
   late MockBagRepository mockRepository;
