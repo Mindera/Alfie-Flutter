@@ -39,7 +39,9 @@ void main() {
     testWidgets('renders color swatch with correct color count', (
       WidgetTester tester,
     ) async {
-      final product = createDummyProduct(colorCount: 3);
+      final product = createDummyProduct(
+        colours: createDummyColors(colorCount: 3),
+      );
 
       await tester.pumpWidget(
         _buildProductMainInfoWidget(product: product, isOnWishlist: false),

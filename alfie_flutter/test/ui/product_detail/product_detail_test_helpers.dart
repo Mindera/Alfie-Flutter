@@ -9,14 +9,29 @@ import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+List<ProductColor> createDummyColors({int colorCount = 3}) {
+  return List.generate(
+    colorCount,
+    (index) => ProductColor(
+      id: "color-$index",
+      name: "Color ${index + 1}",
+      media: [
+        MediaImage(url: 'https://images.example.com/product-color-$index.jpg')
+            as Media,
+      ],
+    ),
+  );
+}
+
 /// Creates a dummy product for testing
 Product createDummyProduct({
   String id = "test-product-1",
   String name = "Test Product",
   String brandName = "Test Brand",
   String price = r'$99.99',
-  int colorCount = 1,
   bool inStock = true,
+  List<ProductColor>? colours,
+  String? longDescription,
 }) {
   return Product(
     id: id,
@@ -24,8 +39,7 @@ Product createDummyProduct({
     name: name,
     brand: Brand(id: "brand-1", name: brandName),
     shortDescription: "Short description for $name",
-    longDescription:
-        "This is a detailed description for $name. It contains comprehensive product information.",
+    longDescription: longDescription,
     defaultVariant: ProductVariant(
       sku: "SKU-$id",
       stock: inStock ? 5 : 0,
@@ -42,19 +56,7 @@ Product createDummyProduct({
         ),
       ),
     ],
-    colours: List.generate(
-      colorCount,
-      (index) => ProductColor(
-        id: "color-$index",
-        name: "Color ${index + 1}",
-        media: [
-          MediaImage(
-                url: 'https://images.example.com/product-$id-color-$index.jpg',
-              )
-              as Media,
-        ],
-      ),
-    ),
+    colours: colours,
   );
 }
 
