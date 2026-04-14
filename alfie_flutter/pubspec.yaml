@@ -31,8 +31,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  integration_test:
-    sdk: flutter
   flutter_lints: ^6.0.0
   build_runner: ^2.10.5
   graphql_codegen: ^3.0.1
