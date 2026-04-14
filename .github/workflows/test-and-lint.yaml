@@ -54,6 +54,7 @@ jobs:
         with:
           api-level: 30
           arch: x86_64
+          profile: pixel_7_pro
           script: |
             cd alfie_flutter && flutter test integration_test --tags=smoke
 
