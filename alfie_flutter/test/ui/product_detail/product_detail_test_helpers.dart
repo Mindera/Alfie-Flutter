@@ -60,14 +60,12 @@ Product createDummyProduct({
 
 /// Creates a ProductDetailState with custom parameters
 ProductDetailState createDummyProductDetailState({
-  Product? product,
+  required Product? product,
   bool isLoading = false,
   bool hasError = false,
   bool isOnWishlist = false,
   Object? error,
 }) {
-  final prod = product ?? createDummyProduct();
-
   late AsyncValue<Product?> productAsync;
   if (isLoading) {
     productAsync = const AsyncLoading();
@@ -77,7 +75,7 @@ ProductDetailState createDummyProductDetailState({
       StackTrace.current,
     );
   } else {
-    productAsync = AsyncData(prod);
+    productAsync = AsyncData(product);
   }
 
   return ProductDetailState(product: productAsync, isOnWishlist: isOnWishlist);
