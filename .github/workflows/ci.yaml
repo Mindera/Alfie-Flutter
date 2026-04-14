@@ -8,7 +8,7 @@ on:
 jobs:
   test-and-lint:
     uses: ./.github/workflows/test-and-lint.yaml
-    inputs:
+    with:
       run-smoke-tests: ${{ github.event_name == 'pull_request' }}
     secrets:
       ENV_DEV: ${{ secrets.ENV_DEV }}
