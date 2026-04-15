@@ -1,5 +1,4 @@
 import 'package:alfie_flutter/data/models/size.dart';
-// Adjust the path below if your folder structure is slightly different
 import 'package:alfie_flutter/data/services/hive_adapters/size_adapters.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

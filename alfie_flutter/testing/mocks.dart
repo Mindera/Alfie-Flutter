@@ -70,3 +70,5 @@ class MockMedia extends Mock implements Media {}
 class MockProductSize extends Mock implements ProductSize {}
 
 class MockSizeGuide extends Mock implements SizeGuide {}
+
+class MockVideoSource extends Mock implements VideoSource {}

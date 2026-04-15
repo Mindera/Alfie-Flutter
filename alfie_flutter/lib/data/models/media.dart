@@ -76,7 +76,7 @@ final class MediaVideo extends Media {
 /// Contains the format, MIME type, and URL for a single video encoding variant.
 /// Multiple sources in different formats allow the client to choose
 /// the best option based on platform capabilities.
-final class VideoSource {
+class VideoSource {
   /// The video format/container type (e.g., MP4, WebM).
   final VideoFormat format;
 
