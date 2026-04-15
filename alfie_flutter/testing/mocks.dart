@@ -6,6 +6,7 @@ import 'package:alfie_flutter/data/models/price_range.dart';
 import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
+import 'package:alfie_flutter/data/models/size.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 import 'package:alfie_flutter/data/repositories/wishlist_repository.dart';
@@ -65,3 +66,5 @@ class MockBagRepository extends Mock implements BagRepository {}
 class MockMediaImage extends Mock implements MediaImage {}
 
 class MockMedia extends Mock implements Media {}
+
+class MockProductSize extends Mock implements ProductSize {}

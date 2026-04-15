@@ -2,7 +2,7 @@
 ///
 /// A size can belong to a size guide for standardized sizing across a collection,
 /// and may include scale information (e.g., EU, US) and additional descriptions.
-final class ProductSize {
+class ProductSize {
   /// The unique identifier for this size.
   final String id;
 
