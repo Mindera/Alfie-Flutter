@@ -14,57 +14,59 @@ class AccountScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(accountViewModelProvider);
     return SafeArea(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.small,
-              vertical: Spacing.extraSmall,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Hi, ${state.user?.data.firstName}!",
-                      style: context.textTheme.displaySmall,
-                    ),
-                    AppButton.tertiary(
-                      leading: AppIcons.profileId,
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                Text(
-                  "Member since 2024",
-                  style: context.textTheme.labelSmall?.copyWith(
-                    color: AppColors.neutral500,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.small,
+                vertical: Spacing.extraSmall,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Hi, ${state.user?.data.firstName}!",
+                        style: context.textTheme.displaySmall,
+                      ),
+                      AppButton.tertiary(
+                        leading: AppIcons.profileId,
+                        onPressed: () {},
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  Text(
+                    "Member since 2024",
+                    style: context.textTheme.labelSmall?.copyWith(
+                      color: AppColors.neutral500,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.small,
-              vertical: Spacing.extraSmall,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.small,
+                vertical: Spacing.extraSmall,
+              ),
+              child: Column(
+                spacing: Spacing.medium,
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: state.menuItems,
+                  ),
+                  state.signOutItem,
+                ],
+              ),
             ),
-            child: Column(
-              spacing: Spacing.medium,
-              children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: state.menuItems,
-                ),
-                state.signOutItem,
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
