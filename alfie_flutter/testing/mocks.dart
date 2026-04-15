@@ -1,6 +1,9 @@
+import 'package:alfie_flutter/data/models/brand.dart';
 import 'package:alfie_flutter/data/models/money.dart';
 import 'package:alfie_flutter/data/models/price.dart';
+import 'package:alfie_flutter/data/models/price_range.dart';
 import 'package:alfie_flutter/data/models/product.dart';
+import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
@@ -32,6 +35,12 @@ class MockPersistentStorageService extends Mock
     implements IPersistentStorageService {}
 
 class MockProduct extends Mock implements Product {}
+
+class MockBrand extends Mock implements Brand {}
+
+class MockPriceRange extends Mock implements PriceRange {}
+
+class MockProductColor extends Mock implements ProductColor {}
 
 class MockWishlistRepository extends Mock implements WishlistRepository {}
 

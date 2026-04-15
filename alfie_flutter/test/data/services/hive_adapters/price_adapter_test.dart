@@ -1,6 +1,5 @@
 import 'package:alfie_flutter/data/models/money.dart';
 import 'package:alfie_flutter/data/models/price.dart';
-// Adjust the path below if your folder structure is slightly different
 import 'package:alfie_flutter/data/services/hive_adapters/price_adapter.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

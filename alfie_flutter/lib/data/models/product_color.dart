@@ -4,7 +4,7 @@ import 'package:alfie_flutter/data/models/media.dart';
 ///
 /// Contains color identification, a visual swatch for display,
 /// and optional media assets (images or videos) showing the product in this color.
-final class ProductColor {
+class ProductColor {
   /// The unique identifier for this color variant.
   final String id;
 

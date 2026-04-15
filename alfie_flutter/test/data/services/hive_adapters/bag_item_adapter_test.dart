@@ -1,6 +1,6 @@
 import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/data/models/product.dart';
-import 'package:alfie_flutter/data/services/hive_adapters/bag_item_adapter.dart'; // Adjust path if necessary
+import 'package:alfie_flutter/data/services/hive_adapters/bag_item_adapter.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
