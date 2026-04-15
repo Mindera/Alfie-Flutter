@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/data/models/brand.dart';
+import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/money.dart';
 import 'package:alfie_flutter/data/models/price.dart';
 import 'package:alfie_flutter/data/models/price_range.dart';
@@ -60,3 +61,7 @@ class MockBinaryWriter extends Mock implements BinaryWriter {}
 class MockAuthRepository extends Mock implements AuthRepository {}
 
 class MockBagRepository extends Mock implements BagRepository {}
+
+class MockMediaImage extends Mock implements MediaImage {}
+
+class MockMedia extends Mock implements Media {}
