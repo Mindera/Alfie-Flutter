@@ -34,7 +34,7 @@ class ProductSize {
 ///
 /// Groups related sizes (e.g., all sizes in the EU standard) to help
 /// customers understand size relationships and make informed choices.
-final class SizeGuide {
+class SizeGuide {
   /// The unique identifier for this size guide.
   final String id;
 
