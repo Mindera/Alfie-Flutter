@@ -9,6 +9,13 @@ runs:
       with:
         channel: stable
         cache: true
+          
+    - name: Create .env files from secrets
+      shell: bash
+      run: |
+          echo "" > .env.dev
+          echo "" > .env.prod
+      working-directory: alfie_flutter
 
     - name: Install dependencies
       shell: bash
