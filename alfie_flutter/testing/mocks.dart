@@ -5,12 +5,14 @@ import 'package:alfie_flutter/data/models/price.dart';
 import 'package:alfie_flutter/data/models/price_range.dart';
 import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/models/product_color.dart';
+import 'package:alfie_flutter/data/models/product_listing.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
 import 'package:alfie_flutter/data/models/size.dart';
 import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 import 'package:alfie_flutter/data/repositories/brand_repository.dart';
+import 'package:alfie_flutter/data/repositories/product_repository.dart';
 import 'package:alfie_flutter/data/repositories/wishlist_repository.dart';
 import 'package:alfie_flutter/data/services/auth_service.dart';
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
@@ -86,3 +88,7 @@ class MockUserData extends Mock implements UserData {}
 class MockGraphQLClient extends Mock implements GraphQLClient {}
 
 class MockBrandRepository extends Mock implements IBrandRepository {}
+
+class MockProductRepository extends Mock implements IProductRepository {}
+
+class MockProductListing extends Mock implements ProductListing {}
