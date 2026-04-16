@@ -10,6 +10,7 @@ import 'package:alfie_flutter/data/models/size.dart';
 import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
+import 'package:alfie_flutter/data/repositories/brand_repository.dart';
 import 'package:alfie_flutter/data/repositories/wishlist_repository.dart';
 import 'package:alfie_flutter/data/services/auth_service.dart';
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
@@ -17,6 +18,7 @@ import 'package:alfie_flutter/ui/nav_bar/view_model/nav_bar_view_model.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -80,3 +82,7 @@ class MockAuthService extends Mock implements IAuthService {}
 class MockUser extends Mock implements User {}
 
 class MockUserData extends Mock implements UserData {}
+
+class MockGraphQLClient extends Mock implements GraphQLClient {}
+
+class MockBrandRepository extends Mock implements IBrandRepository {}
