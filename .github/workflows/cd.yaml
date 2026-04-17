@@ -1,0 +1,109 @@
+name: CD
+
+on:
+  push:
+    branches: [main, "release/**"]
+
+jobs:
+  test-and-lint:
+    uses: ./.github/workflows/test-and-lint.yaml
+    with:
+      run-smoke-tests: false
+
+  integration-tests:
+    name: Integration Tests - ${{ matrix.platform }}
+    needs: test-and-lint
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: Android
+            os: ubuntu-latest
+
+
+          - platform: iOS
+            os: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup-env
+        env: 
+          ENV_DEV: ${{ secrets.ENV_DEV }}
+          ENV_PROD: ${{ secrets.ENV_PROD }}
+
+      - name: Enable KVM
+        if: matrix.platform == 'Android'
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run Android Integration Tests 
+        if: matrix.platform == 'Android'
+        uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a
+        with:
+          api-level: 30
+          arch: x86_64
+          profile: pixel_7_pro
+          script: |
+            cd alfie_flutter && flutter test integration_test
+
+      - uses: futureware-tech/simulator-action@e89aa8f93d3aec35083ff49d2854d07f7186f7f5
+        if: matrix.platform == 'ios'
+        with:
+          model: 'iPhone 17 Pro' 
+
+      - name: Run iOS Integration Tests
+        if: matrix.platform == 'ios'
+        run: |
+          cd alfie_flutter
+          flutter test integration_test
+
+
+  build:
+    name: Build ${{ matrix.platform }}
+    needs: test-and-lint
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: Android
+            os: ubuntu-latest
+            build-cmd: flutter build apk --release
+            artifact-path: alfie_flutter/build/app/outputs/flutter-apk/app-release.apk
+            artifact-name: android-apk
+
+          - platform: iOS
+            os: macos-latest
+            build-cmd: flutter build ipa --release --no-codesign
+            artifact-path: alfie_flutter/build/ios/archive/Runner.xcarchive
+            artifact-name: ios-build-archive
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup-env
+        env: 
+          ENV_DEV: ${{ secrets.ENV_DEV }}
+          ENV_PROD: ${{ secrets.ENV_PROD }}
+
+      - name: Build Application
+        run: ${{ matrix.build-cmd }}
+        working-directory: alfie_flutter
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: ${{ matrix.artifact-name }}
+          path: ${{ matrix.artifact-path }}
+

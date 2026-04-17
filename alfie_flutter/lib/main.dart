@@ -6,6 +6,7 @@ import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'data/models/environment.dart';
@@ -16,10 +17,6 @@ Future<void> main() async {
 
   // Preserve the splash screen while loading resources
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
-  // Load environment configurations
-  log("Loading environment configurations...");
-  await Environment.load();
 
   // Required for HiveStore persistence
   log("Loading Hive for GraphQL...");
@@ -34,6 +31,11 @@ Future<void> main() async {
   // Load Persistent Storage Service
   log("Loading Persistent Storage Service...");
   final container = ProviderContainer();
+
+  // Load environment configurations
+  log("Loading environment configurations...");
+  await dotenv.load(fileName: container.read(environmentProvider).fileName);
+
   final persistentStorageService = container.read(
     persistentStorageServiceProvider,
   );
