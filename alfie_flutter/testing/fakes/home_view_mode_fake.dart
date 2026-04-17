@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/ui/core/ui/promotion_badge.dart';
 import 'package:alfie_flutter/ui/home/view_model/highlight.dart';
 import 'package:alfie_flutter/ui/home/view_model/home_state.dart';
 import 'package:alfie_flutter/ui/home/view_model/home_view_model.dart';
@@ -15,19 +16,33 @@ class FakeHomeViewModel extends HomeViewModel {
   }
 }
 
-/// A custom HomeState to deterministically inject highlights
-/// and avoid relying on the production defaults.
+/// A custom HomeState to deterministically inject state
+/// and avoid relying on the production defaults or infinite loaders.
 class TestHomeState extends HomeState {
-  TestHomeState() : super(brands: const AsyncLoading());
+  TestHomeState({
+    this.highlights = const [
+      Highlight(
+        imageUrl: 'https://example.com/image1.jpg',
+        title: 'Featured Collection',
+      ),
+      Highlight(imageUrl: 'https://example.com/image2.jpg', title: null),
+    ],
+    this.promotions = const [
+      PromotionBadge(
+        title: "Exclusive Offer: 20% Off!",
+        description:
+            "Unlock 20% off your next purchase. Subscribe to our newsletter for more exclusive deals and updates.",
+      ),
+    ],
+    // Default to an empty data state so we don't trigger infinite loading spinners
+    super.brands = const AsyncData([]),
+  });
 
   @override
-  final List<Highlight> highlights = [
-    // Triggers the branch where title != null
-    Highlight(
-      imageUrl: 'https://example.com/image1.jpg',
-      title: 'Featured Collection',
-    ),
-    // Triggers the branch where title == null
-    Highlight(imageUrl: 'https://example.com/image2.jpg', title: null),
-  ];
+  // ignore: overridden_fields
+  final List<Highlight> highlights;
+
+  @override
+  // ignore: overridden_fields
+  final List<PromotionBadge> promotions;
 }
