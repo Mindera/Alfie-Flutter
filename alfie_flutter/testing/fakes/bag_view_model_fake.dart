@@ -3,43 +3,49 @@ import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
 
 class FakeBagViewModel extends BagViewModel {
-  FakeBagViewModel() : super();
+  final List<BagItem> _initialItems;
+  final double _totalPrice;
+  bool updateItemQuantityCalled = false;
+  int? updatedQuantity;
 
   @override
-  List<BagItem> build() {
-    return [];
+  Future<void> updateItemQuantity(String productId, int quantity) async {
+    updateItemQuantityCalled = true;
+    updatedQuantity = quantity;
+  }
+
+  bool removeItemCalled = false;
+  bool addItemCalled = false;
+  bool addToWishlistCalled = false;
+  bool removeFromWishlistCalled = false;
+
+  FakeBagViewModel({List<BagItem> items = const [], double totalPrice = 0.0})
+    : _initialItems = items,
+      _totalPrice = totalPrice;
+
+  @override
+  List<BagItem> build() => _initialItems;
+
+  @override
+  double get total => _totalPrice;
+
+  @override
+  Future<void> removeItem(String productId) async {
+    removeItemCalled = true;
   }
 
   @override
   Future<void> addItem(BagItem item) async {
-    // do nothing
-  }
-
-  @override
-  Future<void> removeItem(String productId) async {
-    // do nothing
-  }
-
-  @override
-  Future<void> updateItemQuantity(String productId, int quantity) async {
-    // do nothing
-  }
-
-  @override
-  Future<void> clearBag() async {
-    // do nothing
+    addItemCalled = true;
   }
 
   @override
   void addToWishlist(Product product) {
-    // do nothing
+    addToWishlistCalled = true;
   }
 
   @override
   void removeFromWishlist(Product product) {
-    // do nothing
+    removeFromWishlistCalled = true;
   }
-
-  @override
-  double get total => 0.0;
 }

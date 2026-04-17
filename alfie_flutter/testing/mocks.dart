@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/data/backend/user_backend.dart';
+import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/data/models/brand.dart';
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/money.dart';
@@ -95,3 +96,5 @@ class MockProductRepository extends Mock implements IProductRepository {}
 class MockProductListing extends Mock implements ProductListing {}
 
 class MockUserBackend extends Mock implements IUserBackend {}
+
+class MockBagItem extends Mock implements BagItem {}
