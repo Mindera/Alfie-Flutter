@@ -74,10 +74,10 @@ class WishlistScreen extends ConsumerWidget {
                     label: "Add to Bag",
                     onPressed: () {
                       ref
-                          .watch(bagViewModelProvider.notifier)
+                          .read(bagViewModelProvider.notifier)
                           .addItem(BagItem(product: product, quantity: 1));
                       ref
-                          .watch(wishlistViewModelProvider.notifier)
+                          .read(wishlistViewModelProvider.notifier)
                           .removeProduct(product.id);
 
                       ScaffoldMessenger.of(context).showSnackBar(
