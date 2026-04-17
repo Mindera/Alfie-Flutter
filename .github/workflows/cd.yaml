@@ -9,9 +9,6 @@ jobs:
     uses: ./.github/workflows/test-and-lint.yaml
     with:
       run-smoke-tests: false
-    secrets:
-      ENV_DEV: ${{ secrets.ENV_DEV }}
-      ENV_PROD: ${{ secrets.ENV_PROD }}
 
   integration-tests:
     name: Integration Tests - ${{ matrix.platform }}

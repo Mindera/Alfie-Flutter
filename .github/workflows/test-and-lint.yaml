@@ -7,11 +7,6 @@ on:
         description: 'Whether to run integration smoke tests'
         default: true
         type: boolean 
-    secrets:
-      ENV_DEV:
-        required: true
-      ENV_PROD:
-        required: true
 
 jobs:
   test-and-lint:
@@ -24,9 +19,6 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup-env
-        env: 
-          ENV_DEV: ${{ secrets.ENV_DEV }}
-          ENV_PROD: ${{ secrets.ENV_PROD }}
 
       - name: Linting
         run: flutter analyze

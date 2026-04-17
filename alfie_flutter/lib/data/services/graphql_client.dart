@@ -12,7 +12,9 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 /// Note: When testing on Android Emulator, the server URL should be
 /// `http://10.0.2.2:4000/` to access the host machine's localhost.
 final gqlClientProvider = Provider<GraphQLClient>((ref) {
-  final HttpLink httpLink = HttpLink(Environment.instance.graphqlServerUrl);
+  final HttpLink httpLink = HttpLink(
+    ref.watch(environmentProvider).graphqlServerUrl,
+  );
 
   return GraphQLClient(
     link: httpLink,

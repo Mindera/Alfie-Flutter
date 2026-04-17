@@ -10,6 +10,3 @@ jobs:
     uses: ./.github/workflows/test-and-lint.yaml
     with:
       run-smoke-tests: ${{ github.event_name == 'pull_request' }}
-    secrets:
-      ENV_DEV: ${{ secrets.ENV_DEV }}
-      ENV_PROD: ${{ secrets.ENV_PROD }}
