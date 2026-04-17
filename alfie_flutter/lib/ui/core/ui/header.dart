@@ -33,7 +33,7 @@ class Header extends StatelessWidget {
       child: Row(
         spacing: Spacing.extraSmall,
         children: [
-          ?leading,
+          leading ?? SizedBox.square(dimension: Spacing.extraLarge),
 
           Expanded(
             child: Text(

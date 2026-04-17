@@ -41,7 +41,6 @@ class CheckboxesScreen extends ConsumerWidget {
               label: 'Checkbox 4',
               info: '3',
               onChanged: (value) {},
-              hasError: true,
               initialValue: null,
             ),
             CheckboxTile(label: 'Checkbox 5', initialValue: false, info: '50'),

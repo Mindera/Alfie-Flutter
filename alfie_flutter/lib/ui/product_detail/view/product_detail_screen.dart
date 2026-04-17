@@ -29,7 +29,7 @@ class ProductDetailScreen extends ConsumerWidget {
     return Container(
       color: AppColors.neutral,
       child: state.product.when(
-        loading: () => Center(),
+        loading: () => Center(child: AppIcons.progressIndicator),
         error: (error, stackTrace) => Center(child: Text(error.toString())),
         data: (product) {
           if (product == null) {
@@ -98,7 +98,10 @@ class ProductDetailScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: Spacing.medium,
                       children: [
-                        ProductMainInfo(product: product, isOnWishlist: state.isOnWishlist),
+                        ProductMainInfo(
+                          product: product,
+                          isOnWishlist: state.isOnWishlist,
+                        ),
 
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

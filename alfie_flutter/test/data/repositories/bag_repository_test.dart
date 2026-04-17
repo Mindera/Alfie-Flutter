@@ -1,6 +1,3 @@
-import 'package:alfie_flutter/data/models/money.dart';
-import 'package:alfie_flutter/data/models/price.dart';
-import 'package:alfie_flutter/data/models/product_variant.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -8,13 +5,6 @@ import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 
 import '../../../testing/mocks.dart';
-
-// --- Mocks ---
-class MockProductVariant extends Mock implements ProductVariant {}
-
-class MockPrice extends Mock implements Price {}
-
-class MockMoney extends Mock implements Money {}
 
 void main() {
   late MockPersistentStorageService mockStorageService;

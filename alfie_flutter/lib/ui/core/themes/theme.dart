@@ -17,7 +17,10 @@ final themeProvider = Provider<ThemeData>((ref) {
   return ThemeData(
     brightness: Brightness.light,
     primaryColor: AppColors.neutral800,
-    colorScheme: ColorScheme.light(primary: AppColors.neutral800),
+    colorScheme: ColorScheme.light(
+      primary: AppColors.neutral800,
+      error: AppColors.error500,
+    ),
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: AppColors.neutral800,
     ),

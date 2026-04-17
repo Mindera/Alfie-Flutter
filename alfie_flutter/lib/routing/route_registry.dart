@@ -1,5 +1,7 @@
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/account/view/account_screen.dart';
+import 'package:alfie_flutter/ui/auth/view/auth_screen.dart';
+import 'package:alfie_flutter/ui/auth/view/create_account_screen.dart';
 import 'package:alfie_flutter/ui/bag/view/bag_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/button/buttons_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/checkbox/checkboxes_screen.dart';
@@ -8,6 +10,8 @@ import 'package:alfie_flutter/ui/core/ui/radio_button/radio_buttons_screen.dart'
 import 'package:alfie_flutter/ui/core/ui/slider/slider_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/text_field/text_field_screen.dart';
 import 'package:alfie_flutter/ui/home/view/home_screen.dart';
+import 'package:alfie_flutter/ui/auth/view/sign_in_screen.dart';
+import 'package:alfie_flutter/ui/personal_information/view/personal_information_screen.dart';
 import 'package:alfie_flutter/ui/product_detail/view/product_detail_screen.dart';
 import 'package:alfie_flutter/ui/search/view/search_screen.dart';
 import 'package:alfie_flutter/ui/store/view/store_screen.dart';
@@ -43,6 +47,10 @@ class DefaultRouteRegistry implements RouteRegistry {
       AppRoute.radioButtons => RadioButtonsScreen(),
       AppRoute.slider => SliderScreen(),
       AppRoute.search => SearchScreen(),
+      AppRoute.signIn => SignInScreen(),
+      AppRoute.personalInformation => PersonalInformationScreen(),
+      AppRoute.auth => AuthScreen(),
+      AppRoute.createAccount => CreateAccountScreen(),
     };
   }
 }

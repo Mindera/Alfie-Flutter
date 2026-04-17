@@ -1,3 +1,5 @@
+import 'package:alfie_flutter/data/repositories/auth_repository.dart';
+import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/routing/route_registry.dart';
 import 'package:alfie_flutter/ui/core/ui/scaffold_with_nav_bar.dart';
@@ -5,22 +7,56 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
-  debugLabel: 'root',
-);
-
 final routerProvider = Provider((ref) {
   final registry = ref.watch(routeRegistryProvider);
+  final navigatorKey = ref.watch(navigatorKeyProvider);
+
+  final authStateNotifier = ValueNotifier<bool>(
+    ref.read(authRepositoryProvider) != null,
+  );
+
+  ref.listen(authRepositoryProvider, (_, next) {
+    authStateNotifier.value = next != null;
+  });
+
+  ref.onDispose(authStateNotifier.dispose);
+
   // GoRouter configuration
   return GoRouter(
-    navigatorKey: _rootNavigatorKey,
+    navigatorKey: navigatorKey,
     initialLocation: AppRoute.home.path,
+
+    refreshListenable: authStateNotifier,
+
+    // router.dart inside the GoRouter configuration
+    redirect: (context, state) {
+      final isLoggedIn = authStateNotifier.value;
+
+      final currentRoute = AppRoute.findByPath(state.matchedLocation);
+      final needsAuth = currentRoute?.needsAuth ?? false;
+
+      if (needsAuth && !isLoggedIn) {
+        return AppRoute.auth.fullPath;
+      }
+
+      return null;
+    },
     routes: [
       GoRoute(
         path: "/",
         redirect: (context, state) {
           return AppRoute.home.path;
         },
+      ),
+      ..._buildRecursiveRoutes(
+        [AppRoute.signIn],
+        registry,
+        AppRoute.signIn.name,
+      ),
+      ..._buildRecursiveRoutes(
+        [AppRoute.createAccount],
+        registry,
+        AppRoute.createAccount.name,
       ),
       StatefulShellRoute.indexedStack(
         builder:

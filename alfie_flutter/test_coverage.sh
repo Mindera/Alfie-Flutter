@@ -10,10 +10,16 @@ set -e
 
 lcov --remove coverage/lcov.info \
   'lib/graphql/generated/**' \
+  --remove coverage/lcov.info \
+  'lib/data/backend/**' \
   -o coverage/lcov.info --branch-coverage --ignore-errors inconsistent,inconsistent
 
+
 if [ "$GITHUB_ACTIONS" != "true" ]; then
-  genhtml coverage/lcov.info -o coverage/html --branch-coverage --ignore-errors inconsistent,inconsistent
+  genhtml coverage/lcov.info -o coverage/html --branch-coverage \
+    --rc genhtml_hi_limit=80 \
+  --rc genhtml_med_limit=70 \
+  --ignore-errors inconsistent,inconsistent
 
   open coverage/html/index.html
 fi

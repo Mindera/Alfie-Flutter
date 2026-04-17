@@ -1,12 +1,9 @@
 import 'package:alfie_flutter/data/services/hive_adapters/search_item_adapter.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:hive/hive.dart';
 import 'package:alfie_flutter/data/models/search_item.dart';
 
-class MockBinaryReader extends Mock implements BinaryReader {}
-
-class MockBinaryWriter extends Mock implements BinaryWriter {}
+import '../../../../testing/mocks.dart';
 
 void main() {
   late SearchItemAdapter adapter;

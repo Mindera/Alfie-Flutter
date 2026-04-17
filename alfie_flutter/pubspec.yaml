@@ -7,6 +7,7 @@ environment:
   sdk: ^3.9.2
 
 dependencies:
+  dart_jsonwebtoken: ^3.3.2
   expandable_page_view: ^1.2.1
   flutter:
     sdk: flutter
@@ -19,10 +20,13 @@ dependencies:
   gql: ^1.0.1
   graphql: ^5.2.3
   graphql_flutter: ^5.2.1
+  connectivity_plus: 6.1.5
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hooks_riverpod: ^3.2.1
+  jwt_decoder: ^2.0.1
   mocktail: ^1.0.4
+  uuid: ^4.5.3
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +34,8 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   build_runner: ^2.10.5
   graphql_codegen: ^3.0.1
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
