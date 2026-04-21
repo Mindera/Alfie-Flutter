@@ -35,9 +35,13 @@ class IdentificationScreen extends StatelessWidget {
           child: Column(
             spacing: Spacing.medium,
             children: [
-              Text(
-                "Sign In or Create Account",
-                style: context.textTheme.headlineSmall,
+              SizedBox(
+                width: double.maxFinite,
+                child: Text(
+                  "Sign In or Create Account",
+                  style: context.textTheme.headlineSmall,
+                  textAlign: TextAlign.left,
+                ),
               ),
               AppInputField("Email"),
               SizedBox(
