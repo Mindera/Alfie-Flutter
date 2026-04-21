@@ -5,36 +5,49 @@ import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:alfie_flutter/data/repositories/checkout_state_repository.dart';
 
 class CheckoutViewModel extends Notifier<CheckoutState> {
+  CheckoutStateRepository get _repository =>
+      ref.read(checkoutStateRepositoryProvider);
+
   @override
   CheckoutState build() {
-    final user = ref.read(authRepositoryProvider);
+    final savedState = _repository.getCheckoutState();
+    if (savedState != null) {
+      return savedState;
+    }
 
+    final user = ref.read(authRepositoryProvider);
     return CheckoutState(userData: user?.data);
+  }
+
+  void _updateState(CheckoutState newState) {
+    state = newState;
+    _repository.saveCheckoutState(newState);
   }
 
   // ---------------------------
   // CONTACT INFO STEP
   // ---------------------------
   void setUser(UserData user) {
-    state = state.copyWith(userData: user);
+    _updateState(state.copyWith(userData: user));
   }
 
   // ---------------------------
   // ADDRESS STEP
   // ---------------------------
   void setShippingAddress(Address address) {
-    state = state.copyWith(address: address);
+    _updateState(state.copyWith(address: address));
   }
 
   void setBillingAddress(Address billingAddress) {
-    state = state.copyWith(billingAddress: billingAddress);
+    _updateState(state.copyWith(billingAddress: billingAddress));
   }
 
   void useShippingAsBilling() {
     if (state.address != null) {
-      state = state.copyWith(billingAddress: state.address);
+      _updateState(state.copyWith(billingAddress: state.address));
     }
   }
 
@@ -42,20 +55,20 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
   // DELIVERY METHOD STEP
   // ---------------------------
   void setDeliveryMethod(DeliveryMethod method) {
-    state = state.copyWith(deliveryMethod: method);
+    _updateState(state.copyWith(deliveryMethod: method));
   }
 
   // ---------------------------
   // PAYMENT METHOD STEP
   // ---------------------------
   void setPaymentMethod(PaymentMethod method) {
-    state = state.copyWith(paymentMethod: method);
+    _updateState(state.copyWith(paymentMethod: method));
   }
 
   // ---------------------------
   // PROMO CODE
   // ---------------------------
   void applyPromoCode(String code) {
-    state = state.copyWith(promoCode: code);
+    _updateState(state.copyWith(promoCode: code));
   }
 }
