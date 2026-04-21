@@ -1,10 +1,14 @@
 import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/models/search_item.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/address_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/bag_item_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/brand_adapter.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/checkout_state_adapter.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/delivery_method_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/media_adapters.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/money_adapter.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/payment_method_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/price_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/price_range_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/product_adapter.dart';
@@ -12,6 +16,7 @@ import 'package:alfie_flutter/data/services/hive_adapters/product_color_adapter.
 import 'package:alfie_flutter/data/services/hive_adapters/product_variant.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/search_item_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/size_adapters.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/user_data_adapter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -97,6 +102,11 @@ class HiveService implements IPersistentStorageService {
     registerSafe(ProductVariantAdapter()); // typeId: 13
     registerSafe(ProductAdapter()); // typeId: 14
     registerSafe(BagItemAdapter()); // typeId: 15
+    registerSafe(AddressAdapter()); // typeId: 16
+    registerSafe(DeliveryMethodAdapter()); // typeId: 17
+    registerSafe(PaymentMethodAdapter()); // typeId: 18
+    registerSafe(UserDataAdapter()); // typeId: 19
+    registerSafe(CheckoutStateAdapter()); // typeId: 20
 
     // This should be dynamic because Hive doesn't store the generic type of the box
 
