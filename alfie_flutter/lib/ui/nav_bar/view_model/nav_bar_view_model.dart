@@ -1,4 +1,3 @@
-import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/routing/router.dart';
 import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
@@ -11,13 +10,11 @@ import 'package:go_router/go_router.dart';
 final navBarViewModelProvider = Provider((ref) {
   var bagCount = 0;
 
-  if (ref.watch(authRepositoryProvider) != null) {
-    final bagItems = ref.watch(bagViewModelProvider);
-    bagCount = bagItems.fold<int>(
-      0,
-      (combinedValue, item) => combinedValue + item.quantity,
-    );
-  }
+  final bagItems = ref.watch(bagViewModelProvider);
+  bagCount = bagItems.fold<int>(
+    0,
+    (combinedValue, item) => combinedValue + item.quantity,
+  );
 
   return NavBarViewModel(ref, bagCount);
 });

@@ -140,7 +140,22 @@ class BagScreen extends ConsumerWidget {
             ),
             SizedBox(
               width: double.infinity,
-              child: AppButton.primary(label: "Continue", onPressed: () {}),
+              child: AppButton.primary(
+                label: "Continue",
+                onPressed: () {
+                  if (ref.read(bagViewModelProvider.notifier).total > 0) {
+                    context.goTo(AppRoute.checkout);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      AppSnackBar.build(
+                        context: context,
+                        infoText: "Your bag is empty.",
+                        messengerKey: ref.watch(scaffoldMessengerKeyProvider),
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
