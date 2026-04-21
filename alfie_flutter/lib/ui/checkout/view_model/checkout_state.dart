@@ -1,7 +1,7 @@
 import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/delivery_method.dart';
 import 'package:alfie_flutter/data/models/payment_method.dart';
-import 'package:alfie_flutter/data/models/user.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 
 class CheckoutState {
   final Address? address;

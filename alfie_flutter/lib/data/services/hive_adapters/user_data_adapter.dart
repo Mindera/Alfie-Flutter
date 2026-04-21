@@ -1,4 +1,4 @@
-import 'package:alfie_flutter/data/models/user.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:hive/hive.dart';
 
 class UserDataAdapter extends TypeAdapter<UserData> {
