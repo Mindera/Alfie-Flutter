@@ -72,6 +72,11 @@ final routerProvider = Provider((ref) {
           return null;
         },
       ),
+      ..._buildRecursiveRoutes(
+        [AppRoute.identification],
+        registry,
+        AppRoute.identification.name,
+      ),
       StatefulShellRoute.indexedStack(
         builder:
             (

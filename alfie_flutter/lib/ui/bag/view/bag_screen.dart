@@ -144,7 +144,7 @@ class BagScreen extends ConsumerWidget {
                 label: "Continue",
                 onPressed: () {
                   if (ref.read(bagViewModelProvider.notifier).total > 0) {
-                    context.goTo(AppRoute.checkout);
+                    context.pushTo(AppRoute.checkout);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       AppSnackBar.build(
