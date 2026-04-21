@@ -1,7 +1,12 @@
+import 'package:alfie_flutter/data/models/brand.dart';
+import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/money.dart';
 import 'package:alfie_flutter/data/models/price.dart';
+import 'package:alfie_flutter/data/models/price_range.dart';
 import 'package:alfie_flutter/data/models/product.dart';
+import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
+import 'package:alfie_flutter/data/models/size.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 import 'package:alfie_flutter/data/repositories/wishlist_repository.dart';
@@ -34,6 +39,12 @@ class MockPersistentStorageService extends Mock
 
 class MockProduct extends Mock implements Product {}
 
+class MockBrand extends Mock implements Brand {}
+
+class MockPriceRange extends Mock implements PriceRange {}
+
+class MockProductColor extends Mock implements ProductColor {}
+
 class MockWishlistRepository extends Mock implements WishlistRepository {}
 
 class MockProductDetailViewModel extends Mock
@@ -52,5 +63,15 @@ class MockBinaryWriter extends Mock implements BinaryWriter {}
 class MockAuthRepository extends Mock implements AuthRepository {}
 
 class MockBagRepository extends Mock implements BagRepository {}
+
+class MockMediaImage extends Mock implements MediaImage {}
+
+class MockMedia extends Mock implements Media {}
+
+class MockProductSize extends Mock implements ProductSize {}
+
+class MockSizeGuide extends Mock implements SizeGuide {}
+
+class MockVideoSource extends Mock implements VideoSource {}
 
 class MockCheckoutState extends Mock implements CheckoutState {}

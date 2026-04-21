@@ -13,7 +13,7 @@ import 'package:alfie_flutter/data/services/hive_adapters/price_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/price_range_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/product_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/product_color_adapter.dart';
-import 'package:alfie_flutter/data/services/hive_adapters/product_variant.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/product_variant_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/search_item_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/size_adapters.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/user_data_adapter.dart';
