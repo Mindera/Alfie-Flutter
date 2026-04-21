@@ -17,6 +17,7 @@ import 'package:alfie_flutter/data/services/hive_adapters/product_variant.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/search_item_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/size_adapters.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/user_data_adapter.dart';
+import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -60,6 +61,12 @@ abstract interface class IPersistentStorageService {
 
   /// Deletes the current access token
   Future<void> deleteAccessToken();
+
+  /// Retrieves saved checkout state.
+  CheckoutState? getCheckoutState();
+
+  /// Updates the current checkout state with a new [state].
+  Future<void> saveCheckoutState(CheckoutState state);
 }
 
 /// A Hive-based implementation of [IPersistentStorageService].
@@ -81,6 +88,9 @@ class HiveService implements IPersistentStorageService {
 
   static const String _authBoxName = 'authBox';
   static const String _accessTokenKey = 'accessTokenKey';
+
+  static const String _checkoutStateBoxName = 'checkoutStateBox';
+  static const String _checkoutStateKey = 'checkoutState';
 
   @override
   Future<void> init() async {
@@ -110,6 +120,7 @@ class HiveService implements IPersistentStorageService {
 
     // This should be dynamic because Hive doesn't store the generic type of the box
 
+    await Hive.openBox<CheckoutState>(_checkoutStateBoxName);
     await Hive.openBox<List<dynamic>>(_recentSearchesBoxName);
     await Hive.openBox<List<dynamic>>(_bagBoxName);
     await Hive.openBox<List<dynamic>>(_wishlistBoxName);
@@ -130,6 +141,8 @@ class HiveService implements IPersistentStorageService {
       Hive.box<List<dynamic>>(_wishlistBoxName);
   Box get _preferencesBox => Hive.box(_preferencesBoxName);
   Box get _authBox => Hive.box(_authBoxName);
+  Box<CheckoutState> get _checkoutStateBox =>
+      Hive.box<CheckoutState>(_checkoutStateBoxName);
 
   @override
   List<SearchItem> getSearchHistory() {
@@ -190,6 +203,16 @@ class HiveService implements IPersistentStorageService {
   @override
   Future<void> deleteAccessToken() async {
     await _authBox.clear();
+  }
+
+  @override
+  Future<void> saveCheckoutState(CheckoutState state) async {
+    await _checkoutStateBox.put(_checkoutStateKey, state);
+  }
+
+  @override
+  CheckoutState? getCheckoutState() {
+    return _checkoutStateBox.get(_checkoutStateKey);
   }
 }
 
