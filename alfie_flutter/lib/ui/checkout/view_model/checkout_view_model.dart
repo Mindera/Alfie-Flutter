@@ -72,3 +72,8 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
     _updateState(state.copyWith(promoCode: code));
   }
 }
+
+final checkoutViewModelProvider =
+    NotifierProvider<CheckoutViewModel, CheckoutState>(
+      () => CheckoutViewModel(),
+    );
