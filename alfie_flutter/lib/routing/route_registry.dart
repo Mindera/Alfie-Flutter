@@ -49,10 +49,14 @@ class DefaultRouteRegistry implements RouteRegistry {
       AppRoute.radioButtons => RadioButtonsScreen(),
       AppRoute.slider => SliderScreen(),
       AppRoute.search => SearchScreen(),
-      AppRoute.signIn => SignInScreen(),
+      AppRoute.signIn => SignInScreen(
+        prefilledEmail: state.uri.queryParameters['email'],
+      ),
       AppRoute.personalInformation => PersonalInformationScreen(),
       AppRoute.auth => AuthScreen(),
-      AppRoute.createAccount => CreateAccountScreen(),
+      AppRoute.createAccount => CreateAccountScreen(
+        prefilledEmail: state.uri.queryParameters['email'],
+      ),
       AppRoute.checkout => CheckoutScreen(),
       AppRoute.identification => IdentificationScreen(),
     };

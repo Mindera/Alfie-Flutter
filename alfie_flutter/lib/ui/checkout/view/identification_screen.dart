@@ -68,7 +68,7 @@ class IdentificationScreen extends HookConsumerWidget {
                                 .isEmailRegistered(email.value)
                             ? AppRoute.signIn
                             : AppRoute.createAccount,
-                        params: {"email": email.value},
+                        queryParams: {"email": email.value},
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
