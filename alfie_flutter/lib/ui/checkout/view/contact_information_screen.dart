@@ -22,10 +22,22 @@ class ContactInformationScreen extends HookConsumerWidget {
         .userData;
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    String firstName = existingUserData?.firstName ?? "";
-    String lastName = existingUserData?.lastName ?? "";
-    String email = existingUserData?.email ?? "";
-    String phoneNumber = existingUserData?.phoneNumber ?? "";
+    final isFormValid = useState(false);
+
+    final firstName = useRef(existingUserData?.firstName ?? "");
+    final lastName = useRef(existingUserData?.lastName ?? "");
+    final email = useRef(existingUserData?.email ?? "");
+    final phoneNumber = useRef(existingUserData?.phoneNumber ?? "");
+
+    void checkValidity() {
+      final isValid =
+          context.validateName(firstName.value) == null &&
+          context.validateName(lastName.value) == null &&
+          context.validateEmail(email.value) == null &&
+          context.validatePhoneNumber(phoneNumber.value) == null;
+
+      isFormValid.value = isValid;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -62,6 +74,8 @@ class ContactInformationScreen extends HookConsumerWidget {
                   ),
                   Form(
                     key: formKey,
+                    autovalidateMode: AutovalidateMode.onUnfocus,
+                    onChanged: () => checkValidity(),
                     child: Column(
                       spacing: Spacing.small,
                       children: [
@@ -69,29 +83,29 @@ class ContactInformationScreen extends HookConsumerWidget {
                           "First Name",
                           validator: context.validateName,
                           keyboardType: TextInputType.name,
-                          onChanged: (value) => firstName = value,
-                          initialValue: firstName,
+                          onChanged: (value) => firstName.value = value,
+                          initialValue: firstName.value,
                         ),
                         AppInputField(
                           "Last Name",
                           validator: context.validateName,
                           keyboardType: TextInputType.name,
-                          onChanged: (value) => lastName = value,
-                          initialValue: lastName,
+                          onChanged: (value) => lastName.value = value,
+                          initialValue: lastName.value,
                         ),
                         AppInputField(
                           "Email",
                           validator: context.validateEmail,
                           keyboardType: TextInputType.emailAddress,
-                          onChanged: (value) => email = value,
-                          initialValue: email,
+                          onChanged: (value) => email.value = value,
+                          initialValue: email.value,
                         ),
                         AppInputField(
                           "Phone Number",
                           validator: context.validatePhoneNumber,
                           keyboardType: TextInputType.phone,
-                          onChanged: (value) => phoneNumber = value,
-                          initialValue: phoneNumber,
+                          onChanged: (value) => phoneNumber.value = value,
+                          initialValue: phoneNumber.value,
                         ),
                       ],
                     ),
@@ -108,15 +122,16 @@ class ContactInformationScreen extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: Spacing.small),
           child: AppButton.primary(
             label: "Continue",
+            isDisabled: !isFormValid.value,
             onPressed: () {
               final isValid = formKey.currentState!.validate();
               if (!isValid) return;
 
               final newUser = UserData(
-                firstName: firstName.trim(),
-                lastName: lastName.trim(),
-                email: email.trim(),
-                phoneNumber: phoneNumber.trim(),
+                firstName: firstName.value.trim(),
+                lastName: lastName.value.trim(),
+                email: email.value.trim(),
+                phoneNumber: phoneNumber.value.trim(),
               );
 
               ref.read(checkoutViewModelProvider.notifier).setUser(newUser);

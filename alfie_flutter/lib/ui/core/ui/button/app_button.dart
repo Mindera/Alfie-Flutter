@@ -21,6 +21,7 @@ class AppButton extends StatelessWidget {
   final IconData? trailing;
   final VoidCallback? onPressed;
   final bool isLoading;
+  final bool isDisabled;
   final ButtonSize _size;
   final ButtonVariant _variant;
   final bool _isIconOnly;
@@ -34,6 +35,7 @@ class AppButton extends StatelessWidget {
     this.isLoading = false,
     required ButtonSize size,
     required ButtonVariant variant,
+    this.isDisabled = false,
   }) : _size = size,
        _variant = variant,
        // Icon-only layout when label is absent and exactly one icon (leading XOR trailing) exists
@@ -50,6 +52,7 @@ class AppButton extends StatelessWidget {
     IconData? trailing,
     VoidCallback? onPressed,
     bool isLoading = false,
+    bool isDisabled = false,
     ButtonSize size = ButtonSize.medium,
   }) {
     return AppButton(
@@ -60,6 +63,7 @@ class AppButton extends StatelessWidget {
       isLoading: isLoading,
       size: size,
       variant: ButtonVariant.primary,
+      isDisabled: isDisabled,
     );
   }
 
@@ -73,6 +77,7 @@ class AppButton extends StatelessWidget {
     IconData? trailing,
     VoidCallback? onPressed,
     bool isLoading = false,
+    bool isDisabled = false,
     ButtonSize size = ButtonSize.medium,
   }) {
     return AppButton(
@@ -81,6 +86,7 @@ class AppButton extends StatelessWidget {
       trailing: trailing,
       onPressed: onPressed,
       isLoading: isLoading,
+      isDisabled: isDisabled,
       size: size,
       variant: ButtonVariant.secondary,
     );
@@ -97,6 +103,7 @@ class AppButton extends StatelessWidget {
     IconData? trailing,
     VoidCallback? onPressed,
     bool isLoading = false,
+    bool isDisabled = false,
     ButtonSize size = ButtonSize.medium,
   }) {
     return AppButton(
@@ -105,6 +112,7 @@ class AppButton extends StatelessWidget {
       trailing: trailing,
       onPressed: onPressed,
       isLoading: isLoading,
+      isDisabled: isDisabled,
       size: size,
       variant: ButtonVariant.tertiary,
     );
@@ -121,6 +129,7 @@ class AppButton extends StatelessWidget {
     IconData? trailing,
     VoidCallback? onPressed,
     bool isLoading = false,
+    bool isDisabled = false,
     ButtonSize size = ButtonSize.medium,
   }) {
     return AppButton(
@@ -129,6 +138,7 @@ class AppButton extends StatelessWidget {
       trailing: trailing,
       onPressed: onPressed,
       isLoading: isLoading,
+      isDisabled: isDisabled,
       size: size,
       variant: ButtonVariant.destructive,
     );
@@ -145,7 +155,7 @@ class AppButton extends StatelessWidget {
 
     return ElevatedButton(
       style: style,
-      onPressed: isLoading ? null : onPressed,
+      onPressed: isDisabled || isLoading ? null : onPressed,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
