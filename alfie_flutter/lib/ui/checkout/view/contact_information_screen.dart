@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/data/models/user_data.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
@@ -22,7 +23,7 @@ class ContactInformationScreen extends HookConsumerWidget {
         .userData;
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    final isFormValid = useState(false);
+    final isFormValid = useState<bool>(existingUserData != null);
 
     final firstName = useRef(existingUserData?.firstName ?? "");
     final lastName = useRef(existingUserData?.lastName ?? "");
@@ -135,6 +136,8 @@ class ContactInformationScreen extends HookConsumerWidget {
               );
 
               ref.read(checkoutViewModelProvider.notifier).setUser(newUser);
+
+              context.goTo(AppRoute.deliveryInformation);
             },
           ),
         ),
