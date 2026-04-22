@@ -23,22 +23,17 @@ class ContactInformationScreen extends HookConsumerWidget {
         .userData;
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    final isFormValid = useState<bool>(existingUserData != null);
 
-    final firstName = useRef(existingUserData?.firstName ?? "");
-    final lastName = useRef(existingUserData?.lastName ?? "");
-    final email = useRef(existingUserData?.email ?? "");
-    final phoneNumber = useRef(existingUserData?.phoneNumber ?? "");
+    final firstName = useState(existingUserData?.firstName ?? "");
+    final lastName = useState(existingUserData?.lastName ?? "");
+    final email = useState(existingUserData?.email ?? "");
+    final phoneNumber = useState(existingUserData?.phoneNumber ?? "");
 
-    void checkValidity() {
-      final isValid =
-          context.validateName(firstName.value) == null &&
-          context.validateName(lastName.value) == null &&
-          context.validateEmail(email.value) == null &&
-          context.validatePhoneNumber(phoneNumber.value) == null;
-
-      isFormValid.value = isValid;
-    }
+    final isFormValid =
+        context.validateName(firstName.value) == null &&
+        context.validateName(lastName.value) == null &&
+        context.validateEmail(email.value) == null &&
+        context.validatePhoneNumber(phoneNumber.value) == null;
 
     return Scaffold(
       appBar: AppBar(
@@ -76,7 +71,6 @@ class ContactInformationScreen extends HookConsumerWidget {
                   Form(
                     key: formKey,
                     autovalidateMode: AutovalidateMode.onUnfocus,
-                    onChanged: () => checkValidity(),
                     child: Column(
                       spacing: Spacing.small,
                       children: [
@@ -123,11 +117,8 @@ class ContactInformationScreen extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: Spacing.small),
           child: AppButton.primary(
             label: "Continue",
-            isDisabled: !isFormValid.value,
+            isDisabled: !isFormValid,
             onPressed: () {
-              final isValid = formKey.currentState!.validate();
-              if (!isValid) return;
-
               final newUser = UserData(
                 firstName: firstName.value.trim(),
                 lastName: lastName.value.trim(),
