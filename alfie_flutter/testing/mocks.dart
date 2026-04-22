@@ -9,6 +9,7 @@ import 'package:alfie_flutter/data/models/product_variant.dart';
 import 'package:alfie_flutter/data/models/size.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
+import 'package:alfie_flutter/data/repositories/user_repository.dart';
 import 'package:alfie_flutter/data/repositories/wishlist_repository.dart';
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
@@ -75,3 +76,5 @@ class MockSizeGuide extends Mock implements SizeGuide {}
 class MockVideoSource extends Mock implements VideoSource {}
 
 class MockCheckoutState extends Mock implements CheckoutState {}
+
+class MockUserRepository extends Mock implements UserRepository {}
