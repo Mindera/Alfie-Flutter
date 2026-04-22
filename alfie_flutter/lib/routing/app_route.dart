@@ -50,14 +50,14 @@ enum AppRoute {
     path: '/checkout',
     children: [
       // orderConfirmation,
-      // contactInformation,
+
       // deliveryInformation,
       // deliveryMethod,
       // paymentMethod,
     ],
   ),
-  identification(path: '/identification'),
-  // contactInformation(path: 'contactInformation'),
+  identification(path: '/identification', children: [contactInformation]),
+  contactInformation(path: 'contactInformation'),
   // deliveryInformation(path: 'deliveryInformation'),
   // deliveryMethod(path: 'deliveryMethod'),
   // paymentMethod(path: 'paymentMethod'),

@@ -81,7 +81,9 @@ class IdentificationScreen extends HookConsumerWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  context.goTo(AppRoute.contactInformation);
+                },
                 child: Text(
                   "CONTINUE AS GUEST",
                   style: context.textTheme.linkMedium,
