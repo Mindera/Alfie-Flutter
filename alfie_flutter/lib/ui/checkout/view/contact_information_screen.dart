@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:alfie_flutter/data/models/user_data.dart';
+import 'package:alfie_flutter/ui/checkout/view_model/checkout_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
@@ -18,11 +17,15 @@ class ContactInformationScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final UserData? existingUserData = ref
+        .watch(checkoutViewModelProvider)
+        .userData;
+
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    String firstName = "";
-    String lastName = "";
-    String email = "";
-    String phoneNumber = "";
+    String firstName = existingUserData?.firstName ?? "";
+    String lastName = existingUserData?.lastName ?? "";
+    String email = existingUserData?.email ?? "";
+    String phoneNumber = existingUserData?.phoneNumber ?? "";
 
     return Scaffold(
       appBar: AppBar(
@@ -67,12 +70,14 @@ class ContactInformationScreen extends HookConsumerWidget {
                           validator: context.validateName,
                           keyboardType: TextInputType.name,
                           onChanged: (value) => firstName = value,
+                          initialValue: firstName,
                         ),
                         AppInputField(
                           "Last Name",
                           validator: context.validateName,
                           keyboardType: TextInputType.name,
                           onChanged: (value) => lastName = value,
+                          initialValue: lastName,
                         ),
                         AppInputField(
                           "Email",
@@ -86,6 +91,7 @@ class ContactInformationScreen extends HookConsumerWidget {
                           validator: context.validatePhoneNumber,
                           keyboardType: TextInputType.phone,
                           onChanged: (value) => phoneNumber = value,
+                          initialValue: phoneNumber,
                         ),
                       ],
                     ),
@@ -113,7 +119,7 @@ class ContactInformationScreen extends HookConsumerWidget {
                 phoneNumber: phoneNumber.trim(),
               );
 
-              log(newUser.toString());
+              ref.read(checkoutViewModelProvider.notifier).setUser(newUser);
             },
           ),
         ),
