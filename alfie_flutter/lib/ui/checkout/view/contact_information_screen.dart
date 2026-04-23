@@ -55,57 +55,52 @@ class ContactInformationScreen extends HookConsumerWidget {
             vertical: Spacing.large,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            spacing: Spacing.medium,
             children: [
-              Column(
-                spacing: Spacing.medium,
-                children: [
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: Text(
-                      "Contact Details",
-                      style: context.textTheme.headlineSmall,
-                      textAlign: TextAlign.left,
+              SizedBox(
+                width: double.maxFinite,
+                child: Text(
+                  "Contact Details",
+                  style: context.textTheme.headlineSmall,
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              Form(
+                key: formKey,
+                autovalidateMode: AutovalidateMode.onUnfocus,
+                child: Column(
+                  spacing: Spacing.small,
+                  children: [
+                    AppInputField(
+                      "First Name",
+                      validator: context.validateName,
+                      keyboardType: TextInputType.name,
+                      onChanged: (value) => firstName.value = value,
+                      initialValue: firstName.value,
                     ),
-                  ),
-                  Form(
-                    key: formKey,
-                    autovalidateMode: AutovalidateMode.onUnfocus,
-                    child: Column(
-                      spacing: Spacing.small,
-                      children: [
-                        AppInputField(
-                          "First Name",
-                          validator: context.validateName,
-                          keyboardType: TextInputType.name,
-                          onChanged: (value) => firstName.value = value,
-                          initialValue: firstName.value,
-                        ),
-                        AppInputField(
-                          "Last Name",
-                          validator: context.validateName,
-                          keyboardType: TextInputType.name,
-                          onChanged: (value) => lastName.value = value,
-                          initialValue: lastName.value,
-                        ),
-                        AppInputField(
-                          "Email",
-                          validator: context.validateEmail,
-                          keyboardType: TextInputType.emailAddress,
-                          onChanged: (value) => email.value = value,
-                          initialValue: email.value,
-                        ),
-                        AppInputField(
-                          "Phone Number",
-                          validator: context.validatePhoneNumber,
-                          keyboardType: TextInputType.phone,
-                          onChanged: (value) => phoneNumber.value = value,
-                          initialValue: phoneNumber.value,
-                        ),
-                      ],
+                    AppInputField(
+                      "Last Name",
+                      validator: context.validateName,
+                      keyboardType: TextInputType.name,
+                      onChanged: (value) => lastName.value = value,
+                      initialValue: lastName.value,
                     ),
-                  ),
-                ],
+                    AppInputField(
+                      "Email",
+                      validator: context.validateEmail,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (value) => email.value = value,
+                      initialValue: email.value,
+                    ),
+                    AppInputField(
+                      "Phone Number",
+                      validator: context.validatePhoneNumber,
+                      keyboardType: TextInputType.phone,
+                      onChanged: (value) => phoneNumber.value = value,
+                      initialValue: phoneNumber.value,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
