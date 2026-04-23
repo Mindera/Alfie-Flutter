@@ -34,7 +34,7 @@ class CheckoutState {
       hasPaymentMethod;
 
   CheckoutState copyWith({
-    Address? address,
+    Address? deliveryAddress,
     Address? billingAddress,
     UserData? userData,
     DeliveryMethod? deliveryMethod,
@@ -42,7 +42,7 @@ class CheckoutState {
     String? promoCode,
   }) {
     return CheckoutState(
-      deliveryAddress: address ?? this.deliveryAddress,
+      deliveryAddress: deliveryAddress ?? this.deliveryAddress,
       billingAddress: billingAddress ?? this.billingAddress,
       userData: userData ?? this.userData,
       deliveryMethod: deliveryMethod ?? this.deliveryMethod,
