@@ -51,6 +51,22 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
     }
   }
 
+  void continueAsGuestUser() {
+    if (state.userData == null ||
+        state.deliveryAddress == null ||
+        state.billingAddress == null) {
+      throw Exception();
+    }
+
+    ref
+        .read(authRepositoryProvider.notifier)
+        .continueAsGuestUser(
+          state.userData!,
+          state.deliveryAddress!,
+          state.billingAddress!,
+        );
+  }
+
   // ---------------------------
   // DELIVERY METHOD STEP
   // ---------------------------
