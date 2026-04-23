@@ -38,6 +38,10 @@ class DeliveryInformationScreen extends HookConsumerWidget {
       existingBillingAddress ?? Address.empty(),
     );
 
+    final isFormValid =
+        deliveryAddress.value.isValid() &&
+        (billingCheckbox.value || billingAddress.value.isValid());
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Header(
@@ -50,6 +54,7 @@ class DeliveryInformationScreen extends HookConsumerWidget {
         automaticallyImplyLeading: false,
         automaticallyImplyActions: false,
         centerTitle: true,
+        scrolledUnderElevation: 0,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -113,16 +118,15 @@ class DeliveryInformationScreen extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: Spacing.small),
           child: AppButton.primary(
             label: "Continue",
-            // isDisabled: !isFormValid,
+            isDisabled: !isFormValid,
             onPressed: () {
-              // final newUser = UserData(
-              //   firstName: firstName.value.trim(),
-              //   lastName: lastName.value.trim(),
-              //   email: email.value.trim(),
-              //   phoneNumber: phoneNumber.value.trim(),
-              // );
+              ref
+                  .read(checkoutViewModelProvider.notifier)
+                  .setDeliveryAddress(deliveryAddress.value);
 
-              // ref.read(checkoutViewModelProvider.notifier).setUser(newUser);
+              ref
+                  .read(checkoutViewModelProvider.notifier)
+                  .setBillingAddress(billingAddress.value);
 
               // context.goTo(AppRoute.deliveryInformation);
             },

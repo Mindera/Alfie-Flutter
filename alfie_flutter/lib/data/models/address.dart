@@ -34,4 +34,10 @@ class Address {
       street: street ?? this.street,
     );
   }
+
+  bool isValid() =>
+      country.isNotEmpty &&
+      city.isNotEmpty &&
+      postalCode.isNotEmpty &&
+      street.isNotEmpty;
 }

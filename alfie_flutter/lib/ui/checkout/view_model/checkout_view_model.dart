@@ -37,7 +37,7 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
   // ---------------------------
   // ADDRESS STEP
   // ---------------------------
-  void setShippingAddress(Address address) {
+  void setDeliveryAddress(Address address) {
     _updateState(state.copyWith(deliveryAddress: address));
   }
 
