@@ -69,32 +69,32 @@ class ContactInformationScreen extends HookConsumerWidget {
                       validator: context.validateName,
                       keyboardType: TextInputType.name,
                       initialValue: formState.value.firstName,
-                      onChanged: (value) =>
-                          formState.value.copyWith(firstName: value),
+                      onChanged: (value) => formState.value = formState.value
+                          .copyWith(firstName: value),
                     ),
                     AppInputField(
                       "Last Name",
                       validator: context.validateName,
                       keyboardType: TextInputType.name,
                       initialValue: formState.value.lastName,
-                      onChanged: (value) =>
-                          formState.value.copyWith(lastName: value),
+                      onChanged: (value) => formState.value = formState.value
+                          .copyWith(lastName: value),
                     ),
                     AppInputField(
                       "Email",
                       validator: context.validateEmail,
                       keyboardType: TextInputType.emailAddress,
                       initialValue: formState.value.email,
-                      onChanged: (value) =>
-                          formState.value.copyWith(email: value),
+                      onChanged: (value) => formState.value = formState.value
+                          .copyWith(email: value),
                     ),
                     AppInputField(
                       "Phone Number",
                       validator: context.validatePhoneNumber,
                       keyboardType: TextInputType.phone,
                       initialValue: formState.value.phoneNumber,
-                      onChanged: (value) =>
-                          formState.value.copyWith(phoneNumber: value),
+                      onChanged: (value) => formState.value = formState.value
+                          .copyWith(phoneNumber: value),
                     ),
                   ],
                 ),
