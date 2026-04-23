@@ -1,4 +1,7 @@
 import 'package:alfie_flutter/data/models/address.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
+import 'package:alfie_flutter/data/repositories/auth_repository.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/checkout/view/address_fields.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
@@ -23,6 +26,12 @@ class DeliveryInformationScreen extends HookConsumerWidget {
 
     final Address? existingBillingAddress = ref.watch(
       checkoutViewModelProvider.select((state) => state.billingAddress),
+    );
+
+    final UserData userData = ref.watch(
+      checkoutViewModelProvider.select(
+        (state) => state.userData ?? UserData.empty(),
+      ),
     );
 
     final billingCheckbox = useState<bool>(
@@ -95,7 +104,7 @@ class DeliveryInformationScreen extends HookConsumerWidget {
 
                   CheckboxTile(
                     label: "Same as delivery address",
-                    initialValue: true,
+                    initialValue: billingCheckbox.value,
                     onChanged: (value) => billingCheckbox.value = value,
                   ),
                   if (!billingCheckbox.value)
@@ -126,9 +135,21 @@ class DeliveryInformationScreen extends HookConsumerWidget {
 
               ref
                   .read(checkoutViewModelProvider.notifier)
-                  .setBillingAddress(billingAddress.value);
+                  .setBillingAddress(
+                    billingCheckbox.value
+                        ? deliveryAddress.value
+                        : billingAddress.value,
+                  );
 
-              // context.goTo(AppRoute.deliveryInformation);
+              ref
+                  .read(authRepositoryProvider.notifier)
+                  .continueAsGuestUser(
+                    userData,
+                    deliveryAddress.value,
+                    billingAddress.value,
+                  );
+
+              context.goTo(AppRoute.checkout);
             },
           ),
         ),
