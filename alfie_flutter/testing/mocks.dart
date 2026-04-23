@@ -10,6 +10,7 @@ import 'package:alfie_flutter/data/models/product_listing.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
 import 'package:alfie_flutter/data/models/size.dart';
 import 'package:alfie_flutter/data/models/user.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 import 'package:alfie_flutter/data/repositories/user_repository.dart';
