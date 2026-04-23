@@ -24,16 +24,9 @@ class ContactInformationScreen extends HookConsumerWidget {
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
-    final firstName = useState(existingUserData?.firstName ?? "");
-    final lastName = useState(existingUserData?.lastName ?? "");
-    final email = useState(existingUserData?.email ?? "");
-    final phoneNumber = useState(existingUserData?.phoneNumber ?? "");
+    final formState = useState<UserData>(existingUserData ?? UserData.empty());
 
-    final isFormValid =
-        context.validateName(firstName.value) == null &&
-        context.validateName(lastName.value) == null &&
-        context.validateEmail(email.value) == null &&
-        context.validatePhoneNumber(phoneNumber.value) == null;
+    final isFormValid = formState.value.isValid();
 
     return Scaffold(
       appBar: AppBar(
@@ -75,29 +68,33 @@ class ContactInformationScreen extends HookConsumerWidget {
                       "First Name",
                       validator: context.validateName,
                       keyboardType: TextInputType.name,
-                      onChanged: (value) => firstName.value = value,
-                      initialValue: firstName.value,
+                      initialValue: formState.value.firstName,
+                      onChanged: (value) =>
+                          formState.value.copyWith(firstName: value),
                     ),
                     AppInputField(
                       "Last Name",
                       validator: context.validateName,
                       keyboardType: TextInputType.name,
-                      onChanged: (value) => lastName.value = value,
-                      initialValue: lastName.value,
+                      initialValue: formState.value.lastName,
+                      onChanged: (value) =>
+                          formState.value.copyWith(lastName: value),
                     ),
                     AppInputField(
                       "Email",
                       validator: context.validateEmail,
                       keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) => email.value = value,
-                      initialValue: email.value,
+                      initialValue: formState.value.email,
+                      onChanged: (value) =>
+                          formState.value.copyWith(email: value),
                     ),
                     AppInputField(
                       "Phone Number",
                       validator: context.validatePhoneNumber,
                       keyboardType: TextInputType.phone,
-                      onChanged: (value) => phoneNumber.value = value,
-                      initialValue: phoneNumber.value,
+                      initialValue: formState.value.phoneNumber,
+                      onChanged: (value) =>
+                          formState.value.copyWith(phoneNumber: value),
                     ),
                   ],
                 ),
@@ -114,12 +111,7 @@ class ContactInformationScreen extends HookConsumerWidget {
             label: "Continue",
             isDisabled: !isFormValid,
             onPressed: () {
-              final newUser = UserData(
-                firstName: firstName.value.trim(),
-                lastName: lastName.value.trim(),
-                email: email.value.trim(),
-                phoneNumber: phoneNumber.value.trim(),
-              );
+              final newUser = formState.value;
 
               ref.read(checkoutViewModelProvider.notifier).setUser(newUser);
 
