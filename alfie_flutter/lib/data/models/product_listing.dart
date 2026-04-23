@@ -5,7 +5,7 @@ import 'package:alfie_flutter/data/models/product.dart';
 ///
 /// Contains a collection of products, pagination information for navigating
 /// through results, and a contextual title for the listing.
-final class ProductListing {
+class ProductListing {
   /// The title or context of this product listing.
   final String title;
 
