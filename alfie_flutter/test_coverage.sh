@@ -12,6 +12,10 @@ lcov --remove coverage/lcov.info \
   'lib/graphql/generated/**' \
   --remove coverage/lcov.info \
   'lib/data/backend/**' \
+  --remove coverage/lcov.info \
+  'lib/ui/core/ui/components_demo_screen/**' \
+    --remove coverage/lcov.info \
+  'lib/ui/core/themes/**' \
   -o coverage/lcov.info --branch-coverage --ignore-errors inconsistent,inconsistent
 
 
