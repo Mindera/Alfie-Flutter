@@ -20,44 +20,44 @@ class CheckoutItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: Spacing.extraSmall),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              spacing: Spacing.extraSmall,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (label != null)
-                  SizedBox(
-                    width: 70,
-                    child: Text(
-                      label!,
-                      style: context.textTheme.bodySmall?.copyWith(
-                        color: AppColors.neutral500,
+    return InkWell(
+      onTap: () => onPressed?.call(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: Spacing.small),
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(
+                spacing: Spacing.extraSmall,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (label != null)
+                    SizedBox(
+                      width: 70,
+                      child: Text(
+                        label!,
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: AppColors.neutral500,
+                        ),
                       ),
                     ),
-                  ),
 
-                Expanded(
-                  child: content != null
-                      ? Text(content!)
-                      : Text(
-                          nullValueFallBackMessage,
-                          style: context.textTheme.bodyMedium?.copyWith(
-                            color: AppColors.neutral400,
+                  Expanded(
+                    child: content != null
+                        ? Text(content!)
+                        : Text(
+                            nullValueFallBackMessage,
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              color: AppColors.neutral400,
+                            ),
                           ),
-                        ),
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          GestureDetector(
-            child: Icon(AppIcons.chevronRight),
-            onTap: () => onPressed?.call(),
-          ),
-        ],
+            Icon(AppIcons.chevronRight),
+          ],
+        ),
       ),
     );
   }

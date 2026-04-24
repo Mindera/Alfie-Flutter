@@ -6,7 +6,9 @@ import 'package:alfie_flutter/ui/bag/view/bag_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/checkout_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/contact_information_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/delivery_information_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/delivery_method_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/identification_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/payment_method_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/button/buttons_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/checkbox/checkboxes_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/components_screen.dart';
@@ -63,6 +65,8 @@ class DefaultRouteRegistry implements RouteRegistry {
       AppRoute.identification => IdentificationScreen(),
       AppRoute.contactInformation => ContactInformationScreen(),
       AppRoute.deliveryInformation => DeliveryInformationScreen(),
+      AppRoute.deliveryMethod => DeliveryMethodScreen(),
+      AppRoute.paymentMethod => PaymentMethodScreen(),
     };
   }
 }

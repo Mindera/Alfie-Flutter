@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
+import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
 import 'package:alfie_flutter/ui/checkout/view/checkout_item.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
@@ -23,19 +24,23 @@ class CheckoutScreen extends ConsumerWidget {
         label: "Ship to",
         content: user?.deliveryAddress.toString(),
         nullValueFallBackMessage: "Add a delivery address",
+        onPressed: () => context.pushTo(AppRoute.deliveryInformation),
       ),
       CheckoutItem(
         label: "Billing Address",
         content: user?.billingAddress.toString(),
         nullValueFallBackMessage: "Add a billing address",
+        onPressed: () => context.pushTo(AppRoute.deliveryInformation),
       ),
       CheckoutItem(
         label: "Delivery Method",
         nullValueFallBackMessage: "Select a delivery method",
+        onPressed: () => context.pushTo(AppRoute.deliveryMethod),
       ),
       CheckoutItem(
         label: "Payment Method",
         nullValueFallBackMessage: "Add a payment method",
+        onPressed: () => context.pushTo(AppRoute.paymentMethod),
       ),
     ];
     return Scaffold(
@@ -44,7 +49,7 @@ class CheckoutScreen extends ConsumerWidget {
           title: "Checkout",
           leading: AppButton.tertiary(
             leading: AppIcons.back,
-            onPressed: () => context.safePop(),
+            onPressed: () => context.goTo(AppRoute.bag),
           ),
         ),
         automaticallyImplyLeading: false,
@@ -59,9 +64,7 @@ class CheckoutScreen extends ConsumerWidget {
             SliverList.separated(
               itemCount: items.length,
               itemBuilder: (_, i) => items[i],
-              separatorBuilder: (_, i) => Padding(
-                padding: EdgeInsets.symmetric(vertical: Spacing.extraSmall),
-              ),
+              separatorBuilder: (_, i) => Divider(),
             ),
             SliverFillRemaining(
               hasScrollBody: false,
