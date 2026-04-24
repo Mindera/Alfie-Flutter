@@ -61,4 +61,7 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
 
   @override
   void applyPromoCode(String code) {}
+
+  @override
+  double get totalPrice => throw UnimplementedError();
 }

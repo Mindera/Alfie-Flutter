@@ -48,4 +48,18 @@ extension RadioButtonThemeExtension on RadioThemeData {
 
     return baseStyle.copyWith(color: labelColor);
   }
+
+  TextStyle getDescriptionStyle(
+    BuildContext context,
+    bool isDisabled,
+    bool isSelected,
+  ) {
+    final textTheme = context.textTheme;
+    final labelColor = isDisabled ? AppColors.neutral300 : AppColors.neutral500;
+    final baseStyle = isSelected
+        ? textTheme.labelSmallBold!
+        : textTheme.labelSmall!;
+
+    return baseStyle.copyWith(color: labelColor);
+  }
 }

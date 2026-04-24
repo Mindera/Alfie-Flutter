@@ -14,7 +14,7 @@ class Money {
   final String formatted;
 
   /// Creates a new [Money] instance.
-  Money({
+  const Money({
     required this.currencyCode,
     required this.amount,
     required this.formatted,

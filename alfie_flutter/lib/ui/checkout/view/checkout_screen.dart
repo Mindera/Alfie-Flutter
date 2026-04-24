@@ -1,7 +1,7 @@
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
-import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
 import 'package:alfie_flutter/ui/checkout/view/checkout_item.dart';
+import 'package:alfie_flutter/ui/checkout/view_model/checkout_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
@@ -18,7 +18,9 @@ class CheckoutScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final checkoutState = ref.watch(checkoutViewModelProvider);
     final user = ref.watch(authRepositoryProvider);
+
     final items = [
       CheckoutItem(
         label: "Ship to",
@@ -34,8 +36,12 @@ class CheckoutScreen extends ConsumerWidget {
       ),
       CheckoutItem(
         label: "Delivery Method",
+        content: checkoutState.deliveryMethod?.toString(),
         nullValueFallBackMessage: "Select a delivery method",
-        onPressed: () => context.pushTo(AppRoute.deliveryMethod),
+        onPressed: () => context.pushTo(
+          AppRoute.deliveryMethod,
+          extra: checkoutState.deliveryMethod,
+        ),
       ),
       CheckoutItem(
         label: "Payment Method",
@@ -106,7 +112,7 @@ class CheckoutScreen extends ConsumerWidget {
                       children: [
                         Text('Total', style: context.textTheme.bodyMediumBold),
                         Text(
-                          '\$${ref.read(bagViewModelProvider.notifier).total.toStringAsFixed(2)}',
+                          '\$${ref.read(checkoutViewModelProvider.notifier).totalPrice.toStringAsFixed(2)}',
                           style: context.textTheme.bodyMediumBold,
                         ),
                       ],

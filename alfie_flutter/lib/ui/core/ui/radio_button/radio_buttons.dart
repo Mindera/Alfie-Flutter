@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/ui/core/themes/radio_button_theme.dart';
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -39,7 +40,7 @@ class RadioButtons<T extends Enum> extends HookWidget {
   final List<T> disabledOptions;
 
   /// The initially selected option value.
-  final T initialValue;
+  final T? initialValue;
 
   /// Called when the user selects a different option.
   ///
@@ -51,6 +52,7 @@ class RadioButtons<T extends Enum> extends HookWidget {
   /// Receives an option and returns its display label string.
   /// Example: `(status) => status.name` or `(status) => status.displayName`
   final String Function(T) labelBuilder;
+  final String Function(T)? descriptionBuilder;
 
   /// Whether the entire radio group is disabled.
   ///
@@ -58,14 +60,18 @@ class RadioButtons<T extends Enum> extends HookWidget {
   /// Takes precedence over individual [disabledOptions].
   final bool isDisabled;
 
+  final bool radionOnRight;
+
   const RadioButtons({
     super.key,
     required this.options,
     this.disabledOptions = const [],
-    required this.initialValue,
+    this.initialValue,
     required this.onChanged,
     required this.labelBuilder,
+    this.descriptionBuilder,
     this.isDisabled = false,
+    this.radionOnRight = false,
   });
 
   /// Determines if a specific option is disabled.
@@ -95,21 +101,42 @@ class RadioButtons<T extends Enum> extends HookWidget {
       groupValue: state.value,
       onChanged: updateValue,
       child: Column(
+        spacing: Spacing.small,
         children: options.map((option) {
           final isOptionDisabled = _isOptionDisabled(option);
           final isSelected = state.value == option;
 
           return ListTile(
             enabled: !isOptionDisabled,
-            title: Text(
-              labelBuilder(option),
-              style: radioTheme.getLabelStyle(
-                context,
-                isOptionDisabled,
-                isSelected,
-              ),
+            title: Column(
+              spacing: Spacing.extraSmall,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  labelBuilder(option),
+                  style: radioTheme.getLabelStyle(
+                    context,
+                    isOptionDisabled,
+                    isSelected,
+                  ),
+                ),
+                if (descriptionBuilder != null)
+                  Text(
+                    descriptionBuilder!(option),
+                    style: radioTheme.getDescriptionStyle(
+                      context,
+                      isOptionDisabled,
+                      isSelected,
+                    ),
+                  ),
+              ],
             ),
-            leading: Radio<T>(value: option, enabled: !isOptionDisabled),
+            leading: radionOnRight
+                ? null
+                : Radio<T>(value: option, enabled: !isOptionDisabled),
+            trailing: radionOnRight
+                ? Radio<T>(value: option, enabled: !isOptionDisabled)
+                : null,
             onTap: isOptionDisabled ? null : () => updateValue(option),
           );
         }).toList(),
