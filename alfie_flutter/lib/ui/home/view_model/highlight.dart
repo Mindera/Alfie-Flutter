@@ -6,5 +6,5 @@ class Highlight {
   final String imageUrl;
   final String? title;
 
-  Highlight({required this.imageUrl, this.title});
+  const Highlight({required this.imageUrl, this.title});
 }

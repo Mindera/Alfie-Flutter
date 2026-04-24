@@ -1,4 +1,6 @@
+import 'package:alfie_flutter/data/backend/auth_backend.dart';
 import 'package:alfie_flutter/data/backend/user_backend.dart';
+import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/data/models/brand.dart';
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/money.dart';
@@ -8,6 +10,7 @@ import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/product_listing.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
+import 'package:alfie_flutter/data/models/search_item.dart';
 import 'package:alfie_flutter/data/models/size.dart';
 import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
@@ -15,6 +18,7 @@ import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 import 'package:alfie_flutter/data/repositories/brand_repository.dart';
 import 'package:alfie_flutter/data/repositories/product_repository.dart';
+import 'package:alfie_flutter/data/repositories/user_repository.dart';
 import 'package:alfie_flutter/data/repositories/wishlist_repository.dart';
 import 'package:alfie_flutter/data/services/auth_service.dart';
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
@@ -99,3 +103,11 @@ class MockProductRepository extends Mock implements IProductRepository {}
 class MockProductListing extends Mock implements ProductListing {}
 
 class MockUserBackend extends Mock implements IUserBackend {}
+
+class MockBagItem extends Mock implements BagItem {}
+
+class MockAuthBackend extends Mock implements IAuthBackend {}
+
+class MockUserRepository extends Mock implements UserRepository {}
+
+class MockSearchItem extends Mock implements SearchItem {}
