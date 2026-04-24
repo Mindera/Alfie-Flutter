@@ -1,10 +1,136 @@
+import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
+import 'package:alfie_flutter/ui/checkout/view/checkout_item.dart';
+import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
+import 'package:alfie_flutter/ui/core/themes/colors.dart';
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/ui/core/themes/typography.dart';
+import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
+import 'package:alfie_flutter/ui/core/ui/header.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
+import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends ConsumerWidget {
   const CheckoutScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Checkout Screen"));
+  Widget build(BuildContext context, WidgetRef ref) {
+    final items = [
+      CheckoutItem(
+        label: "Ship to",
+        content:
+            "John Doe, 1225 University Drive, Menlo Park, 94025, United States",
+        nullValueFallBackMessage: "Add a delivery address",
+      ),
+      CheckoutItem(
+        label: "Billing Address",
+        content:
+            "John Doe, 1225 University Drive, Menlo Park, 94025, United States",
+        nullValueFallBackMessage: "Add a billing address",
+      ),
+      CheckoutItem(
+        label: "Delivery Method",
+        nullValueFallBackMessage: "Select a delivery method",
+      ),
+      CheckoutItem(
+        label: "Payment Method",
+        nullValueFallBackMessage: "Add a payment method",
+      ),
+    ];
+    return Scaffold(
+      appBar: AppBar(
+        flexibleSpace: Header(
+          title: "Checkout",
+          leading: AppButton.tertiary(
+            leading: AppIcons.back,
+            onPressed: () => context.safePop(),
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        automaticallyImplyActions: false,
+        centerTitle: true,
+        scrolledUnderElevation: 0,
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(Spacing.small),
+        child: CustomScrollView(
+          slivers: [
+            SliverList.separated(
+              itemCount: items.length,
+              itemBuilder: (_, i) => items[i],
+              separatorBuilder: (_, i) => Padding(
+                padding: EdgeInsets.symmetric(vertical: Spacing.extraSmall),
+              ),
+            ),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(),
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: Spacing.extraSmall),
+                    child: Row(
+                      children: [
+                        Expanded(child: Text("Add promo code / gift card")),
+                        GestureDetector(child: Icon(AppIcons.chevronRight)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.neutral,
+            border: Border(top: BorderSide(color: AppColors.neutral200)),
+          ),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(
+              Spacing.small,
+              Spacing.extraSmall,
+              Spacing.small,
+              Spacing.extraSmall + MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: Spacing.extraSmall,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Total', style: context.textTheme.bodyMediumBold),
+                        Text(
+                          '\$${ref.read(bagViewModelProvider.notifier).total.toStringAsFixed(2)}',
+                          style: context.textTheme.bodyMediumBold,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "Shipping and taxes are calculated in checkout.",
+                      style: context.textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: AppButton.primary(label: "Continue", onPressed: () {}),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
