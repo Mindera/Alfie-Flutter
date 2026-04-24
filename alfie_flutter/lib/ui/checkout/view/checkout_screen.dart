@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
 import 'package:alfie_flutter/ui/checkout/view/checkout_item.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
@@ -16,17 +17,16 @@ class CheckoutScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authRepositoryProvider);
     final items = [
       CheckoutItem(
         label: "Ship to",
-        content:
-            "John Doe, 1225 University Drive, Menlo Park, 94025, United States",
+        content: user?.deliveryAddress.toString(),
         nullValueFallBackMessage: "Add a delivery address",
       ),
       CheckoutItem(
         label: "Billing Address",
-        content:
-            "John Doe, 1225 University Drive, Menlo Park, 94025, United States",
+        content: user?.billingAddress.toString(),
         nullValueFallBackMessage: "Add a billing address",
       ),
       CheckoutItem(
@@ -70,15 +70,7 @@ class CheckoutScreen extends ConsumerWidget {
                 children: [
                   SizedBox(),
 
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: Spacing.extraSmall),
-                    child: Row(
-                      children: [
-                        Expanded(child: Text("Add promo code / gift card")),
-                        GestureDetector(child: Icon(AppIcons.chevronRight)),
-                      ],
-                    ),
-                  ),
+                  CheckoutItem(content: "Add promo code / gift card"),
                 ],
               ),
             ),

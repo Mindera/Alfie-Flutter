@@ -5,17 +5,17 @@ import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutItem extends StatelessWidget {
-  final String label;
+  final String? label;
   final String? content;
   final String nullValueFallBackMessage;
   final VoidCallback? onPressed;
 
   const CheckoutItem({
     super.key,
-    required this.label,
+    this.label,
     this.content,
     this.onPressed,
-    required this.nullValueFallBackMessage,
+    this.nullValueFallBackMessage = "No data",
   });
 
   @override
@@ -29,15 +29,16 @@ class CheckoutItem extends StatelessWidget {
               spacing: Spacing.extraSmall,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 70,
-                  child: Text(
-                    label,
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: AppColors.neutral500,
+                if (label != null)
+                  SizedBox(
+                    width: 70,
+                    child: Text(
+                      label!,
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: AppColors.neutral500,
+                      ),
                     ),
                   ),
-                ),
 
                 Expanded(
                   child: content != null
