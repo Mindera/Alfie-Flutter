@@ -3,6 +3,7 @@ import 'package:alfie_flutter/data/models/delivery_method.dart';
 import 'package:alfie_flutter/data/models/payment_method.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
+import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:alfie_flutter/data/repositories/checkout_state_repository.dart';
@@ -21,6 +22,10 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
     final user = ref.read(authRepositoryProvider);
     return CheckoutState(userData: user?.data);
   }
+
+  double get totalPrice =>
+      ref.read(bagViewModelProvider.notifier).total +
+      (state.deliveryMethod?.price.amount ?? 0);
 
   void _updateState(CheckoutState newState) {
     state = newState;

@@ -1,6 +1,5 @@
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
-import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
 import 'package:alfie_flutter/ui/checkout/view/checkout_item.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
@@ -113,7 +112,7 @@ class CheckoutScreen extends ConsumerWidget {
                       children: [
                         Text('Total', style: context.textTheme.bodyMediumBold),
                         Text(
-                          '\$${ref.read(bagViewModelProvider.notifier).total.toStringAsFixed(2)}',
+                          '\$${ref.read(checkoutViewModelProvider.notifier).totalPrice.toStringAsFixed(2)}',
                           style: context.textTheme.bodyMediumBold,
                         ),
                       ],
