@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/backend/auth_backend.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
 import 'package:alfie_flutter/data/backend/user_backend.dart';
 import 'package:alfie_flutter/data/repositories/user_repository.dart';

@@ -1,10 +1,14 @@
 import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/models/search_item.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/address_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/bag_item_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/brand_adapter.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/checkout_state_adapter.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/delivery_method_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/media_adapters.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/money_adapter.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/payment_method_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/price_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/price_range_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/product_adapter.dart';
@@ -12,6 +16,8 @@ import 'package:alfie_flutter/data/services/hive_adapters/product_color_adapter.
 import 'package:alfie_flutter/data/services/hive_adapters/product_variant_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/search_item_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/size_adapters.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/user_data_adapter.dart';
+import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -55,6 +61,12 @@ abstract interface class IPersistentStorageService {
 
   /// Deletes the current access token
   Future<void> deleteAccessToken();
+
+  /// Retrieves saved checkout state.
+  CheckoutState? getCheckoutState();
+
+  /// Updates the current checkout state with a new [state].
+  Future<void> saveCheckoutState(CheckoutState state);
 }
 
 /// A Hive-based implementation of [IPersistentStorageService].
@@ -77,6 +89,9 @@ class HiveService implements IPersistentStorageService {
   static const String _authBoxName = 'authBox';
   static const String _accessTokenKey = 'accessTokenKey';
 
+  static const String _checkoutStateBoxName = 'checkoutStateBox';
+  static const String _checkoutStateKey = 'checkoutState';
+
   @override
   Future<void> init() async {
     await Hive.initFlutter();
@@ -97,9 +112,15 @@ class HiveService implements IPersistentStorageService {
     registerSafe(ProductVariantAdapter()); // typeId: 13
     registerSafe(ProductAdapter()); // typeId: 14
     registerSafe(BagItemAdapter()); // typeId: 15
+    registerSafe(AddressAdapter()); // typeId: 16
+    registerSafe(DeliveryMethodAdapter()); // typeId: 17
+    registerSafe(PaymentMethodAdapter()); // typeId: 18
+    registerSafe(UserDataAdapter()); // typeId: 19
+    registerSafe(CheckoutStateAdapter()); // typeId: 20
 
     // This should be dynamic because Hive doesn't store the generic type of the box
 
+    await Hive.openBox<CheckoutState>(_checkoutStateBoxName);
     await Hive.openBox<List<dynamic>>(_recentSearchesBoxName);
     await Hive.openBox<List<dynamic>>(_bagBoxName);
     await Hive.openBox<List<dynamic>>(_wishlistBoxName);
@@ -120,6 +141,8 @@ class HiveService implements IPersistentStorageService {
       Hive.box<List<dynamic>>(_wishlistBoxName);
   Box get _preferencesBox => Hive.box(_preferencesBoxName);
   Box get _authBox => Hive.box(_authBoxName);
+  Box<CheckoutState> get _checkoutStateBox =>
+      Hive.box<CheckoutState>(_checkoutStateBoxName);
 
   @override
   List<SearchItem> getSearchHistory() {
@@ -180,6 +203,16 @@ class HiveService implements IPersistentStorageService {
   @override
   Future<void> deleteAccessToken() async {
     await _authBox.clear();
+  }
+
+  @override
+  Future<void> saveCheckoutState(CheckoutState state) async {
+    await _checkoutStateBox.put(_checkoutStateKey, state);
+  }
+
+  @override
+  CheckoutState? getCheckoutState() {
+    return _checkoutStateBox.get(_checkoutStateKey);
   }
 }
 

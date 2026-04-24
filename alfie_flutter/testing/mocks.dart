@@ -13,6 +13,7 @@ import 'package:alfie_flutter/data/models/product_variant.dart';
 import 'package:alfie_flutter/data/models/search_item.dart';
 import 'package:alfie_flutter/data/models/size.dart';
 import 'package:alfie_flutter/data/models/user.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 import 'package:alfie_flutter/data/repositories/brand_repository.dart';
@@ -21,6 +22,7 @@ import 'package:alfie_flutter/data/repositories/user_repository.dart';
 import 'package:alfie_flutter/data/repositories/wishlist_repository.dart';
 import 'package:alfie_flutter/data/services/auth_service.dart';
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
+import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:alfie_flutter/ui/nav_bar/view_model/nav_bar_view_model.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +85,8 @@ class MockProductSize extends Mock implements ProductSize {}
 class MockSizeGuide extends Mock implements SizeGuide {}
 
 class MockVideoSource extends Mock implements VideoSource {}
+
+class MockCheckoutState extends Mock implements CheckoutState {}
 
 class MockAuthService extends Mock implements IAuthService {}
 
