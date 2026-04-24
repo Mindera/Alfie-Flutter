@@ -45,7 +45,10 @@ enum AppRoute {
   signIn(path: '/signIn'),
   createAccount(path: "/createAccount"),
   personalInformation(path: 'personalInformation'),
-
+  identification(
+    path: '/identification',
+    children: [contactInformation, deliveryInformation],
+  ),
   checkout(
     path: '/checkout',
     children: [
@@ -56,10 +59,7 @@ enum AppRoute {
       // orderConfirmation,
     ],
   ),
-  identification(
-    path: '/identification',
-    children: [contactInformation, deliveryInformation],
-  ),
+
   contactInformation(path: 'contactInformation'),
   deliveryInformation(path: 'deliveryInformation'),
   deliveryMethod(path: 'deliveryMethod'),
