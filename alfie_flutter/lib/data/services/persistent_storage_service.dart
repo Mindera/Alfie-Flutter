@@ -4,10 +4,12 @@ import 'package:alfie_flutter/data/models/search_item.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/address_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/bag_item_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/brand_adapter.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/payment_card_type_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/checkout_state_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/delivery_method_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/media_adapters.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/money_adapter.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/payment_card_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/payment_method_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/price_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/price_range_adapter.dart';
@@ -117,6 +119,8 @@ class HiveService implements IPersistentStorageService {
     registerSafe(PaymentMethodAdapter()); // typeId: 18
     registerSafe(UserDataAdapter()); // typeId: 19
     registerSafe(CheckoutStateAdapter()); // typeId: 20
+    registerSafe(CardTypeAdapter()); // typeId: 21
+    registerSafe(PaymentCardAdapter()); // typeId: 22
 
     // This should be dynamic because Hive doesn't store the generic type of the box
 
