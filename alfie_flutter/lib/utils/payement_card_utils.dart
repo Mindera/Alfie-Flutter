@@ -101,7 +101,7 @@ class PaymentCardUtils {
     return text.replaceAll(regExp, '');
   }
 
-  static Widget? getCardIcon(PaymentCardType? cardType) {
+  static Widget getCardIcon(PaymentCardType? cardType) {
     String img = "";
     Icon? icon;
     switch (cardType) {
@@ -133,13 +133,13 @@ class PaymentCardUtils {
         icon = Icon(Icons.warning, size: 40.0, color: Colors.grey[600]);
         break;
     }
-    Widget? widget;
+
     if (img.isNotEmpty) {
-      widget = Image.asset('assets/images/$img', width: 40.0);
-    } else {
-      widget = icon;
+      return Image.asset('assets/images/$img', width: 56, fit: BoxFit.contain);
     }
-    return widget;
+    if (icon != null) return icon;
+
+    return Icon(Icons.error);
   }
 
   /// With the card number with Luhn Algorithm
