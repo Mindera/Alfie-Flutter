@@ -41,19 +41,25 @@ class CardNumberInputFormatter extends TextInputFormatter {
       return newValue;
     }
 
-    var buffer = StringBuffer();
-    for (int i = 0; i < text.length; i++) {
-      buffer.write(text[i]);
-      var nonZeroIndex = i + 1;
-      if (nonZeroIndex % 4 == 0 && nonZeroIndex != text.length) {
-        buffer.write('  '); // Add double spaces.
-      }
-    }
-
-    var string = buffer.toString();
+    var string = formatCardNumber(text);
     return newValue.copyWith(
       text: string,
       selection: TextSelection.collapsed(offset: string.length),
     );
+  }
+
+  static String formatCardNumber(String text) {
+    final buffer = StringBuffer();
+
+    for (int i = 0; i < text.length; i++) {
+      buffer.write(text[i]);
+      final index = i + 1;
+
+      if (index % 4 == 0 && index != text.length) {
+        buffer.write('  '); // double spaces
+      }
+    }
+
+    return buffer.toString();
   }
 }

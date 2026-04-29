@@ -9,12 +9,12 @@ class PaymentCardAdapter extends TypeAdapter<PaymentCard> {
   @override
   PaymentCard read(BinaryReader reader) {
     return PaymentCard(
-      type: reader.read() as PaymentCardType?,
-      number: reader.read() as String?,
-      name: reader.read() as String?,
-      month: reader.read() as int?,
-      year: reader.read() as int?,
-      cvv: reader.read() as int?,
+      type: reader.read() as PaymentCardType,
+      number: reader.read() as String,
+      name: reader.read() as String,
+      month: reader.read() as int,
+      year: reader.read() as int,
+      cvv: reader.read() as int,
     );
   }
 
