@@ -51,7 +51,7 @@ jobs:
             cd alfie_flutter && flutter test integration_test --tags=smoke
 
       - name: Report LCOV
-        uses: zgosalvez/github-actions-report-lcov@5aba2ff56b3dd258ec9916d3b5049dc5994db23e
+        uses: zgosalvez/github-actions-report-lcov@7d72c57ce4bc101a4a0bf9d726b6c435abde8439
         with:
           coverage-files: alfie_flutter/coverage/lcov.info
           artifact-name: code-coverage-report
