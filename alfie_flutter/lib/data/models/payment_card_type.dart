@@ -1,3 +1,5 @@
+import 'package:alfie_flutter/utils/string_utils.dart';
+
 enum PaymentCardType {
   master,
   visa,
@@ -7,5 +9,10 @@ enum PaymentCardType {
   dinersClub,
   jcb,
   others,
-  invalid,
+  invalid;
+
+  @override
+  String toString() {
+    return name.capitalize();
+  }
 }
