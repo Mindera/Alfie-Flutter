@@ -5,7 +5,7 @@ import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/brand.dart';
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/money.dart';
-import 'package:alfie_flutter/data/models/payment_method.dart';
+import 'package:alfie_flutter/data/models/payment_card.dart';
 import 'package:alfie_flutter/data/models/price.dart';
 import 'package:alfie_flutter/data/models/price_range.dart';
 import 'package:alfie_flutter/data/models/product.dart';
@@ -116,4 +116,4 @@ class MockAddress extends Mock implements Address {}
 
 class MockRegisteredUser extends Mock implements RegisteredUser {}
 
-class MockPaymentMethod extends Mock implements PaymentMethod {}
+class MockPaymentCard extends Mock implements PaymentCard {}

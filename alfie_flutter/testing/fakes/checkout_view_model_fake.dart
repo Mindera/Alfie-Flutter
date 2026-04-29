@@ -1,6 +1,6 @@
 import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/delivery_method.dart';
-import 'package:alfie_flutter/data/models/payment_method.dart';
+import 'package:alfie_flutter/data/models/payment_card.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_view_model.dart';
@@ -66,7 +66,7 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
   void setDeliveryMethod(DeliveryMethod method) {}
 
   @override
-  void setPaymentMethod(PaymentMethod method) {}
+  void setPaymentMethod(PaymentCard paymentCard) {}
 
   @override
   void applyPromoCode(String code) {}

@@ -1,5 +1,5 @@
 import 'package:alfie_flutter/data/models/delivery_method.dart';
-import 'package:alfie_flutter/data/models/payment_method.dart';
+import 'package:alfie_flutter/data/models/payment_card.dart';
 import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/checkout_state_adapter.dart';
@@ -14,7 +14,7 @@ void main() {
   late MockBinaryWriter mockWriter;
 
   late MockRegisteredUser mockUser;
-  late MockPaymentMethod mockPaymentMethod;
+  late MockPaymentCard mockPaymentCard;
 
   setUp(() {
     adapter = CheckoutStateAdapter();
@@ -22,7 +22,7 @@ void main() {
     mockWriter = MockBinaryWriter();
 
     mockUser = MockRegisteredUser();
-    mockPaymentMethod = MockPaymentMethod();
+    mockPaymentCard = MockPaymentCard();
   });
 
   group('CheckoutStateAdapter Tests -', () {
@@ -34,7 +34,7 @@ void main() {
       final state = CheckoutState(
         user: mockUser,
         deliveryMethod: DeliveryMethod.standard,
-        paymentMethod: mockPaymentMethod,
+        paymentCard: mockPaymentCard,
         promoCode: 'SUMMER20',
       );
 
@@ -45,7 +45,7 @@ void main() {
       verifyInOrder([
         () => mockWriter.write<User?>(mockUser),
         () => mockWriter.write<DeliveryMethod?>(DeliveryMethod.standard),
-        () => mockWriter.write<PaymentMethod?>(mockPaymentMethod),
+        () => mockWriter.write<PaymentCard?>(mockPaymentCard),
         () => mockWriter.write<String?>('SUMMER20'),
       ]);
     });
@@ -60,7 +60,7 @@ void main() {
         verifyInOrder([
           () => mockWriter.write<User?>(null),
           () => mockWriter.write<DeliveryMethod?>(null),
-          () => mockWriter.write<PaymentMethod?>(null),
+          () => mockWriter.write<PaymentCard?>(null),
           () => mockWriter.write<String?>(null),
         ]);
       },
@@ -70,7 +70,7 @@ void main() {
       final dynamicReturns = [
         mockUser,
         DeliveryMethod.standard,
-        mockPaymentMethod,
+        mockPaymentCard,
         'SUMMER20',
       ];
 
@@ -83,7 +83,7 @@ void main() {
       // Verify the resulting state properties match what was read
       expect(result.user, mockUser);
       expect(result.deliveryMethod, DeliveryMethod.standard);
-      expect(result.paymentMethod, mockPaymentMethod);
+      expect(result.paymentCard, mockPaymentCard);
       expect(result.promoCode, 'SUMMER20');
 
       // Verify exactly 4 reads were made

@@ -10,7 +10,6 @@ import 'package:alfie_flutter/data/services/hive_adapters/delivery_method_adapte
 import 'package:alfie_flutter/data/services/hive_adapters/media_adapters.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/money_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/payment_card_adapter.dart';
-import 'package:alfie_flutter/data/services/hive_adapters/payment_method_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/price_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/price_range_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/product_adapter.dart';
@@ -117,7 +116,7 @@ class HiveService implements IPersistentStorageService {
     registerSafe(BagItemAdapter()); // typeId: 15
     registerSafe(AddressAdapter()); // typeId: 16
     registerSafe(DeliveryMethodAdapter()); // typeId: 17
-    registerSafe(PaymentMethodAdapter()); // typeId: 18
+
     registerSafe(UserDataAdapter()); // typeId: 19
     registerSafe(CheckoutStateAdapter()); // typeId: 20
     registerSafe(CardTypeAdapter()); // typeId: 21

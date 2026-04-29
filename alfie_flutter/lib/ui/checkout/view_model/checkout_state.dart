@@ -1,19 +1,19 @@
 import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/delivery_method.dart';
-import 'package:alfie_flutter/data/models/payment_method.dart';
+import 'package:alfie_flutter/data/models/payment_card.dart';
 import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 
 class CheckoutState {
   final User? user;
   final DeliveryMethod? deliveryMethod;
-  final PaymentMethod? paymentMethod;
+  final PaymentCard? paymentCard;
   final String? promoCode;
 
   const CheckoutState({
     this.user,
     this.deliveryMethod,
-    this.paymentMethod,
+    this.paymentCard,
     this.promoCode,
   });
 
@@ -25,7 +25,7 @@ class CheckoutState {
   bool get hasShippingAddress => deliveryAddress != null;
   bool get hasBillingAddress => billingAddress != null;
   bool get hasDeliveryMethod => deliveryMethod != null;
-  bool get hasPaymentMethod => paymentMethod != null;
+  bool get hasPaymentMethod => paymentCard != null;
 
   bool get canPlaceOrder =>
       hasContactInfo &&
@@ -37,13 +37,13 @@ class CheckoutState {
   CheckoutState copyWith({
     User? user,
     DeliveryMethod? deliveryMethod,
-    PaymentMethod? paymentMethod,
+    PaymentCard? paymentCard,
     String? promoCode,
   }) {
     return CheckoutState(
       user: user ?? this.user,
       deliveryMethod: deliveryMethod ?? this.deliveryMethod,
-      paymentMethod: paymentMethod ?? this.paymentMethod,
+      paymentCard: paymentCard ?? this.paymentCard,
       promoCode: promoCode ?? this.promoCode,
     );
   }
