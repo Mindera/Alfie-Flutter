@@ -1,7 +1,6 @@
-import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/delivery_method.dart';
 import 'package:alfie_flutter/data/models/payment_method.dart';
-import 'package:alfie_flutter/data/models/user_data.dart';
+import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/checkout_state_adapter.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,20 +8,12 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../../testing/mocks.dart';
 
-class MockAddress extends Mock implements Address {}
-
-class MockUserData extends Mock implements UserData {}
-
-class MockPaymentMethod extends Mock implements PaymentMethod {}
-
 void main() {
   late CheckoutStateAdapter adapter;
   late MockBinaryReader mockReader;
   late MockBinaryWriter mockWriter;
 
-  late MockAddress mockAddress;
-  late MockAddress mockBillingAddress;
-  late MockUserData mockUserData;
+  late MockRegisteredUser mockUser;
   late MockPaymentMethod mockPaymentMethod;
 
   setUp(() {
@@ -30,9 +21,7 @@ void main() {
     mockReader = MockBinaryReader();
     mockWriter = MockBinaryWriter();
 
-    mockAddress = MockAddress();
-    mockBillingAddress = MockAddress();
-    mockUserData = MockUserData();
+    mockUser = MockRegisteredUser();
     mockPaymentMethod = MockPaymentMethod();
   });
 
@@ -43,9 +32,7 @@ void main() {
 
     test('write() should correctly serialize CheckoutState to binary', () {
       final state = CheckoutState(
-        deliveryAddress: mockAddress,
-        billingAddress: mockBillingAddress,
-        userData: mockUserData,
+        user: mockUser,
         deliveryMethod: DeliveryMethod.standard,
         paymentMethod: mockPaymentMethod,
         promoCode: 'SUMMER20',
@@ -53,31 +40,13 @@ void main() {
 
       adapter.write(mockWriter, state);
 
+      // Verifies the 4 fields are written in the exact order specified in the adapter.
+      // Explicitly providing the generic types to match the adapter's invocation exactly.
       verifyInOrder([
-        () => mockWriter.write<Address?>(
-          mockAddress,
-          writeTypeId: any(named: 'writeTypeId'),
-        ),
-        () => mockWriter.write<Address?>(
-          mockBillingAddress,
-          writeTypeId: any(named: 'writeTypeId'),
-        ),
-        () => mockWriter.write<UserData?>(
-          mockUserData,
-          writeTypeId: any(named: 'writeTypeId'),
-        ),
-        () => mockWriter.write<DeliveryMethod?>(
-          DeliveryMethod.standard,
-          writeTypeId: any(named: 'writeTypeId'),
-        ),
-        () => mockWriter.write<PaymentMethod?>(
-          mockPaymentMethod,
-          writeTypeId: any(named: 'writeTypeId'),
-        ),
-        () => mockWriter.write<String?>(
-          'SUMMER20',
-          writeTypeId: any(named: 'writeTypeId'),
-        ),
+        () => mockWriter.write<User?>(mockUser),
+        () => mockWriter.write<DeliveryMethod?>(DeliveryMethod.standard),
+        () => mockWriter.write<PaymentMethod?>(mockPaymentMethod),
+        () => mockWriter.write<String?>('SUMMER20'),
       ]);
     });
 
@@ -89,39 +58,17 @@ void main() {
         adapter.write(mockWriter, state);
 
         verifyInOrder([
-          () => mockWriter.write<Address?>(
-            null,
-            writeTypeId: any(named: 'writeTypeId'),
-          ),
-          () => mockWriter.write<Address?>(
-            null,
-            writeTypeId: any(named: 'writeTypeId'),
-          ),
-          () => mockWriter.write<UserData?>(
-            null,
-            writeTypeId: any(named: 'writeTypeId'),
-          ),
-          () => mockWriter.write<DeliveryMethod?>(
-            null,
-            writeTypeId: any(named: 'writeTypeId'),
-          ),
-          () => mockWriter.write<PaymentMethod?>(
-            null,
-            writeTypeId: any(named: 'writeTypeId'),
-          ),
-          () => mockWriter.write<String?>(
-            null,
-            writeTypeId: any(named: 'writeTypeId'),
-          ),
+          () => mockWriter.write<User?>(null),
+          () => mockWriter.write<DeliveryMethod?>(null),
+          () => mockWriter.write<PaymentMethod?>(null),
+          () => mockWriter.write<String?>(null),
         ]);
       },
     );
 
     test('read() should correctly deserialize binary to CheckoutState', () {
       final dynamicReturns = [
-        mockAddress,
-        mockBillingAddress,
-        mockUserData,
+        mockUser,
         DeliveryMethod.standard,
         mockPaymentMethod,
         'SUMMER20',
@@ -133,14 +80,14 @@ void main() {
 
       final result = adapter.read(mockReader);
 
-      expect(result.deliveryAddress, mockAddress);
-      expect(result.billingAddress, mockBillingAddress);
-      expect(result.userData, mockUserData);
+      // Verify the resulting state properties match what was read
+      expect(result.user, mockUser);
       expect(result.deliveryMethod, DeliveryMethod.standard);
       expect(result.paymentMethod, mockPaymentMethod);
       expect(result.promoCode, 'SUMMER20');
 
-      verify(() => mockReader.read()).called(6);
+      // Verify exactly 4 reads were made
+      verify(() => mockReader.read()).called(4);
     });
   });
 }

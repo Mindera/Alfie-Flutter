@@ -20,9 +20,7 @@ class CheckoutStateAdapter extends TypeAdapter<CheckoutState> {
 
   @override
   void write(BinaryWriter writer, CheckoutState obj) {
-    writer.write(obj.deliveryAddress);
-    writer.write(obj.billingAddress);
-    writer.write(obj.userData);
+    writer.write(obj.user);
     writer.write(obj.deliveryMethod);
     writer.write(obj.paymentMethod);
     writer.write(obj.promoCode);

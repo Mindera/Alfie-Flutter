@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/data/backend/user_backend.dart';
+import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/repositories/user_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,12 +12,14 @@ void main() {
   late UserRepository repository;
   late ProviderContainer container;
 
-  late MockUser mockUser;
+  late MockRegisteredUser mockUser;
+  late MockRegisteredUser mockRegisteredUser;
   late MockUserData mockUserData;
 
   setUp(() {
     mockUserBackend = MockUserBackend();
-    mockUser = MockUser();
+    mockUser = MockRegisteredUser();
+    mockRegisteredUser = MockRegisteredUser();
     mockUserData = MockUserData();
 
     // Setup the ProviderContainer with the mocked backend
@@ -33,7 +36,10 @@ void main() {
 
   group('UserRepository Tests - ', () {
     test('getAllUsers delegates to backend', () {
-      final users = [mockUser];
+      // getAllUsers now expects RegisteredUser instances
+      final users = <RegisteredUser>[mockRegisteredUser];
+
+      // Mocking the backend to return the specific subclass
       when(() => mockUserBackend.getAllUsers()).thenReturn(users);
 
       final result = repository.getAllUsers();
@@ -63,11 +69,13 @@ void main() {
     });
 
     test('addUser delegates to backend and returns the new user', () {
-      when(() => mockUserBackend.addUser(mockUserData)).thenReturn(mockUser);
+      when(
+        () => mockUserBackend.addUser(mockUserData),
+      ).thenReturn(mockRegisteredUser);
 
       final result = repository.addUser(mockUserData);
 
-      expect(result, equals(mockUser));
+      expect(result, equals(mockRegisteredUser));
       verify(() => mockUserBackend.addUser(mockUserData)).called(1);
     });
 
@@ -88,6 +96,35 @@ void main() {
 
       expect(result, equals(mockUser));
       verify(() => mockUserBackend.deleteUser(userId)).called(1);
+    });
+
+    test(
+      'isEmailRegistered returns true if email exists (case insensitive)',
+      () {
+        when(() => mockUserData.email).thenReturn('Test@Alfie.com');
+        when(() => mockRegisteredUser.data).thenReturn(mockUserData);
+        when(
+          () => mockUserBackend.getAllUsers(),
+        ).thenReturn(<RegisteredUser>[mockRegisteredUser]);
+
+        final result = repository.isEmailRegistered('test@alfie.com');
+
+        expect(result, isTrue);
+        verify(() => mockUserBackend.getAllUsers()).called(1);
+      },
+    );
+
+    test('isEmailRegistered returns false if email does not exist', () {
+      when(() => mockUserData.email).thenReturn('admin@alfie.com');
+      when(() => mockRegisteredUser.data).thenReturn(mockUserData);
+      when(
+        () => mockUserBackend.getAllUsers(),
+      ).thenReturn(<RegisteredUser>[mockRegisteredUser]);
+
+      final result = repository.isEmailRegistered('test@alfie.com');
+
+      expect(result, isFalse);
+      verify(() => mockUserBackend.getAllUsers()).called(1);
     });
   });
 

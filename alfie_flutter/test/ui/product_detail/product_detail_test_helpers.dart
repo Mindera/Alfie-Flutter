@@ -86,7 +86,7 @@ ProductDetailState createDummyProductDetailState({
 
 /// Creates a dummy user for testing
 User createDummyUser() {
-  return User(
+  return GuestUser(
     id: "test-user-1",
     data: UserData(
       firstName: "Test",

@@ -19,7 +19,7 @@ void main() {
   late AuthService authService;
   late ProviderContainer container;
 
-  late MockUser mockUser;
+  late MockRegisteredUser mockUser;
   late MockUserData mockUserData;
 
   // Generate a valid JWT structure to satisfy the static JwtDecoder methods.
@@ -40,7 +40,7 @@ void main() {
     mockPersistentStorageService = MockPersistentStorageService();
     mockUserRepository = MockUserRepository();
 
-    mockUser = MockUser();
+    mockUser = MockRegisteredUser();
     mockUserData = MockUserData();
 
     authService = AuthService(
@@ -101,7 +101,7 @@ void main() {
 
     group('createAccount - ', () {
       test('throws Exception if email already exists (case-insensitive)', () {
-        final existingUser = MockUser();
+        final existingUser = MockRegisteredUser();
         final existingData = MockUserData();
 
         when(() => existingData.email).thenReturn('Test@Email.com');

@@ -18,6 +18,7 @@ import 'package:alfie_flutter/data/services/hive_adapters/product_color_adapter.
 import 'package:alfie_flutter/data/services/hive_adapters/product_variant_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/search_item_adapter.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/size_adapters.dart';
+import 'package:alfie_flutter/data/services/hive_adapters/user_adapters.dart';
 import 'package:alfie_flutter/data/services/hive_adapters/user_data_adapter.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -121,6 +122,8 @@ class HiveService implements IPersistentStorageService {
     registerSafe(CheckoutStateAdapter()); // typeId: 20
     registerSafe(CardTypeAdapter()); // typeId: 21
     registerSafe(PaymentCardAdapter()); // typeId: 22
+    registerSafe(RegisteredUserAdapter()); //typeId: 23
+    registerSafe(GuestUserAdapter()); // typeId: 24
 
     // This should be dynamic because Hive doesn't store the generic type of the box
 
