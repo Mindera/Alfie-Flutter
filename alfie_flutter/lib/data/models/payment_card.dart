@@ -2,7 +2,7 @@ import 'package:alfie_flutter/data/models/payment_card_type.dart';
 import 'package:alfie_flutter/utils/input_formatters.dart';
 
 class PaymentCard {
-  static PaymentCard sample = PaymentCard(
+  static const PaymentCard sample = PaymentCard(
     type: PaymentCardType.visa,
     number: '4111111111111111',
     name: 'John Doe',
@@ -10,15 +10,23 @@ class PaymentCard {
     year: 2030,
     cvv: 123,
   );
+  static const PaymentCard invalid = PaymentCard(
+    type: PaymentCardType.invalid,
+    number: '',
+    name: '',
+    month: 0,
+    year: 0,
+    cvv: 0,
+  );
 
-  PaymentCardType type;
-  String number;
-  String name;
-  int month;
-  int year;
-  int cvv;
+  final PaymentCardType type;
+  final String number;
+  final String name;
+  final int month;
+  final int year;
+  final int cvv;
 
-  PaymentCard({
+  const PaymentCard({
     required this.type,
     required this.number,
     required this.name,
@@ -29,7 +37,7 @@ class PaymentCard {
 
   String displayString() {
     final obscuredNumber = CardNumberInputFormatter.formatCardNumber(
-      "${"*" * (number.length - 4)}${number.substring(number.length - 4)}",
+      "${"*" * 4}${number.substring(number.length - 4)}",
     );
 
     return "$type $obscuredNumber";
@@ -56,5 +64,23 @@ class PaymentCard {
       year: year ?? this.year,
       cvv: cvv ?? this.cvv,
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is PaymentCard &&
+        other.type == type &&
+        other.number == number &&
+        other.name == name &&
+        other.month == month &&
+        other.year == year &&
+        other.cvv == cvv;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(type, number, name, month, year, cvv);
   }
 }
