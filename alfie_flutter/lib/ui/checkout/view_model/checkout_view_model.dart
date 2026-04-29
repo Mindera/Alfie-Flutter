@@ -19,8 +19,8 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
       return savedState;
     }
 
-    final user = ref.read(authRepositoryProvider);
-    return CheckoutState(userData: user?.data);
+    final user = ref.watch(authRepositoryProvider);
+    return CheckoutState(user: user);
   }
 
   double get totalPrice =>
@@ -35,41 +35,45 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
   // ---------------------------
   // CONTACT INFO STEP
   // ---------------------------
-  void setUser(UserData user) {
-    _updateState(state.copyWith(userData: user));
+  void setUserData(UserData userData) {
+    final currentUser = state.user;
+    _updateState(state.copyWith(user: currentUser?.copyWith(data: userData)));
   }
 
   // ---------------------------
   // ADDRESS STEP
   // ---------------------------
-  void setDeliveryAddress(Address address) {
-    _updateState(state.copyWith(deliveryAddress: address));
+  void setDeliveryAddress(Address deliveryAddress) {
+    final currentUser = state.user;
+    _updateState(
+      state.copyWith(
+        user: currentUser?.copyWith(deliveryAddress: deliveryAddress),
+      ),
+    );
   }
 
   void setBillingAddress(Address billingAddress) {
-    _updateState(state.copyWith(billingAddress: billingAddress));
+    final currentUser = state.user;
+    _updateState(
+      state.copyWith(
+        user: currentUser?.copyWith(billingAddress: billingAddress),
+      ),
+    );
   }
 
   void useShippingAsBilling() {
+    final currentUser = state.user;
     if (state.deliveryAddress != null) {
-      _updateState(state.copyWith(billingAddress: state.deliveryAddress));
+      _updateState(
+        state.copyWith(
+          user: currentUser?.copyWith(billingAddress: state.deliveryAddress),
+        ),
+      );
     }
   }
 
-  void continueAsGuestUser() {
-    if (state.userData == null ||
-        state.deliveryAddress == null ||
-        state.billingAddress == null) {
-      throw Exception();
-    }
-
-    ref
-        .read(authRepositoryProvider.notifier)
-        .continueAsGuestUser(
-          state.userData!,
-          state.deliveryAddress!,
-          state.billingAddress!,
-        );
+  void startGuestSession() {
+    ref.read(authRepositoryProvider.notifier).startGuestSession();
   }
 
   // ---------------------------

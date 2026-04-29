@@ -1,10 +1,11 @@
+import 'package:alfie_flutter/data/models/payment_card.dart';
 import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 abstract interface class IUserBackend {
-  List<User> getAllUsers();
+  List<RegisteredUser> getAllUsers();
   User? getUser(String id);
   User addUser(UserData userData);
   void updateUser(User updatedUserData);
@@ -13,7 +14,7 @@ abstract interface class IUserBackend {
 
 class LocalUserBackend implements IUserBackend {
   static final List<User> _mockDb = [
-    User(
+    RegisteredUser(
       id: "0a9895ff-8973-4007-b0e0-9533ac82c506",
       data: UserData(
         firstName: 'Alfie',
@@ -21,6 +22,7 @@ class LocalUserBackend implements IUserBackend {
         email: 'admin@alfie.com',
         phoneNumber: '239002231',
       ),
+      paymentCards: [PaymentCard.sample],
     ),
   ];
 
@@ -29,7 +31,11 @@ class LocalUserBackend implements IUserBackend {
   @override
   User addUser(UserData userData) {
     final String newId = uuid.v4();
-    final User user = User(id: newId, data: userData);
+    final User user = RegisteredUser(
+      id: newId,
+      data: userData,
+      paymentCards: [],
+    );
     _mockDb.add(user);
     return user;
   }
@@ -43,7 +49,7 @@ class LocalUserBackend implements IUserBackend {
   }
 
   @override
-  List<User> getAllUsers() => List.unmodifiable(_mockDb);
+  List<RegisteredUser> getAllUsers() => List.unmodifiable(_mockDb);
 
   @override
   User? getUser(String id) {

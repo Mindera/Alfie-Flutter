@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/data/repositories/user_repository.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
+import 'package:alfie_flutter/ui/checkout/view_model/checkout_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/themes/typography.dart';
@@ -82,6 +83,10 @@ class IdentificationScreen extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   context.goTo(AppRoute.contactInformation);
+
+                  ref
+                      .read(checkoutViewModelProvider.notifier)
+                      .startGuestSession();
                 },
                 child: Text(
                   "CONTINUE AS GUEST",

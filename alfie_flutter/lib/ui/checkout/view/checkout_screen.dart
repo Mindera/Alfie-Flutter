@@ -1,4 +1,3 @@
-import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/checkout/view/checkout_item.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_view_model.dart';
@@ -19,7 +18,9 @@ class CheckoutScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final checkoutState = ref.watch(checkoutViewModelProvider);
-    final user = ref.watch(authRepositoryProvider);
+    final user = ref.watch(
+      checkoutViewModelProvider.select((state) => state.user),
+    );
 
     final items = [
       CheckoutItem(

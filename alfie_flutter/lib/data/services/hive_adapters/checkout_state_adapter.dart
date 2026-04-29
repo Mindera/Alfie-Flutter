@@ -1,7 +1,6 @@
-import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/delivery_method.dart';
 import 'package:alfie_flutter/data/models/payment_method.dart';
-import 'package:alfie_flutter/data/models/user_data.dart';
+import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:hive/hive.dart';
 
@@ -12,9 +11,7 @@ class CheckoutStateAdapter extends TypeAdapter<CheckoutState> {
   @override
   CheckoutState read(BinaryReader reader) {
     return CheckoutState(
-      deliveryAddress: reader.read() as Address?,
-      billingAddress: reader.read() as Address?,
-      userData: reader.read() as UserData?,
+      user: reader.read() as User?,
       deliveryMethod: reader.read() as DeliveryMethod?,
       paymentMethod: reader.read() as PaymentMethod?,
       promoCode: reader.read() as String?,

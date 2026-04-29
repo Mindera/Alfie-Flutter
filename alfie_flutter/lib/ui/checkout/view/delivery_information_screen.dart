@@ -131,10 +131,6 @@ class DeliveryInformationScreen extends HookConsumerWidget {
                         : billingAddress.value,
                   );
 
-              ref
-                  .read(checkoutViewModelProvider.notifier)
-                  .continueAsGuestUser();
-
               context.goTo(AppRoute.checkout);
             },
           ),

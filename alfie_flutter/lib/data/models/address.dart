@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 class Address {
   final String country;
   final String postalCode;
@@ -47,8 +45,6 @@ class Address {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
-    log("$this : $other");
 
     return other is Address &&
         other.country == country &&

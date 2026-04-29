@@ -22,15 +22,15 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
   CheckoutState build() => _initialState;
 
   @override
-  void setUser(UserData user) {
+  void setUserData(UserData user) {
     savedUser = user;
     state = state.copyWith(userData: user);
   }
 
   @override
-  void setDeliveryAddress(Address address) {
-    setDeliveryAddressArg = address;
-    state = state.copyWith(deliveryAddress: address);
+  void setDeliveryAddress(Address deliveryAddress) {
+    setDeliveryAddressArg = deliveryAddress;
+    state = state.copyWith(deliveryAddress: deliveryAddress);
   }
 
   @override
