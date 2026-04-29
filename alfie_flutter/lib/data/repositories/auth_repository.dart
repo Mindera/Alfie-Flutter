@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
-import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/data/services/auth_service.dart';
@@ -49,19 +47,9 @@ class AuthRepository extends Notifier<User?> {
     return user;
   }
 
-  User continueAsGuestUser(
-    UserData userData,
-    Address deliveryAddress,
-    Address billingAddress,
-  ) {
-    final guestUser = User(
-      id: UuidV4().generate(),
-      data: userData,
-      deliveryAddress: deliveryAddress,
-      billingAddress: billingAddress,
-    );
-    state = guestUser;
-    return guestUser;
+  void startGuestSession() {
+    final guestId = UuidV4().generate();
+    state = GuestUser(id: guestId);
   }
 }
 

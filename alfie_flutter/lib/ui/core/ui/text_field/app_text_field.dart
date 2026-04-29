@@ -3,6 +3,7 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 /// A text input field with label, optional leading icon, and clearable state.
@@ -50,6 +51,8 @@ class AppInputField extends HookWidget {
 
   final bool obscureText;
 
+  final List<TextInputFormatter>? inputFormatters;
+
   const AppInputField(
     this.label, {
     super.key,
@@ -60,6 +63,7 @@ class AppInputField extends HookWidget {
     this.keyboardType,
     this.initialValue,
     this.obscureText = false,
+    this.inputFormatters,
   });
 
   @override
@@ -102,6 +106,7 @@ class AppInputField extends HookWidget {
           validator: validator,
           keyboardType: keyboardType,
           obscureText: obscureText,
+          inputFormatters: inputFormatters,
         ),
       ],
     );

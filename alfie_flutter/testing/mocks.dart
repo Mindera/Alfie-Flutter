@@ -5,6 +5,7 @@ import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/brand.dart';
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/money.dart';
+import 'package:alfie_flutter/data/models/payment_card.dart';
 import 'package:alfie_flutter/data/models/price.dart';
 import 'package:alfie_flutter/data/models/price_range.dart';
 import 'package:alfie_flutter/data/models/product.dart';
@@ -91,8 +92,6 @@ class MockCheckoutState extends Mock implements CheckoutState {}
 
 class MockAuthService extends Mock implements IAuthService {}
 
-class MockUser extends Mock implements User {}
-
 class MockUserData extends Mock implements UserData {}
 
 class MockGraphQLClient extends Mock implements GraphQLClient {}
@@ -114,3 +113,7 @@ class MockUserRepository extends Mock implements UserRepository {}
 class MockSearchItem extends Mock implements SearchItem {}
 
 class MockAddress extends Mock implements Address {}
+
+class MockRegisteredUser extends Mock implements RegisteredUser {}
+
+class MockPaymentCard extends Mock implements PaymentCard {}
