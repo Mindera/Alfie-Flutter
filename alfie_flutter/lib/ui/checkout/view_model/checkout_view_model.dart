@@ -1,6 +1,6 @@
 import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/delivery_method.dart';
-import 'package:alfie_flutter/data/models/payment_method.dart';
+import 'package:alfie_flutter/data/models/payment_card.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/ui/bag/view_model/bag_view_model.dart';
@@ -86,8 +86,20 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
   // ---------------------------
   // PAYMENT METHOD STEP
   // ---------------------------
-  void setPaymentMethod(PaymentMethod method) {
-    _updateState(state.copyWith(paymentMethod: method));
+  void setPaymentMethod(PaymentCard paymentCard) {
+    final currentCards = state.user?.paymentCards ?? [];
+
+    List<PaymentCard> updatedCards = List.from(currentCards);
+    if (!updatedCards.contains(paymentCard)) {
+      updatedCards.add(paymentCard);
+    }
+
+    _updateState(
+      state.copyWith(
+        paymentCard: paymentCard,
+        user: state.user?.copyWith(paymentCards: updatedCards),
+      ),
+    );
   }
 
   // ---------------------------

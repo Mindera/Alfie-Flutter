@@ -46,8 +46,12 @@ class CheckoutScreen extends ConsumerWidget {
       ),
       CheckoutItem(
         label: "Payment Method",
+        content: checkoutState.paymentCard?.displayString(),
         nullValueFallBackMessage: "Add a payment method",
-        onPressed: () => context.pushTo(AppRoute.paymentMethod),
+        onPressed: () => context.pushTo(
+          AppRoute.paymentMethod,
+          extra: checkoutState.paymentCard,
+        ),
       ),
     ];
     return Scaffold(

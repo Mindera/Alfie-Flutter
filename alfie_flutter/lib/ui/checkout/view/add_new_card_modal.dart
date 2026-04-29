@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/data/models/payment_card.dart';
+import 'package:alfie_flutter/ui/checkout/view_model/checkout_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
@@ -12,14 +13,15 @@ import 'package:alfie_flutter/utils/payement_card_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AddNewCardModal extends HookWidget {
+class AddNewCardModal extends HookConsumerWidget {
   const AddNewCardModal({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    final card = useState<PaymentCard>(PaymentCard.sample);
+    final card = useState<PaymentCard>(PaymentCard.invalid);
     return Padding(
       padding: const EdgeInsets.all(
         Spacing.small,
@@ -47,6 +49,7 @@ class AddNewCardModal extends HookWidget {
                     validator: context.validateCardNumber,
                     onChanged: (value) => card.value = card.value.copyWith(
                       number: PaymentCardUtils.getCleanedNumber(value),
+                      type: PaymentCardUtils.getCardTypeFrmNumber(value),
                     ),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -114,7 +117,16 @@ class AddNewCardModal extends HookWidget {
               ),
               SizedBox(
                 width: double.maxFinite,
-                child: AppButton.primary(label: "Continue", onPressed: () {}),
+                child: AppButton.primary(
+                  label: "Continue",
+                  onPressed: () {
+                    ref
+                        .read(checkoutViewModelProvider.notifier)
+                        .setPaymentMethod(card.value);
+
+                    context.safePop();
+                  },
+                ),
               ),
             ],
           ),
