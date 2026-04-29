@@ -70,13 +70,7 @@ class PaymentCard {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is PaymentCard &&
-        other.type == type &&
-        other.number == number &&
-        other.name == name &&
-        other.month == month &&
-        other.year == year &&
-        other.cvv == cvv;
+    return other is PaymentCard && other.type == type && other.number == number;
   }
 
   @override
