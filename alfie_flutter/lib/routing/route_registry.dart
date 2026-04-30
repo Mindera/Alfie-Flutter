@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/data/models/delivery_method.dart';
 import 'package:alfie_flutter/data/models/payment_card.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/account/view/account_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/auth_screen.dart';
@@ -10,6 +11,7 @@ import 'package:alfie_flutter/ui/checkout/view/contact_information_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/delivery_information_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/delivery_method_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/identification_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/order_confirmation_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/payment_method_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/components_demo_screen/buttons_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/components_demo_screen/checkboxes_screen.dart';
@@ -61,6 +63,9 @@ class DefaultRouteRegistry implements RouteRegistry {
       AppRoute.personalInformation => PersonalInformationScreen(),
       AppRoute.auth => AuthScreen(),
       AppRoute.createAccount => CreateAccountScreen(
+        prefilledUserData: state.extra is UserData?
+            ? state.extra as UserData?
+            : null,
         prefilledEmail: state.uri.queryParameters['email'],
       ),
       AppRoute.checkout => CheckoutScreen(),
@@ -77,6 +82,7 @@ class DefaultRouteRegistry implements RouteRegistry {
             ? state.extra as PaymentCard
             : null,
       ),
+      AppRoute.orderConfirmation => OrderConfirmationScreen(),
     };
   }
 }

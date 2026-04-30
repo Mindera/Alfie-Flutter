@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
@@ -32,7 +33,7 @@ final routerProvider = Provider((ref) {
 
     // router.dart inside the GoRouter configuration
     redirect: (context, state) {
-      final isLoggedIn = authStateNotifier.value;
+      final isLoggedIn = authStateNotifier.value is RegisteredUser;
 
       final currentRoute = AppRoute.findByPath(state.matchedLocation);
       final needsAuth = currentRoute?.needsAuth ?? false;
@@ -65,7 +66,7 @@ final routerProvider = Provider((ref) {
         registry,
         AppRoute.checkout.name,
         redirect: (context, state) {
-          final isLoggedIn = authStateNotifier.value;
+          final isLoggedIn = authStateNotifier.value is RegisteredUser;
           if (!isLoggedIn) {
             return AppRoute.identification.fullPath;
           }
@@ -76,6 +77,11 @@ final routerProvider = Provider((ref) {
         [AppRoute.identification],
         registry,
         AppRoute.identification.name,
+      ),
+      ..._buildRecursiveRoutes(
+        [AppRoute.orderConfirmation],
+        registry,
+        AppRoute.orderConfirmation.name,
       ),
       StatefulShellRoute.indexedStack(
         builder:

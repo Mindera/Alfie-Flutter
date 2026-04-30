@@ -15,6 +15,7 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
   Address? setDeliveryAddressArg;
   Address? setBillingAddressArg;
   bool startGuestSessionCalled = false;
+  bool clearStateCalled = false;
 
   FakeCheckoutViewModel([this._initialState = const CheckoutState()]);
 
@@ -73,4 +74,12 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
 
   @override
   double get totalPrice => 0.0;
+
+  @override
+  void placeOrder() {}
+
+  @override
+  void clearCheckoutState() {
+    clearStateCalled = true;
+  }
 }

@@ -7,20 +7,64 @@ import 'package:alfie_flutter/data/repositories/bag_repository.dart';
 
 import '../../../testing/mocks.dart';
 
+/// A Fake implementation to test BagViewModel cleanly without dealing
+/// with persistent storage mocks or Riverpod's limits on mocking Notifiers.
+class FakeBagRepository extends BagRepository {
+  final List<BagItem> initialItems;
+  final double mockTotal;
+
+  FakeBagRepository({this.initialItems = const [], this.mockTotal = 0.0});
+
+  bool addToBagCalled = false;
+  bool removeFromBagCalled = false;
+  bool updateQuantityCalled = false;
+  bool clearBagCalled = false;
+
+  @override
+  List<BagItem> build() {
+    return initialItems;
+  }
+
+  @override
+  Future<void> addToBag(BagItem item) async {
+    addToBagCalled = true;
+    state = [...state, item];
+  }
+
+  @override
+  Future<void> removeFromBag(String productId) async {
+    removeFromBagCalled = true;
+    state = state.where((item) => item.product.id != productId).toList();
+  }
+
+  @override
+  Future<void> updateQuantity(String productId, int quantity) async {
+    updateQuantityCalled = true;
+    state = state.map((item) {
+      if (item.product.id == productId) {
+        return BagItem(product: item.product, quantity: quantity);
+      }
+      return item;
+    }).toList();
+  }
+
+  @override
+  double get total => mockTotal;
+
+  @override
+  Future<void> clearBag() async {
+    clearBagCalled = true;
+    state = [];
+  }
+}
+
 void main() {
-  late MockBagRepository mockRepository;
   late MockProduct mockProduct1;
   late MockProduct mockProduct2;
   late BagItem item1;
   late BagItem item2;
 
-  setUpAll(() {
-    // Required by mocktail to use any() with custom types
-    registerFallbackValue(BagItem(product: MockProduct(), quantity: 1));
-  });
-
   setUp(() {
-    mockRepository = MockBagRepository();
     mockProduct1 = MockProduct();
     mockProduct2 = MockProduct();
 
@@ -31,13 +75,10 @@ void main() {
     item2 = BagItem(product: mockProduct2, quantity: 2);
   });
 
-  /// Helper method to create a fresh ProviderContainer for each test
-  ProviderContainer createContainer() {
+  /// Helper method to create a fresh ProviderContainer overridden with our Fake Repo
+  ProviderContainer createContainer(FakeBagRepository fakeRepo) {
     final container = ProviderContainer(
-      overrides: [
-        // Inject the mock repository into the provider tree
-        bagRepositoryProvider.overrideWithValue(mockRepository),
-      ],
+      overrides: [bagRepositoryProvider.overrideWith(() => fakeRepo)],
     );
     addTearDown(container.dispose);
     return container;
@@ -45,135 +86,76 @@ void main() {
 
   group('BagViewModel Tests -', () {
     test('initial state is loaded from the repository', () {
-      // Arrange
       final initialItems = [item1];
-      when(() => mockRepository.getBagItems()).thenReturn(initialItems);
+      final fakeRepo = FakeBagRepository(initialItems: initialItems);
+      final container = createContainer(fakeRepo);
 
-      // Act
-      final container = createContainer();
       final state = container.read(bagViewModelProvider);
 
-      // Assert
       expect(state, initialItems);
-      verify(() => mockRepository.getBagItems()).called(1);
     });
 
     test('addItem calls repository and updates state', () async {
-      // Arrange
-      when(() => mockRepository.getBagItems()).thenReturn([]); // Initial state
-      final container = createContainer();
+      final fakeRepo = FakeBagRepository();
+      final container = createContainer(fakeRepo);
 
-      when(() => mockRepository.addToBag(any())).thenAnswer((_) async {});
-      when(
-        () => mockRepository.getBagItems(),
-      ).thenReturn([item1]); // State after addition
-
-      // Act
       await container.read(bagViewModelProvider.notifier).addItem(item1);
 
-      // Assert
-      verify(() => mockRepository.addToBag(item1)).called(1);
+      expect(fakeRepo.addToBagCalled, isTrue);
       expect(container.read(bagViewModelProvider), [item1]);
     });
 
     test('removeItem calls repository and updates state', () async {
-      // Arrange
-      when(
-        () => mockRepository.getBagItems(),
-      ).thenReturn([item1, item2]); // Initial
-      final container = createContainer();
+      final fakeRepo = FakeBagRepository(initialItems: [item1, item2]);
+      final container = createContainer(fakeRepo);
 
-      when(
-        () => mockRepository.removeFromBag('prod-1'),
-      ).thenAnswer((_) async {});
-      when(
-        () => mockRepository.getBagItems(),
-      ).thenReturn([item2]); // State after removal
-
-      // Act
       await container.read(bagViewModelProvider.notifier).removeItem('prod-1');
 
-      // Assert
-      verify(() => mockRepository.removeFromBag('prod-1')).called(1);
+      expect(fakeRepo.removeFromBagCalled, isTrue);
       expect(container.read(bagViewModelProvider), [item2]);
     });
 
     test('updateItemQuantity calls updateQuantity when quantity > 0', () async {
-      // Arrange
-      when(() => mockRepository.getBagItems()).thenReturn([item1]); // Initial
-      final container = createContainer();
+      final fakeRepo = FakeBagRepository(initialItems: [item1]);
+      final container = createContainer(fakeRepo);
 
-      when(
-        () => mockRepository.updateQuantity('prod-1', 5),
-      ).thenAnswer((_) async {});
-
-      // Setup the mock to return the updated list when getBagItems is called next
-      final updatedItem = BagItem(product: mockProduct1, quantity: 5);
-      when(() => mockRepository.getBagItems()).thenReturn([updatedItem]);
-
-      // Act
       await container
           .read(bagViewModelProvider.notifier)
           .updateItemQuantity('prod-1', 5);
 
-      // Assert
-      verify(() => mockRepository.updateQuantity('prod-1', 5)).called(1);
+      expect(fakeRepo.updateQuantityCalled, isTrue);
       expect(container.read(bagViewModelProvider).first.quantity, 5);
     });
 
     test('updateItemQuantity calls removeItem when quantity <= 0', () async {
-      // Arrange
-      when(() => mockRepository.getBagItems()).thenReturn([item1]); // Initial
-      final container = createContainer();
+      final fakeRepo = FakeBagRepository(initialItems: [item1]);
+      final container = createContainer(fakeRepo);
 
-      when(
-        () => mockRepository.removeFromBag('prod-1'),
-      ).thenAnswer((_) async {});
-      when(
-        () => mockRepository.getBagItems(),
-      ).thenReturn([]); // State after removal
-
-      // Act
       await container
           .read(bagViewModelProvider.notifier)
           .updateItemQuantity('prod-1', 0);
 
-      // Assert
-      verify(() => mockRepository.removeFromBag('prod-1')).called(1);
-      // Ensure updateQuantity was NEVER called
-      verifyNever(() => mockRepository.updateQuantity(any(), any()));
+      expect(fakeRepo.removeFromBagCalled, isTrue);
+      expect(fakeRepo.updateQuantityCalled, isFalse);
       expect(container.read(bagViewModelProvider), isEmpty);
     });
 
     test('total getter delegates to repository', () {
-      // Arrange
-      when(() => mockRepository.getBagItems()).thenReturn([]); // Initial
-      final container = createContainer();
+      final fakeRepo = FakeBagRepository(mockTotal: 99.99);
+      final container = createContainer(fakeRepo);
 
-      when(() => mockRepository.total).thenReturn(99.99);
-
-      // Act
       final total = container.read(bagViewModelProvider.notifier).total;
 
-      // Assert
       expect(total, 99.99);
-      verify(() => mockRepository.total).called(1);
     });
 
     test('clearBag clears repository and empties state', () async {
-      // Arrange
-      when(
-        () => mockRepository.getBagItems(),
-      ).thenReturn([item1, item2]); // Initial
-      final container = createContainer();
+      final fakeRepo = FakeBagRepository(initialItems: [item1, item2]);
+      final container = createContainer(fakeRepo);
 
-      when(() => mockRepository.clearBag()).thenAnswer((_) async {});
-
-      // Act
       await container.read(bagViewModelProvider.notifier).clearBag();
 
-      // Assert
-      verify(() => mockRepository.clearBag()).called(1);
+      expect(fakeRepo.clearBagCalled, isTrue);
       expect(container.read(bagViewModelProvider), isEmpty);
     });
   });
