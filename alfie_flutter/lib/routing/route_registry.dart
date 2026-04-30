@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/data/models/delivery_method.dart';
 import 'package:alfie_flutter/data/models/payment_card.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/account/view/account_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/auth_screen.dart';
@@ -62,6 +63,9 @@ class DefaultRouteRegistry implements RouteRegistry {
       AppRoute.personalInformation => PersonalInformationScreen(),
       AppRoute.auth => AuthScreen(),
       AppRoute.createAccount => CreateAccountScreen(
+        prefilledUserData: state.extra is UserData?
+            ? state.extra as UserData?
+            : null,
         prefilledEmail: state.uri.queryParameters['email'],
       ),
       AppRoute.checkout => CheckoutScreen(),

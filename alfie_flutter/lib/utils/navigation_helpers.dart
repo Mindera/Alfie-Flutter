@@ -8,12 +8,16 @@ extension NavigationHelpers on BuildContext {
   }
 
   /// Navigates to an AppRoute dynamically without hardcoded paths.
-  void goTo(AppRoute target, {Map<String, dynamic> params = const {}}) {
+  void goTo(
+    AppRoute target, {
+    Map<String, dynamic> params = const {},
+    Object? extra,
+  }) {
     String goToPath = target.fullPath;
     for (String parameter in params.keys) {
       goToPath.replaceFirst(parameter, params[parameter]!);
     }
-    go(goToPath);
+    go(goToPath, extra: extra);
   }
 
   /// Pushes a route onto the stack instead of replacing the current state
@@ -57,6 +61,7 @@ extension NavigationHelpers on BuildContext {
       pop();
       return true;
     }
+    goTo(AppRoute.home);
     return false;
   }
 }
