@@ -13,14 +13,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CreateAccountScreen extends HookConsumerWidget {
-  const CreateAccountScreen({super.key});
+  final String? prefilledEmail;
+  const CreateAccountScreen({super.key, this.prefilledEmail});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final firstName = useState<String?>(null);
     final lastName = useState<String?>(null);
-    final email = useState<String?>(null);
+    final email = useState<String?>(prefilledEmail);
     final password = useState<String?>(null);
     final phone = useState<String?>(null);
     final acceptedTerms = useState<bool>(false);
@@ -69,6 +70,7 @@ class CreateAccountScreen extends HookConsumerWidget {
                       validator: context.validateEmail,
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (value) => email.value = value,
+                      initialValue: email.value,
                     ),
                     AppInputField(
                       "Password",

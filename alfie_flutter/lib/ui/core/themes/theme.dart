@@ -37,6 +37,8 @@ final themeProvider = Provider<ThemeData>((ref) {
     inputDecorationTheme: ref.read(inputDecorationThemeProvider),
     textSelectionTheme: ref.read(textSelectionThemeProvider),
 
+    dividerTheme: DividerThemeData(color: AppColors.neutral200, thickness: 1),
+
     // Custom extensions
     extensions: [ref.read(appButtonThemeProvider)],
   );

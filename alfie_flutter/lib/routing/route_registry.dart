@@ -3,6 +3,9 @@ import 'package:alfie_flutter/ui/account/view/account_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/auth_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/create_account_screen.dart';
 import 'package:alfie_flutter/ui/bag/view/bag_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/checkout_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/contact_information_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/identification_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/components_demo_screen/buttons_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/components_demo_screen/checkboxes_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/components_demo_screen/components_screen.dart';
@@ -47,10 +50,17 @@ class DefaultRouteRegistry implements RouteRegistry {
       AppRoute.radioButtons => RadioButtonsScreen(),
       AppRoute.slider => SliderScreen(),
       AppRoute.search => SearchScreen(),
-      AppRoute.signIn => SignInScreen(),
+      AppRoute.signIn => SignInScreen(
+        prefilledEmail: state.uri.queryParameters['email'],
+      ),
       AppRoute.personalInformation => PersonalInformationScreen(),
       AppRoute.auth => AuthScreen(),
-      AppRoute.createAccount => CreateAccountScreen(),
+      AppRoute.createAccount => CreateAccountScreen(
+        prefilledEmail: state.uri.queryParameters['email'],
+      ),
+      AppRoute.checkout => CheckoutScreen(),
+      AppRoute.identification => IdentificationScreen(),
+      AppRoute.contactInformation => ContactInformationScreen(),
     };
   }
 }

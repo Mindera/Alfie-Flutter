@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
@@ -58,6 +60,23 @@ final routerProvider = Provider((ref) {
         registry,
         AppRoute.createAccount.name,
       ),
+      ..._buildRecursiveRoutes(
+        [AppRoute.checkout],
+        registry,
+        AppRoute.checkout.name,
+        redirect: (context, state) {
+          final isLoggedIn = authStateNotifier.value;
+          if (!isLoggedIn) {
+            return AppRoute.identification.fullPath;
+          }
+          return null;
+        },
+      ),
+      ..._buildRecursiveRoutes(
+        [AppRoute.identification],
+        registry,
+        AppRoute.identification.name,
+      ),
       StatefulShellRoute.indexedStack(
         builder:
             (
@@ -85,8 +104,9 @@ final routerProvider = Provider((ref) {
 List<RouteBase> _buildRecursiveRoutes(
   List<AppRoute> routes,
   RouteRegistry registry,
-  String name,
-) {
+  String name, {
+  FutureOr<String?> Function(BuildContext, GoRouterState)? redirect,
+}) {
   if (routes.isEmpty) {
     return [];
   }
@@ -99,6 +119,7 @@ List<RouteBase> _buildRecursiveRoutes(
         registry,
         "$name-${route.name}",
       ),
+      redirect: redirect,
     );
   }).toList();
 }
