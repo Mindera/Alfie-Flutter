@@ -9,7 +9,6 @@ import 'package:alfie_flutter/ui/core/ui/color_swatch.dart';
 import 'package:alfie_flutter/ui/core/ui/snack_bar.dart';
 import 'package:alfie_flutter/ui/product_detail/view/wishlist_button.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
-import 'package:alfie_flutter/utils/auth_utils.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
@@ -68,25 +67,23 @@ class ProductMainInfo extends ConsumerWidget {
               child: AppButton.primary(
                 label: "Add to Bag",
                 onPressed: () {
-                  context.authAction(ref, () {
-                    ref
-                        .read(
-                          productDetailViewModelProvider(product.id).notifier,
-                        )
-                        .addToBag(product);
+                  // context.authAction(ref, () {
+                  ref
+                      .read(productDetailViewModelProvider(product.id).notifier)
+                      .addToBag(product);
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      AppSnackBar.build(
-                        context: context,
-                        infoText: "Added to bag.",
-                        actionText: "Go to Bag",
-                        messengerKey: ref.watch(scaffoldMessengerKeyProvider),
-                        onTapAction: () {
-                          context.goTo(AppRoute.bag);
-                        },
-                      ),
-                    );
-                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    AppSnackBar.build(
+                      context: context,
+                      infoText: "Added to bag.",
+                      actionText: "Go to Bag",
+                      messengerKey: ref.watch(scaffoldMessengerKeyProvider),
+                      onTapAction: () {
+                        context.goTo(AppRoute.bag);
+                      },
+                    ),
+                  );
+                  // });
                 },
               ),
             ),

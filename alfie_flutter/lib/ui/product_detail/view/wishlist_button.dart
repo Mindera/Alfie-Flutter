@@ -6,7 +6,6 @@ import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/ui/button/app_button.dart';
 import 'package:alfie_flutter/ui/core/ui/snack_bar.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
-import 'package:alfie_flutter/utils/auth_utils.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,33 +34,33 @@ class WishlistButton extends ConsumerWidget {
       size: buttonSize,
       leading: state.isOnWishlist ? AppIcons.wishlistFill : AppIcons.wishlist,
       onPressed: () {
-        context.authAction(ref, () {
-          late String infoText;
-          late String? actionText;
-          late VoidCallback action;
+        // context.authAction(ref, () {
+        late String infoText;
+        late String? actionText;
+        late VoidCallback action;
 
-          if (state.isOnWishlist) {
-            viewModel.removeFromWishlist(product);
-            infoText = "Removed from Wishlist.";
-            actionText = "Undo";
-            action = () => viewModel.addToWishlist(product);
-          } else {
-            viewModel.addToWishlist(product);
-            infoText = "Added to Wishlist.";
-            actionText = "Go to Wishlist";
-            action = () => context.goTo(AppRoute.wishlist);
-          }
+        if (state.isOnWishlist) {
+          viewModel.removeFromWishlist(product);
+          infoText = "Removed from Wishlist.";
+          actionText = "Undo";
+          action = () => viewModel.addToWishlist(product);
+        } else {
+          viewModel.addToWishlist(product);
+          infoText = "Added to Wishlist.";
+          actionText = "Go to Wishlist";
+          action = () => context.goTo(AppRoute.wishlist);
+        }
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            AppSnackBar.build(
-              context: context,
-              infoText: infoText,
-              actionText: actionText,
-              messengerKey: ref.watch(scaffoldMessengerKeyProvider),
-              onTapAction: action,
-            ),
-          );
-        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          AppSnackBar.build(
+            context: context,
+            infoText: infoText,
+            actionText: actionText,
+            messengerKey: ref.watch(scaffoldMessengerKeyProvider),
+            onTapAction: action,
+          ),
+        );
+        // });
       },
     );
   }
