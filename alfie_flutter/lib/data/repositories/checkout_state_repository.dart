@@ -14,6 +14,10 @@ class CheckoutStateRepository {
   Future<void> saveCheckoutState(CheckoutState state) async {
     await _storageService.saveCheckoutState(state);
   }
+
+  Future<void> deleteCheckoutState() async {
+    await _storageService.deleteCheckoutState();
+  }
 }
 
 final checkoutStateRepositoryProvider = Provider(

@@ -18,6 +18,7 @@ class OrderConfirmationScreen extends ConsumerWidget {
         leading: AppButton.tertiary(
           leading: AppIcons.close,
           onPressed: () {
+            ref.read(checkoutViewModelProvider.notifier).clearCheckoutState();
             context.goTo(AppRoute.home);
           },
         ),
@@ -53,6 +54,9 @@ class OrderConfirmationScreen extends ConsumerWidget {
                 label: "Create account",
                 onPressed: () {
                   final userData = ref.read(checkoutViewModelProvider).userData;
+                  ref
+                      .read(checkoutViewModelProvider.notifier)
+                      .clearCheckoutState();
                   context.goTo(AppRoute.createAccount, extra: userData);
                 },
               ),

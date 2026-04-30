@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/delivery_method.dart';
 import 'package:alfie_flutter/data/models/payment_card.dart';
+import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
@@ -112,6 +113,15 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
 
   void placeOrder() {
     ref.read(bagRepositoryProvider.notifier).clearBag();
+
+    if (state.user is GuestUser) {
+      ref.read(authRepositoryProvider.notifier).logout();
+    }
+  }
+
+  void clearCheckoutState() {
+    _repository.deleteCheckoutState();
+    ref.invalidateSelf();
   }
 }
 
