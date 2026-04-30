@@ -38,7 +38,7 @@ class CheckboxTile extends HookWidget {
   /// Called when the checkbox value changes.
   ///
   /// If null, the checkbox is disabled and cannot be toggled.
-  final ValueChanged<bool?>? onChanged;
+  final ValueChanged<bool>? onChanged;
 
   final bool leftCheckbox;
 
@@ -92,8 +92,10 @@ class CheckboxTile extends HookWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (leftCheckbox) checkBox,
-                  const SizedBox(width: Spacing.extraSmall),
+                  if (leftCheckbox) ...[
+                    checkBox,
+                    const SizedBox(width: Spacing.extraSmall),
+                  ],
 
                   Expanded(
                     child: Row(
