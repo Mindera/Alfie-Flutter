@@ -133,7 +133,9 @@ class CheckoutScreen extends ConsumerWidget {
                   child: AppButton.primary(
                     label: "Continue",
                     isDisabled: !checkoutState.canPlaceOrder,
-                    onPressed: () {},
+                    onPressed: () {
+                      context.goTo(AppRoute.orderConfirmation);
+                    },
                   ),
                 ),
               ],

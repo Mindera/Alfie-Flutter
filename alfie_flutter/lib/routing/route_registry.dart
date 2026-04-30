@@ -10,6 +10,7 @@ import 'package:alfie_flutter/ui/checkout/view/contact_information_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/delivery_information_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/delivery_method_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/identification_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/order_confirmation_screen.dart';
 import 'package:alfie_flutter/ui/checkout/view/payment_method_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/components_demo_screen/buttons_screen.dart';
 import 'package:alfie_flutter/ui/core/ui/components_demo_screen/checkboxes_screen.dart';
@@ -77,6 +78,7 @@ class DefaultRouteRegistry implements RouteRegistry {
             ? state.extra as PaymentCard
             : null,
       ),
+      AppRoute.orderConfirmation => OrderConfirmationScreen(),
     };
   }
 }
