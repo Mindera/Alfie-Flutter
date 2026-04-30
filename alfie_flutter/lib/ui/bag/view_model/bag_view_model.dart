@@ -5,22 +5,19 @@ import 'package:alfie_flutter/ui/wishlist/view_model/wishlist_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BagViewModel extends Notifier<List<BagItem>> {
-  late final BagRepository _repository;
+  BagRepository get _repository => ref.read(bagRepositoryProvider.notifier);
 
   @override
   List<BagItem> build() {
-    _repository = ref.watch(bagRepositoryProvider);
-    return _repository.getBagItems();
+    return ref.watch(bagRepositoryProvider);
   }
 
   Future<void> addItem(BagItem item) async {
     await _repository.addToBag(item);
-    state = _repository.getBagItems();
   }
 
   Future<void> removeItem(String productId) async {
     await _repository.removeFromBag(productId);
-    state = _repository.getBagItems();
   }
 
   Future<void> updateItemQuantity(String productId, int quantity) async {
@@ -28,7 +25,6 @@ class BagViewModel extends Notifier<List<BagItem>> {
       await removeItem(productId);
     } else {
       await _repository.updateQuantity(productId, quantity);
-      state = _repository.getBagItems();
     }
   }
 
@@ -38,7 +34,6 @@ class BagViewModel extends Notifier<List<BagItem>> {
 
   Future<void> clearBag() async {
     await _repository.clearBag();
-    state = [];
   }
 
   void addToWishlist(Product product) {
