@@ -73,4 +73,7 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
 
   @override
   double get totalPrice => 0.0;
+
+  @override
+  void placeOrder() {}
 }

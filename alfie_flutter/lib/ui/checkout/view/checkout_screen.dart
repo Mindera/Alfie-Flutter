@@ -134,6 +134,7 @@ class CheckoutScreen extends ConsumerWidget {
                     label: "Continue",
                     isDisabled: !checkoutState.canPlaceOrder,
                     onPressed: () {
+                      ref.read(checkoutViewModelProvider.notifier).placeOrder();
                       context.goTo(AppRoute.orderConfirmation);
                     },
                   ),
