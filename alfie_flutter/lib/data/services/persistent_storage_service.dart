@@ -224,6 +224,7 @@ class HiveService implements IPersistentStorageService {
     return _checkoutStateBox.get(_checkoutStateKey);
   }
 
+  @override
   Future<void> deleteCheckoutState() async {
     await _checkoutStateBox.clear();
   }

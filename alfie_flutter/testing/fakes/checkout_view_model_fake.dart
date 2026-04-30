@@ -76,4 +76,7 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
 
   @override
   void placeOrder() {}
+
+  @override
+  void clearCheckoutState() {}
 }
