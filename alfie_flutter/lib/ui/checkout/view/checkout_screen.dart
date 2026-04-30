@@ -130,7 +130,11 @@ class CheckoutScreen extends ConsumerWidget {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: AppButton.primary(label: "Continue", onPressed: () {}),
+                  child: AppButton.primary(
+                    label: "Continue",
+                    isDisabled: !checkoutState.canPlaceOrder,
+                    onPressed: () {},
+                  ),
                 ),
               ],
             ),
