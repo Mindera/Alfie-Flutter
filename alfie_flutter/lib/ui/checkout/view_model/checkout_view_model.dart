@@ -38,7 +38,7 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
   // ADDRESS STEP
   // ---------------------------
   void setShippingAddress(Address address) {
-    _updateState(state.copyWith(address: address));
+    _updateState(state.copyWith(deliveryAddress: address));
   }
 
   void setBillingAddress(Address billingAddress) {
@@ -46,8 +46,8 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
   }
 
   void useShippingAsBilling() {
-    if (state.address != null) {
-      _updateState(state.copyWith(billingAddress: state.address));
+    if (state.deliveryAddress != null) {
+      _updateState(state.copyWith(billingAddress: state.deliveryAddress));
     }
   }
 

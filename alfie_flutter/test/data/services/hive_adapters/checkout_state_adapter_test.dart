@@ -43,7 +43,7 @@ void main() {
 
     test('write() should correctly serialize CheckoutState to binary', () {
       final state = CheckoutState(
-        address: mockAddress,
+        deliveryAddress: mockAddress,
         billingAddress: mockBillingAddress,
         userData: mockUserData,
         deliveryMethod: DeliveryMethod.standard,
@@ -133,7 +133,7 @@ void main() {
 
       final result = adapter.read(mockReader);
 
-      expect(result.address, mockAddress);
+      expect(result.deliveryAddress, mockAddress);
       expect(result.billingAddress, mockBillingAddress);
       expect(result.userData, mockUserData);
       expect(result.deliveryMethod, DeliveryMethod.standard);
