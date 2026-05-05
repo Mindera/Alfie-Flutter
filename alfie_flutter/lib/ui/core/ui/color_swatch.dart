@@ -35,7 +35,9 @@ class ColorSwatchWidget extends StatelessWidget {
           height: _swatchSize,
           decoration: BoxDecoration(
             color: color,
-            border: Border.all(color: AppColors.neutral300),
+            border: const Border.fromBorderSide(
+              BorderSide(color: AppColors.neutral300),
+            ),
           ),
         ),
 

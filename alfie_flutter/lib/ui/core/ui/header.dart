@@ -33,7 +33,7 @@ class Header extends StatelessWidget {
       child: Row(
         spacing: Spacing.extraSmall,
         children: [
-          leading ?? SizedBox.square(dimension: Spacing.extraLarge),
+          leading ?? const SizedBox.square(dimension: Spacing.extraLarge),
 
           Expanded(
             child: Text(

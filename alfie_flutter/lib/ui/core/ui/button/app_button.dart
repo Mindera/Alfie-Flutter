@@ -46,7 +46,8 @@ class AppButton extends StatelessWidget {
   /// It is intended to be used to move forward in a flow, acknowledge and dismiss,
   /// or finish a task. Main buttons can be paired with secondary buttons to maintain
   /// action hierarchy balance. There should be only one primary button on a screen.
-  factory AppButton.primary({
+  const AppButton.primary({
+    Key? key,
     String? label,
     IconData? leading,
     IconData? trailing,
@@ -54,24 +55,24 @@ class AppButton extends StatelessWidget {
     bool isLoading = false,
     bool isDisabled = false,
     ButtonSize size = ButtonSize.medium,
-  }) {
-    return AppButton(
-      label: label,
-      leading: leading,
-      trailing: trailing,
-      onPressed: onPressed,
-      isLoading: isLoading,
-      size: size,
-      variant: ButtonVariant.primary,
-      isDisabled: isDisabled,
-    );
-  }
+  }) : this(
+         key: key,
+         label: label,
+         leading: leading,
+         trailing: trailing,
+         onPressed: onPressed,
+         isLoading: isLoading,
+         isDisabled: isDisabled,
+         size: size,
+         variant: ButtonVariant.primary,
+       );
 
   /// Creates a secondary [AppButton] with subtle styling.
   ///
   /// The secondary variant is light weight. It is the most common and many times
   /// combined with a primary button as a way to create action hierarchy.
-  factory AppButton.secondary({
+  const AppButton.secondary({
+    Key? key,
     String? label,
     IconData? leading,
     IconData? trailing,
@@ -79,25 +80,25 @@ class AppButton extends StatelessWidget {
     bool isLoading = false,
     bool isDisabled = false,
     ButtonSize size = ButtonSize.medium,
-  }) {
-    return AppButton(
-      label: label,
-      leading: leading,
-      trailing: trailing,
-      onPressed: onPressed,
-      isLoading: isLoading,
-      isDisabled: isDisabled,
-      size: size,
-      variant: ButtonVariant.secondary,
-    );
-  }
+  }) : this(
+         key: key,
+         label: label,
+         leading: leading,
+         trailing: trailing,
+         onPressed: onPressed,
+         isLoading: isLoading,
+         isDisabled: isDisabled,
+         size: size,
+         variant: ButtonVariant.secondary,
+       );
 
   /// Creates a tertiary [AppButton] with minimal styling.
   ///
   /// Tertiary variant buttons are the most subtle type of buttons. They can
   /// be used for dismissive actions give users a way out of something,
   /// letting them cancel, do nothing, dismiss, or skip.
-  factory AppButton.tertiary({
+  const AppButton.tertiary({
+    Key? key,
     String? label,
     IconData? leading,
     IconData? trailing,
@@ -105,25 +106,25 @@ class AppButton extends StatelessWidget {
     bool isLoading = false,
     bool isDisabled = false,
     ButtonSize size = ButtonSize.medium,
-  }) {
-    return AppButton(
-      label: label,
-      leading: leading,
-      trailing: trailing,
-      onPressed: onPressed,
-      isLoading: isLoading,
-      isDisabled: isDisabled,
-      size: size,
-      variant: ButtonVariant.tertiary,
-    );
-  }
+  }) : this(
+         key: key,
+         label: label,
+         leading: leading,
+         trailing: trailing,
+         onPressed: onPressed,
+         isLoading: isLoading,
+         isDisabled: isDisabled,
+         size: size,
+         variant: ButtonVariant.tertiary,
+       );
 
   /// Creates a destructive [AppButton] indicating a dangerous action.
   ///
   /// The destructive variant should represent actions that permanently cause data
   /// loss. Because these actions can not be undone, using button hierarchy is
   /// essential to reduce errors.
-  factory AppButton.destructive({
+  const AppButton.destructive({
+    Key? key,
     String? label,
     IconData? leading,
     IconData? trailing,
@@ -131,18 +132,17 @@ class AppButton extends StatelessWidget {
     bool isLoading = false,
     bool isDisabled = false,
     ButtonSize size = ButtonSize.medium,
-  }) {
-    return AppButton(
-      label: label,
-      leading: leading,
-      trailing: trailing,
-      onPressed: onPressed,
-      isLoading: isLoading,
-      isDisabled: isDisabled,
-      size: size,
-      variant: ButtonVariant.destructive,
-    );
-  }
+  }) : this(
+         key: key,
+         label: label,
+         leading: leading,
+         trailing: trailing,
+         onPressed: onPressed,
+         isLoading: isLoading,
+         isDisabled: isDisabled,
+         size: size,
+         variant: ButtonVariant.destructive,
+       );
 
   @override
   Widget build(BuildContext context) {
