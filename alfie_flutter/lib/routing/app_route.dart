@@ -50,7 +50,6 @@ enum AppRoute {
     path: '/checkout',
     children: [
       // orderConfirmation,
-
       // deliveryInformation,
       // deliveryMethod,
       // paymentMethod,

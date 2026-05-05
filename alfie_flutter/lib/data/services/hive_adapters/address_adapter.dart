@@ -22,6 +22,6 @@ class AddressAdapter extends TypeAdapter<Address> {
     writer.writeString(obj.postalCode);
     writer.writeString(obj.city);
     writer.writeString(obj.street);
-    writer.writeString(obj.addressLine2);
+    writer.writeString(obj.addressLine2 ?? "");
   }
 }

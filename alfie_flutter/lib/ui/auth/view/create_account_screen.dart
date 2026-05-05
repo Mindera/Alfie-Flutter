@@ -94,8 +94,7 @@ class CreateAccountScreen extends HookConsumerWidget {
                           leftCheckbox: true,
                           label:
                               r"I've read and agreed with User Terms and Conditions of Service.",
-                          onChanged: (value) =>
-                              acceptedTerms.value = value ?? false,
+                          onChanged: (value) => acceptedTerms.value = value,
                           validator: context.validateCheckbox,
                         ),
                         CheckboxTile(
@@ -103,8 +102,7 @@ class CreateAccountScreen extends HookConsumerWidget {
                           leftCheckbox: true,
                           label:
                               r"I want to receive news and special offers via email.",
-                          onChanged: (value) =>
-                              wantsNewsletter.value = value ?? false,
+                          onChanged: (value) => wantsNewsletter.value = value,
                         ),
                       ],
                     ),

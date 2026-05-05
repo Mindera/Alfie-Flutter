@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/data/backend/auth_backend.dart';
 import 'package:alfie_flutter/data/backend/user_backend.dart';
 import 'package:alfie_flutter/data/models/bag_item.dart';
+import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/brand.dart';
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/money.dart';
@@ -111,3 +112,5 @@ class MockAuthBackend extends Mock implements IAuthBackend {}
 class MockUserRepository extends Mock implements UserRepository {}
 
 class MockSearchItem extends Mock implements SearchItem {}
+
+class MockAddress extends Mock implements Address {}
