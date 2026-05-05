@@ -22,8 +22,9 @@ class SignInScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    String email = prefilledEmail ?? '';
-    String password = '';
+
+    final email = useState<String>(prefilledEmail ?? '');
+    final password = useState<String>('');
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +47,6 @@ class SignInScreen extends HookConsumerWidget {
           child: Form(
             key: formKey,
             autovalidateMode: AutovalidateMode.onUnfocus,
-
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -60,15 +60,15 @@ class SignInScreen extends HookConsumerWidget {
                       keyboardType: TextInputType.emailAddress,
                       validator: context.validateEmail,
                       onChanged: (value) {
-                        email = value;
+                        email.value = value;
                       },
-                      initialValue: email,
+                      initialValue: email.value,
                     ),
                     AppInputField(
                       "Password",
                       obscureText: true,
                       onChanged: (value) {
-                        password = value;
+                        password.value = value;
                       },
                       validator: context.validatePassword,
                     ),
@@ -93,7 +93,7 @@ class SignInScreen extends HookConsumerWidget {
 
                         final success = ref
                             .read(authViewModelProvider.notifier)
-                            .signIn(email, password);
+                            .signIn(email.value, password.value);
 
                         if (!success) {
                           ScaffoldMessenger.of(context).showSnackBar(
