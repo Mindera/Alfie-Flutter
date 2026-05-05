@@ -397,11 +397,11 @@ class AppIcons {
   // Progress indicator dimensions
   static const double _loaderSize = 24;
   static const double _loaderStrokeWidth = 1;
-  static Widget get progressIndicator => SizedBox(
+  static Widget get progressIndicator => const SizedBox(
     width: _loaderSize,
     height: _loaderSize,
     child: CircularProgressIndicator(
-      padding: const EdgeInsets.all(Spacing.extraExtraExtraSmall),
+      padding: EdgeInsets.all(Spacing.extraExtraExtraSmall),
       strokeWidth: _loaderStrokeWidth,
     ),
   );

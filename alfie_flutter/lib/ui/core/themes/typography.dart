@@ -9,7 +9,7 @@ const FontWeight _regular = FontWeight.w400;
 const FontWeight _medium = FontWeight.w500;
 
 // Display typography (serif)
-final _displayLarge = TextStyle(
+const _displayLarge = TextStyle(
   fontSize: 24,
   fontFamily: _libreBaskerville,
   fontWeight: _regular,
@@ -17,7 +17,7 @@ final _displayLarge = TextStyle(
   letterSpacing: 0,
 );
 
-final _displayMedium = TextStyle(
+const _displayMedium = TextStyle(
   fontSize: 20,
   fontFamily: _libreBaskerville,
   fontWeight: _regular,
@@ -25,7 +25,7 @@ final _displayMedium = TextStyle(
   letterSpacing: 0,
 );
 
-final _displaySmall = TextStyle(
+const _displaySmall = TextStyle(
   fontSize: 18,
   fontFamily: _libreBaskerville,
   fontWeight: _regular,
@@ -34,21 +34,21 @@ final _displaySmall = TextStyle(
 );
 
 // Headline typography (sans-serif, medium weight)
-final _headlineLarge = TextStyle(
+const _headlineLarge = TextStyle(
   fontSize: 32,
   fontWeight: _medium,
   height: 40 / 32,
   letterSpacing: 0,
 );
 
-final _headlineMedium = TextStyle(
+const _headlineMedium = TextStyle(
   fontSize: 24,
   fontWeight: _medium,
   height: 32 / 24,
   letterSpacing: -0.5,
 );
 
-final _headlineSmall = TextStyle(
+const _headlineSmall = TextStyle(
   fontSize: 20,
   fontWeight: _medium,
   height: 28 / 20,
@@ -56,21 +56,21 @@ final _headlineSmall = TextStyle(
 );
 
 // Body typography (sans-serif, regular weight)
-final _bodyLarge = TextStyle(
+const _bodyLarge = TextStyle(
   fontSize: 18,
   fontWeight: _regular,
   height: 28 / 18,
   letterSpacing: 0,
 );
 
-final _bodyMedium = TextStyle(
+const _bodyMedium = TextStyle(
   fontSize: 16,
   fontWeight: _regular,
   height: 24 / 16,
   letterSpacing: 0,
 );
 
-final _bodySmall = TextStyle(
+const _bodySmall = TextStyle(
   fontSize: 12,
   fontWeight: _regular,
   height: 16 / 12,
@@ -78,7 +78,7 @@ final _bodySmall = TextStyle(
 );
 
 // Label typography (sans-serif, regular weight)
-final _labelSmall = TextStyle(
+const _labelSmall = TextStyle(
   fontSize: 12,
   fontWeight: _regular,
   height: 16 / 12,
@@ -91,7 +91,7 @@ final _labelSmall = TextStyle(
 /// headlines, body text, and labels with consistent line heights
 /// and letter spacing for readable, cohesive text hierarchy.
 final textThemeProvider = Provider<TextTheme>((ref) {
-  return TextTheme(
+  return const TextTheme(
     displayLarge: _displayLarge,
     displayMedium: _displayMedium,
     displaySmall: _displaySmall,
