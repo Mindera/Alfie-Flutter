@@ -401,7 +401,7 @@ class AppIcons {
     width: _loaderSize,
     height: _loaderSize,
     child: CircularProgressIndicator(
-      padding: EdgeInsets.all(Spacing.extraExtraExtraSmall),
+      padding: const EdgeInsets.all(Spacing.extraExtraExtraSmall),
       strokeWidth: _loaderStrokeWidth,
     ),
   );

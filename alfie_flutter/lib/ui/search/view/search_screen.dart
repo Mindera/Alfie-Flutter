@@ -72,7 +72,7 @@ class SearchScreen extends HookConsumerWidget {
             ProductListingView(id: ProductListingId(query: localQuery.value))
           else
             SliverPadding(
-              padding: EdgeInsetsGeometry.all(Spacing.small),
+              padding: const EdgeInsetsGeometry.all(Spacing.small),
               sliver: SliverToBoxAdapter(
                 child: localQuery.value.isEmpty
                     ? DefaultSearchBody(

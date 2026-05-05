@@ -33,9 +33,9 @@ class BagScreen extends ConsumerWidget {
 
   Widget _bagBody(List<BagItem> bagItems, WidgetRef ref) {
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: Spacing.small,
-      ).add(EdgeInsets.only(bottom: Spacing.small)),
+      ).add(const EdgeInsets.only(bottom: Spacing.small)),
       child: bagItems.isEmpty
           ? Center(
               child: Column(
@@ -108,12 +108,12 @@ class BagScreen extends ConsumerWidget {
         border: Border(top: BorderSide(color: AppColors.neutral200)),
       ),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(
+        padding: const EdgeInsets.fromLTRB(
           Spacing.small,
           Spacing.extraSmall,
           Spacing.small,
-          Spacing.extraSmall + MediaQuery.of(context).viewInsets.bottom,
-        ),
+          Spacing.extraSmall,
+        ).add(context.mediaQuery.viewInsets),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           spacing: Spacing.extraSmall,

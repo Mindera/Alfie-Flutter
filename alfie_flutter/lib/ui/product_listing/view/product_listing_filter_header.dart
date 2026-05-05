@@ -94,10 +94,10 @@ class ProductListingFilterHeader extends ConsumerWidget {
                   children: labels.map((label) {
                     final double borderWidth = 1;
                     return Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Spacing.small - borderWidth,
-                        vertical: Spacing.extraExtraSmall - borderWidth,
-                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Spacing.small,
+                        vertical: Spacing.extraExtraSmall,
+                      ).subtract(EdgeInsets.all(borderWidth)),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: AppColors.neutral800,

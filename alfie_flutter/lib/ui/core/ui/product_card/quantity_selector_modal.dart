@@ -29,7 +29,7 @@ class QuantitySelectorModal extends HookConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: Spacing.extraSmall),
+          padding: const EdgeInsets.symmetric(vertical: Spacing.extraSmall),
           child: Center(
             child: Container(width: 40, height: 2, color: AppColors.neutral300),
           ),

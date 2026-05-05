@@ -24,7 +24,7 @@ class OrderConfirmationScreen extends ConsumerWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           vertical: Spacing.extraSmall,
           horizontal: Spacing.small,
         ),
@@ -42,7 +42,7 @@ class OrderConfirmationScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: Padding(
         padding: context.mediaQuery.padding.add(
-          EdgeInsets.symmetric(horizontal: Spacing.small),
+          const EdgeInsets.symmetric(horizontal: Spacing.small),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,

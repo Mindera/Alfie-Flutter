@@ -54,7 +54,7 @@ class WishlistScreen extends ConsumerWidget {
             ),
           )
         : Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: Spacing.small,
             ).add(EdgeInsets.only(bottom: Spacing.small)),
 

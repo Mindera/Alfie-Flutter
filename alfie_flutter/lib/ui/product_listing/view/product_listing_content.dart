@@ -37,7 +37,9 @@ class ProductListingContent extends ConsumerWidget {
         }
 
         return SliverPadding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: Spacing.small),
+          padding: const EdgeInsetsGeometry.symmetric(
+            horizontal: Spacing.small,
+          ),
           sliver: SliverGrid(
             delegate: SliverChildBuilderDelegate((context, index) {
               final product = productListing.products[index];

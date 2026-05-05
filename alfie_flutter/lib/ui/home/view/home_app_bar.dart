@@ -27,7 +27,7 @@ class HomeAppBar extends StatelessWidget {
       surfaceTintColor: AppColors.transparent,
       expandedHeight: expandedHeight,
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.all(Spacing.small),
+        titlePadding: const EdgeInsets.all(Spacing.small),
         // Setting scale to 1 prevents the Search field from resizing
         expandedTitleScale: 1,
         background: Image.asset(logoImagePath, fit: BoxFit.scaleDown),

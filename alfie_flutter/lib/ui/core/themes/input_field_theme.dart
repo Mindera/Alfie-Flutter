@@ -29,7 +29,7 @@ final inputDecorationThemeProvider = Provider<InputDecorationTheme>(
     constraints: BoxConstraints(minHeight: 40, minWidth: 40),
     suffixIconConstraints: BoxConstraints(minHeight: 40, minWidth: 40),
 
-    contentPadding: EdgeInsets.zero,
+    contentPadding: const EdgeInsets.only(),
 
     suffixIconColor: AppColors.neutral800,
     prefixIconColor: AppColors.neutral800,

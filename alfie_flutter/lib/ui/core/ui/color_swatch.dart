@@ -30,7 +30,7 @@ class ColorSwatchWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          margin: EdgeInsets.all(Spacing.extraExtraExtraSmall),
+          margin: const EdgeInsets.all(Spacing.extraExtraExtraSmall),
           width: _swatchSize,
           height: _swatchSize,
           decoration: BoxDecoration(
@@ -40,7 +40,7 @@ class ColorSwatchWidget extends StatelessWidget {
         ),
 
         Padding(
-          padding: EdgeInsets.only(left: Spacing.extraExtraExtraSmall),
+          padding: const EdgeInsets.only(left: Spacing.extraExtraExtraSmall),
           child: Text(
             '+${totalColors - 1}',
             style: context.textTheme.bodyMedium,

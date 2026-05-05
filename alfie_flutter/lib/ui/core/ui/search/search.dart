@@ -47,7 +47,7 @@ class Search extends HookWidget {
     final showClearButton = focusNode.hasFocus && controller.text.isNotEmpty;
 
     return TextFormField(
-      scrollPadding: EdgeInsets.zero,
+      scrollPadding: const EdgeInsets.only(),
       controller: controller,
       focusNode: focusNode,
       onChanged: onChanged,

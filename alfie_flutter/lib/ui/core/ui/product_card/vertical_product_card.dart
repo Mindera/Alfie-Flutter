@@ -82,7 +82,9 @@ class VerticalProductCard extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(Spacing.extraSmall),
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Spacing.extraSmall),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.extraSmall,
+                  ),
                   color: AppColors.neutral800,
                   child: Text(
                     label!,
