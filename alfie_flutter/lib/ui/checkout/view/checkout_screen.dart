@@ -75,9 +75,9 @@ class CheckoutScreen extends ConsumerWidget {
             SliverList.separated(
               itemCount: items.length,
               itemBuilder: (_, i) => items[i],
-              separatorBuilder: (_, i) => Divider(),
+              separatorBuilder: (_, i) => const Divider(),
             ),
-            SliverFillRemaining(
+            const SliverFillRemaining(
               hasScrollBody: false,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,7 +93,7 @@ class CheckoutScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColors.neutral,
             border: Border(top: BorderSide(color: AppColors.neutral200)),
           ),

@@ -55,7 +55,7 @@ class CheckoutItem extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(AppIcons.chevronRight),
+            const Icon(AppIcons.chevronRight),
           ],
         ),
       ),

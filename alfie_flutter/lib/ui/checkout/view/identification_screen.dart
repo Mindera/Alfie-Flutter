@@ -72,7 +72,7 @@ class IdentificationScreen extends ConsumerWidget {
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text("Please enter a valid email address."),
                         ),
                       );
@@ -93,7 +93,7 @@ class IdentificationScreen extends ConsumerWidget {
                   style: context.textTheme.linkMedium,
                 ),
               ),
-              Row(
+              const Row(
                 spacing: Spacing.medium,
                 children: [
                   Expanded(child: Divider()),
