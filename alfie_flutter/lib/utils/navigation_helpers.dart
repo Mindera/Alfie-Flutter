@@ -17,15 +17,26 @@ extension NavigationHelpers on BuildContext {
   }
 
   /// Pushes a route onto the stack instead of replacing the current state
-  void pushTo(AppRoute target, {Map<String, dynamic> params = const {}}) {
-    String pushPath = target.fullPath;
-    for (String parameter in params.keys) {
-      pushPath = pushPath.replaceFirst(
-        parameter,
-        params[parameter]!,
-      ); // Fixed assignment
-    }
-    push(pushPath);
+  void pushTo(
+    AppRoute target, {
+    Map<String, String> pathParams = const {},
+    Map<String, String?> queryParams = const {},
+  }) {
+    String path = target.fullPath;
+
+    // Replace path parameters like :id
+    pathParams.forEach((key, value) {
+      path = path.replaceFirst(':$key', Uri.encodeComponent(value));
+    });
+
+    final uri = Uri(
+      path: path,
+      queryParameters: queryParams.isEmpty
+          ? null
+          : queryParams.map((k, v) => MapEntry(k, v ?? '')),
+    );
+
+    push(uri.toString());
   }
 
   void goToProduct(String productId) {

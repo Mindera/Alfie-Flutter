@@ -1,8 +1,8 @@
 import 'package:alfie_flutter/utils/app_regex.dart';
 import 'package:flutter/material.dart';
 
-extension FormUtils on BuildContext {
-  String? validateName(
+class FormUtils {
+  static String? validateName(
     String? value, {
     String errorMessage = 'Please enter a valid name',
   }) {
@@ -13,7 +13,7 @@ extension FormUtils on BuildContext {
     );
   }
 
-  String? validatePassword(
+  static String? validatePassword(
     String? value, {
     String errorMessage = 'Password must be at least 4 characters',
   }) {
@@ -24,7 +24,7 @@ extension FormUtils on BuildContext {
     );
   }
 
-  String? validateCheckbox(
+  static String? validateCheckbox(
     bool? value, {
     String errorMessage = 'This field is required',
   }) {
@@ -34,7 +34,7 @@ extension FormUtils on BuildContext {
     return null;
   }
 
-  String? validateEmail(
+  static String? validateEmail(
     String? value, {
     String errorMessage = 'Please enter a valid email',
   }) {
@@ -45,7 +45,7 @@ extension FormUtils on BuildContext {
     );
   }
 
-  String? validatePhoneNumber(
+  static String? validatePhoneNumber(
     String? value, {
     String errorMessage = 'Please enter a valid phone number',
   }) {
@@ -56,7 +56,7 @@ extension FormUtils on BuildContext {
     );
   }
 
-  String? _validate({
+  static String? _validate({
     required String? value,
     required RegExp regex,
     required String errorMessage,
@@ -70,5 +70,42 @@ extension FormUtils on BuildContext {
     }
 
     return null;
+  }
+}
+
+extension FormUtilsExtension on BuildContext {
+  String? validateName(
+    String? value, {
+    String errorMessage = 'Please enter a valid name',
+  }) {
+    return FormUtils.validateName(value, errorMessage: errorMessage);
+  }
+
+  String? validatePassword(
+    String? value, {
+    String errorMessage = 'Password must be at least 4 characters',
+  }) {
+    return FormUtils.validatePassword(value, errorMessage: errorMessage);
+  }
+
+  String? validateCheckbox(
+    bool? value, {
+    String errorMessage = 'This field is required',
+  }) {
+    return FormUtils.validateCheckbox(value, errorMessage: errorMessage);
+  }
+
+  String? validateEmail(
+    String? value, {
+    String errorMessage = 'Please enter a valid email',
+  }) {
+    return FormUtils.validateEmail(value, errorMessage: errorMessage);
+  }
+
+  String? validatePhoneNumber(
+    String? value, {
+    String errorMessage = 'Please enter a valid phone number',
+  }) {
+    return FormUtils.validatePhoneNumber(value, errorMessage: errorMessage);
   }
 }

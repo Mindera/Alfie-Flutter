@@ -16,12 +16,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SignInScreen extends HookConsumerWidget {
-  const SignInScreen({super.key});
+  final String? prefilledEmail;
+  const SignInScreen({super.key, this.prefilledEmail});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    String email = '';
+    String email = prefilledEmail ?? '';
     String password = '';
 
     return Scaffold(
@@ -61,6 +62,7 @@ class SignInScreen extends HookConsumerWidget {
                       onChanged: (value) {
                         email = value;
                       },
+                      initialValue: email,
                     ),
                     AppInputField(
                       "Password",

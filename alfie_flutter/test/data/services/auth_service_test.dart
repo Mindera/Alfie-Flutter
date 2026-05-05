@@ -106,9 +106,10 @@ void main() {
 
         when(() => existingData.email).thenReturn('Test@Email.com');
         when(() => existingUser.data).thenReturn(existingData);
-        when(() => mockUserRepository.getAllUsers()).thenReturn([existingUser]);
-
         when(() => mockUserData.email).thenReturn('test@email.com');
+        when(
+          () => mockUserRepository.isEmailRegistered('test@email.com'),
+        ).thenReturn(true);
 
         expect(
           () => authService.createAccount(mockUserData),
@@ -124,7 +125,9 @@ void main() {
       });
 
       test('adds user if email is unique', () {
-        when(() => mockUserRepository.getAllUsers()).thenReturn([]);
+        when(
+          () => mockUserRepository.isEmailRegistered('new@email.com'),
+        ).thenReturn(false);
         when(() => mockUserData.email).thenReturn('new@email.com');
         when(
           () => mockUserRepository.addUser(mockUserData),

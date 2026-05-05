@@ -37,8 +37,8 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
   // ---------------------------
   // ADDRESS STEP
   // ---------------------------
-  void setShippingAddress(Address address) {
-    _updateState(state.copyWith(address: address));
+  void setDeliveryAddress(Address address) {
+    _updateState(state.copyWith(deliveryAddress: address));
   }
 
   void setBillingAddress(Address billingAddress) {
@@ -46,9 +46,25 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
   }
 
   void useShippingAsBilling() {
-    if (state.address != null) {
-      _updateState(state.copyWith(billingAddress: state.address));
+    if (state.deliveryAddress != null) {
+      _updateState(state.copyWith(billingAddress: state.deliveryAddress));
     }
+  }
+
+  void continueAsGuestUser() {
+    if (state.userData == null ||
+        state.deliveryAddress == null ||
+        state.billingAddress == null) {
+      throw Exception();
+    }
+
+    ref
+        .read(authRepositoryProvider.notifier)
+        .continueAsGuestUser(
+          state.userData!,
+          state.deliveryAddress!,
+          state.billingAddress!,
+        );
   }
 
   // ---------------------------

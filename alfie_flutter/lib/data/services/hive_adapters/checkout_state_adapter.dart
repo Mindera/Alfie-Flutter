@@ -12,7 +12,7 @@ class CheckoutStateAdapter extends TypeAdapter<CheckoutState> {
   @override
   CheckoutState read(BinaryReader reader) {
     return CheckoutState(
-      address: reader.read() as Address?,
+      deliveryAddress: reader.read() as Address?,
       billingAddress: reader.read() as Address?,
       userData: reader.read() as UserData?,
       deliveryMethod: reader.read() as DeliveryMethod?,
@@ -23,7 +23,7 @@ class CheckoutStateAdapter extends TypeAdapter<CheckoutState> {
 
   @override
   void write(BinaryWriter writer, CheckoutState obj) {
-    writer.write(obj.address);
+    writer.write(obj.deliveryAddress);
     writer.write(obj.billingAddress);
     writer.write(obj.userData);
     writer.write(obj.deliveryMethod);

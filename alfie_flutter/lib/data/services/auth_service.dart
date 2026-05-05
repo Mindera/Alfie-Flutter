@@ -39,9 +39,7 @@ class AuthService implements IAuthService {
 
   @override
   User createAccount(UserData userData) {
-    final isExistingEmail = userRepository.getAllUsers().any(
-      (user) => user.data.email.toLowerCase() == userData.email.toLowerCase(),
-    );
+    final isExistingEmail = userRepository.isEmailRegistered(userData.email);
 
     if (isExistingEmail) {
       throw Exception('A user with this email already exists.');

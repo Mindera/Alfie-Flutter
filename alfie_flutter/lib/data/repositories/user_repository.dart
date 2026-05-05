@@ -28,6 +28,12 @@ class UserRepository {
   User deleteUser(String id) {
     return _userBackend.deleteUser(id);
   }
+
+  bool isEmailRegistered(String email) {
+    return getAllUsers().any(
+      (user) => user.data.email.toLowerCase() == email.toLowerCase(),
+    );
+  }
 }
 
 final userRepositoryProvider = Provider<UserRepository>(
