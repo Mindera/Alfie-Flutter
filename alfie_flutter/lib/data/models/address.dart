@@ -64,12 +64,14 @@ class Address {
 
   @override
   String toString() {
-    return 'Address('
-        'country: $country, '
-        'city: $city, '
-        'postalCode: $postalCode, '
-        'street: $street, '
-        'addressLine2: $addressLine2'
-        ')';
+    final parts = <String>[
+      street,
+      if (addressLine2 != null && addressLine2!.isNotEmpty) addressLine2!,
+      city,
+      postalCode,
+      country,
+    ];
+
+    return parts.where((e) => e.isNotEmpty).join(', ');
   }
 }

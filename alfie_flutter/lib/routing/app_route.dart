@@ -45,24 +45,25 @@ enum AppRoute {
   signIn(path: '/signIn'),
   createAccount(path: "/createAccount"),
   personalInformation(path: 'personalInformation'),
-
-  checkout(
-    path: '/checkout',
-    children: [
-      // orderConfirmation,
-      // deliveryInformation,
-      // deliveryMethod,
-      // paymentMethod,
-    ],
-  ),
   identification(
     path: '/identification',
     children: [contactInformation, deliveryInformation],
   ),
+  checkout(
+    path: '/checkout',
+    children: [
+      contactInformation,
+      deliveryInformation,
+      deliveryMethod,
+      paymentMethod,
+      // orderConfirmation,
+    ],
+  ),
+
   contactInformation(path: 'contactInformation'),
   deliveryInformation(path: 'deliveryInformation'),
-  // deliveryMethod(path: 'deliveryMethod'),
-  // paymentMethod(path: 'paymentMethod'),
+  deliveryMethod(path: 'deliveryMethod'),
+  paymentMethod(path: 'paymentMethod'),
   // orderConfirmation(path: 'orderConfirmation'),
 
   components(

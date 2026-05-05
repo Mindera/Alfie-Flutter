@@ -101,9 +101,7 @@ class DeliveryInformationScreen extends HookConsumerWidget {
                   ),
                   if (!billingCheckbox.value)
                     AddressFields(
-                      address: billingCheckbox.value
-                          ? deliveryAddress.value
-                          : billingAddress.value,
+                      address: billingAddress.value,
                       onChanged: (newAddress) =>
                           billingAddress.value = newAddress,
                     ),
