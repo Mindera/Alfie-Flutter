@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/data/models/user.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 

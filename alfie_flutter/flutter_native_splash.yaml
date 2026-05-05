@@ -63,7 +63,7 @@ flutter_native_splash:
   # general image for all platform (except android 12+):
   # allows you to specify an image used in the splash screen. It must be a
   # png file and should be sized for 4x pixel density.
-  image:                assets/alfie8x.png
+  image:                assets/images/alfie_splash_icon.png
   #image_dark:          assets/splash-invert.png
   # platform-specific image. will override general image if active:
   #image_android:       assets/splash-android.png
@@ -142,11 +142,11 @@ flutter_native_splash:
     # with background: 960×960 px (fit within circle 640px in diameter)    
     # without background: 1152×1152 px (fit within circle 768px in diameter)
     # ensure that the most important design elements of your image are placed within a circular area 
-    image: assets/alfie8x.png    
+    image: assets/images/alfie_splash_icon.png    
     # image_dark: assets/images/logo/logo-splash2.png  
 
     # center-logo background color
-    icon_background_color: "#111111"
+    # icon_background_color: "#111111"
     # icon_background_color_dark: "#eeeeee"
 
     # branding:

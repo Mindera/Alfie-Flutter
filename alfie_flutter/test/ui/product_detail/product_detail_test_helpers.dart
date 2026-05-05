@@ -6,6 +6,7 @@ import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
 import 'package:alfie_flutter/data/models/user.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,8 +1,18 @@
+import 'package:alfie_flutter/data/models/address.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
+
 class User {
   final String id;
   final UserData data;
+  final Address? deliveryAddress;
+  final Address? billingAddress;
 
-  const User({required this.id, required this.data});
+  const User({
+    required this.id,
+    required this.data,
+    this.deliveryAddress,
+    this.billingAddress,
+  });
 
   @override
   bool operator ==(Object other) {
@@ -15,18 +25,4 @@ class User {
   int get hashCode {
     return Object.hash("User", id);
   }
-}
-
-class UserData {
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String phoneNumber;
-
-  const UserData({
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.phoneNumber,
-  });
 }

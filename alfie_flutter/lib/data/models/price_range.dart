@@ -4,7 +4,7 @@ import 'package:alfie_flutter/data/models/money.dart';
 ///
 /// Contains a minimum price and an optional maximum price.
 /// When [high] is null, the range represents a 'from' price range (from the [low] price).
-final class PriceRange {
+class PriceRange {
   /// The minimum price in the range.
   final Money low;
 

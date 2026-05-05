@@ -69,3 +69,10 @@ Here it is showned the process of getting a Icon Font in order to use the icons 
 - Add the downloaded font to `pubspec.yaml`
 - Add the .dart class to `/lib/core/themes/`
 - Use it as you whould use `Icons` or `CupertinoIcons`.
+
+
+## How many lines of code does the project have?
+
+```bash
+find . -name '*.dart' ! -name '*.g.dart' ! -name '*.freezed.dart' ! -name '*.gr.dart' ! -name '*.gen.dart' | xargs wc -l
+```

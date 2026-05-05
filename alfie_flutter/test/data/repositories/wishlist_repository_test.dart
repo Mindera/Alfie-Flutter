@@ -1,3 +1,5 @@
+import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -19,7 +21,12 @@ void main() {
 
   setUp(() {
     mockStorageService = MockPersistentStorageService();
-    repository = WishlistRepository(mockStorageService);
+    final container = ProviderContainer(
+      overrides: [
+        persistentStorageServiceProvider.overrideWithValue(mockStorageService),
+      ],
+    );
+    repository = container.read(wishlistRepositoryProvider);
 
     mockProduct1 = MockProduct();
     mockProduct2 = MockProduct();

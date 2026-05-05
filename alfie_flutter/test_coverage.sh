@@ -12,13 +12,20 @@ lcov --remove coverage/lcov.info \
   'lib/graphql/generated/**' \
   --remove coverage/lcov.info \
   'lib/data/backend/**' \
-  -o coverage/lcov.info --branch-coverage --ignore-errors inconsistent,inconsistent
+  --remove coverage/lcov.info \
+  'lib/ui/core/ui/components_demo_screen/**' \
+    --remove coverage/lcov.info \
+  'lib/ui/core/themes/**' \
+  -o coverage/lcov.info --branch-coverage \
+  --rc function_coverage=0 \
+  --ignore-errors inconsistent,inconsistent
 
 
 if [ "$GITHUB_ACTIONS" != "true" ]; then
   genhtml coverage/lcov.info -o coverage/html --branch-coverage \
-    --rc genhtml_hi_limit=80 \
+  --rc genhtml_hi_limit=80 \
   --rc genhtml_med_limit=70 \
+  --no-function-coverage \
   --ignore-errors inconsistent,inconsistent
 
   open coverage/html/index.html

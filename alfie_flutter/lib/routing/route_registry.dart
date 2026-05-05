@@ -3,12 +3,18 @@ import 'package:alfie_flutter/ui/account/view/account_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/auth_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/create_account_screen.dart';
 import 'package:alfie_flutter/ui/bag/view/bag_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/button/buttons_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/checkbox/checkboxes_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/components_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/radio_button/radio_buttons_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/slider/slider_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/text_field/text_field_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/checkout_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/contact_information_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/delivery_information_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/delivery_method_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/identification_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/payment_method_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/buttons_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/checkboxes_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/components_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/radio_buttons_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/slider_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/text_field_screen.dart';
 import 'package:alfie_flutter/ui/home/view/home_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/sign_in_screen.dart';
 import 'package:alfie_flutter/ui/personal_information/view/personal_information_screen.dart';
@@ -47,10 +53,20 @@ class DefaultRouteRegistry implements RouteRegistry {
       AppRoute.radioButtons => RadioButtonsScreen(),
       AppRoute.slider => SliderScreen(),
       AppRoute.search => SearchScreen(),
-      AppRoute.signIn => SignInScreen(),
+      AppRoute.signIn => SignInScreen(
+        prefilledEmail: state.uri.queryParameters['email'],
+      ),
       AppRoute.personalInformation => PersonalInformationScreen(),
       AppRoute.auth => AuthScreen(),
-      AppRoute.createAccount => CreateAccountScreen(),
+      AppRoute.createAccount => CreateAccountScreen(
+        prefilledEmail: state.uri.queryParameters['email'],
+      ),
+      AppRoute.checkout => CheckoutScreen(),
+      AppRoute.identification => IdentificationScreen(),
+      AppRoute.contactInformation => ContactInformationScreen(),
+      AppRoute.deliveryInformation => DeliveryInformationScreen(),
+      AppRoute.deliveryMethod => DeliveryMethodScreen(),
+      AppRoute.paymentMethod => PaymentMethodScreen(),
     };
   }
 }

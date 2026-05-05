@@ -4,6 +4,7 @@ import 'package:alfie_flutter/ui/home/view/brand_carousel.dart';
 import 'package:alfie_flutter/ui/home/view/category_carousel.dart';
 import 'package:alfie_flutter/ui/home/view/highlights_gallery.dart';
 import 'package:alfie_flutter/ui/home/view/home_app_bar.dart';
+import 'package:alfie_flutter/ui/home/view/promotion_gallery.dart';
 import 'package:alfie_flutter/utils/use_scroll_to_top.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -35,7 +36,11 @@ class HomeScreen extends HookConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               spacing: Spacing.extraLarge,
-              children: [CategoryCarousel(), BrandCarousel()],
+              children: [
+                PromotionGallery(),
+                CategoryCarousel(),
+                BrandCarousel(),
+              ],
             ),
           ),
         ),

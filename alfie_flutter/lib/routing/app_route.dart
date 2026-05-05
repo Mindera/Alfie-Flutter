@@ -21,14 +21,14 @@ enum AppRoute {
     isTab: true,
     icon: AppIcons.wishlist,
     children: [productDetail],
-    needsAuth: true,
+    // needsAuth: true,
   ),
   bag(
     path: '/bag',
     isTab: true,
     icon: AppIcons.bag,
     children: [productDetail],
-    needsAuth: true,
+    // needsAuth: true,
   ),
   account(
     path: '/account',
@@ -45,6 +45,27 @@ enum AppRoute {
   signIn(path: '/signIn'),
   createAccount(path: "/createAccount"),
   personalInformation(path: 'personalInformation'),
+  identification(
+    path: '/identification',
+    children: [contactInformation, deliveryInformation],
+  ),
+  checkout(
+    path: '/checkout',
+    children: [
+      contactInformation,
+      deliveryInformation,
+      deliveryMethod,
+      paymentMethod,
+      // orderConfirmation,
+    ],
+  ),
+
+  contactInformation(path: 'contactInformation'),
+  deliveryInformation(path: 'deliveryInformation'),
+  deliveryMethod(path: 'deliveryMethod'),
+  paymentMethod(path: 'paymentMethod'),
+  // orderConfirmation(path: 'orderConfirmation'),
+
   components(
     path: 'components',
     children: [buttons, textField, checkboxes, radioButtons, slider],
@@ -72,16 +93,20 @@ enum AppRoute {
   static List<AppRoute> get tabs =>
       AppRoute.values.where((r) => r.isTab).toList();
 
+  static List<AppRoute> get rootRoutes =>
+      AppRoute.values.where((r) => r.path.startsWith('/')).toList();
+
   String get label => name.capitalize();
 
   /// Gets the full path of a given route
   ///
   /// When a route can be instantiated over more than one base route, it returns the first match
   String get fullPath {
-    if (isTab) return path;
+    if (path.startsWith('/')) return path;
 
-    for (final tab in AppRoute.tabs) {
-      final calculatedPath = _searchPath(tab, this);
+    // Search starting from all root routes, not just tabs
+    for (final root in AppRoute.rootRoutes) {
+      final calculatedPath = _searchPath(root, this);
       if (calculatedPath != null) return calculatedPath;
     }
 

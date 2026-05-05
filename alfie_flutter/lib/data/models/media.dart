@@ -46,7 +46,7 @@ class Media {
 /// Represents image media content.
 ///
 /// An image media asset with a URL pointing to the image resource.
-final class MediaImage extends Media {
+class MediaImage extends Media {
   /// The URL to access the image resource.
   final String url;
 
@@ -76,7 +76,7 @@ final class MediaVideo extends Media {
 /// Contains the format, MIME type, and URL for a single video encoding variant.
 /// Multiple sources in different formats allow the client to choose
 /// the best option based on platform capabilities.
-final class VideoSource {
+class VideoSource {
   /// The video format/container type (e.g., MP4, WebM).
   final VideoFormat format;
 

@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/backend/user_backend.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserRepository {
@@ -26,6 +27,12 @@ class UserRepository {
 
   User deleteUser(String id) {
     return _userBackend.deleteUser(id);
+  }
+
+  bool isEmailRegistered(String email) {
+    return getAllUsers().any(
+      (user) => user.data.email.toLowerCase() == email.toLowerCase(),
+    );
   }
 }
 
