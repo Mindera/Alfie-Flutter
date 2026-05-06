@@ -79,7 +79,7 @@ class SearchScreen extends HookConsumerWidget {
                         recentSearches: state.recentSearches,
                         onSearchItemTapped: submitSearch,
                       )
-                    : SearchSuggestions(),
+                    : const SearchSuggestions(),
               ),
             ),
         ],
