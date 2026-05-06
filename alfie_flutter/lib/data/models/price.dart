@@ -12,5 +12,5 @@ class Price {
   final Money? previousAmount;
 
   /// Creates a new [Price] instance.
-  Price({required this.amount, this.previousAmount});
+  const Price({required this.amount, this.previousAmount});
 }

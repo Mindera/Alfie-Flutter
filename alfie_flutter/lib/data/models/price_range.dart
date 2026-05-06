@@ -12,5 +12,5 @@ class PriceRange {
   final Money? high;
 
   /// Creates a new [PriceRange] instance.
-  PriceRange({required this.low, this.high});
+  const PriceRange({required this.low, this.high});
 }
