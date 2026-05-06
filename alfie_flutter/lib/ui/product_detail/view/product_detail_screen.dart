@@ -29,7 +29,7 @@ class ProductDetailScreen extends ConsumerWidget {
     return Container(
       color: AppColors.neutral,
       child: state.product.when(
-        loading: () => Center(child: AppIcons.progressIndicator),
+        loading: () => const Center(child: AppIcons.progressIndicator),
         error: (error, stackTrace) => Center(child: Text(error.toString())),
         data: (product) {
           if (product == null) {
