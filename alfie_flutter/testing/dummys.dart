@@ -38,7 +38,7 @@ final dummyProducts = [
         id: "id",
         name: "color",
         media: [
-          MediaImage(
+          const MediaImage(
                 url:
                     'https://images.pexels.com/photos/35255594/pexels-photo-35255594.jpeg',
               )
@@ -78,7 +78,7 @@ final dummyProducts = [
         id: "id",
         name: "color",
         media: [
-          MediaImage(
+          const MediaImage(
                 url:
                     'https://images.pexels.com/photos/35255594/pexels-photo-35255594.jpeg',
               )
