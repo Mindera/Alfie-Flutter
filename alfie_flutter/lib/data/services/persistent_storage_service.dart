@@ -157,7 +157,7 @@ class HiveService implements IPersistentStorageService {
   List<SearchItem> getSearchHistory() {
     final data = _recentSearchesBox.get(
       _recentSearchesKey,
-      defaultValue: <SearchItem>[],
+      defaultValue: const <SearchItem>[],
     );
     return List<SearchItem>.from(data ?? []);
   }
@@ -169,7 +169,7 @@ class HiveService implements IPersistentStorageService {
 
   @override
   List<BagItem> getBagItems() {
-    final data = _bagBox.get(_bagKey, defaultValue: <BagItem>[]);
+    final data = _bagBox.get(_bagKey, defaultValue: const <BagItem>[]);
     return List<BagItem>.from(data ?? []);
   }
 
@@ -180,7 +180,10 @@ class HiveService implements IPersistentStorageService {
 
   @override
   List<Product> getWishlist() {
-    final data = _wishlistBox.get(_wishlistKey, defaultValue: <Product>[]);
+    final data = _wishlistBox.get(
+      _wishlistKey,
+      defaultValue: const <Product>[],
+    );
     return List<Product>.from(data ?? []);
   }
 
