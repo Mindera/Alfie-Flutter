@@ -25,7 +25,7 @@ class ProductListingContent extends ConsumerWidget {
       skipLoadingOnRefresh: true,
       skipLoadingOnReload: true,
 
-      loading: () => SliverFillRemaining(
+      loading: () => const SliverFillRemaining(
         hasScrollBody: false,
         child: Center(child: AppIcons.progressIndicator),
       ),
@@ -33,7 +33,7 @@ class ProductListingContent extends ConsumerWidget {
           SliverToBoxAdapter(child: Center(child: Text(error.toString()))),
       data: (productListing) {
         if (productListing == null) {
-          return Center(child: Text("Not Foumd"));
+          return const Center(child: Text("Not Found"));
         }
 
         return SliverPadding(
@@ -43,12 +43,12 @@ class ProductListingContent extends ConsumerWidget {
           sliver: SliverGrid(
             delegate: SliverChildBuilderDelegate((context, index) {
               final product = productListing.products[index];
-              String? label = index == 0 ? "Best Seller" : null;
+              final String? label = index == 0 ? "Best Seller" : null;
 
               return TweenAnimationBuilder<double>(
                 key: ValueKey('anim-${product.id}-$columns'),
 
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
 
                 curve: Curves.easeOut,
 
