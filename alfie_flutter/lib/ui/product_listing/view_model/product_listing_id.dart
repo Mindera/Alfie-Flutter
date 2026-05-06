@@ -6,7 +6,7 @@ class ProductListingId {
   final String? categoryId;
   final String? query;
 
-  ProductListingId({this.categoryId, this.query});
+  const ProductListingId({this.categoryId, this.query});
 
   /// Generates a unique string representation of the listing.
   String get id {
