@@ -6,7 +6,7 @@ import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
 
-final dummyProducts = [
+const dummyProducts = [
   Product(
     id: "id1",
     styleNumber: "styleNumber1",
@@ -34,7 +34,7 @@ final dummyProducts = [
       ),
     ],
     colours: [
-      const ProductColor(
+      ProductColor(
         id: "id",
         name: "color",
         media: [
@@ -74,7 +74,7 @@ final dummyProducts = [
       ),
     ],
     colours: [
-      const ProductColor(
+      ProductColor(
         id: "id",
         name: "color",
         media: [

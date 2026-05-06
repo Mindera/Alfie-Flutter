@@ -49,9 +49,9 @@ void main() {
             ProductListingState(
               params: ProductListingParams(),
               listing: AsyncValue.data(
-                ProductListing(
+                const ProductListing(
                   title: '',
-                  pagination: const Pagination(
+                  pagination: Pagination(
                     offset: 0,
                     limit: 10,
                     total: 10,
