@@ -15,6 +15,7 @@ sealed class User {
     Address? billingAddress,
     List<PaymentCard>? paymentCards,
   });
+  const User();
 }
 
 class RegisteredUser extends User {
@@ -29,7 +30,7 @@ class RegisteredUser extends User {
   @override
   final List<PaymentCard> paymentCards;
 
-  RegisteredUser({
+  const RegisteredUser({
     required this.id,
     required this.data,
     this.deliveryAddress,
@@ -67,7 +68,7 @@ class GuestUser extends User {
   @override
   final List<PaymentCard> paymentCards;
 
-  GuestUser({
+  const GuestUser({
     required this.id,
     this.data,
     this.deliveryAddress,
