@@ -23,7 +23,7 @@ class WishlistViewModel extends Notifier<List<Product>> {
 
   Future<void> clearWishlist() async {
     await _repository.clearWishlists();
-    state = [];
+    state = const [];
   }
 }
 
