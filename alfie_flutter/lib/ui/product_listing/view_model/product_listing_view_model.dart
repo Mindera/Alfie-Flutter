@@ -33,9 +33,9 @@ class ProductListingViewModel extends Notifier<ProductListingState> {
   }
 
   void updateCount() {
-    ProductListing? listing = state.listing.value;
+    final ProductListing? listing = state.listing.value;
     listing?.products.removeLast();
-    state = state.copyWith(listing: AsyncValue.loading());
+    state = state.copyWith(listing: const AsyncValue.loading());
 
     ref.invalidateSelf();
   }
