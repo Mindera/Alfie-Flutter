@@ -34,11 +34,11 @@ final dummyProducts = [
       ),
     ],
     colours: [
-      ProductColor(
+      const ProductColor(
         id: "id",
         name: "color",
         media: [
-          const MediaImage(
+          MediaImage(
                 url:
                     'https://images.pexels.com/photos/35255594/pexels-photo-35255594.jpeg',
               )
@@ -74,11 +74,11 @@ final dummyProducts = [
       ),
     ],
     colours: [
-      ProductColor(
+      const ProductColor(
         id: "id",
         name: "color",
         media: [
-          const MediaImage(
+          MediaImage(
                 url:
                     'https://images.pexels.com/photos/35255594/pexels-photo-35255594.jpeg',
               )

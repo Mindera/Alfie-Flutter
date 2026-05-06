@@ -61,7 +61,7 @@ void main() {
     test(
       'write() should correctly serialize ProductColor to binary (without optional fields)',
       () {
-        final productColor = ProductColor(
+        final productColor = const ProductColor(
           id: 'color_123',
           name: 'Navy Blue',
           swatch: null,
