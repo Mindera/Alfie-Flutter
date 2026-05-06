@@ -51,7 +51,7 @@ void main() {
               listing: AsyncValue.data(
                 ProductListing(
                   title: '',
-                  pagination: Pagination(
+                  pagination: const Pagination(
                     offset: 0,
                     limit: 10,
                     total: 10,
