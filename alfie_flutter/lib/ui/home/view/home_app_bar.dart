@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 /// It utilizes a [SliverAppBar] to transition from a branded background
 /// to a pinned [SearchDummy] field during scrolling.
 class HomeAppBar extends StatelessWidget {
-  final double expandedHeight = 150;
-  final String logoImagePath = 'assets/images/doc_branding.png';
+  static const double expandedHeight = 150;
+  static const String logoImagePath = 'assets/images/doc_branding.png';
 
   const HomeAppBar({super.key});
 
