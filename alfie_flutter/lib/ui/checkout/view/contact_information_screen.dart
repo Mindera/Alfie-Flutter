@@ -113,7 +113,7 @@ class ContactInformationScreen extends HookConsumerWidget {
             onPressed: () {
               final newUser = formState.value;
 
-              ref.read(checkoutViewModelProvider.notifier).setUser(newUser);
+              ref.read(checkoutViewModelProvider.notifier).setUserData(newUser);
 
               context.goTo(AppRoute.deliveryInformation);
             },

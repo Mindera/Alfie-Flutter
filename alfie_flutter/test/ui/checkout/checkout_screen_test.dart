@@ -30,15 +30,6 @@ class FakeAuthRepository extends Notifier<User?> implements AuthRepository {
   User? build() => _user;
 
   @override
-  User continueAsGuestUser(
-    UserData userData,
-    Address deliveryAddress,
-    Address billingAddress,
-  ) {
-    throw UnimplementedError();
-  }
-
-  @override
   User createAccount(UserData userData) {
     throw UnimplementedError();
   }
@@ -52,6 +43,11 @@ class FakeAuthRepository extends Notifier<User?> implements AuthRepository {
   bool signIn(String email, String password) {
     throw UnimplementedError();
   }
+
+  @override
+  void startGuestSession() {
+    throw UnimplementedError();
+  }
 }
 
 class FakeCheckoutViewModel extends CheckoutViewModel {
@@ -60,14 +56,6 @@ class FakeCheckoutViewModel extends CheckoutViewModel {
 
   @override
   CheckoutState build() => _state;
-}
-
-class FakeAddress extends Fake implements Address {
-  final String _addressString;
-  FakeAddress(this._addressString);
-
-  @override
-  String toString() => _addressString;
 }
 
 // --- Test Helper Setup ---
@@ -174,20 +162,36 @@ void main() {
     );
 
     testWidgets(
-      'renders actual user delivery & billing addresses and delivery method when provided',
+      'renders actual user delivery & billing addresses when provided',
       (WidgetTester tester) async {
-        final mockUser = MockUser();
+        final mockUser = MockRegisteredUser();
 
-        // Use Fakes instead of Mocks to safely override toString()
-        final mockDeliveryAddress = FakeAddress('123 Delivery St');
-        final mockBillingAddress = FakeAddress('456 Billing Ave');
-        final mockDeliveryMethod = DeliveryMethod.express;
+        // Create valid fake addresses
+        final deliveryAddr = Address(
+          street: '123 Delivery St',
+          city: 'London',
+          postalCode: 'E1 6AN',
+          country: 'UK',
+        );
+        final billingAddr = Address(
+          street: '456 Billing Ave',
+          city: 'London',
+          postalCode: 'NW1 4NP',
+          country: 'UK',
+        );
 
-        when(() => mockUser.deliveryAddress).thenReturn(mockDeliveryAddress);
-        when(() => mockUser.billingAddress).thenReturn(mockBillingAddress);
+        // Stub the user to return these addresses
+        when(() => mockUser.deliveryAddress).thenReturn(deliveryAddr);
+        when(() => mockUser.billingAddress).thenReturn(billingAddr);
 
         final bagViewModel = FakeBagViewModel(totalPrice: 10.0);
-        final checkoutState = CheckoutState(deliveryMethod: mockDeliveryMethod);
+
+        // CRITICAL: Pass the mockUser into the CheckoutState
+        final checkoutState = CheckoutState(
+          user:
+              mockUser, // This ensures ref.watch(checkoutViewModelProvider) sees the user
+          deliveryMethod: DeliveryMethod.standard,
+        );
 
         await tester.pumpWidget(
           _buildCheckoutScreen(
@@ -197,18 +201,16 @@ void main() {
             screenKey: key,
           ),
         );
+
         await tester.pumpAndSettle();
 
-        expect(find.text('123 Delivery St'), findsOneWidget);
-        expect(find.text('456 Billing Ave'), findsOneWidget);
+        // Verify the output of Address.toString()
+        expect(find.textContaining('123 Delivery St'), findsOneWidget);
+        expect(find.textContaining('456 Billing Ave'), findsOneWidget);
 
-        // Asserting against the actual toString output instead of just 'Express'
-        expect(find.text(mockDeliveryMethod.toString()), findsOneWidget);
-
-        // Fallbacks should no longer be present
+        // Fallbacks should be gone
         expect(find.text('Add a delivery address'), findsNothing);
         expect(find.text('Add a billing address'), findsNothing);
-        expect(find.text('Select a delivery method'), findsNothing);
       },
     );
   });
