@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/data/models/delivery_method.dart';
+import 'package:alfie_flutter/data/models/payment_card.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/account/view/account_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/auth_screen.dart';
@@ -71,7 +72,11 @@ class DefaultRouteRegistry implements RouteRegistry {
             ? state.extra as DeliveryMethod
             : null,
       ),
-      AppRoute.paymentMethod => PaymentMethodScreen(),
+      AppRoute.paymentMethod => PaymentMethodScreen(
+        initialValue: state.extra is PaymentCard
+            ? state.extra as PaymentCard
+            : null,
+      ),
     };
   }
 }

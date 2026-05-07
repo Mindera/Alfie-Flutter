@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/global_keys.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
@@ -13,6 +14,7 @@ class AccountViewModel extends Notifier<AccountState> {
   @override
   AccountState build() {
     final navigatorKey = ref.watch(navigatorKeyProvider);
+    final currentUser = ref.watch(authRepositoryProvider);
     return AccountState(
       menuItems: [
         AccountMenuItem(
@@ -36,7 +38,7 @@ class AccountViewModel extends Notifier<AccountState> {
           ref.read(authRepositoryProvider.notifier).logout();
         },
       ),
-      user: ref.watch(authRepositoryProvider),
+      user: currentUser is RegisteredUser ? currentUser : null,
     );
   }
 }

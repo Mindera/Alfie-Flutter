@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/checkout/view/address_fields.dart';
 import 'package:alfie_flutter/ui/checkout/view/delivery_information_screen.dart';
@@ -84,9 +85,12 @@ void main() {
       (tester) async {
         final checkoutViewModel = FakeCheckoutViewModel(
           CheckoutState(
-            deliveryAddress: null,
-            billingAddress: null,
-            userData: mockUserData,
+            user: GuestUser(
+              id: "",
+              deliveryAddress: null,
+              billingAddress: null,
+              data: mockUserData,
+            ),
           ),
         );
 
@@ -111,9 +115,12 @@ void main() {
       (tester) async {
         final checkoutViewModel = FakeCheckoutViewModel(
           CheckoutState(
-            deliveryAddress: invalidAddress,
-            billingAddress: invalidAddress,
-            userData: mockUserData,
+            user: GuestUser(
+              id: "",
+              deliveryAddress: invalidAddress,
+              billingAddress: invalidAddress,
+              data: mockUserData,
+            ),
           ),
         );
 
@@ -152,9 +159,12 @@ void main() {
 
         final checkoutViewModel = FakeCheckoutViewModel(
           CheckoutState(
-            deliveryAddress: validAddress,
-            billingAddress: anotherValidAddress,
-            userData: mockUserData,
+            user: GuestUser(
+              id: "",
+              deliveryAddress: validAddress,
+              billingAddress: anotherValidAddress,
+              data: mockUserData,
+            ),
           ),
         );
 
@@ -187,9 +197,12 @@ void main() {
       (tester) async {
         final checkoutViewModel = FakeCheckoutViewModel(
           CheckoutState(
-            deliveryAddress: validAddress,
-            billingAddress: validAddress,
-            userData: mockUserData,
+            user: GuestUser(
+              id: "",
+              deliveryAddress: validAddress,
+              billingAddress: validAddress,
+              data: mockUserData,
+            ),
           ),
         );
 
@@ -249,9 +262,12 @@ void main() {
     ) async {
       final checkoutViewModel = FakeCheckoutViewModel(
         CheckoutState(
-          deliveryAddress: validAddress,
-          billingAddress: validAddress,
-          userData: mockUserData,
+          user: GuestUser(
+            id: "",
+            deliveryAddress: validAddress,
+            billingAddress: validAddress,
+            data: mockUserData,
+          ),
         ),
       );
 
@@ -286,9 +302,12 @@ void main() {
       (tester) async {
         final checkoutViewModel = FakeCheckoutViewModel(
           CheckoutState(
-            deliveryAddress: validAddress,
-            billingAddress: validAddress,
-            userData: mockUserData,
+            user: GuestUser(
+              id: "",
+              deliveryAddress: validAddress,
+              billingAddress: validAddress,
+              data: mockUserData,
+            ),
           ),
         );
 
@@ -314,7 +333,6 @@ void main() {
         // Verifies TRUE branch of `billingCheckbox.value ? deliveryAddress.value : billingAddress.value`
         expect(checkoutViewModel.setDeliveryAddressArg, equals(validAddress));
         expect(checkoutViewModel.setBillingAddressArg, equals(validAddress));
-        expect(checkoutViewModel.continueAsGuestCalled, isTrue);
 
         expect(find.text('Checkout Screen'), findsOneWidget);
       },
@@ -323,9 +341,12 @@ void main() {
     testWidgets('navigates back when back button is tapped', (tester) async {
       final checkoutViewModel = FakeCheckoutViewModel(
         CheckoutState(
-          deliveryAddress: validAddress,
-          billingAddress: validAddress,
-          userData: mockUserData,
+          user: GuestUser(
+            id: "",
+            deliveryAddress: validAddress,
+            billingAddress: validAddress,
+            data: mockUserData,
+          ),
         ),
       );
 

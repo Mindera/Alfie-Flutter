@@ -24,7 +24,7 @@ class FakeAuthViewModel extends AuthViewModel {
     if (shouldThrow) {
       throw Exception('Create account failed');
     }
-    return User(id: 'user-id', data: userData);
+    return GuestUser(id: 'user-id', data: userData);
   }
 }
 

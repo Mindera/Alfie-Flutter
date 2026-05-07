@@ -10,12 +10,12 @@ void main() {
   late MockAuthService mockAuthService;
   late ProviderContainer container;
 
-  late MockUser mockUser;
+  late MockRegisteredUser mockUser;
   late MockUserData mockUserData;
 
   setUp(() {
     mockAuthService = MockAuthService();
-    mockUser = MockUser();
+    mockUser = MockRegisteredUser();
     mockUserData = MockUserData();
 
     when(() => mockAuthService.getTokenExpiration()).thenReturn(null);

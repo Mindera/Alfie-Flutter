@@ -4,7 +4,7 @@ import 'package:alfie_flutter/ui/account/view/account_menu_item.dart';
 class AccountState {
   final List<AccountMenuItem> menuItems;
   final AccountMenuItem signOutItem;
-  final User? user;
+  final RegisteredUser? user;
 
   AccountState({
     required this.menuItems,
