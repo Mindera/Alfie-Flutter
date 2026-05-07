@@ -1,3 +1,4 @@
+import 'package:alfie_flutter/data/models/delivery_method.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/account/view/account_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/auth_screen.dart';
@@ -65,7 +66,11 @@ class DefaultRouteRegistry implements RouteRegistry {
       AppRoute.identification => IdentificationScreen(),
       AppRoute.contactInformation => ContactInformationScreen(),
       AppRoute.deliveryInformation => DeliveryInformationScreen(),
-      AppRoute.deliveryMethod => DeliveryMethodScreen(),
+      AppRoute.deliveryMethod => DeliveryMethodScreen(
+        initialValue: state.extra is DeliveryMethod
+            ? state.extra as DeliveryMethod
+            : null,
+      ),
       AppRoute.paymentMethod => PaymentMethodScreen(),
     };
   }

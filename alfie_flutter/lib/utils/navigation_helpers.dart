@@ -21,6 +21,7 @@ extension NavigationHelpers on BuildContext {
     AppRoute target, {
     Map<String, String> pathParams = const {},
     Map<String, String?> queryParams = const {},
+    Object? extra,
   }) {
     String path = target.fullPath;
 
@@ -36,7 +37,7 @@ extension NavigationHelpers on BuildContext {
           : queryParams.map((k, v) => MapEntry(k, v ?? '')),
     );
 
-    push(uri.toString());
+    push(uri.toString(), extra: extra);
   }
 
   void goToProduct(String productId) {
