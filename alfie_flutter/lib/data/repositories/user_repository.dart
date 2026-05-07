@@ -9,7 +9,7 @@ class UserRepository {
   UserRepository({required IUserBackend userBackend})
     : _userBackend = userBackend;
 
-  List<User> getAllUsers() {
+  List<RegisteredUser> getAllUsers() {
     return _userBackend.getAllUsers();
   }
 

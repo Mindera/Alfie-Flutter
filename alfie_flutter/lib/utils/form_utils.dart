@@ -1,4 +1,5 @@
 import 'package:alfie_flutter/utils/app_regex.dart';
+import 'package:alfie_flutter/utils/payement_card_utils.dart';
 import 'package:flutter/material.dart';
 
 class FormUtils {
@@ -107,5 +108,17 @@ extension FormUtilsExtension on BuildContext {
     String errorMessage = 'Please enter a valid phone number',
   }) {
     return FormUtils.validatePhoneNumber(value, errorMessage: errorMessage);
+  }
+
+  String? validateCVV(String? value) {
+    return PaymentCardUtils.validateCVV(value);
+  }
+
+  String? validateDate(String? value) {
+    return PaymentCardUtils.validateDate(value);
+  }
+
+  String? validateCardNumber(String? value) {
+    return PaymentCardUtils.validateCardNumber(value);
   }
 }

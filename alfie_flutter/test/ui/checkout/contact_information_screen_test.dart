@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/checkout/view/contact_information_screen.dart';
@@ -115,7 +116,7 @@ void main() {
         await tester.tap(find.widgetWithText(AppButton, 'Continue'));
         await tester.pumpAndSettle();
 
-        expect(mockViewModel.savedUser?.firstName, 'John');
+        expect(mockViewModel.savedUserData?.firstName, 'John');
         expect(find.text('Delivery Information Screen'), findsOneWidget);
       },
     );
@@ -131,7 +132,9 @@ void main() {
       );
 
       final mockViewModel = FakeCheckoutViewModel(
-        CheckoutState(userData: userData),
+        CheckoutState(
+          user: GuestUser(id: "", data: userData),
+        ),
       );
 
       await tester.pumpWidget(_buildApp(mockViewModel: mockViewModel));
@@ -150,7 +153,7 @@ void main() {
       // Navigation should be successful
       expect(find.text('Delivery Information Screen'), findsOneWidget);
       // User should be updated via the view model
-      expect(mockViewModel.savedUser?.firstName, 'Jane');
+      expect(mockViewModel.savedUserData?.firstName, 'Jane');
     });
 
     testWidgets('tapping back button navigates back via safePop', (

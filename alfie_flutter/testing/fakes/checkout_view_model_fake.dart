@@ -1,6 +1,6 @@
 import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/delivery_method.dart';
-import 'package:alfie_flutter/data/models/payment_method.dart';
+import 'package:alfie_flutter/data/models/payment_card.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_view_model.dart';
@@ -11,10 +11,10 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
   final CheckoutState _initialState;
 
   // --- tracked values ---
-  UserData? savedUser;
+  UserData? savedUserData;
   Address? setDeliveryAddressArg;
   Address? setBillingAddressArg;
-  bool continueAsGuestCalled = false;
+  bool startGuestSessionCalled = false;
 
   FakeCheckoutViewModel([this._initialState = const CheckoutState()]);
 
@@ -22,33 +22,42 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
   CheckoutState build() => _initialState;
 
   @override
-  void setUser(UserData user) {
-    savedUser = user;
-    state = state.copyWith(userData: user);
+  void setUserData(UserData userData) {
+    savedUserData = userData;
+    final currentUser = state.user;
+    state = state.copyWith(user: currentUser?.copyWith(data: userData));
   }
 
   @override
-  void setDeliveryAddress(Address address) {
-    setDeliveryAddressArg = address;
-    state = state.copyWith(deliveryAddress: address);
+  void setDeliveryAddress(Address deliveryAddress) {
+    setDeliveryAddressArg = deliveryAddress;
+    final currentUser = state.user;
+    state = state.copyWith(
+      user: currentUser?.copyWith(deliveryAddress: deliveryAddress),
+    );
   }
 
   @override
   void setBillingAddress(Address billingAddress) {
     setBillingAddressArg = billingAddress;
-    state = state.copyWith(billingAddress: billingAddress);
+    final currentUser = state.user;
+    state = state.copyWith(
+      user: currentUser?.copyWith(billingAddress: billingAddress),
+    );
   }
 
   @override
-  void continueAsGuestUser() {
-    continueAsGuestCalled = true;
+  void startGuestSession() {
+    startGuestSessionCalled = true;
   }
 
-  // Optional: simulate behavior if needed
   @override
   void useShippingAsBilling() {
+    final currentUser = state.user;
     if (state.deliveryAddress != null) {
-      state = state.copyWith(billingAddress: state.deliveryAddress);
+      state = state.copyWith(
+        user: currentUser?.copyWith(billingAddress: state.deliveryAddress),
+      );
     }
   }
 
@@ -57,11 +66,11 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
   void setDeliveryMethod(DeliveryMethod method) {}
 
   @override
-  void setPaymentMethod(PaymentMethod method) {}
+  void setPaymentMethod(PaymentCard paymentCard) {}
 
   @override
   void applyPromoCode(String code) {}
 
   @override
-  double get totalPrice => throw UnimplementedError();
+  double get totalPrice => 0.0;
 }

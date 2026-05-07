@@ -29,7 +29,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 ///   disabledOptions: [Status.pending],
 /// )
 /// ```
-class RadioButtons<T extends Enum> extends HookWidget {
+class RadioButtons<T> extends HookWidget {
   /// The complete list of available options to display.
   final List<T> options;
 
@@ -53,6 +53,7 @@ class RadioButtons<T extends Enum> extends HookWidget {
   /// Example: `(status) => status.name` or `(status) => status.displayName`
   final String Function(T) labelBuilder;
   final String Function(T)? descriptionBuilder;
+  final Widget Function(T)? iconBuilder;
 
   /// Whether the entire radio group is disabled.
   ///
@@ -72,6 +73,7 @@ class RadioButtons<T extends Enum> extends HookWidget {
     this.descriptionBuilder,
     this.isDisabled = false,
     this.radionOnRight = false,
+    this.iconBuilder,
   });
 
   /// Determines if a specific option is disabled.
@@ -85,7 +87,6 @@ class RadioButtons<T extends Enum> extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final state = useState(initialValue);
-    final radioTheme = context.theme.radioTheme;
 
     /// Updates the selected value if the group is not disabled.
     ///
@@ -103,44 +104,75 @@ class RadioButtons<T extends Enum> extends HookWidget {
       child: Column(
         spacing: Spacing.small,
         children: options.map((option) {
-          final isOptionDisabled = _isOptionDisabled(option);
-          final isSelected = state.value == option;
-
-          return ListTile(
-            enabled: !isOptionDisabled,
-            title: Column(
-              spacing: Spacing.extraSmall,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  labelBuilder(option),
-                  style: radioTheme.getLabelStyle(
-                    context,
-                    isOptionDisabled,
-                    isSelected,
-                  ),
-                ),
-                if (descriptionBuilder != null)
-                  Text(
-                    descriptionBuilder!(option),
-                    style: radioTheme.getDescriptionStyle(
-                      context,
-                      isOptionDisabled,
-                      isSelected,
-                    ),
-                  ),
-              ],
-            ),
-            leading: radionOnRight
-                ? null
-                : Radio<T>(value: option, enabled: !isOptionDisabled),
-            trailing: radionOnRight
-                ? Radio<T>(value: option, enabled: !isOptionDisabled)
-                : null,
-            onTap: isOptionDisabled ? null : () => updateValue(option),
+          return RadioButtonTile(
+            option: option,
+            isDisabled: _isOptionDisabled(option),
+            labelBuilder: labelBuilder,
+            iconBuilder: iconBuilder,
+            descriptionBuilder: descriptionBuilder,
+            radionOnRight: radionOnRight,
+            isSelected: state.value == option,
+            updateValue: updateValue,
           );
         }).toList(),
       ),
+    );
+  }
+}
+
+class RadioButtonTile<T> extends StatelessWidget {
+  final T option;
+  final bool isDisabled;
+  final String Function(T) labelBuilder;
+  final String Function(T)? descriptionBuilder;
+  final Widget Function(T)? iconBuilder;
+  final bool radionOnRight;
+  final bool isSelected;
+  final void Function(T? newValue) updateValue;
+  const RadioButtonTile({
+    super.key,
+    required this.option,
+    this.isDisabled = false,
+    required this.labelBuilder,
+    this.descriptionBuilder,
+    this.iconBuilder,
+    this.radionOnRight = true,
+    this.isSelected = true,
+    required this.updateValue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final radioTheme = context.theme.radioTheme;
+
+    return ListTile(
+      enabled: !isDisabled,
+      title: Column(
+        spacing: Spacing.extraSmall,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            labelBuilder(option),
+            style: radioTheme.getLabelStyle(context, isDisabled, isSelected),
+          ),
+          if (descriptionBuilder != null)
+            Text(
+              descriptionBuilder!(option),
+              style: radioTheme.getDescriptionStyle(
+                context,
+                isDisabled,
+                isSelected,
+              ),
+            ),
+        ],
+      ),
+      leading: radionOnRight
+          ? iconBuilder?.call(option)
+          : Radio<T>(value: option, enabled: !isDisabled),
+      trailing: radionOnRight
+          ? Radio<T>(value: option, enabled: !isDisabled)
+          : iconBuilder?.call(option),
+      onTap: isDisabled ? null : () => updateValue(option),
     );
   }
 }
