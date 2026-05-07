@@ -1,21 +1,17 @@
 import 'package:alfie_flutter/data/models/pagination.dart';
 import 'package:alfie_flutter/data/models/product.dart';
 
-/// Represents a paginated list of products with metadata.
-///
-/// Contains a collection of products, pagination information for navigating
-/// through results, and a contextual title for the listing.
+/// Represents a paginated collection of [Product] items with navigation metadata.
 class ProductListing {
-  /// The title or context of this product listing.
+  /// The contextual title for this specific listing or category.
   final String title;
 
-  /// Pagination information for navigating through the product results.
+  /// State and boundaries for navigating the result set.
   final Pagination pagination;
 
-  /// The list of products in this page of results.
+  /// The collection of products within the current page.
   final List<Product> products;
 
-  /// Creates a new [ProductListing] instance.
   const ProductListing({
     required this.title,
     required this.pagination,
@@ -23,20 +19,13 @@ class ProductListing {
   });
 }
 
-/// Defines the available sorting options for product listings.
+/// Defines the sorting behavior applied to a [ProductListing].
 enum ProductListingSort {
-  /// Sort by price from lowest to highest.
   lowToHigh,
-
-  /// Sort by price from highest to lowest.
   highToLow,
-
-  /// Sort alphabetically from A to Z.
   aToZ,
-
-  /// Sort alphabetically from Z to A.
   zToA,
 
-  /// Sort type unknown.
+  /// Fallback state when the sorting preference is unrecognized or unassigned.
   unknown,
 }

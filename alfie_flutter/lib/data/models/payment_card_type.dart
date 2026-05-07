@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/utils/string_utils.dart';
 
+/// Defines the supported credit and debit card payment networks.
 enum PaymentCardType {
   master,
   visa,

@@ -2,12 +2,14 @@ import 'package:alfie_flutter/data/models/address.dart';
 import 'package:alfie_flutter/data/models/payment_card.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 
+/// Base authentication state and profile contract for a shopping session.
 sealed class User {
   String get id;
   UserData? get data;
   Address? get deliveryAddress;
   Address? get billingAddress;
   List<PaymentCard> get paymentCards;
+
   User copyWith({
     String? id,
     UserData? data,
@@ -15,9 +17,14 @@ sealed class User {
     Address? billingAddress,
     List<PaymentCard>? paymentCards,
   });
+
   const User();
 }
 
+/// Represents a fully authenticated and persisted user session.
+///
+/// Enforces non-nullability on core profile [data] and requires a concrete
+/// list of saved [paymentCards].
 class RegisteredUser extends User {
   @override
   final String id;
@@ -56,6 +63,10 @@ class RegisteredUser extends User {
   }
 }
 
+/// Represents an ephemeral, unauthenticated shopping session.
+///
+/// Profile [data] is optional, allowing users to browse and configure a cart
+/// prior to formal registration or login.
 class GuestUser extends User {
   @override
   final String id;

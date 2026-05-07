@@ -1,32 +1,29 @@
 import 'package:alfie_flutter/data/models/price.dart';
 import 'package:alfie_flutter/data/models/size.dart';
 
-/// Represents a specific variant of a product.
+/// Represents a purchasable configuration of a product.
 ///
-/// A product variant is a distinct combination of attributes (size, color, etc.)
-/// that can be purchased separately. Each variant has its own SKU, pricing,
-/// and stock information.
+/// Variants are distinct physical items derived from a base product,
+/// each tracking its own inventory, pricing, and specific attributes.
 class ProductVariant {
-  /// The stock keeping unit (SKU) uniquely identifying this variant.
+  /// The Stock Keeping Unit uniquely identifying this physical configuration.
   final String sku;
 
-  /// Size, if applicable.
+  /// The physical dimensions or fit standard.
   final ProductSize? size;
 
-  /// The identifier of the color for this variant, if applicable.
+  /// The identifier linking to the associated color variant.
   final String? colorId;
 
-  /// Additional product attributes specific to this variant
-  /// or null if there are no additional attributes.
+  /// Additional dynamic specifications unique to this variant.
   final Map<String, String>? attributes;
 
-  /// The current stock quantity available for this variant.
+  /// The current inventory count available for purchase.
   final int stock;
 
-  /// The pricing information for this variant.
+  /// The absolute pricing state for this specific variant.
   final Price price;
 
-  /// Creates a new [ProductVariant] instance.
   const ProductVariant({
     required this.sku,
     this.size,
