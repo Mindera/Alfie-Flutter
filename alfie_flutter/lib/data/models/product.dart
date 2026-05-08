@@ -46,7 +46,7 @@ class Product {
   final List<ProductColor>? colours;
 
   /// Creates a new [Product] instance.
-  Product({
+  const Product({
     required this.id,
     required this.styleNumber,
     required this.name,

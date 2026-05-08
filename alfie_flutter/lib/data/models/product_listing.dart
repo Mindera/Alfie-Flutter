@@ -16,7 +16,7 @@ class ProductListing {
   final List<Product> products;
 
   /// Creates a new [ProductListing] instance.
-  ProductListing({
+  const ProductListing({
     required this.title,
     required this.pagination,
     required this.products,

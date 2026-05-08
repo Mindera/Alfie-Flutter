@@ -91,7 +91,7 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
   void setPaymentMethod(PaymentCard paymentCard) {
     final currentCards = state.user?.paymentCards ?? [];
 
-    List<PaymentCard> updatedCards = List.from(currentCards);
+    final List<PaymentCard> updatedCards = List.from(currentCards);
     if (!updatedCards.contains(paymentCard)) {
       updatedCards.add(paymentCard);
     }

@@ -6,7 +6,7 @@ class AccountState {
   final AccountMenuItem signOutItem;
   final RegisteredUser? user;
 
-  AccountState({
+  const AccountState({
     required this.menuItems,
     required this.signOutItem,
     required this.user,

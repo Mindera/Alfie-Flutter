@@ -33,7 +33,7 @@ final appButtonThemeProvider = Provider<AppButtonTheme>(
 ButtonStyle _buildPrimaryStyle(Ref ref) =>
     ElevatedButton.styleFrom(
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       textStyle: ref.read(textThemeProvider).bodyMedium,
       backgroundColor: AppColors.neutral800,
       foregroundColor: AppColors.neutral,
@@ -43,8 +43,8 @@ ButtonStyle _buildPrimaryStyle(Ref ref) =>
     ).copyWith(
       side: WidgetStateProperty.resolveWith<BorderSide?>(
         (states) => states.contains(WidgetState.disabled)
-            ? BorderSide(color: AppColors.neutral300)
-            : BorderSide(color: AppColors.neutral800),
+            ? const BorderSide(color: AppColors.neutral300)
+            : const BorderSide(color: AppColors.neutral800),
       ),
     );
 
@@ -52,7 +52,7 @@ ButtonStyle _buildPrimaryStyle(Ref ref) =>
 ButtonStyle _buildSecondaryStyle(Ref ref) =>
     OutlinedButton.styleFrom(
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       textStyle: ref.read(textThemeProvider).bodyMedium,
       backgroundColor: AppColors.transparent,
       foregroundColor: AppColors.neutral800,
@@ -62,15 +62,15 @@ ButtonStyle _buildSecondaryStyle(Ref ref) =>
     ).copyWith(
       side: WidgetStateProperty.resolveWith<BorderSide?>(
         (states) => states.contains(WidgetState.disabled)
-            ? BorderSide(color: AppColors.neutral500)
-            : BorderSide(color: AppColors.neutral800),
+            ? const BorderSide(color: AppColors.neutral500)
+            : const BorderSide(color: AppColors.neutral800),
       ),
     );
 
 /// Builds the tertiary button style: text-only with transparent background.
 ButtonStyle _buildTertiaryStyle(Ref ref) => TextButton.styleFrom(
   elevation: 0,
-  shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
   textStyle: ref.read(textThemeProvider).bodyMedium,
   backgroundColor: AppColors.transparent,
   foregroundColor: AppColors.neutral800,
@@ -83,7 +83,7 @@ ButtonStyle _buildTertiaryStyle(Ref ref) => TextButton.styleFrom(
 ButtonStyle _buildDestructiveStyle(Ref ref) =>
     ElevatedButton.styleFrom(
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       textStyle: ref.read(textThemeProvider).bodyMedium,
       backgroundColor: AppColors.error600,
       foregroundColor: AppColors.neutral,
@@ -93,8 +93,8 @@ ButtonStyle _buildDestructiveStyle(Ref ref) =>
     ).copyWith(
       side: WidgetStateProperty.resolveWith<BorderSide?>(
         (states) => states.contains(WidgetState.disabled)
-            ? BorderSide(color: AppColors.neutral300)
-            : BorderSide(color: AppColors.error600),
+            ? const BorderSide(color: AppColors.neutral300)
+            : const BorderSide(color: AppColors.error600),
       ),
     );
 

@@ -105,7 +105,7 @@ void main() {
     test(
       'write() should correctly serialize MediaImage to binary (with alt text)',
       () {
-        final image = MediaImage(
+        final image = const MediaImage(
           url: 'https://example.com/img.jpg',
           alt: 'A nice image',
         );
@@ -125,7 +125,10 @@ void main() {
     test(
       'write() should correctly serialize MediaImage to binary (without alt text)',
       () {
-        final image = MediaImage(url: 'https://example.com/img.jpg', alt: null);
+        final image = const MediaImage(
+          url: 'https://example.com/img.jpg',
+          alt: null,
+        );
 
         adapter.write(mockWriter, image);
 
@@ -173,7 +176,7 @@ void main() {
     });
 
     test('write() should correctly serialize VideoSource to binary', () {
-      final source = VideoSource(
+      final source = const VideoSource(
         format: VideoFormat.mp4,
         mimeType: 'video/mp4',
         url: 'https://example.com/video.mp4',

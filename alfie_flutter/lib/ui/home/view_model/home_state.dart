@@ -9,7 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 /// and consumed by the Home View.
 class HomeState {
   /// Featured content for the top gallery.
-  final List<Highlight> highlights = [
+  final List<Highlight> highlights = const [
     Highlight(
       imageUrl:
           'https://images.pexels.com/photos/6769357/pexels-photo-6769357.jpeg',
@@ -68,5 +68,5 @@ class HomeState {
   /// Asynchronous list of brands, managed via Riverpod's [AsyncValue].
   final AsyncValue<List<Brand>> brands;
 
-  HomeState({required this.brands});
+  const HomeState({required this.brands});
 }
