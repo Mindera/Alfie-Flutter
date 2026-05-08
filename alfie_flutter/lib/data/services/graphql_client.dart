@@ -3,14 +3,13 @@ import 'package:alfie_flutter/graphql/generated/schema.graphql.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-/// Provides a configured [GraphQLClient] instance for making GraphQL queries.
+/// Orchestrates the global [GraphQLClient] for network communications.
 ///
-/// The client is configured with:
-/// - HTTP link pointing to the GraphQL server URL from [Environment]
-/// - Hive-based cache for offline support and performance optimization
+/// Configures the transport layer using [Environment.graphqlServerUrl] and
+/// leverages a [HiveStore] cache for local data persistence and offline capabilities.
 ///
-/// Note: When testing on Android Emulator, the server URL should be
-/// `http://10.0.2.2:4000/` to access the host machine's localhost.
+/// *Engineering Note:* When testing on an Android Emulator, ensure the environment
+/// URL points to `http://10.0.2.2:<port>` to properly route to the host machine's localhost.
 final gqlClientProvider = Provider<GraphQLClient>((ref) {
   final HttpLink httpLink = HttpLink(
     ref.watch(environmentProvider).graphqlServerUrl,
@@ -22,5 +21,8 @@ final gqlClientProvider = Provider<GraphQLClient>((ref) {
   );
 });
 
-/// Uses a cache-first strategy to minimize network requests and improve performance.
+/// The default [FetchPolicy] applied across repository network requests.
+///
+/// Prioritizes the local [GraphQLCache] to minimize latency and reduce backend load,
+/// falling back to the network only when data is missing or stale.
 final globalFetchPolicy = FetchPolicy.cacheFirst;
