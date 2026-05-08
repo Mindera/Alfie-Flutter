@@ -67,7 +67,6 @@ class ProductMainInfo extends ConsumerWidget {
               child: AppButton.primary(
                 label: "Add to Bag",
                 onPressed: () {
-                  // context.authAction(ref, () {
                   ref
                       .read(productDetailViewModelProvider(product.id).notifier)
                       .addToBag(product);
@@ -83,7 +82,6 @@ class ProductMainInfo extends ConsumerWidget {
                       },
                     ),
                   );
-                  // });
                 },
               ),
             ),
