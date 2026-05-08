@@ -1,11 +1,14 @@
 import 'package:alfie_flutter/data/models/search_item.dart';
 
-/// Represents the UI state for the search screen.
+/// Aggregates the presentation state for the search interface.
 ///
-/// Holds both the user's recent search history
-/// and the currently active search query.
+/// Manages the transient active query alongside a bounded collection
+/// of historical user searches.
 class SearchState {
+  /// The collection of previously executed [SearchItem] queries.
   final List<SearchItem> recentSearches;
+
+  /// The active, unsubmitted text currently residing in the search input field.
   final String? currentSearchQuery;
 
   const SearchState({required this.recentSearches, this.currentSearchQuery});
