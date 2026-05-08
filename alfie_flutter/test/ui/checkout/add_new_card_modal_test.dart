@@ -44,6 +44,12 @@ class FakeCheckoutViewModel extends Notifier<CheckoutState>
   void useShippingAsBilling() {}
   @override
   double get totalPrice => 0.0;
+
+  @override
+  void placeOrder() {}
+
+  @override
+  void clearCheckoutState() {}
 }
 
 void main() {

@@ -69,6 +69,9 @@ abstract interface class IPersistentStorageService {
 
   /// Updates the current checkout state with a new [state].
   Future<void> saveCheckoutState(CheckoutState state);
+
+  /// Deletes the current checkout state
+  Future<void> deleteCheckoutState();
 }
 
 /// A Hive-based implementation of [IPersistentStorageService].
@@ -219,6 +222,11 @@ class HiveService implements IPersistentStorageService {
   @override
   CheckoutState? getCheckoutState() {
     return _checkoutStateBox.get(_checkoutStateKey);
+  }
+
+  @override
+  Future<void> deleteCheckoutState() async {
+    await _checkoutStateBox.clear();
   }
 }
 
