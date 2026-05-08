@@ -4,7 +4,9 @@ import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:hive/hive.dart';
 
+/// A Hive [TypeAdapter] for binary serialization of the [CheckoutState] UI context.
 class CheckoutStateAdapter extends TypeAdapter<CheckoutState> {
+  /// The unique identifier for this type within Hive.
   @override
   final int typeId = 20;
 

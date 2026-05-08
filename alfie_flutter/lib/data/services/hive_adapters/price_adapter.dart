@@ -2,7 +2,7 @@ import 'package:alfie_flutter/data/models/money.dart';
 import 'package:alfie_flutter/data/models/price.dart';
 import 'package:hive/hive.dart';
 
-/// A Hive [TypeAdapter] that handles binary serialization for [Price].
+/// A Hive [TypeAdapter] for binary serialization of [Price] entities.
 class PriceAdapter extends TypeAdapter<Price> {
   @override
   final int typeId = 4;

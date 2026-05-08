@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:hive/hive.dart';
 
+/// A Hive [TypeAdapter] for binary serialization of [UserData] profiles.
 class UserDataAdapter extends TypeAdapter<UserData> {
   @override
   final int typeId = 19;
