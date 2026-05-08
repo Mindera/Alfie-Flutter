@@ -10,6 +10,10 @@ import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// A reusable toggle button for adding or removing a [Product] from the active wishlist.
+///
+/// Subscribes to [productDetailViewModelProvider] to reflect the current
+/// wishlist status and dispatch mutation intents.
 class WishlistButton extends ConsumerWidget {
   final Product product;
   final ButtonVariant buttonVariant;
@@ -25,16 +29,16 @@ class WishlistButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(productDetailViewModelProvider(product.id));
-    final viewModel = ref.read(
-      productDetailViewModelProvider(product.id).notifier,
-    );
 
     return AppButton(
       variant: buttonVariant,
       size: buttonSize,
       leading: state.isOnWishlist ? AppIcons.wishlistFill : AppIcons.wishlist,
       onPressed: () {
-        // context.authAction(ref, () {
+        final viewModel = ref.read(
+          productDetailViewModelProvider(product.id).notifier,
+        );
+
         late String infoText;
         late String? actionText;
         late VoidCallback action;
@@ -60,7 +64,6 @@ class WishlistButton extends ConsumerWidget {
             onTapAction: action,
           ),
         );
-        // });
       },
     );
   }
