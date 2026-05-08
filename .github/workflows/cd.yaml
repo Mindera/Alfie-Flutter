@@ -58,6 +58,11 @@ jobs:
         with:
           model: 'iPhone 17 Pro' 
 
+      - name: Wait for Simulator
+        if: matrix.platform == 'iOS'
+        run: |
+          xcrun simctl bootstatus booted -b
+
       - name: Run iOS Integration Tests
         if: matrix.platform == 'iOS'
         run: |
