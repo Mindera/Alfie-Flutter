@@ -15,6 +15,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// A modal bottom sheet for capturing new [PaymentCard] details.
+///
+/// Validates user input and mutates the global [checkoutViewModelProvider]
+/// state upon successful submission.
 class AddNewCardModal extends HookConsumerWidget {
   const AddNewCardModal({super.key});
 
@@ -22,6 +26,7 @@ class AddNewCardModal extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final card = useState<PaymentCard>(PaymentCard.invalid);
+
     return Padding(
       padding: const EdgeInsets.all(
         Spacing.small,
@@ -34,7 +39,7 @@ class AddNewCardModal extends HookConsumerWidget {
             spacing: Spacing.medium,
             children: [
               Header(
-                title: "Add new vard",
+                title: "Add new card",
                 leading: AppButton.tertiary(
                   leading: AppIcons.close,
                   onPressed: () => context.safePop(),

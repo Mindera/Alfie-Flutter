@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// Manages the collection of shipping and billing [Address] details.
 class DeliveryInformationScreen extends HookConsumerWidget {
   const DeliveryInformationScreen({super.key});
 
@@ -33,10 +34,10 @@ class DeliveryInformationScreen extends HookConsumerWidget {
     );
 
     final deliveryAddress = useState<Address>(
-      existingDeliveryAddress ?? Address.empty(),
+      existingDeliveryAddress ?? const Address.empty(),
     );
     final billingAddress = useState<Address>(
-      existingBillingAddress ?? Address.empty(),
+      existingBillingAddress ?? const Address.empty(),
     );
 
     final isFormValid =
@@ -46,7 +47,7 @@ class DeliveryInformationScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Header(
-          title: "Delivery Indormation",
+          title: "Delivery Information",
           leading: AppButton.tertiary(
             leading: AppIcons.back,
             onPressed: () => context.safePop(),
@@ -89,7 +90,7 @@ class DeliveryInformationScreen extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Delivery Address",
+                    "Billing Address",
                     style: context.textTheme.headlineSmall,
                     textAlign: TextAlign.left,
                   ),

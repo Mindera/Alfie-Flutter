@@ -10,10 +10,23 @@ import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:alfie_flutter/data/repositories/checkout_state_repository.dart';
 
+/// Orchestrates the multi-step checkout funnel and preserves progression state.
+final checkoutViewModelProvider =
+    NotifierProvider<CheckoutViewModel, CheckoutState>(
+      () => CheckoutViewModel(),
+    );
+
+/// State controller for the active checkout session payload.
+///
+/// Synchronizes local UI progression with the [CheckoutStateRepository] to
+/// survive application backgrounding or accidental dismissals.
 class CheckoutViewModel extends Notifier<CheckoutState> {
   CheckoutStateRepository get _repository =>
       ref.read(checkoutStateRepositoryProvider);
 
+  /// Initializes the funnel by attempting to hydrate a suspended session from local storage.
+  ///
+  /// If no suspended session exists, defaults to the active [authRepositoryProvider] state.
   @override
   CheckoutState build() {
     final savedState = _repository.getCheckoutState();
@@ -25,26 +38,22 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
     return CheckoutState(user: user);
   }
 
+  /// The aggregate sum of the cart contents and selected fulfillment fees.
   double get totalPrice =>
       ref.read(bagViewModelProvider.notifier).total +
       (state.deliveryMethod?.price.amount ?? 0);
 
+  /// Mutates the active state and immediately synchronizes the snapshot to persistent storage.
   void _updateState(CheckoutState newState) {
     state = newState;
     _repository.saveCheckoutState(newState);
   }
 
-  // ---------------------------
-  // CONTACT INFO STEP
-  // ---------------------------
   void setUserData(UserData userData) {
     final currentUser = state.user;
     _updateState(state.copyWith(user: currentUser?.copyWith(data: userData)));
   }
 
-  // ---------------------------
-  // ADDRESS STEP
-  // ---------------------------
   void setDeliveryAddress(Address deliveryAddress) {
     final currentUser = state.user;
     _updateState(
@@ -63,6 +72,7 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
     );
   }
 
+  /// Duplicates the current [CheckoutState.deliveryAddress] into the billing address slot.
   void useShippingAsBilling() {
     final currentUser = state.user;
     if (state.deliveryAddress != null) {
@@ -78,16 +88,11 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
     ref.read(authRepositoryProvider.notifier).startGuestSession();
   }
 
-  // ---------------------------
-  // DELIVERY METHOD STEP
-  // ---------------------------
   void setDeliveryMethod(DeliveryMethod method) {
     _updateState(state.copyWith(deliveryMethod: method));
   }
 
-  // ---------------------------
-  // PAYMENT METHOD STEP
-  // ---------------------------
+  /// Assigns the active [paymentCard] and registers it to the user's profile if unrecognized.
   void setPaymentMethod(PaymentCard paymentCard) {
     final currentCards = state.user?.paymentCards ?? [];
 
@@ -104,13 +109,11 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
     );
   }
 
-  // ---------------------------
-  // PROMO CODE
-  // ---------------------------
   void applyPromoCode(String code) {
     _updateState(state.copyWith(promoCode: code));
   }
 
+  /// Finalizes the transaction, purges the transient cart, and conditionally cleans up guest sessions.
   void placeOrder() {
     ref.read(bagRepositoryProvider.notifier).clearBag();
 
@@ -119,13 +122,9 @@ class CheckoutViewModel extends Notifier<CheckoutState> {
     }
   }
 
+  /// Purges the locally persisted checkout snapshot and resets the funnel to its initial state.
   void clearCheckoutState() {
     _repository.deleteCheckoutState();
     ref.invalidateSelf();
   }
 }
-
-final checkoutViewModelProvider =
-    NotifierProvider<CheckoutViewModel, CheckoutState>(
-      () => CheckoutViewModel(),
-    );

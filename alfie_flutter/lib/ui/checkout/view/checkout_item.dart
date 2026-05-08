@@ -4,6 +4,10 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 
+/// A reusable navigational tile representing a distinct step in the checkout funnel.
+///
+/// Displays the current state of a checkout requirement (e.g., selected address)
+/// or prompts the user via [nullValueFallBackMessage] if data is missing.
 class CheckoutItem extends StatelessWidget {
   final String? label;
   final String? content;
