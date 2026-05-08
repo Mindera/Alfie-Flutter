@@ -15,8 +15,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// Handles the user authentication flow via credentials.
+///
+/// Consumes [authViewModelProvider] to validate credentials and initiate sessions.
 class SignInScreen extends HookConsumerWidget {
   final String? prefilledEmail;
+
   const SignInScreen({super.key, this.prefilledEmail});
 
   @override

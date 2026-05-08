@@ -12,9 +12,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// Handles the user registration flow and data collection.
+///
+/// Consumes [authViewModelProvider] to dispatch account creation requests.
+/// Optionally accepts [prefilledEmail] and [prefilledUserData] for seamless
+/// transition from external registration funnels or guest checkouts.
 class CreateAccountScreen extends HookConsumerWidget {
   final String? prefilledEmail;
   final UserData? prefilledUserData;
+
   const CreateAccountScreen({
     super.key,
     this.prefilledEmail,
@@ -32,6 +38,7 @@ class CreateAccountScreen extends HookConsumerWidget {
     final phone = useState<String?>(prefilledUserData?.phoneNumber);
     final acceptedTerms = useState<bool>(false);
     final wantsNewsletter = useState<bool>(false);
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Header(
