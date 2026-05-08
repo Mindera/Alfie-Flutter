@@ -5,6 +5,10 @@ import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 
+/// A customized application bar designed specifically for the Wishlist view.
+///
+/// Implements [PreferredSizeWidget] to guarantee standard Material metrics
+/// while exposing bespoke sharing and navigation actions.
 class WishlistAppBar extends StatelessWidget implements PreferredSizeWidget {
   const WishlistAppBar({super.key});
 

@@ -14,12 +14,17 @@ import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Renders the core scrollable grid of saved wishlist items.
+///
+/// Subscribes to the [wishlistViewModelProvider] to dynamically switch between
+/// an empty placeholder state and a populated grid of [VerticalProductCard]s.
 class WishlistBody extends ConsumerWidget {
   const WishlistBody({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final wishlist = ref.watch(wishlistViewModelProvider);
+
     return wishlist.isEmpty
         ? Padding(
             padding: const EdgeInsets.all(Spacing.large),
@@ -50,7 +55,6 @@ class WishlistBody extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: Spacing.small,
             ).add(const EdgeInsets.only(bottom: Spacing.small)),
-
             child: GridView.builder(
               itemCount: wishlist.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
