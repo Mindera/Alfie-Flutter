@@ -8,13 +8,19 @@ import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final accountViewModelProvider = NotifierProvider(AccountViewModel.new);
+/// Orchestrates the state and actions for the account dashboard.
+final accountViewModelProvider =
+    NotifierProvider<AccountViewModel, AccountState>(AccountViewModel.new);
 
+/// Manages the user's profile view state, including menu navigation and session termination.
 class AccountViewModel extends Notifier<AccountState> {
+  /// Initializes the account dashboard state, resolving the current user session
+  /// and constructing the available navigation menu.
   @override
   AccountState build() {
     final navigatorKey = ref.watch(navigatorKeyProvider);
     final currentUser = ref.watch(authRepositoryProvider);
+
     return AccountState(
       menuItems: [
         AccountMenuItem(
