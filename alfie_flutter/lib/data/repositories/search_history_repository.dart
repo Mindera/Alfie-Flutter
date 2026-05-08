@@ -2,40 +2,33 @@ import 'package:alfie_flutter/data/models/search_item.dart';
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Provider for the [SearchHistoryRepository], ensuring a single instance
-/// is used across the application via Riverpod.
+/// Provides singleton access to the [SearchHistoryRepository].
 final searchHistoryRepositoryProvider = Provider<SearchHistoryRepository>(
   (ref) => SearchHistoryRepository(ref.watch(persistentStorageServiceProvider)),
 );
 
-/// Manages the persistence and business logic for user search history.
-///
-/// This repository handles deduplication, chronological ordering, and
-/// storage limits for [SearchItem] objects.
+/// Coordinates the persistence, deduplication, and lifecycle of user search history.
 class SearchHistoryRepository {
   final IPersistentStorageService _persistentStorageService;
 
-  /// The maximum number of recent searches kept in local storage.
   static const int _maxSearchItemsStored = 10;
 
   SearchHistoryRepository(this._persistentStorageService);
 
-  /// Retrieves the current list of saved search items from the data source.
+  /// Retrieves the chronological list of historical [SearchItem] queries.
   List<SearchItem> getRecentSearches() {
     return _persistentStorageService.getSearchHistory();
   }
 
-  /// Adds a new query to the history.
+  /// Commits a new [query] to persistent storage.
   ///
-  /// If the query already exists (case-insensitive), the old entry is removed
-  /// so the new one can be moved to the top of the list.
-  /// Maintains a maximum size of [_maxSearchItemsStored].
+  /// Existing case-insensitive matches are removed to ensure the new query
+  /// bubbles to the top. Enforces the strict capacity limit defined by [_maxSearchItemsStored].
   Future<void> addSearchQuery(String query) async {
     final currentHistory = _persistentStorageService
         .getSearchHistory()
         .toList();
 
-    // Remove existing entry to handle move to top
     _removeQueryFromList(currentHistory, query);
 
     final newItem = SearchItem(query: query, timestamp: DateTime.now());
@@ -49,7 +42,7 @@ class SearchHistoryRepository {
     await _persistentStorageService.saveSearchHistory(currentHistory);
   }
 
-  /// Removes a specific query from the history, regardless of its timestamp.
+  /// Deletes a specific historical [query] entry based on a case-insensitive string match.
   Future<void> removeSearch(String query) async {
     final currentHistory = _persistentStorageService
         .getSearchHistory()
@@ -60,13 +53,14 @@ class SearchHistoryRepository {
     }
   }
 
-  /// Wipes all search history entries.
+  /// Clears all local search history state.
   Future<void> clearAll() async {
     await _persistentStorageService.saveSearchHistory([]);
   }
 
-  /// Helper to remove queries from a list using case-insensitive matching.
-  /// Returns true if an item was actually removed.
+  /// Evaluates and mutates [list] in place, stripping case-insensitive matches against [query].
+  ///
+  /// Returns `true` if mutations occurred.
   bool _removeQueryFromList(List<SearchItem> list, String query) {
     final originalLength = list.length;
     list.removeWhere(
