@@ -6,10 +6,10 @@ import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/home/view/carousel_section.dart';
 import 'package:alfie_flutter/ui/home/view_model/home_view_model.dart';
 
-/// A carousel that displays product categories.
+/// A horizontal carousel rendering the catalog's top-level navigation categories.
 ///
-/// This View component observes the [HomeViewModel] to render a list of
-/// categories using a standardized [CarouselSection] layout.
+/// Subscribes specifically to the [HomeViewModel.categories] property
+/// to minimize unnecessary render cycles.
 class CategoryCarousel extends ConsumerWidget {
   const CategoryCarousel({super.key});
 

@@ -8,20 +8,18 @@ import 'package:alfie_flutter/ui/home/view_model/home_view_model.dart';
 import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/image_utils.dart';
 
-/// A sliver-based gallery that displays featured highlights at the top of the home screen.
+/// A dynamic sliver gallery displaying high-impact feature content.
 ///
-/// This View observes the [HomeViewModel] and renders a list of high-impact
-/// visual cards within a [SliverAppBar].
+/// Embedded natively within a [SliverAppBar] flexible space, allowing it to
+/// collapse or expand synchronously with the root viewport scroll position.
 class HighlightsGallery extends ConsumerWidget {
-  /// The fixed aspect ratio for the gallery items.
+  /// Enforces a strict 3:4 aspect ratio for all featured imagery.
   static const double galleryAspectRatio = 3 / 4;
 
   const HighlightsGallery({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Selectively watching only the highlights list ensures this gallery
-    // doesn't rebuild if other unrelated data in the HomeViewModel changes.
     final highlights = ref.watch(
       homeViewModelProvider.select((viewModel) => viewModel.highlights),
     );
@@ -47,7 +45,6 @@ class HighlightsGallery extends ConsumerWidget {
     );
   }
 
-  /// Constructs an individual image item with gradient and an optional text overlay .
   Widget _buildHighlightItem(BuildContext context, Highlight highlight) {
     return ImageFactory.networkWithGradient(
       highlight.imageUrl,

@@ -9,10 +9,10 @@ import 'package:alfie_flutter/utils/use_scroll_to_top.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-/// The primary landing screen of the application.
+/// The root landing interface of the application.
 ///
-/// Utilizes a [CustomScrollView] to coordinate various sliver-based components.
-/// State is managed via Riverpod, and scroll behavior is handled by [useScrollToTop].
+/// Orchestrates a [CustomScrollView] to seamlessly blend the [HomeAppBar]
+/// and [HighlightsGallery] slivers into standard box layouts.
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
 
@@ -26,7 +26,6 @@ class HomeScreen extends HookConsumerWidget {
         const HomeAppBar(),
         const HighlightsGallery(),
 
-        // Main content section.
         const SliverPadding(
           padding: EdgeInsetsGeometry.symmetric(
             horizontal: Spacing.small,
