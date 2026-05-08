@@ -34,7 +34,6 @@ class WishlistButton extends ConsumerWidget {
       size: buttonSize,
       leading: state.isOnWishlist ? AppIcons.wishlistFill : AppIcons.wishlist,
       onPressed: () {
-        // context.authAction(ref, () {
         late String infoText;
         late String? actionText;
         late VoidCallback action;
@@ -60,7 +59,6 @@ class WishlistButton extends ConsumerWidget {
             onTapAction: action,
           ),
         );
-        // });
       },
     );
   }
