@@ -54,12 +54,12 @@ jobs:
             cd alfie_flutter && flutter test integration_test
 
       - uses: futureware-tech/simulator-action@e89aa8f93d3aec35083ff49d2854d07f7186f7f5
-        if: matrix.platform == 'ios'
+        if: matrix.platform == 'iOS'
         with:
           model: 'iPhone 17 Pro' 
 
       - name: Run iOS Integration Tests
-        if: matrix.platform == 'ios'
+        if: matrix.platform == 'iOS'
         run: |
           cd alfie_flutter
           flutter test integration_test
