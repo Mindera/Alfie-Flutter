@@ -24,7 +24,7 @@ final class Pagination {
   final int? prevPage;
 
   /// Creates a new [Pagination] instance.
-  Pagination({
+  const Pagination({
     required this.offset,
     required this.limit,
     required this.total,

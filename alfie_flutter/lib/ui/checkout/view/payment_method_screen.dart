@@ -23,9 +23,6 @@ class PaymentMethodScreen extends HookConsumerWidget {
     final List<PaymentCard> cardsAvailable = [];
     final state = ref.watch(checkoutViewModelProvider);
 
-    // if (!(state.user?.paymentCards.contains(PaymentCard.sample) ?? false)) {
-    //   cardsAvailable.add(PaymentCard.sample);
-    // }
     cardsAvailable.addAll(state.user?.paymentCards ?? []);
 
     return Scaffold(
@@ -61,7 +58,7 @@ class PaymentMethodScreen extends HookConsumerWidget {
               onChanged: (card) => selectedCard.value = card,
             ),
             ListTile(
-              title: Column(
+              title: const Column(
                 spacing: Spacing.extraSmall,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [Text("Add new card")],
@@ -73,7 +70,7 @@ class PaymentMethodScreen extends HookConsumerWidget {
               ),
               onTap: () => showModalBottomSheet(
                 context: context,
-                builder: (context) => AddNewCardModal(),
+                builder: (context) => const AddNewCardModal(),
                 isDismissible: false,
               ),
             ),

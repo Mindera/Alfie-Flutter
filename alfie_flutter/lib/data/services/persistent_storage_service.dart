@@ -69,6 +69,9 @@ abstract interface class IPersistentStorageService {
 
   /// Updates the current checkout state with a new [state].
   Future<void> saveCheckoutState(CheckoutState state);
+
+  /// Deletes the current checkout state
+  Future<void> deleteCheckoutState();
 }
 
 /// A Hive-based implementation of [IPersistentStorageService].
@@ -154,7 +157,7 @@ class HiveService implements IPersistentStorageService {
   List<SearchItem> getSearchHistory() {
     final data = _recentSearchesBox.get(
       _recentSearchesKey,
-      defaultValue: <SearchItem>[],
+      defaultValue: const <SearchItem>[],
     );
     return List<SearchItem>.from(data ?? []);
   }
@@ -166,7 +169,7 @@ class HiveService implements IPersistentStorageService {
 
   @override
   List<BagItem> getBagItems() {
-    final data = _bagBox.get(_bagKey, defaultValue: <BagItem>[]);
+    final data = _bagBox.get(_bagKey, defaultValue: const <BagItem>[]);
     return List<BagItem>.from(data ?? []);
   }
 
@@ -177,7 +180,10 @@ class HiveService implements IPersistentStorageService {
 
   @override
   List<Product> getWishlist() {
-    final data = _wishlistBox.get(_wishlistKey, defaultValue: <Product>[]);
+    final data = _wishlistBox.get(
+      _wishlistKey,
+      defaultValue: const <Product>[],
+    );
     return List<Product>.from(data ?? []);
   }
 
@@ -219,6 +225,11 @@ class HiveService implements IPersistentStorageService {
   @override
   CheckoutState? getCheckoutState() {
     return _checkoutStateBox.get(_checkoutStateKey);
+  }
+
+  @override
+  Future<void> deleteCheckoutState() async {
+    await _checkoutStateBox.clear();
   }
 }
 

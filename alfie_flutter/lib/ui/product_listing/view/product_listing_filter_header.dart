@@ -92,20 +92,23 @@ class ProductListingFilterHeader extends ConsumerWidget {
                 child: Row(
                   spacing: Spacing.extraSmall,
                   children: labels.map((label) {
-                    final double borderWidth = 1;
+                    const double borderWidth = 1;
                     return Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Spacing.small - borderWidth,
-                        vertical: Spacing.extraExtraSmall - borderWidth,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.neutral800,
-                          width: borderWidth,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Spacing.small,
+                        vertical: Spacing.extraExtraSmall,
+                      ).subtract(const EdgeInsets.all(borderWidth)),
+                      decoration: const BoxDecoration(
+                        border: Border.fromBorderSide(
+                          BorderSide(
+                            color: AppColors.neutral800,
+                            width: borderWidth,
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(Spacing.medium),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(Spacing.medium),
+                        ),
                       ),
-
                       child: Center(child: Text(label)),
                     );
                   }).toList(),

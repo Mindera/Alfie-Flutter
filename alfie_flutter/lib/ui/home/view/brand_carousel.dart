@@ -40,7 +40,9 @@ class BrandCarousel extends ConsumerWidget {
           width: _logoSize,
           decoration: BoxDecoration(
             color: AppColors.neutral100,
-            borderRadius: BorderRadius.circular(Spacing.extraSmall),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(Spacing.extraSmall),
+            ),
           ),
           child: Padding(
             padding: const EdgeInsets.all(Spacing.extraSmall),

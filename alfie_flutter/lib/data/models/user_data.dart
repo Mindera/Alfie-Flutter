@@ -38,4 +38,9 @@ class UserData {
       phoneNumber: phoneNumber ?? this.phoneNumber,
     );
   }
+
+  @override
+  String toString() {
+    return 'UserData(firstName: $firstName, lastName: $lastName, email: $email, phoneNumber: $phoneNumber)';
+  }
 }

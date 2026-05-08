@@ -68,7 +68,7 @@ class DefaultSearchBody extends ConsumerWidget {
             ],
           ),
 
-        SectionHeader(title: "Popular Items"),
+        const SectionHeader(title: "Popular Items"),
         // TODO: Popular Items
       ],
     );

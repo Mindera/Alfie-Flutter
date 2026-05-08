@@ -13,7 +13,7 @@ class Media {
   final MediaContentType mediaContentType;
 
   /// Creates a new [Media] instance.
-  Media({this.alt, required this.mediaContentType});
+  const Media({this.alt, required this.mediaContentType});
 
   T when<T>({
     required T Function(MediaImage) image,
@@ -51,7 +51,7 @@ class MediaImage extends Media {
   final String url;
 
   /// Creates a new [MediaImage] instance.
-  MediaImage({required this.url, super.alt})
+  const MediaImage({required this.url, super.alt})
     : super(mediaContentType: MediaContentType.image);
 }
 
@@ -67,8 +67,11 @@ final class MediaVideo extends Media {
   final MediaImage? previewImage;
 
   /// Creates a new [MediaVideo] instance.
-  MediaVideo({required super.alt, required this.sources, this.previewImage})
-    : super(mediaContentType: MediaContentType.video);
+  const MediaVideo({
+    required super.alt,
+    required this.sources,
+    this.previewImage,
+  }) : super(mediaContentType: MediaContentType.video);
 }
 
 /// Represents a video source with a specific format.
@@ -87,7 +90,7 @@ class VideoSource {
   final String url;
 
   /// Creates a new [VideoSource] instance.
-  VideoSource({
+  const VideoSource({
     required this.format,
     required this.mimeType,
     required this.url,

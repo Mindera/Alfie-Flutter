@@ -24,16 +24,16 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        top: Spacing.extraExtraSmall + context.mediaQuery.padding.top,
+      padding: const EdgeInsets.only(
+        top: Spacing.extraExtraSmall,
         left: Spacing.extraExtraSmall,
         bottom: Spacing.extraExtraSmall,
         right: Spacing.extraExtraSmall,
-      ),
+      ).add(context.mediaQuery.padding),
       child: Row(
         spacing: Spacing.extraSmall,
         children: [
-          leading ?? SizedBox.square(dimension: Spacing.extraLarge),
+          leading ?? const SizedBox.square(dimension: Spacing.extraLarge),
 
           Expanded(
             child: Text(

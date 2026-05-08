@@ -23,13 +23,16 @@ class AccountViewModel extends Notifier<AccountState> {
           onTap: () =>
               navigatorKey.currentContext?.goTo(AppRoute.personalInformation),
         ),
-        AccountMenuItem(icon: AppIcons.package, label: "Orders"),
-        AccountMenuItem(icon: AppIcons.returnIcon, label: "Returns & Refunds"),
-        AccountMenuItem(icon: AppIcons.wishlist, label: "Wishlist"),
-        AccountMenuItem(icon: AppIcons.creditCard, label: "Wallet"),
-        AccountMenuItem(icon: AppIcons.home, label: "Promotions"),
-        AccountMenuItem(icon: AppIcons.settings, label: "Settings"),
-        AccountMenuItem(icon: AppIcons.help, label: "Help"),
+        const AccountMenuItem(icon: AppIcons.package, label: "Orders"),
+        const AccountMenuItem(
+          icon: AppIcons.returnIcon,
+          label: "Returns & Refunds",
+        ),
+        const AccountMenuItem(icon: AppIcons.wishlist, label: "Wishlist"),
+        const AccountMenuItem(icon: AppIcons.creditCard, label: "Wallet"),
+        const AccountMenuItem(icon: AppIcons.home, label: "Promotions"),
+        const AccountMenuItem(icon: AppIcons.settings, label: "Settings"),
+        const AccountMenuItem(icon: AppIcons.help, label: "Help"),
       ],
       signOutItem: AccountMenuItem(
         icon: AppIcons.exit,

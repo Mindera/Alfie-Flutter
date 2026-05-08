@@ -15,14 +15,13 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: Header(title: "Account", leading: null),
+        flexibleSpace: const Header(title: "Account", leading: null),
         automaticallyImplyLeading: false,
         automaticallyImplyActions: false,
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(Spacing.small),
-
         child: Column(
           spacing: Spacing.medium,
           children: [
@@ -31,7 +30,7 @@ class AuthScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: Spacing.small,
               children: [
-                Icon(AppIcons.account),
+                const Icon(AppIcons.account),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,14 +40,13 @@ class AuthScreen extends StatelessWidget {
                       "Sign in to your account",
                       style: context.textTheme.headlineSmall,
                     ),
-                    Text(
+                    const Text(
                       "View your orders and fast-track your checkout experience",
                     ),
                   ],
                 ),
               ],
             ),
-
             Column(
               mainAxisSize: MainAxisSize.min,
               spacing: Spacing.extraSmall,
@@ -62,7 +60,6 @@ class AuthScreen extends StatelessWidget {
                     },
                   ),
                 ),
-
                 SizedBox(
                   width: double.maxFinite,
                   child: AppButton.secondary(
@@ -74,7 +71,7 @@ class AuthScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Column(
+            const Column(
               children: [
                 AccountMenuItem(icon: AppIcons.settings, label: "Settings"),
                 AccountMenuItem(icon: AppIcons.help, label: "Help"),

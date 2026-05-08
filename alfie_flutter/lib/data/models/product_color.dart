@@ -18,5 +18,10 @@ class ProductColor {
   final List<Media>? media;
 
   /// Creates a new [ProductColor] instance.
-  ProductColor({required this.id, required this.name, this.swatch, this.media});
+  const ProductColor({
+    required this.id,
+    required this.name,
+    this.swatch,
+    this.media,
+  });
 }

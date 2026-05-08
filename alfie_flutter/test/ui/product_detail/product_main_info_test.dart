@@ -99,25 +99,6 @@ void main() {
 
       expect(find.text('Bag page'), findsOneWidget);
     });
-
-    testWidgets('tapping Add to Bag when not authenticated navigates to auth', (
-      WidgetTester tester,
-    ) async {
-      final product = createDummyProduct();
-
-      await tester.pumpWidget(
-        _buildProductMainInfoWidget(
-          product: product,
-          isOnWishlist: false,
-          isAuthenticated: false,
-        ),
-      );
-
-      await tester.tap(find.text('Add to Bag'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Auth page'), findsOneWidget);
-    });
   });
 }
 

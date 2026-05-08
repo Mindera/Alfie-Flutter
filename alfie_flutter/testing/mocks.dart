@@ -18,6 +18,7 @@ import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/data/repositories/auth_repository.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
+import 'package:alfie_flutter/data/repositories/checkout_state_repository.dart';
 import 'package:alfie_flutter/data/repositories/user_repository.dart';
 import 'package:alfie_flutter/data/repositories/brand_repository.dart';
 import 'package:alfie_flutter/data/repositories/product_repository.dart';
@@ -117,3 +118,6 @@ class MockAddress extends Mock implements Address {}
 class MockRegisteredUser extends Mock implements RegisteredUser {}
 
 class MockPaymentCard extends Mock implements PaymentCard {}
+
+class MockCheckoutStateRepository extends Mock
+    implements CheckoutStateRepository {}
