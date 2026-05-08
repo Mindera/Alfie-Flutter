@@ -21,7 +21,7 @@ class ProductSize {
   final SizeGuide? sizeGuide;
 
   /// Creates a new [ProductSize] instance.
-  ProductSize({
+  const ProductSize({
     required this.id,
     required this.value,
     this.scale,
@@ -49,7 +49,7 @@ class SizeGuide {
   final List<ProductSize> sizes;
 
   /// Creates a new [SizeGuide] instance.
-  SizeGuide({
+  const SizeGuide({
     required this.id,
     required this.name,
     this.description,

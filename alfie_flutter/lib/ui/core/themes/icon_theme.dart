@@ -26,7 +26,8 @@ class IconSizes {
 /// Defines the default size and color for all icons used in the app,
 /// ensuring visual consistency across different screens and components.
 final iconThemeProvider = Provider<IconThemeData>(
-  (ref) => IconThemeData(size: IconSizes.medium, color: AppColors.neutral800),
+  (ref) =>
+      const IconThemeData(size: IconSizes.medium, color: AppColors.neutral800),
 );
 
 /// Provides the icon button theme for the application.

@@ -93,7 +93,9 @@ class AppInputField extends HookWidget {
           focusNode: focusNode,
           onChanged: onChanged,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: Spacing.extraSmall),
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: Spacing.extraSmall,
+            ),
             hintText: hintText,
             prefixIcon: leadingIcon != null ? Icon(leadingIcon) : null,
             suffixIcon: showClearButton

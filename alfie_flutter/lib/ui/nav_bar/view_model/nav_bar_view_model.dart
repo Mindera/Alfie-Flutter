@@ -23,7 +23,7 @@ class NavBarViewModel {
   final Ref _ref;
   final int bagCount;
 
-  NavBarViewModel(this._ref, this.bagCount);
+  const NavBarViewModel(this._ref, this.bagCount);
 
   List<BottomNavigationBarItem> get navBarItems {
     return AppRoute.tabs.map((tab) {

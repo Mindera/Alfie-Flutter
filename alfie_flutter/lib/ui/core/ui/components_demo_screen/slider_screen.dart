@@ -12,7 +12,7 @@ class SliderScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(Spacing.small),
       color: context.theme.scaffoldBackgroundColor,
       child: SingleChildScrollView(
         child: Column(

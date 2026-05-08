@@ -166,7 +166,7 @@ void main() {
     test(
       'write() should correctly serialize ProductSize to binary (without optional fields)',
       () {
-        final size = ProductSize(
+        final size = const ProductSize(
           id: 'size_42',
           value: '42',
           scale: null,

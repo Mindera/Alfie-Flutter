@@ -69,15 +69,15 @@ class CheckoutScreen extends ConsumerWidget {
         scrolledUnderElevation: 0,
       ),
       body: Padding(
-        padding: EdgeInsets.all(Spacing.small),
+        padding: const EdgeInsets.all(Spacing.small),
         child: CustomScrollView(
           slivers: [
             SliverList.separated(
               itemCount: items.length,
               itemBuilder: (_, i) => items[i],
-              separatorBuilder: (_, i) => Divider(),
+              separatorBuilder: (_, i) => const Divider(),
             ),
-            SliverFillRemaining(
+            const SliverFillRemaining(
               hasScrollBody: false,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,17 +93,17 @@ class CheckoutScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColors.neutral,
             border: Border(top: BorderSide(color: AppColors.neutral200)),
           ),
           child: Padding(
-            padding: EdgeInsets.fromLTRB(
+            padding: const EdgeInsets.fromLTRB(
               Spacing.small,
               Spacing.extraSmall,
               Spacing.small,
-              Spacing.extraSmall + MediaQuery.of(context).viewInsets.bottom,
-            ),
+              Spacing.extraSmall,
+            ).add(context.mediaQuery.viewInsets),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               spacing: Spacing.extraSmall,

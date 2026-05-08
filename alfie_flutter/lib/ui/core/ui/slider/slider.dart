@@ -120,7 +120,7 @@ class AppSlider extends HookWidget {
       spacing: Spacing.extraSmall,
       children: [
         RangeSlider(
-          padding: EdgeInsets.zero,
+          padding: const EdgeInsets.only(),
           values: currentValues.value,
           min: min,
           max: max,

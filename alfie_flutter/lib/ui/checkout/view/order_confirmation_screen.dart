@@ -24,7 +24,7 @@ class OrderConfirmationScreen extends ConsumerWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           vertical: Spacing.extraSmall,
           horizontal: Spacing.small,
         ),
@@ -33,8 +33,8 @@ class OrderConfirmationScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Thank you!", style: context.textTheme.displayLarge),
-            Text("ORDER NUMBER #1A2B3C4D"),
-            Text(
+            const Text("ORDER NUMBER #1A2B3C4D"),
+            const Text(
               "We sent an email to email@email.com with everything you need to know about your order. Log in or register to enjoy a personalized experience and access all our services.",
             ),
           ],
@@ -42,7 +42,7 @@ class OrderConfirmationScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: Padding(
         padding: context.mediaQuery.padding.add(
-          EdgeInsets.symmetric(horizontal: Spacing.small),
+          const EdgeInsets.symmetric(horizontal: Spacing.small),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,

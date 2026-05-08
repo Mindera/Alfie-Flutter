@@ -11,6 +11,9 @@ class StoreScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = useScrollToTop(ref, AppRoute.store.fullPath);
-    return ProductListingScreen(id: ProductListingId(), controller: controller);
+    return ProductListingScreen(
+      id: const ProductListingId(),
+      controller: controller,
+    );
   }
 }

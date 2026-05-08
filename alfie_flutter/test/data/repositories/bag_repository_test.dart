@@ -17,7 +17,7 @@ void main() {
 
   setUpAll(() {
     // Required by mocktail to use any() with custom types/lists
-    registerFallbackValue(<BagItem>[]);
+    registerFallbackValue(const <BagItem>[]);
   });
 
   setUp(() {

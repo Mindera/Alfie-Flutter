@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// provides semantic color feedback for user interactions.
 final checkBoxThemeProvider = Provider<CheckboxThemeData>(
   (ref) => CheckboxThemeData(
-    shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+    shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
     fillColor: _resolveFillColor(),
     side: _resolveBorderSide(),
     checkColor: WidgetStateProperty.all(AppColors.neutral),
@@ -57,15 +57,15 @@ WidgetStateProperty<Color> _resolveFillColor() =>
 WidgetStateBorderSide _resolveBorderSide() =>
     WidgetStateBorderSide.resolveWith((states) {
       if (states.contains(WidgetState.error)) {
-        return BorderSide(color: AppColors.error400, width: 1);
+        return const BorderSide(color: AppColors.error400, width: 1);
       }
       if (states.contains(WidgetState.selected)) {
         return BorderSide.none;
       }
       if (states.contains(WidgetState.disabled)) {
-        return BorderSide(color: AppColors.neutral400, width: 1);
+        return const BorderSide(color: AppColors.neutral400, width: 1);
       }
-      return BorderSide(color: AppColors.neutral800, width: 1);
+      return const BorderSide(color: AppColors.neutral800, width: 1);
     });
 
 // ─────────────────────────────────────────────────────────────────────────────

@@ -8,7 +8,7 @@ class SearchState {
   final List<SearchItem> recentSearches;
   final String? currentSearchQuery;
 
-  SearchState({required this.recentSearches, this.currentSearchQuery});
+  const SearchState({required this.recentSearches, this.currentSearchQuery});
 
   SearchState copyWith({
     List<SearchItem>? recentSearches,

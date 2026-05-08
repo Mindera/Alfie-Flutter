@@ -17,11 +17,11 @@ final themeProvider = Provider<ThemeData>((ref) {
   return ThemeData(
     brightness: Brightness.light,
     primaryColor: AppColors.neutral800,
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
       primary: AppColors.neutral800,
       error: AppColors.error500,
     ),
-    progressIndicatorTheme: ProgressIndicatorThemeData(
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: AppColors.neutral800,
     ),
 
@@ -37,7 +37,10 @@ final themeProvider = Provider<ThemeData>((ref) {
     inputDecorationTheme: ref.read(inputDecorationThemeProvider),
     textSelectionTheme: ref.read(textSelectionThemeProvider),
 
-    dividerTheme: DividerThemeData(color: AppColors.neutral200, thickness: 1),
+    dividerTheme: const DividerThemeData(
+      color: AppColors.neutral200,
+      thickness: 1,
+    ),
 
     // Custom extensions
     extensions: [ref.read(appButtonThemeProvider)],

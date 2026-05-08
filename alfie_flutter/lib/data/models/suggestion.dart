@@ -16,7 +16,7 @@ final class Suggestion {
   final List<SuggestionProduct> products;
 
   /// Creates a new [Suggestion] instance.
-  Suggestion({
+  const Suggestion({
     required this.brands,
     required this.keywords,
     required this.products,
@@ -32,7 +32,7 @@ final class SuggestionBrand {
   final int results;
 
   /// Creates a new [SuggestionBrand] instance.
-  SuggestionBrand({required this.value, required this.results});
+  const SuggestionBrand({required this.value, required this.results});
 }
 
 /// Represents a keyword suggestion with result count.
@@ -44,7 +44,7 @@ final class SuggestionKeyword {
   final int results;
 
   /// Creates a new [SuggestionKeyword] instance.
-  SuggestionKeyword({required this.value, required this.results});
+  const SuggestionKeyword({required this.value, required this.results});
 }
 
 /// Represents a product suggestion with essential product information.
@@ -68,7 +68,7 @@ final class SuggestionProduct {
   final Price price;
 
   /// Creates a new [SuggestionProduct] instance.
-  SuggestionProduct({
+  const SuggestionProduct({
     required this.id,
     required this.name,
     required this.brandName,

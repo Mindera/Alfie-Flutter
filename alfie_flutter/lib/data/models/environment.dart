@@ -39,6 +39,6 @@ class Environment {
 }
 
 final environmentProvider = Provider<Environment>((ref) {
-  String fileName = kReleaseMode ? ".env.prod" : ".env.dev";
+  final String fileName = kReleaseMode ? ".env.prod" : ".env.dev";
   return Environment(fileName: fileName);
 });

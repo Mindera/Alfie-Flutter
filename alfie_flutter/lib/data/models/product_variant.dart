@@ -27,7 +27,7 @@ class ProductVariant {
   final Price price;
 
   /// Creates a new [ProductVariant] instance.
-  ProductVariant({
+  const ProductVariant({
     required this.sku,
     this.size,
     this.colorId,
