@@ -183,6 +183,7 @@ void main() {
         // Stub the user to return these addresses
         when(() => mockUser.deliveryAddress).thenReturn(deliveryAddr);
         when(() => mockUser.billingAddress).thenReturn(billingAddr);
+        when(() => mockUser.data).thenReturn(MockUserData());
 
         final bagViewModel = FakeBagViewModel(totalPrice: 10.0);
 

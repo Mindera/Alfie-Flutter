@@ -2,20 +2,21 @@ import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/data/services/persistent_storage_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final bagRepositoryProvider = Provider<BagRepository>(
-  (ref) => BagRepository(ref.watch(persistentStorageServiceProvider)),
+final bagRepositoryProvider = NotifierProvider<BagRepository, List<BagItem>>(
+  () => BagRepository(),
 );
 
-class BagRepository {
-  final IPersistentStorageService _persistentStorageService;
-  BagRepository(this._persistentStorageService);
+class BagRepository extends Notifier<List<BagItem>> {
+  late IPersistentStorageService _persistentStorageService;
 
-  List<BagItem> getBagItems() {
+  @override
+  List<BagItem> build() {
+    _persistentStorageService = ref.watch(persistentStorageServiceProvider);
     return List<BagItem>.from(_persistentStorageService.getBagItems());
   }
 
   double get total {
-    final bagItems = getBagItems();
+    final bagItems = state;
     return bagItems.fold(
       0.0,
       (sum, item) =>
@@ -24,7 +25,7 @@ class BagRepository {
   }
 
   Future<void> addToBag(BagItem item) async {
-    final currentItems = getBagItems();
+    final currentItems = state;
     final existingIndex = currentItems.indexWhere(
       (i) => i.product.id == item.product.id,
     );
@@ -40,16 +41,18 @@ class BagRepository {
     }
 
     await _persistentStorageService.saveBagItems(currentItems);
+    ref.invalidateSelf();
   }
 
   Future<void> removeFromBag(String productId) async {
-    final currentItems = getBagItems();
+    final currentItems = state;
     currentItems.removeWhere((item) => item.product.id == productId);
     await _persistentStorageService.saveBagItems(currentItems);
+    ref.invalidateSelf();
   }
 
   Future<void> updateQuantity(String productId, int quantity) async {
-    final currentItems = getBagItems();
+    final currentItems = state;
     final index = currentItems.indexWhere(
       (item) => item.product.id == productId,
     );
@@ -62,9 +65,11 @@ class BagRepository {
       );
       await _persistentStorageService.saveBagItems(currentItems);
     }
+    ref.invalidateSelf();
   }
 
   Future<void> clearBag() async {
     await _persistentStorageService.saveBagItems([]);
+    ref.invalidateSelf();
   }
 }

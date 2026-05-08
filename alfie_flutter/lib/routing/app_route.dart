@@ -56,7 +56,6 @@ enum AppRoute {
       deliveryInformation,
       deliveryMethod,
       paymentMethod,
-      // orderConfirmation,
     ],
   ),
 
@@ -64,7 +63,7 @@ enum AppRoute {
   deliveryInformation(path: 'deliveryInformation'),
   deliveryMethod(path: 'deliveryMethod'),
   paymentMethod(path: 'paymentMethod'),
-  // orderConfirmation(path: 'orderConfirmation'),
+  orderConfirmation(path: '/orderConfirmation'),
 
   components(
     path: 'components',

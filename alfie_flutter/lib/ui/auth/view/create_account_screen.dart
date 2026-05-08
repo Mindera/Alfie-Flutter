@@ -14,16 +14,22 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CreateAccountScreen extends HookConsumerWidget {
   final String? prefilledEmail;
-  const CreateAccountScreen({super.key, this.prefilledEmail});
+  final UserData? prefilledUserData;
+  const CreateAccountScreen({
+    super.key,
+    this.prefilledEmail,
+    this.prefilledUserData,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    final firstName = useState<String?>(null);
-    final lastName = useState<String?>(null);
-    final email = useState<String?>(prefilledEmail);
+
+    final firstName = useState<String?>(prefilledUserData?.firstName);
+    final lastName = useState<String?>(prefilledUserData?.lastName);
+    final email = useState<String?>(prefilledUserData?.email ?? prefilledEmail);
     final password = useState<String?>(null);
-    final phone = useState<String?>(null);
+    final phone = useState<String?>(prefilledUserData?.phoneNumber);
     final acceptedTerms = useState<bool>(false);
     final wantsNewsletter = useState<bool>(false);
     return Scaffold(
@@ -58,12 +64,14 @@ class CreateAccountScreen extends HookConsumerWidget {
                       validator: context.validateName,
                       keyboardType: TextInputType.name,
                       onChanged: (value) => firstName.value = value,
+                      initialValue: firstName.value,
                     ),
                     AppInputField(
                       "Last Name",
                       validator: context.validateName,
                       keyboardType: TextInputType.name,
                       onChanged: (value) => lastName.value = value,
+                      initialValue: lastName.value,
                     ),
                     AppInputField(
                       "Email",
@@ -83,6 +91,7 @@ class CreateAccountScreen extends HookConsumerWidget {
                       validator: context.validatePhoneNumber,
                       keyboardType: TextInputType.phone,
                       onChanged: (value) => phone.value = value,
+                      initialValue: phone.value,
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.min,
