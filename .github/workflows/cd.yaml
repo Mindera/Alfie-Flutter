@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [main, "release/**", "chore/Solving-iOS-integration-tests-in-CD"]
+    branches: [main, "release/**"]
 
 jobs:
   test-and-lint:
@@ -67,9 +67,10 @@ jobs:
 
       - name: Run iOS Integration Tests
         if: matrix.platform == 'iOS'
+        timeout-minutes: 60
         run: |
           cd alfie_flutter
-          flutter test integration_test -v
+          flutter test integration_test
 
 
   build:
