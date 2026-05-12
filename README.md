@@ -7,10 +7,23 @@ This is a repository for an e-commerce Flutter app template. Its current behavio
 1. This project uses a mock GraphQL API for fetching data. Mock server can be run locally as described in documentation: https://github.com/Mindera/Alfie-Mocks
 2. This project uses two .env files: `.env.dev` and `.env.prod`. Both need a variable `GRAPHQL_SERVER` with a URL to the mock server.
 
+## Setting Up the Project
+
+1. Install Flutter and Dart on your machine. This repo uses the stable Flutter channel.
+2. Create the environment files in `alfie_flutter/`:
+   - `.env.dev`
+   - `.env.prod`
+3. Add the required GraphQL endpoint variable to both files:
+   - `GRAPHQL_SERVER=<your-mock-server-url>`
+4. From the repo root, install dependencies:
+   - `cd alfie_flutter && flutter pub get`
+5. Run the app locally with:
+   - `cd alfie_flutter && flutter run`
+
+
 ## Architecture 
 
 This project uses the MVVM architecture model as reccommended by the [Flutter Documentation](https://docs.flutter.dev/app-architecture/guide).
-
 
 ### View
 
@@ -41,19 +54,6 @@ This project uses the MVVM architecture model as reccommended by the [Flutter Do
 ![alt text](Docs/mvvm_diagram.png)
 
 _Note: For more detail go see the flutter documentation._
-
-## Setting Up the Project
-
-1. Install Flutter and Dart on your machine. This repo uses the stable Flutter channel.
-2. Create the environment files in `alfie_flutter/`:
-   - `.env.dev`
-   - `.env.prod`
-3. Add the required GraphQL endpoint variable to both files:
-   - `GRAPHQL_SERVER=<your-mock-server-url>`
-4. From the repo root, install dependencies:
-   - `cd alfie_flutter && flutter pub get`
-5. Run the app locally with:
-   - `cd alfie_flutter && flutter run`
 
 ## GraphQL
 
