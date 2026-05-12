@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [main, "release/**"]
+    branches: [main, "release/**", "chore/Solving-iOS-integration-tests-in-CD"]
 
 jobs:
   test-and-lint:
@@ -62,12 +62,14 @@ jobs:
         if: matrix.platform == 'iOS'
         run: |
           xcrun simctl bootstatus booted -b
+          open -a Simulator
+          flutter devices
 
       - name: Run iOS Integration Tests
         if: matrix.platform == 'iOS'
         run: |
           cd alfie_flutter
-          flutter test integration_test
+          flutter test integration_test -v
 
 
   build:
