@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [main, "release/**", "chore/Solving-iOS-integration-tests-in-CD"]
+    branches: [main, "release/**"]
 
 jobs:
   test-and-lint:
