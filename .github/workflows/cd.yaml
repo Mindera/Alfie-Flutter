@@ -62,9 +62,12 @@ jobs:
         if: matrix.platform == 'iOS'
         run: |
           xcrun simctl bootstatus booted -b
+          open -a Simulator
+          flutter devices
 
       - name: Run iOS Integration Tests
         if: matrix.platform == 'iOS'
+        timeout-minutes: 60
         run: |
           cd alfie_flutter
           flutter test integration_test
