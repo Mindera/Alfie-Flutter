@@ -44,12 +44,58 @@ _Note: For more detail go see the flutter documentation._
 
 ## Setting Up the Project
 
+1. Install Flutter and Dart on your machine. This repo uses the stable Flutter channel.
+2. Create the environment files in `alfie_flutter/`:
+   - `.env.dev`
+   - `.env.prod`
+3. Add the required GraphQL endpoint variable to both files:
+   - `GRAPHQL_SERVER=<your-mock-server-url>`
+4. From the repo root, install dependencies:
+   - `cd alfie_flutter && flutter pub get`
+5. Run the app locally with:
+   - `cd alfie_flutter && flutter run`
+
 ## GraphQL
 
 ## CI/CD
 
+The repository includes GitHub Actions workflows to validate code, run tests, and build release artifacts:
+
+- `.github/workflows/ci.yaml`
+  - Runs on push to non-main branches and on pull requests.
+  - Calls the shared `test-and-lint` workflow.
+- `.github/workflows/cd.yaml`
+  - Runs on push to `main` and `release/**` branches.
+  - Executes the same `test-and-lint` workflow first.
+  - Runs integration tests for Android and iOS on supported runners.
+  - Builds Android APK and iOS IPA/archive artifacts.
+
+Shared workflow details:
+
+- `.github/workflows/test-and-lint.yaml`
+  - Checks out code and sets up Flutter.
+  - Runs `flutter analyze` for static analysis.
+  - Executes `alfie_flutter/test_coverage.sh` to run tests and generate coverage.
+  - Optionally runs smoke integration tests on Android when enabled.
+  - Uploads LCOV coverage reports as a PR message.
+
+Helper action:
+
+- `.github/actions/setup-env`
+  - Sets up Flutter using the internal setup action.
+  - Creates empty `.env.dev` and `.env.prod` files if required.
+  - Runs `flutter pub get` in `alfie_flutter/`.
+
 ## Release
 
-**Work in progress**
+Release builds are handled through the CD workflow. Note that these artifacts represent "raw" builds; they are neither code-signed nor ready for production. The repository can produce:
+
+- Android APK artifact: `alfie_flutter/build/app/outputs/flutter-apk/app-release.apk`
+- iOS archive artifact: `alfie_flutter/build/ios/archive/Runner.xcarchive`
+
+For local release builds, run:
+
+- `cd alfie_flutter && flutter build apk --release`
+- `cd alfie_flutter && flutter build ipa --release --no-codesign`
 
 ---
