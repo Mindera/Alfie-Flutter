@@ -57,6 +57,14 @@ _Note: For more detail go see the flutter documentation._
 
 ## GraphQL
 
+This project relies on a mock GraphQL API for product and checkout data. You must run the mock server separately, as described in the [Alfie-Mocks documentation](https://github.com/Mindera/Alfie-Mocks).
+
+The app reads the GraphQL endpoint from the `.env.dev` or `.env.prod` files via the `GRAPHQL_SERVER` variable.
+
+GraphQL requests and responses are generated with GraphQL code generation. The generated models are not used directly across the app; instead, manual mappers convert those generated GraphQL DTOs into the apps domain models.
+
+The mapper implementations live in `alfie_flutter/lib/graphql/extensions`, where generated GraphQL output is translated into the apps domain objects.
+
 ## CI/CD
 
 The repository includes GitHub Actions workflows to validate code, run tests, and build release artifacts:
