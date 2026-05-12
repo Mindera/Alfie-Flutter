@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/utils/app_regex.dart';
 import 'package:alfie_flutter/utils/payement_card_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:phonenumbers_core/core.dart';
 
 class FormUtils {
   static String? validateName(
@@ -50,11 +51,17 @@ class FormUtils {
     String? value, {
     String errorMessage = 'Please enter a valid phone number',
   }) {
-    return _validate(
-      value: value,
-      regex: AppRegex.phone,
-      errorMessage: errorMessage,
-    );
+    if (value == null || value.isEmpty) {
+      return errorMessage;
+    }
+
+    final isValid = PhoneNumber.parse(value).isValid;
+
+    if (!isValid) {
+      return errorMessage;
+    }
+
+    return null;
   }
 
   static String? _validate({
