@@ -27,6 +27,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   mocktail: ^1.0.4
   uuid: ^4.5.3
+  phonenumbers_core: ^1.0.1
 
 dev_dependencies:
   flutter_test:
