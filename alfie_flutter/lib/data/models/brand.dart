@@ -9,6 +9,5 @@ class Brand {
   /// The display name of the brand.
   final String name;
 
-  /// Creates a new [Brand] instance.
   const Brand({required this.id, required this.name});
 }

@@ -2,6 +2,8 @@ import 'package:alfie_flutter/utils/app_regex.dart';
 import 'package:alfie_flutter/utils/payement_card_utils.dart';
 import 'package:flutter/material.dart';
 
+/// A collection of static validation methods for evaluating user input against
+/// defined [AppRegex] patterns.
 class FormUtils {
   static String? validateName(
     String? value, {
@@ -57,6 +59,7 @@ class FormUtils {
     );
   }
 
+  /// Core evaluation logic assessing the target [value] against the provided [regex].
   static String? _validate({
     required String? value,
     required RegExp regex,
@@ -74,6 +77,7 @@ class FormUtils {
   }
 }
 
+/// Extends [BuildContext] to provide localized shorthand access to [FormUtils] methods.
 extension FormUtilsExtension on BuildContext {
   String? validateName(
     String? value, {

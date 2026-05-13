@@ -1,7 +1,9 @@
 import 'package:alfie_flutter/data/models/payment_card_type.dart';
 import 'package:alfie_flutter/utils/input_formatters.dart';
 
+/// Represents a customer's stored payment method.
 class PaymentCard {
+  /// A pre-populated [PaymentCard] used as a fallback or for testing purposes.
   static const PaymentCard sample = PaymentCard(
     type: PaymentCardType.visa,
     number: '4111111111111111',
@@ -10,6 +12,8 @@ class PaymentCard {
     year: 2030,
     cvv: 123,
   );
+
+  /// Represents an empty or uninitialized [PaymentCard] state.
   static const PaymentCard invalid = PaymentCard(
     type: PaymentCardType.invalid,
     number: '',
@@ -19,11 +23,22 @@ class PaymentCard {
     cvv: 0,
   );
 
+  /// The network processing this card.
   final PaymentCardType type;
+
+  /// The full Primary Account Number (PAN).
   final String number;
+
+  /// The cardholder's full name as printed on the card.
   final String name;
+
+  /// The 1-based expiration month.
   final int month;
+
+  /// The 4-digit expiration year.
   final int year;
+
+  /// The card verification value.
   final int cvv;
 
   const PaymentCard({
@@ -35,6 +50,9 @@ class PaymentCard {
     required this.cvv,
   });
 
+  /// Returns a secure representation of the card suitable for UI display.
+  ///
+  /// Masks all but the last 4 digits (e.g., "Visa ****1111").
   String displayString() {
     final obscuredNumber = CardNumberInputFormatter.formatCardNumber(
       "${"*" * 4}${number.substring(number.length - 4)}",

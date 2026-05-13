@@ -1,7 +1,7 @@
 import 'package:alfie_flutter/data/models/size.dart';
 import 'package:hive/hive.dart';
 
-/// A Hive [TypeAdapter] that handles binary serialization for [SizeGuide].
+/// A Hive [TypeAdapter] for binary serialization of [SizeGuide] groupings.
 class SizeGuideAdapter extends TypeAdapter<SizeGuide> {
   @override
   final int typeId = 10;
@@ -25,7 +25,7 @@ class SizeGuideAdapter extends TypeAdapter<SizeGuide> {
   }
 }
 
-/// A Hive [TypeAdapter] that handles binary serialization for [ProductSize].
+/// A Hive [TypeAdapter] for binary serialization of [ProductSize] standards.
 class ProductSizeAdapter extends TypeAdapter<ProductSize> {
   @override
   final int typeId = 11;

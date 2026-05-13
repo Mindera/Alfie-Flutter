@@ -8,6 +8,10 @@ import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// The final success view displayed after a completed transaction.
+///
+/// Provides confirmation details and prompts guest users to convert their
+/// ephemeral session into a registered account.
 class OrderConfirmationScreen extends ConsumerWidget {
   const OrderConfirmationScreen({super.key});
 

@@ -14,6 +14,10 @@ import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Renders the user's active shopping bag.
+///
+/// Consumes [bagViewModelProvider] to display the current [BagItem] collection,
+/// calculate the monetary total, and facilitate checkout navigation.
 class BagScreen extends ConsumerWidget {
   const BagScreen({super.key});
 
@@ -24,7 +28,6 @@ class BagScreen extends ConsumerWidget {
     return Scaffold(
       appBar: _bagAppBar(context),
       body: _bagBody(bagItems, ref),
-
       bottomNavigationBar: bagItems.isNotEmpty
           ? _bagBottomBar(context, ref)
           : const SizedBox.shrink(),

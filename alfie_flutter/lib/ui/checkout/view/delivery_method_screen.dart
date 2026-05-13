@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// Allows the user to select their preferred [DeliveryMethod].
 class DeliveryMethodScreen extends HookConsumerWidget {
   final DeliveryMethod? initialValue;
   const DeliveryMethodScreen({super.key, this.initialValue});
@@ -17,6 +18,7 @@ class DeliveryMethodScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedOption = useState<DeliveryMethod?>(initialValue);
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Header(

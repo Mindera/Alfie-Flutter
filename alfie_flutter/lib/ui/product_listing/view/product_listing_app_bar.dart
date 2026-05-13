@@ -8,10 +8,15 @@ import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// A persistent top navigation bar for the product listing page.
+///
+/// Reactively subscribes to the [productListingViewModelProvider] to render
+/// the localized title of the active query or category [id].
 class ProductListingAppBar extends ConsumerWidget {
-  const ProductListingAppBar({super.key, required this.id});
-
+  /// The unique query or category identifier defining this listing.
   final ProductListingId id;
+
+  const ProductListingAppBar({super.key, required this.id});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,17 +25,14 @@ class ProductListingAppBar extends ConsumerWidget {
         id,
       ).select((s) => s.listing.value?.title.capitalizeAll()),
     );
+
     return SliverAppBar(
       primary: true,
-
       pinned: true,
-
       automaticallyImplyActions: false,
       automaticallyImplyLeading: false,
-
       backgroundColor: AppColors.neutral,
       surfaceTintColor: AppColors.transparent,
-
       flexibleSpace: FlexibleSpaceBar(
         background: Header(
           leading: IconButton(

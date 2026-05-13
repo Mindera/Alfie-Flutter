@@ -7,10 +7,10 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/home/view/carousel_section.dart';
 import 'package:alfie_flutter/ui/home/view_model/home_view_model.dart';
 
-/// A carousel that displays a list of brands.
+/// A horizontal carousel rendering the catalog's available brands.
 ///
-/// This widget acts as a View in the MVVM pattern, observing [homeViewModelProvider]
-/// and mapping brand data to a [CarouselSection].
+/// Subscribes specifically to the [HomeViewModel.brands] asynchronous data stream
+/// to isolate rebuilds and handle network loading/error states gracefully.
 class BrandCarousel extends ConsumerWidget {
   const BrandCarousel({super.key});
 
@@ -38,11 +38,9 @@ class BrandCarousel extends ConsumerWidget {
         itemBuilder: (brand) => Container(
           height: _logoSize,
           width: _logoSize,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColors.neutral100,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(Spacing.extraSmall),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(Spacing.extraSmall)),
           ),
           child: Padding(
             padding: const EdgeInsets.all(Spacing.extraSmall),

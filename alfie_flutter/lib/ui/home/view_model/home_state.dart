@@ -3,12 +3,12 @@ import 'package:alfie_flutter/ui/core/ui/promotion_badge.dart';
 import 'package:alfie_flutter/ui/home/view_model/highlight.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-/// Represents the complete UI state for the Home screen.
+/// Represents the complete presentation state for the Home screen.
 ///
-/// This state is emitted by the [HomeViewModel]
-/// and consumed by the Home View.
+/// Aggregates promotional banners, featured [Highlight] content, and
+/// an asynchronous feed of [Brand] entities into a single UI-consumable object.
 class HomeState {
-  /// Featured content for the top gallery.
+  /// A static collection of featured imagery for the top gallery carousel.
   final List<Highlight> highlights = const [
     Highlight(
       imageUrl:
@@ -33,7 +33,7 @@ class HomeState {
     ),
   ];
 
-  /// Product categories displayed in the category carousel.
+  /// Static product category filters for the horizontal navigation carousel.
   final List<String> categories = const [
     "A",
     "B",
@@ -46,7 +46,7 @@ class HomeState {
     "I",
   ];
 
-  /// Promotional banners displayed in the promotion gallery.
+  /// Static promotional banners presented in the promotion gallery.
   final List<PromotionBadge> promotions = const [
     PromotionBadge(
       title: "Get 50% off your first purchase!",
@@ -65,7 +65,7 @@ class HomeState {
     ),
   ];
 
-  /// Asynchronous list of brands, managed via Riverpod's [AsyncValue].
+  /// Asynchronous feed of available brands fetched from the remote API.
   final AsyncValue<List<Brand>> brands;
 
   const HomeState({required this.brands});

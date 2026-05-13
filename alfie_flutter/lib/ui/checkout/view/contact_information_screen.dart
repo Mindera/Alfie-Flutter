@@ -13,6 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// Captures essential [UserData] for guest checkouts or profile updates.
+///
+/// Hydrates from the active [checkoutViewModelProvider] and mutates the global
+/// checkout state upon validation and progression.
 class ContactInformationScreen extends HookConsumerWidget {
   const ContactInformationScreen({super.key});
 
@@ -24,7 +28,9 @@ class ContactInformationScreen extends HookConsumerWidget {
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
-    final formState = useState<UserData>(existingUserData ?? UserData.empty());
+    final formState = useState<UserData>(
+      existingUserData ?? const UserData.empty(),
+    );
 
     final isFormValid = formState.value.isValid();
 

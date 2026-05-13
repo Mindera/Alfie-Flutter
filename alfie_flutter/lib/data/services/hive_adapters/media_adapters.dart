@@ -1,8 +1,9 @@
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:hive/hive.dart';
 
-/// A Hive [TypeAdapter] that handles binary serialization for [MediaContentType].
+/// A Hive [TypeAdapter] for binary serialization of the [MediaContentType] enum.
 class MediaContentTypeAdapter extends TypeAdapter<MediaContentType> {
+  /// The unique identifier for this type within Hive.
   @override
   final int typeId = 5;
 
@@ -17,8 +18,9 @@ class MediaContentTypeAdapter extends TypeAdapter<MediaContentType> {
   }
 }
 
-/// A Hive [TypeAdapter] that handles binary serialization for [VideoFormat].
+/// A Hive [TypeAdapter] for binary serialization of the [VideoFormat] enum.
 class VideoFormatAdapter extends TypeAdapter<VideoFormat> {
+  /// The unique identifier for this type within Hive.
   @override
   final int typeId = 6;
 
@@ -33,8 +35,9 @@ class VideoFormatAdapter extends TypeAdapter<VideoFormat> {
   }
 }
 
-/// A Hive [TypeAdapter] that handles binary serialization for [MediaImage].
+/// A Hive [TypeAdapter] for binary serialization of [MediaImage] entities.
 class MediaImageAdapter extends TypeAdapter<MediaImage> {
+  /// The unique identifier for this type within Hive.
   @override
   final int typeId = 7;
 
@@ -50,8 +53,9 @@ class MediaImageAdapter extends TypeAdapter<MediaImage> {
   }
 }
 
-/// A Hive [TypeAdapter] that handles binary serialization for [VideoSource].
+/// A Hive [TypeAdapter] for binary serialization of [VideoSource] entities.
 class VideoSourceAdapter extends TypeAdapter<VideoSource> {
+  /// The unique identifier for this type within Hive.
   @override
   final int typeId = 8;
 
@@ -72,8 +76,9 @@ class VideoSourceAdapter extends TypeAdapter<VideoSource> {
   }
 }
 
-/// A Hive [TypeAdapter] that handles binary serialization for [MediaVideo].
+/// A Hive [TypeAdapter] for binary serialization of [MediaVideo] entities.
 class MediaVideoAdapter extends TypeAdapter<MediaVideo> {
+  /// The unique identifier for this type within Hive.
   @override
   final int typeId = 9;
 

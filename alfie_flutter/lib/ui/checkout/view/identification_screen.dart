@@ -13,6 +13,10 @@ import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// The authentication gateway for the checkout funnel.
+///
+/// Prompts unauthenticated users to log in, register, or proceed with an
+/// ephemeral guest session before advancing to shipping and billing details.
 class IdentificationScreen extends ConsumerWidget {
   const IdentificationScreen({super.key});
 

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+/// Orchestrates the state and interaction logic for the primary bottom navigation bar.
 final navBarViewModelProvider = Provider((ref) {
   var bagCount = 0;
 
@@ -19,12 +20,21 @@ final navBarViewModelProvider = Provider((ref) {
   return NavBarViewModel(ref, bagCount);
 });
 
+/// State controller managing global navigation tabs and dynamic tab decorators.
+///
+/// Evaluates route boundaries and integrates domain states (like [bagCount])
+/// into presentation-ready formats.
 class NavBarViewModel {
   final Ref _ref;
+
+  /// The aggregate quantity of items currently residing in the user's shopping bag.
   final int bagCount;
 
   const NavBarViewModel(this._ref, this.bagCount);
 
+  /// Constructs the collection of [BottomNavigationBarItem]s corresponding to the application's root tabs.
+  ///
+  /// Dynamically injects a [Badge] onto the bag tab when [bagCount] exceeds zero.
   List<BottomNavigationBarItem> get navBarItems {
     return AppRoute.tabs.map((tab) {
       Widget icon = Icon(tab.icon);
@@ -43,6 +53,10 @@ class NavBarViewModel {
     }).toList();
   }
 
+  /// Processes tab selection intents and coordinates nested routing behaviors.
+  ///
+  /// Automatically detects double-taps on the active tab's root route to dispatch
+  /// scroll-to-top events via the [scrollProvider].
   void handleTap(StatefulNavigationShell navigationShell, int index) {
     final isCurrentTab = index == navigationShell.currentIndex;
 

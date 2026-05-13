@@ -1,29 +1,26 @@
-/// Represents pagination information.
-///
-/// Contains pagination details.
+/// Defines pagination state and boundaries for a collection of data.
 final class Pagination {
-  /// The offset of the first item in the current result set.
+  /// The zero-based index of the first item in the current result set.
   final int offset;
 
-  /// The maximum number of items returned per page.
+  /// The maximum number of items requested per page.
   final int limit;
 
   /// The total number of items available across all pages.
   final int total;
 
-  /// The total number of pages available, based on offset.
+  /// The total number of pages available, derived from [total] and [limit].
   final int pages;
 
-  /// The current page.
+  /// The current page index.
   final int page;
 
-  /// Do we have a next page? (If null, no, else new offset)
+  /// The offset required to fetch the next page, or `null` if on the last page.
   final int? nextPage;
 
-  /// Do we have a previous page? (If null, no, else new offset)
+  /// The offset required to fetch the previous page, or `null` if on the first page.
   final int? prevPage;
 
-  /// Creates a new [Pagination] instance.
   const Pagination({
     required this.offset,
     required this.limit,

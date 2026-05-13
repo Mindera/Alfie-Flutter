@@ -23,61 +23,62 @@ import 'package:alfie_flutter/ui/checkout/view_model/checkout_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-/// Defines the contract for local data persistence.
+/// Defines the engine-agnostic contract for local data persistence.
 ///
-/// Using an interface allows the application to swap storage engines
-/// (e.g., switching from Hive to SQLite) without impacting the domain logic.
+/// Abstracting the storage engine allows the application to swap implementations
+/// (e.g., from Hive to SQLite) without impacting higher-level domain logic.
 abstract interface class IPersistentStorageService {
-  /// Prepares the storage engine. Is idempotent (can be called multiple times without adverse effects).
+  /// Initializes the underlying storage engine and prepares necessary schemas.
+  ///
+  /// This method is idempotent and must be awaited prior to any read/write operations.
   Future<void> init();
 
-  /// Retrieves saved search history of [SearchItem] records.
+  /// Retrieves the chronological list of cached [SearchItem] queries.
   List<SearchItem> getSearchHistory();
 
-  /// Overwrites the current search history with a new [history] list.
+  /// Serializes and stores the provided [history] list to disk.
   Future<void> saveSearchHistory(List<SearchItem> history);
 
-  /// Retrieves saved bag products.
+  /// Retrieves the active collection of [BagItem]s slated for checkout.
   List<BagItem> getBagItems();
 
-  /// Overwrites the current bag products with a new [products] list.
+  /// Synchronizes the current [products] in the shopping bag with local storage.
   Future<void> saveBagItems(List<BagItem> products);
 
-  /// Retrieves saved wishlist products.
+  /// Retrieves the user's saved [Product] wishlist.
   List<Product> getWishlist();
 
-  /// Overwrites the current wishlist products with a new [products] list.
+  /// Synchronizes the active wishlist [products] with local storage.
   Future<void> saveWishlist(List<Product> products);
 
-  /// Retrieves saved plp layout preference.
+  /// Retrieves the user's UI layout preference for Product Listing Pages (PLP).
   int? getPlpLayoutPreference();
 
-  /// Updates the current preference with a new [preference].
+  /// Caches the user's PLP grid/list layout [preference].
   Future<void> savePlpLayoutPreference(int preference);
 
-  /// Retrieves saved authentication access token.
+  /// Retrieves the cryptographic access token for the active user session.
   String? getAccessToken();
 
-  /// Updates the current access token with a new [token].
+  /// Persists the active session's [token].
   Future<void> saveAccessToken(String token);
 
-  /// Deletes the current access token
+  /// Purges the active access token, typically invoked during logout or token expiration.
   Future<void> deleteAccessToken();
 
-  /// Retrieves saved checkout state.
+  /// Retrieves the transient [CheckoutState] to recover a user's checkout progress.
   CheckoutState? getCheckoutState();
 
-  /// Updates the current checkout state with a new [state].
+  /// Serializes the active [state] of the checkout flow to survive application backgrounding.
   Future<void> saveCheckoutState(CheckoutState state);
 
-  /// Deletes the current checkout state
+  /// Purges the checkout state, typically invoked upon successful order placement.
   Future<void> deleteCheckoutState();
 }
 
 /// A Hive-based implementation of [IPersistentStorageService].
 ///
-/// Encapsulates binary serialization and box management to provide
-/// a clean API for the Repository layer.
+/// Encapsulates binary serialization, type adapter registration, and box management.
 class HiveService implements IPersistentStorageService {
   static const String _recentSearchesBoxName = 'recentSearchesBox';
   static const String _recentSearchesKey = 'recentSearches';
@@ -127,8 +128,8 @@ class HiveService implements IPersistentStorageService {
     registerSafe(RegisteredUserAdapter()); //typeId: 23
     registerSafe(GuestUserAdapter()); // typeId: 24
 
-    // This should be dynamic because Hive doesn't store the generic type of the box
-
+    // Note: Boxes storing lists require explicit casting during retrieval because
+    // Hive does not securely store the generic type of the box natively.
     await Hive.openBox<CheckoutState>(_checkoutStateBoxName);
     await Hive.openBox<List<dynamic>>(_recentSearchesBoxName);
     await Hive.openBox<List<dynamic>>(_bagBoxName);
@@ -137,6 +138,7 @@ class HiveService implements IPersistentStorageService {
     await Hive.openBox(_authBoxName);
   }
 
+  /// Safely registers a Hive [adapter] only if its `typeId` is not already bound.
   void registerSafe<T>(TypeAdapter<T> adapter) {
     if (!Hive.isAdapterRegistered(adapter.typeId)) {
       Hive.registerAdapter<T>(adapter);
@@ -233,7 +235,7 @@ class HiveService implements IPersistentStorageService {
   }
 }
 
-/// Exposes the [IPersistentStorageService] via Riverpod.
+/// Exposes the active [IPersistentStorageService] instance globally via Riverpod.
 final persistentStorageServiceProvider = Provider<IPersistentStorageService>(
   (ref) => HiveService(),
 );

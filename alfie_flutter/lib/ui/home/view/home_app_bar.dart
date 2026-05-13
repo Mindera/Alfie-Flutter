@@ -5,10 +5,10 @@ import 'package:alfie_flutter/ui/core/ui/search/search.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 
-/// A persistent top navigation bar designed for the home screen.
+/// A pinned navigation sliver providing global search access and brand identity.
 ///
-/// It utilizes a [SliverAppBar] to transition from a branded background
-/// to a pinned [SearchDummy] field during scrolling.
+/// Anchors to the top of the viewport, transitioning the central brand logo
+/// into a persistent [SearchDummy] field as the user scrolls down the page.
 class HomeAppBar extends StatelessWidget {
   static const double expandedHeight = 150;
   static const String logoImagePath = 'assets/images/doc_branding.png';
@@ -22,13 +22,11 @@ class HomeAppBar extends StatelessWidget {
       pinned: true,
       automaticallyImplyActions: false,
       automaticallyImplyLeading: false,
-
       backgroundColor: AppColors.neutral,
       surfaceTintColor: AppColors.transparent,
       expandedHeight: expandedHeight,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.all(Spacing.small),
-        // Setting scale to 1 prevents the Search field from resizing
         expandedTitleScale: 1,
         background: Image.asset(logoImagePath, fit: BoxFit.scaleDown),
         title: SearchDummy(onTap: () => context.goTo(AppRoute.search)),

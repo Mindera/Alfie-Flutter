@@ -8,6 +8,10 @@ import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 
+/// Provides the primary entry point for unauthenticated users.
+///
+/// Displays promotional copy and routes the user toward either the
+/// [SignInScreen] or [CreateAccountScreen].
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
 

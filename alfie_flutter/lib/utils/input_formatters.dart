@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
 
+/// A [TextInputFormatter] that automatically inserts a forward slash (`/`)
+/// after the second character to format a credit card expiry date (MM/YY).
 class CardMonthInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
@@ -29,6 +31,8 @@ class CardMonthInputFormatter extends TextInputFormatter {
   }
 }
 
+/// A [TextInputFormatter] that automatically inserts double spaces after every
+/// four digits to enhance the readability of credit card numbers.
 class CardNumberInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
@@ -48,6 +52,7 @@ class CardNumberInputFormatter extends TextInputFormatter {
     );
   }
 
+  /// Injects double spaces into a raw string [text] at 4-character intervals.
   static String formatCardNumber(String text) {
     final buffer = StringBuffer();
 

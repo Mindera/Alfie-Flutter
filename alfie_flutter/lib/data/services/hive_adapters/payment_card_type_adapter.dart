@@ -1,7 +1,9 @@
 import 'package:alfie_flutter/data/models/payment_card_type.dart';
 import 'package:hive/hive.dart';
 
+/// A Hive [TypeAdapter] for binary serialization of the [PaymentCardType] enum.
 class CardTypeAdapter extends TypeAdapter<PaymentCardType> {
+  /// The unique identifier for this type within Hive.
   @override
   final int typeId = 21;
 

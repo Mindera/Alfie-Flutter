@@ -5,10 +5,7 @@ import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
 import 'package:hive/hive.dart';
 
-/// A Hive [TypeAdapter] that handles binary serialization for [Product].
-///
-/// This allows the repository to persist complete product catalog items directly
-/// to local storage.
+/// A Hive [TypeAdapter] for binary serialization of aggregate [Product] catalog items.
 class ProductAdapter extends TypeAdapter<Product> {
   @override
   final int typeId = 14;

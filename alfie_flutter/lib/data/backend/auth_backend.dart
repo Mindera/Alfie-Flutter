@@ -5,13 +5,20 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
+/// Temporary mock authentication contract.
+///
+/// Replaces external GraphQL authentication for local development.
 abstract interface class IAuthBackend {
-  /// Returns Access token if successful and null if not
+  /// Generates a signed JWT Access token upon successful validation of [email] and [password].
+  ///
+  /// Returns `null` if credentials do not match an existing user.
   String? signIn(String email, String password);
 
+  /// Validates [token] structure, cryptographic signature, and expiration against the mock server secret.
   bool verifyToken(String token);
 }
 
+/// In-memory implementation of [IAuthBackend] simulating server-side JWT operations.
 class LocalAuthBackend implements IAuthBackend {
   final IUserBackend _userBackend;
 
@@ -79,12 +86,13 @@ class LocalAuthBackend implements IAuthBackend {
       'role': 'customer',
     });
 
-    final token = jwt.sign(SecretKey(_mockServerSecret), expiresIn: duration);
-
-    return token;
+    return jwt.sign(SecretKey(_mockServerSecret), expiresIn: duration);
   }
 }
 
+/// Provides the active [IAuthBackend] implementation.
+///
+/// Defaults to [LocalAuthBackend]
 final authBackendProvider = Provider<IAuthBackend>((ref) {
   final userBackend = ref.watch(userBackendProvider);
   return LocalAuthBackend(userBackend);

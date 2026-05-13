@@ -4,6 +4,7 @@ import 'package:alfie_flutter/data/models/user.dart';
 import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:hive/hive.dart';
 
+/// A Hive [TypeAdapter] for binary serialization of authenticated [RegisteredUser] sessions.
 class RegisteredUserAdapter extends TypeAdapter<RegisteredUser> {
   @override
   final int typeId = 23;
@@ -29,6 +30,7 @@ class RegisteredUserAdapter extends TypeAdapter<RegisteredUser> {
   }
 }
 
+/// A Hive [TypeAdapter] for binary serialization of ephemeral [GuestUser] sessions.
 class GuestUserAdapter extends TypeAdapter<GuestUser> {
   @override
   final int typeId = 24;

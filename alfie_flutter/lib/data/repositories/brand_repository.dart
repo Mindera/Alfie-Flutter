@@ -6,34 +6,33 @@ import 'package:alfie_flutter/utils/graphql_executor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-/// Provider for the [GraphQLBrandRepository] instance.
-///
-/// Manages the lifecycle of the brand repository and injects the GraphQL client dependency.
+/// Provides the active [IBrandRepository] instance for catalog data retrieval.
 final graphQLBrandRepositoryProvider = Provider<IBrandRepository>((ref) {
   final client = ref.watch(gqlClientProvider);
   return GraphQLBrandRepository(client);
 });
 
-/// Provider that fetches and caches the list of brands.
+/// Orchestrates the asynchronous fetching and caching of the catalog's [Brand] list.
+///
+/// Consumed by UI layers to display brand filters or directory listings.
 final brandListProvider = FutureProvider<List<Brand>>((ref) async {
   final repository = ref.watch(graphQLBrandRepositoryProvider);
   return repository.getBrands();
 });
 
-/// Contract for brand data operations.
+/// Contract for domain-level brand catalog operations.
 abstract interface class IBrandRepository {
-  /// Fetches all available brands.
+  /// Retrieves the complete list of associated [Brand] entities available in the catalog.
   Future<List<Brand>> getBrands();
 }
 
-/// Implementation of [IBrandRepository] using GraphQL.
+/// GraphQL-based implementation of [IBrandRepository].
 ///
-/// Uses a cache-first strategy to minimize network requests and improve performance.
-/// Transforms GraphQL response data into domain models using a mapper extension.
+/// Executes queries using [GraphQLExecutor] and maps the raw DTO fragments
+/// into pure domain models via mapper extensions.
 final class GraphQLBrandRepository implements IBrandRepository {
   final GraphQLClient _client;
 
-  /// Creates a new instance with the provided GraphQL [client].
   GraphQLBrandRepository(this._client);
 
   @override

@@ -12,9 +12,9 @@ class Media {
   /// The type of media content this instance represents.
   final MediaContentType mediaContentType;
 
-  /// Creates a new [Media] instance.
   const Media({this.alt, required this.mediaContentType});
 
+  /// Executes pattern matching based on the [mediaContentType] discriminator.
   T when<T>({
     required T Function(MediaImage) image,
     required T Function(MediaVideo) video,
@@ -23,50 +23,42 @@ class Media {
     switch (mediaContentType) {
       case MediaContentType.image:
         return image(this as MediaImage);
-
       case MediaContentType.video:
         return video(this as MediaVideo);
-
       default:
         return orElse();
     }
   }
 
-  /// Safely extracts the first URL from the [Media] union type.
+  /// Safely extracts the primary URL from the underlying [Media] type.
+  ///
+  /// Returns an empty string if no valid source is found.
   String get firstUrl {
     return when(
       image: (image) => image.url,
-      // Avoids a StateError by ensuring sources list is not empty before accessing .first
       video: (video) => video.sources.isNotEmpty ? video.sources.first.url : '',
       orElse: () => '',
     );
   }
 }
 
-/// Represents image media content.
-///
-/// An image media asset with a URL pointing to the image resource.
+/// Represents an image media asset.
 class MediaImage extends Media {
-  /// The URL to access the image resource.
+  /// The network URL locating the image resource.
   final String url;
 
-  /// Creates a new [MediaImage] instance.
   const MediaImage({required this.url, super.alt})
     : super(mediaContentType: MediaContentType.image);
 }
 
-/// Represents video media content.
-///
-/// A video media asset with one or more sources in different formats
-/// and an optional preview image.
+/// Represents a video media asset containing multiple format encodings.
 final class MediaVideo extends Media {
-  /// The list of video sources available in different formats.
+  /// The available video sources in different format encodings.
   final List<VideoSource> sources;
 
-  /// Optional preview image displayed before the video plays.
+  /// Optional preview image to display before video playback begins.
   final MediaImage? previewImage;
 
-  /// Creates a new [MediaVideo] instance.
   const MediaVideo({
     required super.alt,
     required this.sources,
@@ -74,22 +66,16 @@ final class MediaVideo extends Media {
   }) : super(mediaContentType: MediaContentType.video);
 }
 
-/// Represents a video source with a specific format.
-///
-/// Contains the format, MIME type, and URL for a single video encoding variant.
-/// Multiple sources in different formats allow the client to choose
-/// the best option based on platform capabilities.
+/// Defines a specific format and location for a video encoding.
 class VideoSource {
-  /// The video format/container type (e.g., MP4, WebM).
   final VideoFormat format;
 
   /// The MIME type of the video source (e.g., "video/mp4").
   final String mimeType;
 
-  /// The URL to access the video resource.
+  /// The network URL locating the video resource.
   final String url;
 
-  /// Creates a new [VideoSource] instance.
   const VideoSource({
     required this.format,
     required this.mimeType,
@@ -97,5 +83,5 @@ class VideoSource {
   });
 }
 
-/// Defines the supported video formats.
+/// Defines the supported video container formats.
 enum VideoFormat { mp4, webm, unknown }

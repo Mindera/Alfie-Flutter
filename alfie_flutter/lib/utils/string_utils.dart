@@ -6,8 +6,6 @@ extension StringUtils on String {
   String capitalizeAll() {
     if (isEmpty) return this;
 
-    // Use a RegExp to split by both spaces and hyphens while capturing the delimiters
-    // to preserve the original formatting during the join.
     final pattern = RegExp(r'(\s|-)');
 
     return splitMapJoin(
