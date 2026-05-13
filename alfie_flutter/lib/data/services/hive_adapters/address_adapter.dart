@@ -1,7 +1,9 @@
 import 'package:alfie_flutter/data/models/address.dart';
 import 'package:hive/hive.dart';
 
+/// A Hive [TypeAdapter] for binary serialization of [Address] entities.
 class AddressAdapter extends TypeAdapter<Address> {
+  /// The unique identifier for this type within Hive.
   @override
   final int typeId = 16;
 

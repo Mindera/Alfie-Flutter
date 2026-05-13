@@ -49,7 +49,7 @@ void main() {
             ProductListingState(
               params: ProductListingParams(),
               listing: AsyncValue.data(
-                ProductListing(
+                const ProductListing(
                   title: '',
                   pagination: Pagination(
                     offset: 0,

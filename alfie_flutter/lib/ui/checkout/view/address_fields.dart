@@ -3,6 +3,10 @@ import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:alfie_flutter/ui/core/ui/text_field/app_text_field.dart';
 import 'package:flutter/material.dart';
 
+/// A reusable form component for capturing physical [Address] details.
+///
+/// Designed to be embedded within larger forms (e.g., delivery and billing),
+/// delegating state mutations back to the parent via the [onChanged] callback.
 class AddressFields extends StatelessWidget {
   final Address address;
   final Function(Address) onChanged;

@@ -1,74 +1,59 @@
 import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/price.dart';
 
-/// Represents search suggestions grouped by type.
+/// Aggregates search autocomplete results categorized by match type.
 ///
-/// Contains brand suggestions, keyword suggestions, and product suggestions
-/// to help users refine their search or discover relevant items.
+/// Contains collections of [brands], [keywords], and [products] to help users
+/// rapidly refine their search intent before execution.
 final class Suggestion {
-  /// A list of brand suggestions matching the search query.
   final List<SuggestionBrand> brands;
-
-  /// A list of keyword suggestions matching the search query.
   final List<SuggestionKeyword> keywords;
-
-  /// A list of product suggestions matching the search query.
   final List<SuggestionProduct> products;
 
-  /// Creates a new [Suggestion] instance.
-  Suggestion({
+  const Suggestion({
     required this.brands,
     required this.keywords,
     required this.products,
   });
 }
 
-/// Represents a brand suggestion with result count.
+/// Represents an auto-complete brand match and its associated inventory count.
 final class SuggestionBrand {
-  /// The brand name or value.
+  /// The matched brand name.
   final String value;
 
-  /// The number of products available for this brand that match the search query.
+  /// The total number of available products associated with this brand.
   final int results;
 
-  /// Creates a new [SuggestionBrand] instance.
-  SuggestionBrand({required this.value, required this.results});
+  const SuggestionBrand({required this.value, required this.results});
 }
 
-/// Represents a keyword suggestion with result count.
+/// Represents an auto-complete keyword match and its associated inventory count.
 final class SuggestionKeyword {
-  /// The keyword or search term.
+  /// The matched keyword or search term.
   final String value;
 
-  /// The number of products matching this keyword.
+  /// The total number of available products matching this keyword.
   final int results;
 
-  /// Creates a new [SuggestionKeyword] instance.
-  SuggestionKeyword({required this.value, required this.results});
+  const SuggestionKeyword({required this.value, required this.results});
 }
 
-/// Represents a product suggestion with essential product information.
+/// Represents a lightweight product preview optimized for search auto-complete dropdowns.
 ///
-/// Contains a subset of product data optimized for display in search suggestions,
-/// including media and pricing for quick preview.
+/// Contains a stripped-down subset of product data, prioritizing [media]
+/// and [price] for immediate visual recognition.
 final class SuggestionProduct {
-  /// The unique identifier for this product.
   final String id;
-
-  /// The name of the product.
   final String name;
-
-  /// The name of the brand that manufactures or sells this product.
   final String brandName;
 
-  /// Media assets (images/videos) for previewing the product.
+  /// Preview assets intended for thumbnail display.
   final List<Media> media;
 
-  /// The pricing information for this product.
   final Price price;
 
-  /// Creates a new [SuggestionProduct] instance.
-  SuggestionProduct({
+  const SuggestionProduct({
     required this.id,
     required this.name,
     required this.brandName,

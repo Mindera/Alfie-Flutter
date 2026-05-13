@@ -4,17 +4,34 @@ import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
+/// Temporary mock user data contract for local development.
+///
+/// Simulates external GraphQL user mutations and queries.
 abstract interface class IUserBackend {
+  /// Retrieves the complete list of locally mocked [RegisteredUser] instances.
   List<RegisteredUser> getAllUsers();
+
+  /// Fetches a specific [User] by their unique [id].
+  ///
+  /// Returns `null` if the user is not found.
   User? getUser(String id);
+
+  /// Simulates a user registration mutation for [userData], generating a new UUID.
   User addUser(UserData userData);
+
+  /// Overwrites existing data for an already registered [updatedUserData].
   void updateUser(User updatedUserData);
+
+  /// Simulates account deletion, removing the user matching [id] from the local memory store.
+  ///
+  /// Throws an [Exception] if the user does not exist.
   User deleteUser(String id);
 }
 
+/// In-memory implementation of [IUserBackend] for simulating user persistence.
 class LocalUserBackend implements IUserBackend {
   static final List<User> _mockDb = [
-    RegisteredUser(
+    const RegisteredUser(
       id: "0a9895ff-8973-4007-b0e0-9533ac82c506",
       data: UserData(
         firstName: 'Alfie',
@@ -69,4 +86,7 @@ class LocalUserBackend implements IUserBackend {
   }
 }
 
+/// Provides the active [IUserBackend] implementation.
+///
+/// Defaults to [LocalUserBackend]
 final userBackendProvider = Provider<IUserBackend>((ref) => LocalUserBackend());

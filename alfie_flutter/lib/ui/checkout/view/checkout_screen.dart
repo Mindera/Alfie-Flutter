@@ -12,6 +12,10 @@ import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// The primary hub of the checkout funnel.
+///
+/// Consumes [checkoutViewModelProvider] to render a summary of all checkout requirements.
+/// Gates the final purchase action until all mandatory fields are satisfied.
 class CheckoutScreen extends ConsumerWidget {
   const CheckoutScreen({super.key});
 
@@ -25,13 +29,13 @@ class CheckoutScreen extends ConsumerWidget {
     final items = [
       CheckoutItem(
         label: "Ship to",
-        content: user?.deliveryAddress.toString(),
+        content: user?.deliveryAddress?.toString(),
         nullValueFallBackMessage: "Add a delivery address",
         onPressed: () => context.pushTo(AppRoute.deliveryInformation),
       ),
       CheckoutItem(
         label: "Billing Address",
-        content: user?.billingAddress.toString(),
+        content: user?.billingAddress?.toString(),
         nullValueFallBackMessage: "Add a billing address",
         onPressed: () => context.pushTo(AppRoute.deliveryInformation),
       ),
@@ -54,6 +58,7 @@ class CheckoutScreen extends ConsumerWidget {
         ),
       ),
     ];
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Header(
@@ -69,21 +74,20 @@ class CheckoutScreen extends ConsumerWidget {
         scrolledUnderElevation: 0,
       ),
       body: Padding(
-        padding: EdgeInsets.all(Spacing.small),
+        padding: const EdgeInsets.all(Spacing.small),
         child: CustomScrollView(
           slivers: [
             SliverList.separated(
               itemCount: items.length,
               itemBuilder: (_, i) => items[i],
-              separatorBuilder: (_, i) => Divider(),
+              separatorBuilder: (_, i) => const Divider(),
             ),
-            SliverFillRemaining(
+            const SliverFillRemaining(
               hasScrollBody: false,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(),
-
                   CheckoutItem(content: "Add promo code / gift card"),
                 ],
               ),
@@ -93,17 +97,17 @@ class CheckoutScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColors.neutral,
             border: Border(top: BorderSide(color: AppColors.neutral200)),
           ),
           child: Padding(
-            padding: EdgeInsets.fromLTRB(
+            padding: const EdgeInsets.fromLTRB(
               Spacing.small,
               Spacing.extraSmall,
               Spacing.small,
-              Spacing.extraSmall + MediaQuery.of(context).viewInsets.bottom,
-            ),
+              Spacing.extraSmall,
+            ).add(context.mediaQuery.viewInsets),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               spacing: Spacing.extraSmall,

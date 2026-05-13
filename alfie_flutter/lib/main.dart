@@ -12,13 +12,18 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'data/models/environment.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
+/// The primary entry point for the application.
+///
+/// Bootstraps critical infrastructure, including environment variables,
+/// persistent storage engines, and GraphQL caches, before handing off
+/// execution to the Flutter engine.
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   // Preserve the splash screen while loading resources
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  // Required for HiveStore persistence
+  // Required for GraphQL HiveStore persistence
   log("Loading Hive for GraphQL...");
   await initHiveForFlutter();
 
@@ -28,11 +33,9 @@ Future<void> main() async {
     overlays: [SystemUiOverlay.top],
   );
 
-  // Load Persistent Storage Service
   log("Loading Persistent Storage Service...");
   final container = ProviderContainer();
 
-  // Load environment configurations
   log("Loading environment configurations...");
   await dotenv.load(fileName: container.read(environmentProvider).fileName);
 
@@ -41,8 +44,6 @@ Future<void> main() async {
   );
   await persistentStorageService.init();
 
-  // Start the main application wrapped in a ProviderScope so Riverpod
-  // providers are available throughout the widget tree.
   log("Starting the application...");
   runApp(const ProviderScope(child: MainApp()));
 
@@ -51,6 +52,10 @@ Future<void> main() async {
   log("Running Alfie!");
 }
 
+/// The root material application widget.
+///
+/// Consumes global routing, theming, and messenger configurations from Riverpod
+/// to initialize the presentation layer.
 class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
@@ -58,6 +63,7 @@ class MainApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
     final theme = ref.watch(themeProvider);
+
     return MaterialApp.router(
       scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
       debugShowCheckedModeBanner: false,

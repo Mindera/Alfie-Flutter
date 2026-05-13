@@ -37,7 +37,7 @@ void main() {
 
     when(
       () => mockPersistentStorageService.getBagItems(),
-    ).thenReturn(<BagItem>[]);
+    ).thenReturn(const <BagItem>[]);
 
     container = ProviderContainer(
       overrides: [

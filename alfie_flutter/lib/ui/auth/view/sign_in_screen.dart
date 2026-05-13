@@ -15,15 +15,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// Handles the user authentication flow via credentials.
+///
+/// Consumes [authViewModelProvider] to validate credentials and initiate sessions.
 class SignInScreen extends HookConsumerWidget {
   final String? prefilledEmail;
+
   const SignInScreen({super.key, this.prefilledEmail});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    String email = prefilledEmail ?? '';
-    String password = '';
+
+    final email = useState<String>(prefilledEmail ?? '');
+    final password = useState<String>('');
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +51,6 @@ class SignInScreen extends HookConsumerWidget {
           child: Form(
             key: formKey,
             autovalidateMode: AutovalidateMode.onUnfocus,
-
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -60,15 +64,15 @@ class SignInScreen extends HookConsumerWidget {
                       keyboardType: TextInputType.emailAddress,
                       validator: context.validateEmail,
                       onChanged: (value) {
-                        email = value;
+                        email.value = value;
                       },
-                      initialValue: email,
+                      initialValue: email.value,
                     ),
                     AppInputField(
                       "Password",
                       obscureText: true,
                       onChanged: (value) {
-                        password = value;
+                        password.value = value;
                       },
                       validator: context.validatePassword,
                     ),
@@ -93,7 +97,7 @@ class SignInScreen extends HookConsumerWidget {
 
                         final success = ref
                             .read(authViewModelProvider.notifier)
-                            .signIn(email, password);
+                            .signIn(email.value, password.value);
 
                         if (!success) {
                           ScaffoldMessenger.of(context).showSnackBar(

@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Displays the primary metadata for a [Product], including brand, name,
-/// price, available colors, and call-to-action buttons.
+/// price, available colors, and primary call-to-action buttons.
 class ProductMainInfo extends ConsumerWidget {
   final Product product;
   final bool isOnWishlist;
@@ -58,7 +58,6 @@ class ProductMainInfo extends ConsumerWidget {
             ),
           ],
         ),
-
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: Spacing.extraSmall,
@@ -67,7 +66,6 @@ class ProductMainInfo extends ConsumerWidget {
               child: AppButton.primary(
                 label: "Add to Bag",
                 onPressed: () {
-                  // context.authAction(ref, () {
                   ref
                       .read(productDetailViewModelProvider(product.id).notifier)
                       .addToBag(product);
@@ -83,7 +81,6 @@ class ProductMainInfo extends ConsumerWidget {
                       },
                     ),
                   );
-                  // });
                 },
               ),
             ),

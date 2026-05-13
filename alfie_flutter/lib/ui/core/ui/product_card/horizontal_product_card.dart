@@ -111,7 +111,7 @@ class HorizontalProductCard extends StatelessWidget {
                               ],
                             ),
                           ),
-                          AppButton.tertiary(
+                          const AppButton.tertiary(
                             size: ButtonSize.small,
                             leading: AppIcons.more,
                           ),
@@ -124,7 +124,7 @@ class HorizontalProductCard extends StatelessWidget {
                             Row(
                               spacing: Spacing.extraExtraExtraSmall,
                               children: [
-                                Text("Quantity:"),
+                                const Text("Quantity:"),
                                 Text(bagItem.quantity.toString()),
                                 AppButton.tertiary(
                                   leading: AppIcons.chevronDown,

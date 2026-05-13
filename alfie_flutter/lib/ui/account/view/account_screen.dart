@@ -7,6 +7,9 @@ import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Displays the authenticated user's account dashboard and navigation menu.
+///
+/// Consumes [accountViewModelProvider] to render profile data and available account actions.
 class AccountScreen extends ConsumerWidget {
   const AccountScreen({super.key});
 

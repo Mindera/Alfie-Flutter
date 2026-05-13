@@ -1,3 +1,4 @@
+/// Represents a physical location for shipping or billing purposes.
 class Address {
   final String country;
   final String postalCode;
@@ -36,6 +37,7 @@ class Address {
     );
   }
 
+  /// Validates that all required physical location fields are populated.
   bool isValid() =>
       country.isNotEmpty &&
       city.isNotEmpty &&

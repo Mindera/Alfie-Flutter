@@ -1,5 +1,6 @@
 import 'package:alfie_flutter/data/models/money.dart';
 
+/// Defines available delivery tiers and their associated [price] and estimated timelines.
 enum DeliveryMethod {
   standard(
     label: "Standard Delivery",
@@ -22,7 +23,9 @@ enum DeliveryMethod {
     required this.details,
   });
 
+  /// Aggregates the formatted price and delivery details for UI presentation.
   String get description => "${price.formatted}\n$details";
+
   @override
   String toString() {
     return "$label - ${price.formatted} $details";

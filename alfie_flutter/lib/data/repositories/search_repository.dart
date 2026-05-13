@@ -6,15 +6,16 @@ import 'package:alfie_flutter/utils/graphql_executor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-/// Provider for the [GraphQLSearchRepository] instance.
-///
-/// Manages the lifecycle of the search repository and injects the GraphQL client dependency.
+/// Provides the active [ISearchRepository] implementation.
 final graphQLSearchRepositoryProvider = Provider<ISearchRepository>((ref) {
   final client = ref.watch(gqlClientProvider);
   return GraphQLSearchRepository(client);
 });
 
-/// Provider that fetches and caches search suggestions for a given search term.
+/// Orchestrates the asynchronous fetching of [Suggestion]s based on user input.
+///
+/// The [term] parameter uniquely identifies the query, allowing Riverpod to
+/// natively cache results for previously searched terms.
 final searchSuggestionsProvider = FutureProvider.family<Suggestion, String>((
   ref,
   term,
@@ -23,20 +24,19 @@ final searchSuggestionsProvider = FutureProvider.family<Suggestion, String>((
   return repository.getSuggestions(term);
 });
 
-/// Contract for search data operations.
+/// Contract for domain-level search autocomplete operations.
 abstract interface class ISearchRepository {
-  /// Fetches search suggestions for the given [term]
+  /// Retrieves auto-complete suggestions and matching entities for the given [term].
   Future<Suggestion> getSuggestions(String term);
 }
 
-/// Implementation of [ISearchRepository] using GraphQL.
+/// GraphQL-based implementation of [ISearchRepository].
 ///
-/// Uses a cache-first strategy to minimize network requests and improve performance.
-/// Transforms GraphQL response data into domain models using mapper extensions.
+/// Executes network requests via [GraphQLExecutor] and maps the raw DTO fragments
+/// into pure domain models to insulate the application from network contracts.
 final class GraphQLSearchRepository implements ISearchRepository {
   final GraphQLClient _client;
 
-  /// Creates a new instance with the provided GraphQL [client].
   GraphQLSearchRepository(this._client);
 
   @override

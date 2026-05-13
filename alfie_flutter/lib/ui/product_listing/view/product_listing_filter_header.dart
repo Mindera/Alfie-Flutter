@@ -10,20 +10,29 @@ import 'package:alfie_flutter/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// A pinned header exposing controls to filter, sort, and modify the grid layout.
+///
+/// Reactively subscribes to the [productListingViewModelProvider] to display
+/// an accurate total item count matching the active query constraints.
 class ProductListingFilterHeader extends ConsumerWidget {
+  /// The unique query or category identifier defining this listing.
+  final ProductListingId id;
+
+  /// Callback triggered when the user alters their desired grid column count.
+  final ValueChanged<int> onColumnsChanged;
+
+  /// The currently active cross-axis layout configuration.
+  final int columns;
+
+  static const labels = ["Slim Fit", "Linen", "Cotton", "Straight Fit"];
+  static const double _headerHeight = 88.0;
+
   const ProductListingFilterHeader({
     super.key,
     required this.id,
     required this.onColumnsChanged,
     required this.columns,
   });
-
-  final ProductListingId id;
-  final ValueChanged<int> onColumnsChanged;
-  final int columns;
-
-  static const labels = ["Slim Fit", "Linen", "Cotton", "Straight Fit"];
-  static const double _headerHeight = 88.0;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,6 +41,7 @@ class ProductListingFilterHeader extends ConsumerWidget {
         id,
       ).select((s) => s.listing.value?.products.length),
     );
+
     return SliverAppBar(
       pinned: true,
       primary: false,
@@ -39,9 +49,7 @@ class ProductListingFilterHeader extends ConsumerWidget {
       backgroundColor: AppColors.neutral,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
-
       toolbarHeight: _headerHeight,
-
       flexibleSpace: Padding(
         padding: const EdgeInsets.only(
           left: Spacing.small,
@@ -84,7 +92,6 @@ class ProductListingFilterHeader extends ConsumerWidget {
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: Spacing.extraExtraSmall,
@@ -92,20 +99,23 @@ class ProductListingFilterHeader extends ConsumerWidget {
                 child: Row(
                   spacing: Spacing.extraSmall,
                   children: labels.map((label) {
-                    final double borderWidth = 1;
+                    const double borderWidth = 1;
                     return Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Spacing.small - borderWidth,
-                        vertical: Spacing.extraExtraSmall - borderWidth,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.neutral800,
-                          width: borderWidth,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Spacing.small,
+                        vertical: Spacing.extraExtraSmall,
+                      ).subtract(const EdgeInsets.all(borderWidth)),
+                      decoration: const BoxDecoration(
+                        border: Border.fromBorderSide(
+                          BorderSide(
+                            color: AppColors.neutral800,
+                            width: borderWidth,
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(Spacing.medium),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(Spacing.medium),
+                        ),
                       ),
-
                       child: Center(child: Text(label)),
                     );
                   }).toList(),

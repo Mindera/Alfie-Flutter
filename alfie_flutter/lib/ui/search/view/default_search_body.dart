@@ -8,10 +8,10 @@ import 'package:alfie_flutter/ui/search/view_model/search_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Displays the default state of the search screen before a user starts typing.
+/// Renders the default pre-search interface displaying historical queries.
 ///
-/// Includes the user's recent search history and popular items. Actions to
-/// clear or remove history communicate directly with the [searchViewModelProvider].
+/// Consumes a localized [recentSearches] list and dispatches management
+/// intents directly to the [searchViewModelProvider] when modifying history.
 class DefaultSearchBody extends ConsumerWidget {
   const DefaultSearchBody({
     super.key,
@@ -19,7 +19,10 @@ class DefaultSearchBody extends ConsumerWidget {
     this.onSearchItemTapped,
   });
 
+  /// The bounded collection of previously executed search queries.
   final List<SearchItem> recentSearches;
+
+  /// Callback triggered when a user taps a historical search item to re-execute it.
   final void Function(String query)? onSearchItemTapped;
 
   @override
@@ -34,12 +37,10 @@ class DefaultSearchBody extends ConsumerWidget {
               SectionHeader(
                 title: "Your Recent Searches",
                 linkText: "Clear",
-
                 onLinkPressed: () {
                   ref.read(searchViewModelProvider.notifier).clearHistory();
                 },
               ),
-
               ...recentSearches.map(
                 (item) => GestureDetector(
                   onTap: () => onSearchItemTapped?.call(item.query),
@@ -67,8 +68,7 @@ class DefaultSearchBody extends ConsumerWidget {
               ),
             ],
           ),
-
-        SectionHeader(title: "Popular Items"),
+        const SectionHeader(title: "Popular Items"),
         // TODO: Popular Items
       ],
     );

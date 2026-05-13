@@ -1,22 +1,23 @@
 import 'package:alfie_flutter/data/models/media.dart';
 
-/// Represents a color variant of a product.
-///
-/// Contains color identification, a visual swatch for display,
-/// and optional media assets (images or videos) showing the product in this color.
+/// Represents a specific color variant of a product.
 class ProductColor {
   /// The unique identifier for this color variant.
   final String id;
 
-  /// The display name of the color (e.g., "Navy Blue", "Red").
+  /// The presentation name of the color (e.g., "Navy Blue").
   final String name;
 
-  /// Image resolver for the colour swatch.
+  /// A visual thumbnail representation of this color variant.
   final MediaImage? swatch;
 
-  /// A list of media assets (images/videos) showing the product in this color.
+  /// A collection of [Media] assets showcasing the product in this specific color.
   final List<Media>? media;
 
-  /// Creates a new [ProductColor] instance.
-  ProductColor({required this.id, required this.name, this.swatch, this.media});
+  const ProductColor({
+    required this.id,
+    required this.name,
+    this.swatch,
+    this.media,
+  });
 }

@@ -47,7 +47,7 @@ class Search extends HookWidget {
     final showClearButton = focusNode.hasFocus && controller.text.isNotEmpty;
 
     return TextFormField(
-      scrollPadding: EdgeInsets.zero,
+      scrollPadding: const EdgeInsets.only(),
       controller: controller,
       focusNode: focusNode,
       onChanged: onChanged,
@@ -86,12 +86,16 @@ class SearchDummy extends StatelessWidget {
         hintText: hintText,
         prefixIcon: const Icon(icon),
         fillColor: AppColors.neutral100,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(Spacing.extraExtraSmall),
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(Spacing.extraExtraSmall),
+          ),
           borderSide: BorderSide(color: AppColors.neutral100),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(Spacing.extraExtraSmall),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(Spacing.extraExtraSmall),
+          ),
           borderSide: BorderSide(color: AppColors.neutral100),
         ),
       ),

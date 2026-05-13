@@ -2,7 +2,7 @@ import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/data/models/product.dart';
 import 'package:hive/hive.dart';
 
-/// A Hive [TypeAdapter] that handles binary serialization for [BagItem].
+/// A Hive [TypeAdapter] for binary serialization of [BagItem] entities.
 class BagItemAdapter extends TypeAdapter<BagItem> {
   /// The unique identifier for this type within Hive.
   @override

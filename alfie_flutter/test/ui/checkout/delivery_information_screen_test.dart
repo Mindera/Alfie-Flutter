@@ -131,7 +131,7 @@ void main() {
           ),
         );
 
-        expect(find.text('Delivery Indormation'), findsOneWidget);
+        expect(find.text('Delivery Information'), findsOneWidget);
 
         // Because delivery and billing instances are the same, checkbox defaults to true showing only 1 form
         expect(find.byType(AddressFields), findsOneWidget);
@@ -361,7 +361,7 @@ void main() {
       await tester.tap(find.text('Go to Delivery'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Delivery Indormation'), findsOneWidget);
+      expect(find.text('Delivery Information'), findsOneWidget);
 
       await tester.tap(find.byIcon(AppIcons.back));
       await tester.pumpAndSettle();

@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-// nav_bar.dart
-
+/// A persistent bottom navigation rail governing top-level view transitions.
+///
+/// Synchronizes the [StatefulNavigationShell] from GoRouter with the visual
+/// state evaluated by [navBarViewModelProvider].
 class NavBar extends ConsumerWidget {
-  const NavBar({required this.navigationShell, super.key});
-
+  /// The shell managing the state of the nested routing branches.
   final StatefulNavigationShell navigationShell;
+
+  const NavBar({required this.navigationShell, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,7 +19,6 @@ class NavBar extends ConsumerWidget {
 
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      // The View now just consumes pre-formatted items
       items: viewModel.navBarItems,
       currentIndex: navigationShell.currentIndex,
       onTap: (index) => viewModel.handleTap(navigationShell, index),

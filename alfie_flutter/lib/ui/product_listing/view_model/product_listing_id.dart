@@ -1,17 +1,19 @@
 /// A unique identifier for a product listing state.
 ///
 /// Used to distinguish between different product feeds, such as those
-/// filtered by category, search query, or a combination of both.
+/// filtered by [categoryId], [query], or a combination of both.
 class ProductListingId {
   final String? categoryId;
   final String? query;
 
-  ProductListingId({this.categoryId, this.query});
+  const ProductListingId({this.categoryId, this.query});
 
-  /// Generates a unique string representation of the listing.
+  /// Derives a deterministic string key representing the listing parameters.
+  ///
+  /// Utilized primarily for cache identification and provider isolation.
   String get id {
-    String categoryPart = categoryId != null ? '$categoryId-' : '';
-    String searchPart = query != null ? '$query' : '';
+    final String categoryPart = categoryId != null ? '$categoryId-' : '';
+    final String searchPart = query != null ? '$query' : '';
     return '$categoryPart$searchPart';
   }
 

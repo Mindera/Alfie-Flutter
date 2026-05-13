@@ -30,12 +30,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Injectable contract for resolving routes to screens.
-abstract class RouteRegistry {
+/// Contract for resolving [AppRoute] definitions into platform-renderable [Widget]s.
+///
+/// Decoupling route definitions from UI instantiation allows for clean dependency
+/// injection and facilitates mocked navigation states during widget testing.
+abstract interface class RouteRegistry {
   Widget getScreen(AppRoute route, GoRouterState state);
 }
 
-/// Default implementation used in production.
+/// The production implementation mapping application routes to their concrete UI screens.
 class DefaultRouteRegistry implements RouteRegistry {
   const DefaultRouteRegistry();
 
@@ -87,6 +90,7 @@ class DefaultRouteRegistry implements RouteRegistry {
   }
 }
 
+/// Provides the active [RouteRegistry] implementation for the GoRouter configuration.
 final routeRegistryProvider = Provider<RouteRegistry>(
   (ref) => const DefaultRouteRegistry(),
 );

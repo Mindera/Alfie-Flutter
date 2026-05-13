@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// Manages the selection and addition of [PaymentCard] entities.
 class PaymentMethodScreen extends HookConsumerWidget {
   final PaymentCard? initialValue;
   const PaymentMethodScreen({super.key, this.initialValue});
@@ -23,9 +24,6 @@ class PaymentMethodScreen extends HookConsumerWidget {
     final List<PaymentCard> cardsAvailable = [];
     final state = ref.watch(checkoutViewModelProvider);
 
-    // if (!(state.user?.paymentCards.contains(PaymentCard.sample) ?? false)) {
-    //   cardsAvailable.add(PaymentCard.sample);
-    // }
     cardsAvailable.addAll(state.user?.paymentCards ?? []);
 
     return Scaffold(
@@ -61,7 +59,7 @@ class PaymentMethodScreen extends HookConsumerWidget {
               onChanged: (card) => selectedCard.value = card,
             ),
             ListTile(
-              title: Column(
+              title: const Column(
                 spacing: Spacing.extraSmall,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [Text("Add new card")],
@@ -73,7 +71,7 @@ class PaymentMethodScreen extends HookConsumerWidget {
               ),
               onTap: () => showModalBottomSheet(
                 context: context,
-                builder: (context) => AddNewCardModal(),
+                builder: (context) => const AddNewCardModal(),
                 isDismissible: false,
               ),
             ),

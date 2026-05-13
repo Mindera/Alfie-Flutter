@@ -1,16 +1,14 @@
 import 'package:alfie_flutter/data/models/money.dart';
 
-/// Represents a range of prices.
+/// Represents a variable pricing tier for a product.
 ///
-/// Contains a minimum price and an optional maximum price.
-/// When [high] is null, the range represents a 'from' price range (from the [low] price).
+/// When [high] is null, this represents an open-ended "from [low]" pricing structure.
 class PriceRange {
-  /// The minimum price in the range.
+  /// The minimum required price boundary.
   final Money low;
 
-  /// The maximum price in the range, if not a 'from' range.
+  /// The maximum price boundary. If null, the range is unbounded upwards.
   final Money? high;
 
-  /// Creates a new [PriceRange] instance.
-  PriceRange({required this.low, this.high});
+  const PriceRange({required this.low, this.high});
 }

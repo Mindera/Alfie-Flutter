@@ -1,7 +1,9 @@
 import 'package:alfie_flutter/data/models/payment_card_type.dart';
 import 'package:flutter/material.dart';
 
+/// A utility collection for parsing, validating, and formatting credit card inputs.
 class PaymentCardUtils {
+  /// Validates that a [value] contains a 3 or 4-digit security code.
   static String? validateCVV(String? value) {
     if (value == null || value.isEmpty) {
       return "This field is required";
@@ -13,6 +15,7 @@ class PaymentCardUtils {
     return null;
   }
 
+  /// Validates a raw string [value] formatted as `MM/YY` or `MM/YYYY` against the current date.
   static String? validateDate(String? value) {
     if (value == null || value.isEmpty) {
       return "This field is required";
@@ -20,29 +23,22 @@ class PaymentCardUtils {
 
     int year;
     int month;
-    // The value contains a forward slash if the month and year has been
-    // entered.
+
     if (value.contains(RegExp(r'(/)'))) {
       var split = value.split(RegExp(r'(/)'));
-      // The value before the slash is the month while the value to right of
-      // it is the year.
       month = int.parse(split[0]);
       year = int.parse(split[1]);
     } else {
-      // Only the month was entered
-      month = int.parse(value.substring(0, (value.length)));
-      year = -1; // Lets use an invalid year intentionally
+      month = int.parse(value);
+      year = -1;
     }
 
     if ((month < 1) || (month > 12)) {
-      // A valid month is between 1 (January) and 12 (December)
       return 'Expiry month is invalid';
     }
 
     var fourDigitsYear = convertYearTo4Digits(year);
     if ((fourDigitsYear < 1) || (fourDigitsYear > 2099)) {
-      // We are assuming a valid should be between 1 and 2099.
-      // Note that, it's valid doesn't mean that it has not expired.
       return 'Expiry year is invalid';
     }
 
@@ -52,7 +48,7 @@ class PaymentCardUtils {
     return null;
   }
 
-  /// Convert the two-digit year to four-digit year if necessary
+  /// Extrapolates a two-digit year into a four-digit year based on the current century.
   static int convertYearTo4Digits(int year) {
     if (year < 100 && year >= 0) {
       var now = DateTime.now();
@@ -63,44 +59,44 @@ class PaymentCardUtils {
     return year;
   }
 
+  /// Evaluates whether the provided [month] and [year] occur in the past.
   static bool hasDateExpired(int month, int year) {
     return isNotExpired(year, month);
   }
 
+  /// Evaluates whether the provided [month] and [year] denote a future or current date.
   static bool isNotExpired(int year, int month) {
-    // It has not expired if both the year and date has not passed
     return !hasYearPassed(year) && !hasMonthPassed(year, month);
   }
 
+  /// Extracts the integer month and year components from an `MM/YY` formatted [value].
   static List<int>? getExpiryDate(String value) {
     var split = value.split(RegExp(r'(/)'));
     if (split.length != 2 || split[1].isEmpty) return null;
     return [int.parse(split[0]), int.parse(split[1])];
   }
 
+  /// Determines if the provided [month] has elapsed relative to the current calendar date.
   static bool hasMonthPassed(int year, int month) {
     var now = DateTime.now();
-    // The month has passed if:
-    // 1. The year is in the past. In that case, we just assume that the month
-    // has passed
-    // 2. Card's month (plus another month) is more than current month.
     return hasYearPassed(year) ||
         convertYearTo4Digits(year) == now.year && (month < now.month + 1);
   }
 
+  /// Determines if the provided [year] has elapsed relative to the current calendar year.
   static bool hasYearPassed(int year) {
     int fourDigitsYear = convertYearTo4Digits(year);
     var now = DateTime.now();
-    // The year has passed if the year we are currently is more than card's
-    // year
     return fourDigitsYear < now.year;
   }
 
+  /// Strips all non-numeric characters from the provided [text] string.
   static String getCleanedNumber(String text) {
     RegExp regExp = RegExp(r"[^0-9]");
     return text.replaceAll(regExp, '');
   }
 
+  /// Resolves the appropriate brand logo or fallback icon for a given [cardType].
   static Widget getCardIcon(PaymentCardType? cardType) {
     String img = "";
     Icon? icon;
@@ -139,11 +135,12 @@ class PaymentCardUtils {
     }
     if (icon != null) return icon;
 
-    return Icon(Icons.error);
+    return const Icon(Icons.error);
   }
 
-  /// With the card number with Luhn Algorithm
-  /// https://en.wikipedia.org/wiki/Luhn_algorithm
+  /// Validates a credit card number using the Luhn Algorithm.
+  ///
+  /// See: https://en.wikipedia.org/wiki/Luhn_algorithm
   static String? validateCardNumber(String? input) {
     if (input == null || input.isEmpty) {
       return "This field is required";
@@ -158,10 +155,8 @@ class PaymentCardUtils {
     int sum = 0;
     int length = input.length;
     for (var i = 0; i < length; i++) {
-      // get digits in reverse order
       int digit = int.parse(input[length - i - 1]);
 
-      // every 2nd number multiply with 2
       if (i % 2 == 1) {
         digit *= 2;
       }
@@ -175,6 +170,7 @@ class PaymentCardUtils {
     return "Card is invalid";
   }
 
+  /// Identifies the major credit card network by inspecting the [input] Issuer Identification Number (IIN).
   static PaymentCardType getCardTypeFrmNumber(String input) {
     PaymentCardType cardType;
     if (input.startsWith(

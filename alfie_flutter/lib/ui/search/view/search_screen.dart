@@ -13,13 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-/// The primary search interface.
+/// The primary interface for product discovery and search execution.
 ///
-/// Manages the local text input state and coordinates with the
-/// [searchViewModelProvider] to transition between three distinct visual states:
-/// 1. Default (Empty input): Shows recent searches.
-/// 2. Suggestions (Typing): Shows predictive search suggestions.
-/// 3. Results (Submitted): Shows the [ProductListingView] for the active query.
+/// Coordinates local input state with the global [searchViewModelProvider]
+/// to seamlessly transition between the [DefaultSearchBody], active
+/// [SearchSuggestions], and the resulting [ProductListingView].
 class SearchScreen extends HookConsumerWidget {
   const SearchScreen({super.key});
 
@@ -72,14 +70,14 @@ class SearchScreen extends HookConsumerWidget {
             ProductListingView(id: ProductListingId(query: localQuery.value))
           else
             SliverPadding(
-              padding: EdgeInsetsGeometry.all(Spacing.small),
+              padding: const EdgeInsetsGeometry.all(Spacing.small),
               sliver: SliverToBoxAdapter(
                 child: localQuery.value.isEmpty
                     ? DefaultSearchBody(
                         recentSearches: state.recentSearches,
                         onSearchItemTapped: submitSearch,
                       )
-                    : SearchSuggestions(),
+                    : const SearchSuggestions(),
               ),
             ),
         ],

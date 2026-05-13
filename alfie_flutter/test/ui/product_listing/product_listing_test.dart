@@ -39,7 +39,7 @@ void main() {
       listing: AsyncValue.data(
         ProductListing(
           title: 'Test Category',
-          pagination: Pagination(
+          pagination: const Pagination(
             total: 2,
             limit: 10,
             offset: 0,

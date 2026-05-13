@@ -113,7 +113,7 @@ void main() {
       await tester.tap(find.text('Open Modal'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Add new vard'), findsOneWidget);
+      expect(find.text('Add new card'), findsOneWidget);
       expect(find.widgetWithText(AppInputField, 'Card Number'), findsOneWidget);
       expect(
         find.widgetWithText(AppInputField, 'Name on card'),
@@ -132,13 +132,13 @@ void main() {
       await tester.tap(find.text('Open Modal'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Add new vard'), findsOneWidget);
+      expect(find.text('Add new card'), findsOneWidget);
 
       await tester.tap(find.byIcon(AppIcons.close));
       await tester.pumpAndSettle();
 
       // Verifies safePop triggered navigation successfully
-      expect(find.text('Add new vard'), findsNothing);
+      expect(find.text('Add new card'), findsNothing);
       expect(find.text('Open Modal'), findsOneWidget);
     });
 
@@ -218,7 +218,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify modal popped back to root wrapper
-        expect(find.text('Add new vard'), findsNothing);
+        expect(find.text('Add new card'), findsNothing);
         expect(find.text('Open Modal'), findsOneWidget);
 
         // Verifying the method was successfully invoked passes the widget's responsibility test.

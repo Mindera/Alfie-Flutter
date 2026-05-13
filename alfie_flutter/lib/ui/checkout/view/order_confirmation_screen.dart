@@ -8,6 +8,10 @@ import 'package:alfie_flutter/utils/navigation_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// The final success view displayed after a completed transaction.
+///
+/// Provides confirmation details and prompts guest users to convert their
+/// ephemeral session into a registered account.
 class OrderConfirmationScreen extends ConsumerWidget {
   const OrderConfirmationScreen({super.key});
 
@@ -24,7 +28,7 @@ class OrderConfirmationScreen extends ConsumerWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           vertical: Spacing.extraSmall,
           horizontal: Spacing.small,
         ),
@@ -33,8 +37,8 @@ class OrderConfirmationScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Thank you!", style: context.textTheme.displayLarge),
-            Text("ORDER NUMBER #1A2B3C4D"),
-            Text(
+            const Text("ORDER NUMBER #1A2B3C4D"),
+            const Text(
               "We sent an email to email@email.com with everything you need to know about your order. Log in or register to enjoy a personalized experience and access all our services.",
             ),
           ],
@@ -42,7 +46,7 @@ class OrderConfirmationScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: Padding(
         padding: context.mediaQuery.padding.add(
-          EdgeInsets.symmetric(horizontal: Spacing.small),
+          const EdgeInsets.symmetric(horizontal: Spacing.small),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
