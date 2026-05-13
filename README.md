@@ -21,6 +21,38 @@ This is a repository for an e-commerce Flutter app template. Its current behavio
    - `cd alfie_flutter && flutter run`
 
 
+## Contributing
+
+### Commit Message Convention
+
+- Use descriptive commit messages that explain the change clearly.
+- Follow a simple structure: `ALFMOB-[Ticket ID]: short summary`.
+- Examples:
+  - `ALFMOB-111: Added Unit Tests for New Adapters`
+  - `ALFMOB-413: Added Dynamic Payment Card List`
+- See the repository commit message template [commit message template](/.gitmessage).
+
+### PR Rules
+
+- Keep pull requests small and focused.
+- Describe what changed, why it changed, and how to test it.
+- Link the relevant ticket.
+- Ensure all tests pass (locally or through the CI runs) before creating a PR.
+- One obligatory revision is required before merging.
+- Use the [PR template](/.github/pull_request_template.md) when opening a PR, filling only the relevant sections.
+
+### Branching Convention
+
+- Use branch names that describe the work and allways reference the ticket.
+- Recommended prefixes:
+  - `task/` for new tickets
+  - `chore/` for CI/CD related branches
+  - `bug/` for bug fixes
+  - `hotfix/` for urgent production fixes
+  - `release/` for release preparation
+- Example: `task/ALFMOB-[Ticket ID]-Checkout-Scree`
+
+
 ## Architecture 
 
 This project uses the MVVM architecture model as reccommended by the [Flutter Documentation](https://docs.flutter.dev/app-architecture/guide).
