@@ -56,7 +56,7 @@ jobs:
       - uses: futureware-tech/simulator-action@e89aa8f93d3aec35083ff49d2854d07f7186f7f5
         if: matrix.platform == 'iOS'
         with:
-          model: 'iPhone 15 Pro' 
+          model: 'iPhone 17 Pro' 
 
       - name: Wait for Simulator
         if: matrix.platform == 'iOS'
