@@ -11,4 +11,7 @@ extension AppContextExtension on BuildContext {
 
   /// Shorthand for [MediaQuery.of(context)].
   MediaQueryData get mediaQuery => MediaQuery.of(this);
+
+  /// Unfocuses the current focus node, dismissing the keyboard if visible.
+  void unfocus() => FocusScope.of(this).unfocus();
 }
