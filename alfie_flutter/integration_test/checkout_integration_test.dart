@@ -101,6 +101,9 @@ void main() {
         await tester.enterText(find.byType(TextFormField).at(3), '+1234567890');
         await tester.pumpAndSettle();
 
+        await tester.ensureVisible(
+          find.widgetWithText(ElevatedButton, 'Continue').first,
+        );
         await tester.tap(find.widgetWithText(ElevatedButton, 'Continue').first);
         await tester.pumpAndSettle();
 
