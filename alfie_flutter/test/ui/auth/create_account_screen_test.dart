@@ -151,7 +151,7 @@ void main() {
         await tester.enterText(fields.at(1), 'Doe');
         await tester.enterText(fields.at(2), 'jane.doe@example.com');
         await tester.enterText(fields.at(3), 'Password123!');
-        await tester.enterText(fields.at(4), '+1234567890');
+        await tester.enterText(fields.at(4), '+44 7700 900000');
 
         final termsCheckbox = find.widgetWithText(
           CheckboxTile,
@@ -211,7 +211,7 @@ void main() {
         await tester.enterText(fields.at(1), 'Doe');
         await tester.enterText(fields.at(2), 'jane.doe@example.com');
         await tester.enterText(fields.at(3), 'Password123!');
-        await tester.enterText(fields.at(4), '+1234567890');
+        await tester.enterText(fields.at(4), '+44 7700 900000');
 
         final termsCheckbox = find.widgetWithText(
           CheckboxTile,

@@ -102,7 +102,10 @@ void main() {
           find.byType(TextFormField).at(2),
           'john@example.com',
         );
-        await tester.enterText(find.byType(TextFormField).at(3), '1234567890');
+        await tester.enterText(
+          find.byType(TextFormField).at(3),
+          '+44 7700 900000',
+        );
 
         await tester.pumpAndSettle();
 
@@ -128,7 +131,7 @@ void main() {
         firstName: 'Jane',
         lastName: 'Doe',
         email: 'jane@example.com',
-        phoneNumber: '1234567890',
+        phoneNumber: '+44 7700 900000',
       );
 
       final mockViewModel = FakeCheckoutViewModel(
@@ -144,7 +147,7 @@ void main() {
       expect(find.text('Jane'), findsOneWidget);
       expect(find.text('Doe'), findsOneWidget);
       expect(find.text('jane@example.com'), findsOneWidget);
-      expect(find.text('1234567890'), findsOneWidget);
+      expect(find.text('+44 7700 900000'), findsOneWidget);
 
       // Tap Continue
       await tester.tap(find.widgetWithText(AppButton, 'Continue'));

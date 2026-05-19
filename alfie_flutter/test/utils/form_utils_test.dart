@@ -52,7 +52,7 @@ void main() {
     // --- Phone Number Validation ---
     group('validatePhoneNumber', () {
       test('should return null when a valid phone number is provided', () {
-        const validPhone = '+1234567890';
+        const validPhone = '+44 7700 900000';
 
         final result = mockContext.validatePhoneNumber(validPhone);
 
