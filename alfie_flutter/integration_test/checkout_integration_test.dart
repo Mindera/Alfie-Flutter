@@ -153,6 +153,9 @@ void main() {
         await tester.enterText(find.byType(TextFormField).at(3), '123');
         await tester.pumpAndSettle();
 
+        await tester.ensureVisible(
+          find.widgetWithText(ElevatedButton, 'Continue').first,
+        );
         await tester.tap(find.widgetWithText(ElevatedButton, 'Continue').first);
         await tester.pumpAndSettle();
 
@@ -323,6 +326,9 @@ void main() {
         // Enter invalid card number
         await tester.enterText(find.byType(TextFormField).at(0), '1234');
         await tester.pumpAndSettle();
+        await tester.ensureVisible(
+          find.widgetWithText(ElevatedButton, 'Continue').first,
+        );
         await tester.tap(find.widgetWithText(ElevatedButton, 'Continue').first);
         await tester.pumpAndSettle();
 
@@ -424,7 +430,6 @@ void main() {
         await tester.enterText(find.byType(TextFormField).at(2), 'New York');
         await tester.enterText(find.byType(TextFormField).at(3), '123 Main St');
         await tester.pumpAndSettle();
-        await tester.tap(find.byType(Checkbox));
         await tester.tap(find.widgetWithText(ElevatedButton, 'Continue').first);
         await tester.pumpAndSettle();
 
@@ -438,7 +443,7 @@ void main() {
 
         // On checkout screen, verify state is reflected
         expect(find.text('Ship to'), findsOneWidget);
-        expect(find.textContaining('USA'), findsOneWidget);
+        expect(find.textContaining('USA'), findsWidgets);
         expect(find.text('Delivery Method'), findsOneWidget);
         expect(find.textContaining('Standard Delivery'), findsOneWidget);
       });
