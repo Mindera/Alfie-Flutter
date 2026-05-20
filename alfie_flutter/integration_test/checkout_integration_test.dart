@@ -91,14 +91,23 @@ void main() {
         // Should be on contact information screen
         expect(find.text('Contact Info'), findsOneWidget);
 
-        // Fill contact information using TextFormField (AppInputField wraps TextFormField)
-        await tester.enterText(find.byType(TextFormField).at(0), 'John');
-        await tester.enterText(find.byType(TextFormField).at(1), 'Doe');
+        // Fill contact information using Explicit Keys
         await tester.enterText(
-          find.byType(TextFormField).at(2),
+          find.byKey(const Key('contact_first_name_field')),
+          'John',
+        );
+        await tester.enterText(
+          find.byKey(const Key('contact_last_name_field')),
+          'Doe',
+        );
+        await tester.enterText(
+          find.byKey(const Key('contact_email_field')),
           'john.doe@example.com',
         );
-        await tester.enterText(find.byType(TextFormField).at(3), '+1234567890');
+        await tester.enterText(
+          find.byKey(const Key('contact_phone_field')),
+          '+1234567890',
+        );
         await tester.pumpAndSettle();
 
         await tester.ensureVisible(
@@ -110,11 +119,23 @@ void main() {
         // Should be on delivery information screen
         expect(find.text('Delivery Information'), findsOneWidget);
 
-        // Fill delivery address using TextFormField (AppInputField wraps TextFormField)
-        await tester.enterText(find.byType(TextFormField).at(0), 'USA');
-        await tester.enterText(find.byType(TextFormField).at(1), '12345');
-        await tester.enterText(find.byType(TextFormField).at(2), 'New York');
-        await tester.enterText(find.byType(TextFormField).at(3), '123 Main St');
+        // Fill delivery address using Explicit Keys
+        await tester.enterText(
+          find.byKey(const Key('delivery_country_field')),
+          'USA',
+        );
+        await tester.enterText(
+          find.byKey(const Key('delivery_postal_code_field')),
+          '12345',
+        );
+        await tester.enterText(
+          find.byKey(const Key('delivery_city_field')),
+          'New York',
+        );
+        await tester.enterText(
+          find.byKey(const Key('delivery_street_field')),
+          '123 Main St',
+        );
         await tester.pumpAndSettle();
 
         await tester.tap(find.widgetWithText(ElevatedButton, 'Continue').first);
@@ -146,14 +167,20 @@ void main() {
         await tester.tap(find.text('Add new card'));
         await tester.pumpAndSettle();
 
-        // Fill card details in modal order using TextFormField
+        // Fill card details in modal order using Explicit Keys
         await tester.enterText(
-          find.byType(TextFormField).at(0),
+          find.byKey(const Key('card_number_field')),
           '4111111111111111',
         );
-        await tester.enterText(find.byType(TextFormField).at(1), 'John Doe');
-        await tester.enterText(find.byType(TextFormField).at(2), '12/30');
-        await tester.enterText(find.byType(TextFormField).at(3), '123');
+        await tester.enterText(
+          find.byKey(const Key('card_name_field')),
+          'John Doe',
+        );
+        await tester.enterText(
+          find.byKey(const Key('card_expiry_field')),
+          '12/30',
+        );
+        await tester.enterText(find.byKey(const Key('card_cvv_field')), '123');
         await tester.pumpAndSettle();
 
         await tester.ensureVisible(
@@ -326,8 +353,11 @@ void main() {
         await tester.tap(find.text('Add new card'));
         await tester.pumpAndSettle();
 
-        // Enter invalid card number
-        await tester.enterText(find.byType(TextFormField).at(0), '1234');
+        // Enter invalid card number using Explicit Keys
+        await tester.enterText(
+          find.byKey(const Key('card_number_field')),
+          '1234',
+        );
         await tester.pumpAndSettle();
         await tester.ensureVisible(
           find.widgetWithText(ElevatedButton, 'Continue').first,
@@ -359,9 +389,9 @@ void main() {
             .first;
         expect(tester.widget<ElevatedButton>(continueButton).enabled, isFalse);
 
-        // Fill some fields but not all
+        // Fill some fields but not all using Explicit Keys
         await tester.enterText(
-          find.byType(TextFormField).at(2),
+          find.byKey(const Key('contact_email_field')),
           'test@example.com',
         );
         await tester.pumpAndSettle();
@@ -369,10 +399,19 @@ void main() {
         // Button should still be disabled
         expect(tester.widget<ElevatedButton>(continueButton).enabled, isFalse);
 
-        // Fill all required fields
-        await tester.enterText(find.byType(TextFormField).at(0), 'John');
-        await tester.enterText(find.byType(TextFormField).at(1), 'Doe');
-        await tester.enterText(find.byType(TextFormField).at(3), '+1234567890');
+        // Fill all required fields using Explicit Keys
+        await tester.enterText(
+          find.byKey(const Key('contact_first_name_field')),
+          'John',
+        );
+        await tester.enterText(
+          find.byKey(const Key('contact_last_name_field')),
+          'Doe',
+        );
+        await tester.enterText(
+          find.byKey(const Key('contact_phone_field')),
+          '+1234567890',
+        );
         await tester.pumpAndSettle();
 
         // Button should now be enabled
@@ -415,23 +454,44 @@ void main() {
         await tester.tap(find.text('CONTINUE AS GUEST'));
         await tester.pumpAndSettle();
 
-        // Fill contact info
-        await tester.enterText(find.byType(TextFormField).at(0), 'John');
-        await tester.enterText(find.byType(TextFormField).at(1), 'Doe');
+        // Fill contact info using Explicit Keys
         await tester.enterText(
-          find.byType(TextFormField).at(2),
+          find.byKey(const Key('contact_first_name_field')),
+          'John',
+        );
+        await tester.enterText(
+          find.byKey(const Key('contact_last_name_field')),
+          'Doe',
+        );
+        await tester.enterText(
+          find.byKey(const Key('contact_email_field')),
           'john@example.com',
         );
-        await tester.enterText(find.byType(TextFormField).at(3), '+1234567890');
+        await tester.enterText(
+          find.byKey(const Key('contact_phone_field')),
+          '+1234567890',
+        );
         await tester.pumpAndSettle();
         await tester.tap(find.widgetWithText(ElevatedButton, 'Continue').first);
         await tester.pumpAndSettle();
 
-        // Fill delivery info
-        await tester.enterText(find.byType(TextFormField).at(0), 'USA');
-        await tester.enterText(find.byType(TextFormField).at(1), '12345');
-        await tester.enterText(find.byType(TextFormField).at(2), 'New York');
-        await tester.enterText(find.byType(TextFormField).at(3), '123 Main St');
+        // Fill delivery info using Explicit Keys
+        await tester.enterText(
+          find.byKey(const Key('delivery_country_field')),
+          'USA',
+        );
+        await tester.enterText(
+          find.byKey(const Key('delivery_postal_code_field')),
+          '12345',
+        );
+        await tester.enterText(
+          find.byKey(const Key('delivery_city_field')),
+          'New York',
+        );
+        await tester.enterText(
+          find.byKey(const Key('delivery_street_field')),
+          '123 Main St',
+        );
         await tester.pumpAndSettle();
         await tester.tap(find.widgetWithText(ElevatedButton, 'Continue').first);
         await tester.pumpAndSettle();

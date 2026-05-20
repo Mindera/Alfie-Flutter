@@ -78,6 +78,7 @@ class DeliveryInformationScreen extends HookConsumerWidget {
                     textAlign: TextAlign.left,
                   ),
                   AddressFields(
+                    keyPrefix: 'delivery',
                     address: deliveryAddress.value,
                     onChanged: (newAddress) =>
                         deliveryAddress.value = newAddress,
@@ -102,6 +103,7 @@ class DeliveryInformationScreen extends HookConsumerWidget {
                   ),
                   if (!billingCheckbox.value)
                     AddressFields(
+                      keyPrefix: 'billing',
                       address: billingAddress.value,
                       onChanged: (newAddress) =>
                           billingAddress.value = newAddress,
