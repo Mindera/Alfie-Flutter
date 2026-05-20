@@ -108,6 +108,8 @@ void main() {
           find.byKey(const Key('contact_phone_field')),
           '+1234567890',
         );
+
+        FocusManager.instance.primaryFocus?.unfocus();
         await tester.pumpAndSettle();
 
         await tester.ensureVisible(
