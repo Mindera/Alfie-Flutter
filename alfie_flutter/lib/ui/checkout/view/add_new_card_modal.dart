@@ -66,6 +66,7 @@ class AddNewCardModal extends HookConsumerWidget {
                   children: [
                     AppInputField(
                       "Card Number",
+                      key: const Key('card_number_field'),
                       keyboardType: TextInputType.number,
                       validator: context.validateCardNumber,
                       onChanged: (value) => card.value = card.value.copyWith(
@@ -81,6 +82,7 @@ class AddNewCardModal extends HookConsumerWidget {
 
                     AppInputField(
                       "Name on card",
+                      key: const Key('card_name_field'),
                       keyboardType: TextInputType.text,
                       validator: (String? value) =>
                           value!.isEmpty ? "This field is required" : null,
@@ -95,6 +97,7 @@ class AddNewCardModal extends HookConsumerWidget {
                         Expanded(
                           child: AppInputField(
                             "Expiry Date",
+                            key: const Key('card_expiry_field'),
                             validator: context.validateDate,
                             keyboardType: TextInputType.datetime,
                             inputFormatters: [
@@ -118,6 +121,7 @@ class AddNewCardModal extends HookConsumerWidget {
                         Expanded(
                           child: AppInputField(
                             "CVV",
+                            key: const Key('card_cvv_field'),
                             validator: context.validateCVV,
                             keyboardType: TextInputType.number,
                             onChanged: (value) {
