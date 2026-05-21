@@ -87,6 +87,70 @@ This project uses the MVVM architecture model as reccommended by the [Flutter Do
 
 _Note: For more detail go see the flutter documentation._
 
+
+## State Management
+
+This project uses **Riverpod** for global state and **Flutter Hooks** for local widget state. We keep UI declarative, with no mutable global variables or `StatefulWidget`s.
+
+### State Management Philosophy
+
+- **Providers own state**. Views consume providers and dispatch notifier actions.
+- **UI is declarative**. Widgets reflect state instead of mutating it directly.
+- **Separation of concerns**: ViewModels handle presentation logic, Repositories handle data, Services handle external APIs.
+- **Immutable flow** prevents hidden state and keeps behavior predictable.
+
+### Application State (Riverpod) vs. Ephemetal State (Hooks)
+
+#### Riverpod Providers
+
+Used for shared application state and domain logic:
+
+- auth, bag contents, product listings
+- GraphQL queries and async operations
+- ViewModels exposing presentation state
+
+**Do / Don't**
+
+- **Do:** use `ref.watch(provider)` to subscribe and rebuild.
+- **Do:** prefer `ref.watch(provider.select(...))` for fine-grained updates.
+- **Do:** use `ref.listen(provider, callback)` for side effects.
+- **Don't:** use `ref.read(provider)` in `build()`; reserve it for callbacks and effects.
+
+Example:
+
+```dart
+final authRepositoryProvider = NotifierProvider<AuthRepository, User?>(
+  AuthRepository.new,
+);
+```
+
+#### Flutter Hooks
+
+Used for ephemeral (local) widget state without `StatefulWidget`:
+
+- controllers like `TextEditingController` or `ScrollController`
+- transient UI state and validation
+- lifecycle-bound effects
+
+Custom hook example:
+
+```dart
+ScrollController useScrollToTop(WidgetRef ref, String routeName) {
+  final controller = useScrollController();
+
+  ref.listen(scrollProvider(routeName), (prev, next) {
+    if (controller.hasClients && controller.offset > 0) {
+      controller.animateTo(0, duration: const Duration(milliseconds: 300));
+    }
+  });
+
+  return controller;
+}
+```
+
+
+
+
 ## GraphQL
 
 This project relies on a mock GraphQL API for product and checkout data. You must run the mock server separately, as described in the [Alfie-Mocks documentation](https://github.com/Mindera/Alfie-Mocks).
