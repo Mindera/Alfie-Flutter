@@ -1,10 +1,9 @@
 import 'package:alfie_flutter/data/models/brand.dart';
 import 'package:hive/hive.dart';
 
-/// A Hive [TypeAdapter] that handles binary serialization for [Brand].
+/// A Hive [TypeAdapter] for binary serialization of [Brand] entities.
 class BrandAdapter extends TypeAdapter<Brand> {
   /// The unique identifier for this type within Hive.
-  /// Keep this constant to avoid data corruption during migrations.
   @override
   final int typeId = 1;
 

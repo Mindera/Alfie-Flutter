@@ -5,10 +5,15 @@ import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_view
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Organizes the interior body slivers of the Product Listing Page.
+///
+/// Binds the filter header and core grid content into a unified [SliverMainAxisGroup],
+/// delegating layout preferences down from the [productListingViewModelProvider].
 class ProductListingView extends ConsumerWidget {
-  const ProductListingView({super.key, required this.id});
-
+  /// The unique query or category identifier defining this listing.
   final ProductListingId id;
+
+  const ProductListingView({super.key, required this.id});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

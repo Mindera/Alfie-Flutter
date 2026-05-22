@@ -2,7 +2,7 @@ import 'package:alfie_flutter/data/models/media.dart';
 import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:hive/hive.dart';
 
-/// A Hive [TypeAdapter] that handles binary serialization for [ProductColor].
+/// A Hive [TypeAdapter] for binary serialization of [ProductColor] entities.
 class ProductColorAdapter extends TypeAdapter<ProductColor> {
   @override
   final int typeId = 12;

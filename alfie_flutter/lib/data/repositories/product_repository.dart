@@ -8,15 +8,15 @@ import 'package:alfie_flutter/utils/graphql_executor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-/// Provider for the [GraphQLProductRepository] instance.
-///
-/// Manages the lifecycle of the product repository and injects the GraphQL client dependency.
+/// Provides the active [IProductRepository] instance for catalog data retrieval.
 final graphQLRepositoryProvider = Provider<IProductRepository>((ref) {
   final client = ref.watch(gqlClientProvider);
   return GraphQLProductRepository(client);
 });
 
-/// Provider that fetches and caches a single product by its ID.
+/// Orchestrates the asynchronous fetching and caching of a single [Product].
+///
+/// Automatically invalidates and refetches when [productId] changes.
 final getProductProvider = FutureProvider.family<Product?, String>((
   ref,
   productId,
@@ -25,7 +25,9 @@ final getProductProvider = FutureProvider.family<Product?, String>((
   return repository.getProduct(productId);
 });
 
-/// Provider that fetches and caches product listings with filtering and sorting.
+/// Orchestrates the asynchronous fetching of [ProductListing]s based on supplied [ProductListingParams].
+///
+/// Consumed by collection pages and search result views.
 final getProductListingProvider =
     FutureProvider.family<ProductListing?, ProductListingParams>((
       ref,
@@ -41,12 +43,14 @@ final getProductListingProvider =
       );
     });
 
-/// Contract for product data operations.
+/// Contract for domain-level product catalog operations.
 abstract interface class IProductRepository {
-  /// Fetches a single product by its ID, or `null` if not found.
+  /// Fetches a specific [Product] by its internal catalog [id].
+  ///
+  /// Returns `null` if the item does not exist or is unpublished.
   Future<Product?> getProduct(String id);
 
-  /// Fetches a paginated list of products with optional filtering and sorting.
+  /// Fetches a paginated result set of products constrained by the provided parameters.
   Future<ProductListing?> getProductListing({
     required int offset,
     required int limit,
@@ -56,14 +60,13 @@ abstract interface class IProductRepository {
   });
 }
 
-/// Implementation of [IProductRepository] using GraphQL.
+/// GraphQL-based implementation of [IProductRepository].
 ///
-/// Uses a cache-first strategy to minimize network requests and improve performance.
-/// Transforms GraphQL response data into domain models using mapper extensions.
+/// Executes queries via [GraphQLExecutor] and maps the raw DTO fragments
+/// into pure domain models to insulate the application from network layer contracts.
 final class GraphQLProductRepository implements IProductRepository {
   final GraphQLClient _client;
 
-  /// Creates a new instance with the provided GraphQL [client].
   GraphQLProductRepository(this._client);
 
   @override
@@ -105,27 +108,16 @@ final class GraphQLProductRepository implements IProductRepository {
   }
 }
 
-/// Parameters for fetching a product listing.
+/// Encapsulates filtering, sorting, and pagination state into a single query object.
 ///
-/// Groups pagination, filtering, and sorting parameters
-/// to be passed as a single argument to the provider.
+/// Facilitates caching and identity comparison within [getProductListingProvider].
 final class ProductListingParams {
-  /// The zero-based offset for pagination.
   final int offset;
-
-  /// The maximum number of products per page.
   final int limit;
-
-  /// Optional category filter.
   final String? categoryId;
-
-  /// Optional search query for filtering products.
   final String? query;
-
-  /// Optional sorting order for results.
   final ProductListingSort? sort;
 
-  /// Creates a new [ProductListingParams] instance.
   ProductListingParams({
     this.offset = 0,
     this.limit = 10,

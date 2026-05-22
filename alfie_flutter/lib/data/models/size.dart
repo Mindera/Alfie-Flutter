@@ -1,27 +1,20 @@
-/// Represents a size option for a product.
-///
-/// A size can belong to a size guide for standardized sizing across a collection,
-/// and may include scale information (e.g., EU, US) and additional descriptions.
-final class ProductSize {
-  /// The unique identifier for this size.
+/// Represents a discrete sizing standard for a variant.
+class ProductSize {
   final String id;
 
-  /// The size value (e.g., "M", "10", "42").
+  /// The readable size designation (e.g., "M", "10", "42").
   final String value;
 
-  /// The sizing scale or standard this size follows (e.g., "US", "EU", "UK"),
-  /// or null if the size is not part of a specific scale system.
+  /// The geographical or standard scale system this size adheres to (e.g., "US", "EU").
   final String? scale;
 
-  /// Additional information about this size, or null if not applicable.
+  /// Supplementary details regarding the fit or measurement.
   final String? description;
 
-  /// The size guide this size belongs to, providing context and comparison
-  /// with other sizes in the same standard, or null if no guide is available.
+  /// The parent [SizeGuide] defining the broader sizing context for this item.
   final SizeGuide? sizeGuide;
 
-  /// Creates a new [ProductSize] instance.
-  ProductSize({
+  const ProductSize({
     required this.id,
     required this.value,
     this.scale,
@@ -30,26 +23,20 @@ final class ProductSize {
   });
 }
 
-/// Represents a standardized size guide for a collection of sizes.
-///
-/// Groups related sizes (e.g., all sizes in the EU standard) to help
-/// customers understand size relationships and make informed choices.
-final class SizeGuide {
-  /// The unique identifier for this size guide.
+/// Represents a standardized classification grouping related [ProductSize] entities.
+class SizeGuide {
   final String id;
 
-  /// The display name of the size guide (e.g., "European Sizes", "US Standard").
+  /// The display name for the measurement standard (e.g., "European Sizes").
   final String name;
 
-  /// Additional information about this size guide (e.g., measurement instructions),
-  /// or null if not applicable.
+  /// Contextual instructions or measurement methodologies for this guide.
   final String? description;
 
-  /// The list of sizes defined by this size guide.
+  /// The collection of individual sizes bounded by this guide.
   final List<ProductSize> sizes;
 
-  /// Creates a new [SizeGuide] instance.
-  SizeGuide({
+  const SizeGuide({
     required this.id,
     required this.name,
     this.description,

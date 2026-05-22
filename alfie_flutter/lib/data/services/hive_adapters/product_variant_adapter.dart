@@ -3,7 +3,7 @@ import 'package:alfie_flutter/data/models/product_variant.dart';
 import 'package:alfie_flutter/data/models/size.dart';
 import 'package:hive/hive.dart';
 
-/// A Hive [TypeAdapter] that handles binary serialization for [ProductVariant].
+/// A Hive [TypeAdapter] for binary serialization of [ProductVariant] entities.
 class ProductVariantAdapter extends TypeAdapter<ProductVariant> {
   @override
   final int typeId = 13;

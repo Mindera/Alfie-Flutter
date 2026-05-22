@@ -1,0 +1,75 @@
+/// Represents a physical location for shipping or billing purposes.
+class Address {
+  final String country;
+  final String postalCode;
+  final String city;
+  final String street;
+  final String? addressLine2;
+
+  const Address({
+    required this.country,
+    required this.city,
+    required this.postalCode,
+    required this.street,
+    this.addressLine2,
+  });
+
+  const Address.empty()
+    : country = "",
+      postalCode = "",
+      city = "",
+      street = "",
+      addressLine2 = null;
+
+  Address copyWith({
+    String? country,
+    String? postalCode,
+    String? city,
+    String? street,
+    String? addressLine2,
+  }) {
+    return Address(
+      country: country ?? this.country,
+      city: city ?? this.city,
+      postalCode: postalCode ?? this.postalCode,
+      street: street ?? this.street,
+      addressLine2: addressLine2 ?? this.addressLine2,
+    );
+  }
+
+  /// Validates that all required physical location fields are populated.
+  bool isValid() =>
+      country.isNotEmpty &&
+      city.isNotEmpty &&
+      postalCode.isNotEmpty &&
+      street.isNotEmpty;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Address &&
+        other.country == country &&
+        other.postalCode == postalCode &&
+        other.city == city &&
+        other.street == street &&
+        other.addressLine2 == addressLine2;
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(country, postalCode, city, street, addressLine2);
+
+  @override
+  String toString() {
+    final parts = <String>[
+      street,
+      if (addressLine2 != null && addressLine2!.isNotEmpty) addressLine2!,
+      city,
+      postalCode,
+      country,
+    ];
+
+    return parts.where((e) => e.isNotEmpty).join(', ');
+  }
+}

@@ -1,0 +1,68 @@
+import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
+import 'package:alfie_flutter/ui/core/themes/colors.dart';
+import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
+import 'package:flutter/material.dart';
+
+/// A reusable navigational tile representing a distinct step in the checkout funnel.
+///
+/// Displays the current state of a checkout requirement (e.g., selected address)
+/// or prompts the user via [nullValueFallBackMessage] if data is missing.
+class CheckoutItem extends StatelessWidget {
+  final String? label;
+  final String? content;
+  final String nullValueFallBackMessage;
+  final VoidCallback? onPressed;
+
+  const CheckoutItem({
+    super.key,
+    this.label,
+    this.content,
+    this.onPressed,
+    this.nullValueFallBackMessage = "No data",
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => onPressed?.call(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: Spacing.small),
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(
+                spacing: Spacing.extraSmall,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (label != null)
+                    SizedBox(
+                      width: 70,
+                      child: Text(
+                        label!,
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: AppColors.neutral500,
+                        ),
+                      ),
+                    ),
+
+                  Expanded(
+                    child: content != null
+                        ? Text(content!)
+                        : Text(
+                            nullValueFallBackMessage,
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              color: AppColors.neutral400,
+                            ),
+                          ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(AppIcons.chevronRight),
+          ],
+        ),
+      ),
+    );
+  }
+}

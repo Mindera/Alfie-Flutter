@@ -1,9 +1,7 @@
 import 'package:alfie_flutter/utils/form_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
-class MockBuildContext extends Mock implements BuildContext {}
+import '../../testing/mocks.dart';
 
 void main() {
   late MockBuildContext mockContext;
@@ -54,7 +52,7 @@ void main() {
     // --- Phone Number Validation ---
     group('validatePhoneNumber', () {
       test('should return null when a valid phone number is provided', () {
-        const validPhone = '+1234567890';
+        const validPhone = '+44 7700 900000';
 
         final result = mockContext.validatePhoneNumber(validPhone);
 

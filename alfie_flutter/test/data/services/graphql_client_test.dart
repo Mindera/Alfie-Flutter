@@ -6,8 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:graphql/client.dart';
+import 'package:mocktail/mocktail.dart';
+
+class MockEnvironment extends Mock implements Environment {}
 
 void main() {
+  late MockEnvironment mockEnvironment;
   setUp(() async {
     final tempDir = Directory.systemTemp.createTempSync();
 
@@ -15,13 +19,19 @@ void main() {
 
     await HiveStore.openBox(HiveStore.defaultBoxName);
 
-    await Environment.load();
+    mockEnvironment = MockEnvironment();
   });
 
   test(
     'gqlClientProvider initializes all dependencies and returns a client',
     () {
-      final container = ProviderContainer();
+      final container = ProviderContainer(
+        overrides: [environmentProvider.overrideWithValue(mockEnvironment)],
+      );
+
+      when(
+        () => mockEnvironment.graphqlServerUrl,
+      ).thenReturn('http://localhost:4000/');
 
       addTearDown(container.dispose);
 
@@ -34,7 +44,7 @@ void main() {
       expect(client.cache.store, isA<HiveStore>());
 
       final httpLink = client.link as HttpLink;
-      expect(httpLink.uri.toString(), Environment.instance.graphqlServerUrl);
+      expect(httpLink.uri.toString(), mockEnvironment.graphqlServerUrl);
     },
   );
 }

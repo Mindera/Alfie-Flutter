@@ -3,50 +3,44 @@ import 'package:alfie_flutter/data/models/price_range.dart';
 import 'package:alfie_flutter/data/models/product_color.dart';
 import 'package:alfie_flutter/data/models/product_variant.dart';
 
-/// Represents a product in the catalog.
-///
-/// A product is a high-level item with general information (name, description, brand)
-/// and multiple variants that differ by size, color, or other attributes.
-/// Each variant has its own SKU, pricing, and stock information.
+/// Represents a base catalog item aggregating all of its available configurations.
 class Product {
-  /// The unique identifier for this product.
+  /// The unique system identifier for this product.
   final String id;
 
-  /// A product style or design number used for internal identification and categorization.
+  /// The internal catalog categorization and tracking number.
   final String styleNumber;
 
-  /// The formal name of the product.
+  /// The formal display name of the product.
   final String name;
 
-  /// The brand of the product.
+  /// The manufacturer or associated [Brand].
   final Brand brand;
 
-  /// The price range for this product across all variants,
-  /// or null if pricing information is not available.
+  /// The computed pricing boundaries across all underlying [variants].
+  ///
+  /// Returns `null` if pricing cannot be determined.
   final PriceRange? priceRange;
 
-  /// A brief description of the product.
+  /// A concise summary for listing and preview contexts.
   final String shortDescription;
 
-  /// A detailed description of the product
-  /// or null if no detailed description is available.
+  /// The comprehensive product details for dedicated viewing contexts.
   final String? longDescription;
 
-  /// Additional product attributes or specifications
-  /// or null if there are no additional attributes.
+  /// Global specifications applying to the product across all variants.
   final Map<String, String>? attributes;
 
-  /// The default variant selected when first viewing the product detail page.
+  /// The primary [ProductVariant] selected by default in the UI.
   final ProductVariant defaultVariant;
 
-  /// All available variants of this product.
+  /// The complete list of available physical configurations.
   final List<ProductVariant> variants;
 
-  /// Available color options for this product, or null if the product has no color variants.
+  /// The distinct [ProductColor] options available across this product's variants.
   final List<ProductColor>? colours;
 
-  /// Creates a new [Product] instance.
-  Product({
+  const Product({
     required this.id,
     required this.styleNumber,
     required this.name,
@@ -69,6 +63,6 @@ class Product {
 
   @override
   int get hashCode {
-    return Object.hash("Product", id);
+    return Object.hash(runtimeType, id);
   }
 }

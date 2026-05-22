@@ -2,6 +2,10 @@ import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 
+/// Defines the application's static routing tree and navigation hierarchy.
+///
+/// Centralizes route paths, tab configurations, and authentication requirements
+/// to ensure GoRouter configurations remain strongly typed and maintainable.
 enum AppRoute {
   // Tabs
   home(
@@ -21,15 +25,8 @@ enum AppRoute {
     isTab: true,
     icon: AppIcons.wishlist,
     children: [productDetail],
-    needsAuth: true,
   ),
-  bag(
-    path: '/bag',
-    isTab: true,
-    icon: AppIcons.bag,
-    children: [productDetail],
-    needsAuth: true,
-  ),
+  bag(path: '/bag', isTab: true, icon: AppIcons.bag, children: [productDetail]),
   account(
     path: '/account',
     isTab: true,
@@ -45,6 +42,26 @@ enum AppRoute {
   signIn(path: '/signIn'),
   createAccount(path: "/createAccount"),
   personalInformation(path: 'personalInformation'),
+  identification(
+    path: '/identification',
+    children: [contactInformation, deliveryInformation],
+  ),
+  checkout(
+    path: '/checkout',
+    children: [
+      contactInformation,
+      deliveryInformation,
+      deliveryMethod,
+      paymentMethod,
+    ],
+  ),
+
+  contactInformation(path: 'contactInformation'),
+  deliveryInformation(path: 'deliveryInformation'),
+  deliveryMethod(path: 'deliveryMethod'),
+  paymentMethod(path: 'paymentMethod'),
+  orderConfirmation(path: '/orderConfirmation'),
+
   components(
     path: 'components',
     children: [buttons, textField, checkboxes, radioButtons, slider],
@@ -72,23 +89,27 @@ enum AppRoute {
   static List<AppRoute> get tabs =>
       AppRoute.values.where((r) => r.isTab).toList();
 
+  static List<AppRoute> get rootRoutes =>
+      AppRoute.values.where((r) => r.path.startsWith('/')).toList();
+
   String get label => name.capitalize();
 
-  /// Gets the full path of a given route
+  /// Resolves the absolute URI path for this route by traversing the routing tree.
   ///
-  /// When a route can be instantiated over more than one base route, it returns the first match
+  /// If a route is nested under multiple parents, this returns the first discovered match.
   String get fullPath {
-    if (isTab) return path;
+    if (path.startsWith('/')) return path;
 
-    for (final tab in AppRoute.tabs) {
-      final calculatedPath = _searchPath(tab, this);
+    // Search starting from all root routes, not just tabs
+    for (final root in AppRoute.rootRoutes) {
+      final calculatedPath = _searchPath(root, this);
       if (calculatedPath != null) return calculatedPath;
     }
 
     return path;
   }
 
-  /// Helper to perform DFS (Depth First Search)
+  /// Recursively searches the route tree via Depth-First Search (DFS) to map the parent hierarchy.
   String? _searchPath(AppRoute current, AppRoute target) {
     if (current == target) {
       return current.path;
@@ -106,7 +127,7 @@ enum AppRoute {
     return null;
   }
 
-  /// Finds an AppRoute by its path string
+  /// Locates an [AppRoute] configuration matching the provided raw string [path].
   static AppRoute? findByPath(String path) {
     return AppRoute.values.where((route) => route.path == path).firstOrNull;
   }

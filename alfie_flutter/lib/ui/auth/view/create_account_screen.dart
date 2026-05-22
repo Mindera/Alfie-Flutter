@@ -1,4 +1,4 @@
-import 'package:alfie_flutter/data/models/user.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/ui/auth/view_model/auth_view_model.dart';
 import 'package:alfie_flutter/ui/core/themes/app_icons.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
@@ -12,19 +12,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// Handles the user registration flow and data collection.
+///
+/// Consumes [authViewModelProvider] to dispatch account creation requests.
+/// Optionally accepts [prefilledEmail] and [prefilledUserData] for seamless
+/// transition from external registration funnels or guest checkouts.
 class CreateAccountScreen extends HookConsumerWidget {
-  const CreateAccountScreen({super.key});
+  final String? prefilledEmail;
+  final UserData? prefilledUserData;
+
+  const CreateAccountScreen({
+    super.key,
+    this.prefilledEmail,
+    this.prefilledUserData,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    final firstName = useState<String?>(null);
-    final lastName = useState<String?>(null);
-    final email = useState<String?>(null);
+
+    final firstName = useState<String?>(prefilledUserData?.firstName);
+    final lastName = useState<String?>(prefilledUserData?.lastName);
+    final email = useState<String?>(prefilledUserData?.email ?? prefilledEmail);
     final password = useState<String?>(null);
-    final phone = useState<String?>(null);
+    final phone = useState<String?>(prefilledUserData?.phoneNumber);
     final acceptedTerms = useState<bool>(false);
     final wantsNewsletter = useState<bool>(false);
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Header(
@@ -57,18 +71,21 @@ class CreateAccountScreen extends HookConsumerWidget {
                       validator: context.validateName,
                       keyboardType: TextInputType.name,
                       onChanged: (value) => firstName.value = value,
+                      initialValue: firstName.value,
                     ),
                     AppInputField(
                       "Last Name",
                       validator: context.validateName,
                       keyboardType: TextInputType.name,
                       onChanged: (value) => lastName.value = value,
+                      initialValue: lastName.value,
                     ),
                     AppInputField(
                       "Email",
                       validator: context.validateEmail,
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (value) => email.value = value,
+                      initialValue: email.value,
                     ),
                     AppInputField(
                       "Password",
@@ -81,6 +98,7 @@ class CreateAccountScreen extends HookConsumerWidget {
                       validator: context.validatePhoneNumber,
                       keyboardType: TextInputType.phone,
                       onChanged: (value) => phone.value = value,
+                      initialValue: phone.value,
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -92,8 +110,7 @@ class CreateAccountScreen extends HookConsumerWidget {
                           leftCheckbox: true,
                           label:
                               r"I've read and agreed with User Terms and Conditions of Service.",
-                          onChanged: (value) =>
-                              acceptedTerms.value = value ?? false,
+                          onChanged: (value) => acceptedTerms.value = value,
                           validator: context.validateCheckbox,
                         ),
                         CheckboxTile(
@@ -101,8 +118,7 @@ class CreateAccountScreen extends HookConsumerWidget {
                           leftCheckbox: true,
                           label:
                               r"I want to receive news and special offers via email.",
-                          onChanged: (value) =>
-                              wantsNewsletter.value = value ?? false,
+                          onChanged: (value) => wantsNewsletter.value = value,
                         ),
                       ],
                     ),

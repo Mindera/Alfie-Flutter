@@ -33,7 +33,7 @@ class GraphQLExecutor {
   /// - [performQuery]: A function that executes the GraphQL query.
   /// - [parseData]: A function that transforms GraphQL query results to the domain type.
   /// - [maxRetries]: Maximum number of retries on network failures (default: 2).
-  ///   Uses exponential backoff: 1s, 2s, 3s, etc.
+  ///   Uses exponential backoff: 1s, 2s, 4s, etc.
   ///
   /// Throws:
   /// - [NetworkFailure]: On persistent network errors after retries are exhausted.
@@ -57,7 +57,7 @@ class GraphQLExecutor {
         final data = result.parsedData;
 
         log(
-          "Recieved raw data from GraphQLExecutor:\n${result.data.toString().substring(0, 100)}...",
+          "Received raw data from GraphQLExecutor:\n${result.data.toString().substring(0, 100)}...",
         );
 
         if (data == null) {

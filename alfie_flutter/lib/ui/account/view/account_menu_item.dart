@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
 
+/// A standard row-based menu item widget for the account dashboard.
 class AccountMenuItem extends StatelessWidget {
   final IconData icon;
   final String label;

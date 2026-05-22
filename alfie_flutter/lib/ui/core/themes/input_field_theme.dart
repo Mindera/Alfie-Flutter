@@ -8,10 +8,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final _inputBorderRadius = BorderRadius.circular(Spacing.extraExtraSmall);
 
 // Neutral border color for normal and focused states
-final _inputBorderColor = BorderSide(color: AppColors.neutral200);
+const _inputBorderColor = BorderSide(color: AppColors.neutral200);
 
 // Error border color for validation error state
-final _errorBorderColor = BorderSide(color: AppColors.error700);
+const _errorBorderColor = BorderSide(color: AppColors.error700);
 
 /// Provides the [InputDecorationTheme] used throughout the application.
 ///
@@ -25,11 +25,11 @@ final inputDecorationThemeProvider = Provider<InputDecorationTheme>(
 
     // This allow input fields to have height bellow the standardized 48px by material guidelines
     isDense: true,
-    prefixIconConstraints: BoxConstraints(minHeight: 40, minWidth: 40),
-    constraints: BoxConstraints(minHeight: 40, minWidth: 40),
-    suffixIconConstraints: BoxConstraints(minHeight: 40, minWidth: 40),
+    prefixIconConstraints: const BoxConstraints(minHeight: 40, minWidth: 40),
+    constraints: const BoxConstraints(minHeight: 40, minWidth: 40),
+    suffixIconConstraints: const BoxConstraints(minHeight: 40, minWidth: 40),
 
-    contentPadding: EdgeInsets.zero,
+    contentPadding: const EdgeInsets.only(),
 
     suffixIconColor: AppColors.neutral800,
     prefixIconColor: AppColors.neutral800,
@@ -62,7 +62,7 @@ final inputDecorationThemeProvider = Provider<InputDecorationTheme>(
 /// Configures the appearance of selected text, cursor, and selection handles
 /// to maintain consistent visual feedback across text input interactions.
 final textSelectionThemeProvider = Provider<TextSelectionThemeData>(
-  (ref) => TextSelectionThemeData(
+  (ref) => const TextSelectionThemeData(
     cursorColor: AppColors.neutral800,
     selectionColor: AppColors.neutral300,
     selectionHandleColor: AppColors.neutral600,

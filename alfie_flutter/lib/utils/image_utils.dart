@@ -4,7 +4,13 @@ import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
 import 'package:flutter/material.dart';
 
+/// Provides standardized factories for rendering application imagery.
 abstract class ImageFactory {
+  /// Loads a remote image from the specified [url] with a built-in fallback state.
+  ///
+  /// Utilizes [FadeInImage.assetNetwork] to transition smoothly from a local
+  /// placeholder to the downloaded asset. Renders the placeholder indefinitely
+  /// if the [url] is malformed or inaccessible.
   static Widget network(String url) {
     if (url.isEmpty) {
       return Image.asset(
@@ -37,6 +43,10 @@ abstract class ImageFactory {
     );
   }
 
+  /// Renders a remote image overlaid with a dark vertical gradient.
+  ///
+  /// Primarily used for featured content where high-contrast [foreground] text
+  /// must remain legible against unpredictable image backgrounds.
   static Stack networkWithGradient(
     String url, {
     Widget? foreground,

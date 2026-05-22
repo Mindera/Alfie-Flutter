@@ -13,23 +13,26 @@ import 'package:alfie_flutter/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// The primary detail view for a specific catalog product.
+///
+/// Consumes [productDetailViewModelProvider] via the supplied [id] to seamlessly
+/// transition between asynchronous loading, error, and content states.
 class ProductDetailScreen extends ConsumerWidget {
-  const ProductDetailScreen({required this.id, super.key});
-
+  /// The unique catalog identifier used to fetch the target product.
   final String id;
-  static const double _galleryAspectRatio = 2 / 3; // 2 : 3
+
+  static const double _galleryAspectRatio = 2 / 3;
+
+  const ProductDetailScreen({required this.id, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(productDetailViewModelProvider(id));
 
-    ProductDetailViewModel getViewModel() =>
-        ref.read(productDetailViewModelProvider(id).notifier);
-
     return Container(
       color: AppColors.neutral,
       child: state.product.when(
-        loading: () => Center(),
+        loading: () => const Center(child: AppIcons.progressIndicator),
         error: (error, stackTrace) => Center(child: Text(error.toString())),
         data: (product) {
           if (product == null) {
@@ -37,38 +40,33 @@ class ProductDetailScreen extends ConsumerWidget {
           }
           return CustomScrollView(
             slivers: [
-              // 1. Header Sliver
               SliverAppBar(
                 primary: true,
-
                 automaticallyImplyActions: false,
                 automaticallyImplyLeading: false,
-
                 flexibleSpace: FlexibleSpaceBar(
                   background: Header(
                     title: product.name.capitalizeAll(),
                     leading: IconButton(
-                      padding: EdgeInsets.zero,
+                      padding: const EdgeInsets.only(),
                       icon: Icon(AppIcons.back),
                       onPressed: () => context.safePop(),
                     ),
                     actions: [
                       IconButton(
-                        onPressed: () => getViewModel().shareProduct(),
+                        onPressed: () => ref
+                            .read(productDetailViewModelProvider(id).notifier)
+                            .shareProduct(),
                         icon: Icon(AppIcons.share),
                       ),
                     ],
                   ),
                 ),
               ),
-
-              // 2. Gallery Sliver
               SliverAppBar(
                 primary: false,
-
                 automaticallyImplyActions: false,
                 automaticallyImplyLeading: false,
-
                 expandedHeight:
                     context.mediaQuery.size.width / _galleryAspectRatio,
                 flexibleSpace: FlexibleSpaceBar(
@@ -80,7 +78,6 @@ class ProductDetailScreen extends ConsumerWidget {
                             ?.expand((color) => color.media ?? <Media>[])
                             .map((media) {
                               final mediaUrl = media.firstUrl;
-
                               return ImageFactory.network(mediaUrl);
                             })
                             .toList() ??
@@ -88,8 +85,6 @@ class ProductDetailScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-
-              // 3. Product Content Sliver
               SliverPadding(
                 padding: const EdgeInsets.all(Spacing.small),
                 sliver: SliverList(
@@ -98,8 +93,10 @@ class ProductDetailScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: Spacing.medium,
                       children: [
-                        ProductMainInfo(product: product, isOnWishlist: state.isOnWishlist),
-
+                        ProductMainInfo(
+                          product: product,
+                          isOnWishlist: state.isOnWishlist,
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           spacing: Spacing.small,

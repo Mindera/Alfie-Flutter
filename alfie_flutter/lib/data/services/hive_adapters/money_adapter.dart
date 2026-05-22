@@ -1,8 +1,9 @@
 import 'package:alfie_flutter/data/models/money.dart';
 import 'package:hive/hive.dart';
 
-/// A Hive [TypeAdapter] that handles binary serialization for [Money].
+/// A Hive [TypeAdapter] for binary serialization of [Money] entities.
 class MoneyAdapter extends TypeAdapter<Money> {
+  /// The unique identifier for this type within Hive.
   @override
   final int typeId = 2;
 

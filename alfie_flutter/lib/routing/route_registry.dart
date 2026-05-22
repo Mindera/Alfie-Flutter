@@ -1,14 +1,24 @@
+import 'package:alfie_flutter/data/models/delivery_method.dart';
+import 'package:alfie_flutter/data/models/payment_card.dart';
+import 'package:alfie_flutter/data/models/user_data.dart';
 import 'package:alfie_flutter/routing/app_route.dart';
 import 'package:alfie_flutter/ui/account/view/account_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/auth_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/create_account_screen.dart';
 import 'package:alfie_flutter/ui/bag/view/bag_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/button/buttons_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/checkbox/checkboxes_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/components_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/radio_button/radio_buttons_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/slider/slider_screen.dart';
-import 'package:alfie_flutter/ui/core/ui/text_field/text_field_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/checkout_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/contact_information_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/delivery_information_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/delivery_method_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/identification_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/order_confirmation_screen.dart';
+import 'package:alfie_flutter/ui/checkout/view/payment_method_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/buttons_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/checkboxes_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/components_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/radio_buttons_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/slider_screen.dart';
+import 'package:alfie_flutter/ui/core/ui/components_demo_screen/text_field_screen.dart';
 import 'package:alfie_flutter/ui/home/view/home_screen.dart';
 import 'package:alfie_flutter/ui/auth/view/sign_in_screen.dart';
 import 'package:alfie_flutter/ui/personal_information/view/personal_information_screen.dart';
@@ -20,12 +30,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Injectable contract for resolving routes to screens.
-abstract class RouteRegistry {
+/// Contract for resolving [AppRoute] definitions into platform-renderable [Widget]s.
+///
+/// Decoupling route definitions from UI instantiation allows for clean dependency
+/// injection and facilitates mocked navigation states during widget testing.
+abstract interface class RouteRegistry {
   Widget getScreen(AppRoute route, GoRouterState state);
 }
 
-/// Default implementation used in production.
+/// The production implementation mapping application routes to their concrete UI screens.
 class DefaultRouteRegistry implements RouteRegistry {
   const DefaultRouteRegistry();
 
@@ -47,14 +60,37 @@ class DefaultRouteRegistry implements RouteRegistry {
       AppRoute.radioButtons => RadioButtonsScreen(),
       AppRoute.slider => SliderScreen(),
       AppRoute.search => SearchScreen(),
-      AppRoute.signIn => SignInScreen(),
+      AppRoute.signIn => SignInScreen(
+        prefilledEmail: state.uri.queryParameters['email'],
+      ),
       AppRoute.personalInformation => PersonalInformationScreen(),
       AppRoute.auth => AuthScreen(),
-      AppRoute.createAccount => CreateAccountScreen(),
+      AppRoute.createAccount => CreateAccountScreen(
+        prefilledUserData: state.extra is UserData?
+            ? state.extra as UserData?
+            : null,
+        prefilledEmail: state.uri.queryParameters['email'],
+      ),
+      AppRoute.checkout => CheckoutScreen(),
+      AppRoute.identification => IdentificationScreen(),
+      AppRoute.contactInformation => ContactInformationScreen(),
+      AppRoute.deliveryInformation => DeliveryInformationScreen(),
+      AppRoute.deliveryMethod => DeliveryMethodScreen(
+        initialValue: state.extra is DeliveryMethod
+            ? state.extra as DeliveryMethod
+            : null,
+      ),
+      AppRoute.paymentMethod => PaymentMethodScreen(
+        initialValue: state.extra is PaymentCard
+            ? state.extra as PaymentCard
+            : null,
+      ),
+      AppRoute.orderConfirmation => OrderConfirmationScreen(),
     };
   }
 }
 
+/// Provides the active [RouteRegistry] implementation for the GoRouter configuration.
 final routeRegistryProvider = Provider<RouteRegistry>(
   (ref) => const DefaultRouteRegistry(),
 );

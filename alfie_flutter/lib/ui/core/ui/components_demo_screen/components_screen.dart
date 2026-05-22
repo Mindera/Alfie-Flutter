@@ -14,7 +14,7 @@ class ComponentsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(Spacing.large),
+        padding: const EdgeInsets.all(Spacing.large),
         child: ListView.separated(
           itemCount: componentsScreens.length,
           itemBuilder: (context, index) {

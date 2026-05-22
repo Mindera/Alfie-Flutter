@@ -5,12 +5,20 @@ import 'package:alfie_flutter/utils/use_scroll_to_top.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// The root destination for the "Store" navigation tab.
+///
+/// Acts as an unfiltered global catalog view by rendering a [ProductListingScreen]
+/// with an empty [ProductListingId]. Integrates the [useScrollToTop] hook to
+/// intercept and handle tab-driven scroll reset events.
 class StoreScreen extends HookConsumerWidget {
   const StoreScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = useScrollToTop(ref, AppRoute.store.fullPath);
-    return ProductListingScreen(id: ProductListingId(), controller: controller);
+    return ProductListingScreen(
+      id: const ProductListingId(),
+      controller: controller,
+    );
   }
 }

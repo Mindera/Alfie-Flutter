@@ -1,8 +1,12 @@
 import 'package:alfie_flutter/utils/app_regex.dart';
+import 'package:alfie_flutter/utils/payement_card_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:phonenumbers_core/core.dart';
 
-extension FormUtils on BuildContext {
-  String? validateName(
+/// A collection of static validation methods for evaluating user input against
+/// defined [AppRegex] patterns.
+class FormUtils {
+  static String? validateName(
     String? value, {
     String errorMessage = 'Please enter a valid name',
   }) {
@@ -13,7 +17,7 @@ extension FormUtils on BuildContext {
     );
   }
 
-  String? validatePassword(
+  static String? validatePassword(
     String? value, {
     String errorMessage = 'Password must be at least 4 characters',
   }) {
@@ -24,7 +28,7 @@ extension FormUtils on BuildContext {
     );
   }
 
-  String? validateCheckbox(
+  static String? validateCheckbox(
     bool? value, {
     String errorMessage = 'This field is required',
   }) {
@@ -34,7 +38,7 @@ extension FormUtils on BuildContext {
     return null;
   }
 
-  String? validateEmail(
+  static String? validateEmail(
     String? value, {
     String errorMessage = 'Please enter a valid email',
   }) {
@@ -45,18 +49,25 @@ extension FormUtils on BuildContext {
     );
   }
 
-  String? validatePhoneNumber(
+  static String? validatePhoneNumber(
     String? value, {
     String errorMessage = 'Please enter a valid phone number',
   }) {
-    return _validate(
-      value: value,
-      regex: AppRegex.phone,
-      errorMessage: errorMessage,
-    );
+    if (value == null || value.isEmpty) {
+      return errorMessage;
+    }
+
+    final isValid = PhoneNumber.parse(value).isValid;
+
+    if (!isValid) {
+      return errorMessage;
+    }
+
+    return null;
   }
 
-  String? _validate({
+  /// Core evaluation logic assessing the target [value] against the provided [regex].
+  static String? _validate({
     required String? value,
     required RegExp regex,
     required String errorMessage,
@@ -70,5 +81,55 @@ extension FormUtils on BuildContext {
     }
 
     return null;
+  }
+}
+
+/// Extends [BuildContext] to provide localized shorthand access to [FormUtils] methods.
+extension FormUtilsExtension on BuildContext {
+  String? validateName(
+    String? value, {
+    String errorMessage = 'Please enter a valid name',
+  }) {
+    return FormUtils.validateName(value, errorMessage: errorMessage);
+  }
+
+  String? validatePassword(
+    String? value, {
+    String errorMessage = 'Password must be at least 4 characters',
+  }) {
+    return FormUtils.validatePassword(value, errorMessage: errorMessage);
+  }
+
+  String? validateCheckbox(
+    bool? value, {
+    String errorMessage = 'This field is required',
+  }) {
+    return FormUtils.validateCheckbox(value, errorMessage: errorMessage);
+  }
+
+  String? validateEmail(
+    String? value, {
+    String errorMessage = 'Please enter a valid email',
+  }) {
+    return FormUtils.validateEmail(value, errorMessage: errorMessage);
+  }
+
+  String? validatePhoneNumber(
+    String? value, {
+    String errorMessage = 'Please enter a valid phone number',
+  }) {
+    return FormUtils.validatePhoneNumber(value, errorMessage: errorMessage);
+  }
+
+  String? validateCVV(String? value) {
+    return PaymentCardUtils.validateCVV(value);
+  }
+
+  String? validateDate(String? value) {
+    return PaymentCardUtils.validateDate(value);
+  }
+
+  String? validateCardNumber(String? value) {
+    return PaymentCardUtils.validateCardNumber(value);
   }
 }

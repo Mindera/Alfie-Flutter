@@ -3,10 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:alfie_flutter/ui/core/view_model/scroll_view_model.dart';
 
-/// A hook that manages a [ScrollController] and listens for scroll-to-top events.
+/// A hook that provisions a [ScrollController] and manages scroll-to-top event listeners.
 ///
-/// Uses [ref.listen] and ensures that the subscription is
-/// tied to the hook's lifecycle and disposed of properly.
+/// Subscribes to the provider identified by [routeName] and automatically animates
+/// the viewport back to the top-most offset when triggered. Automatically disposes
+/// of the controller alongside the widget's lifecycle.
 ScrollController useScrollToTop(WidgetRef ref, String routeName) {
   final controller = useScrollController();
 

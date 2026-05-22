@@ -5,9 +5,17 @@ import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_view
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// The root component orchestrating the Product Listing Page (PLP) experience.
+///
+/// Wraps the internal sliver view hierarchy within a [RefreshIndicator] to
+/// facilitate manual user-driven data refetching.
 class ProductListingScreen extends HookConsumerWidget {
+  /// Handles offset delegation for "scroll to top" actions triggered from the nav bar.
   final ScrollController? controller;
+
+  /// The unique query or category identifier defining this listing.
   final ProductListingId id;
+
   static const pullToRefreshEdgeOffset = 182.0;
 
   const ProductListingScreen({super.key, required this.id, this.controller});

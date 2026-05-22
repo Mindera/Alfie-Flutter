@@ -5,6 +5,19 @@ import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_id.d
 import 'package:alfie_flutter/ui/product_listing/view_model/product_listing_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// Orchestrates the presentation state for a specific product listing configuration.
+///
+/// Isolated by [ProductListingId] to ensure independent caching and scroll states
+/// across different categories or search queries.
+final productListingViewModelProvider = NotifierProvider.autoDispose
+    .family<ProductListingViewModel, ProductListingState, ProductListingId>(
+      ProductListingViewModel.new,
+    );
+
+/// State controller managing the aggregate [ProductListingState].
+///
+/// Coordinates network fetching via [getProductListingProvider] and synchronizes
+/// user display preferences with local storage.
 class ProductListingViewModel extends Notifier<ProductListingState> {
   final ProductListingId listingId;
   ProductListingSort? _currentSort;
@@ -32,14 +45,16 @@ class ProductListingViewModel extends Notifier<ProductListingState> {
     );
   }
 
+  /// Mutates the active listing by dropping the last product and forcing a provider rebuild.
   void updateCount() {
-    ProductListing? listing = state.listing.value;
+    final ProductListing? listing = state.listing.value;
     listing?.products.removeLast();
-    state = state.copyWith(listing: AsyncValue.loading());
+    state = state.copyWith(listing: const AsyncValue.loading());
 
     ref.invalidateSelf();
   }
 
+  /// Updates the PLP grid layout to the specified number of [columns] and persists the preference.
   void updateLayoutPreference(int columns) async {
     await ref
         .read(persistentStorageServiceProvider)
@@ -48,8 +63,3 @@ class ProductListingViewModel extends Notifier<ProductListingState> {
     state = state.copyWith(layoutPreference: columns);
   }
 }
-
-final productListingViewModelProvider = NotifierProvider.autoDispose
-    .family<ProductListingViewModel, ProductListingState, ProductListingId>(
-      ProductListingViewModel.new,
-    );
