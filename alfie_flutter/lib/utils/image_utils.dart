@@ -1,11 +1,20 @@
-import 'dart:math';
-
 import 'package:alfie_flutter/ui/core/themes/colors.dart';
 import 'package:alfie_flutter/ui/core/themes/spacing.dart';
+import 'package:alfie_flutter/utils/build_context_extensions.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 /// Provides standardized factories for rendering application imagery.
 abstract class ImageFactory {
+  static const Image brandPlaceholder = Image(
+    image: AssetImage('assets/images/alfie.png'),
+    fit: BoxFit.cover,
+  );
+  static const Image fallbackImage = Image(
+    image: AssetImage('assets/images/fallback_image.png'),
+    fit: BoxFit.cover,
+  );
+
   /// Loads a remote image from the specified [url] with a built-in fallback state.
   ///
   /// Utilizes [FadeInImage.assetNetwork] to transition smoothly from a local
@@ -13,31 +22,25 @@ abstract class ImageFactory {
   /// if the [url] is malformed or inaccessible.
   static Widget network(String url) {
     if (url.isEmpty) {
-      return Image.asset(
-        'assets/images/fallback_image.png',
-        fit: BoxFit.fitHeight,
-      );
+      return fallbackImage;
     }
     return LayoutBuilder(
       builder: (context, constraints) {
-        bool isPortrait = constraints.maxHeight > constraints.maxWidth;
+        final double dpr = context.mediaQuery.devicePixelRatio;
 
-        return FadeInImage.assetNetwork(
-          placeholder: 'assets/images/fallback_image.png',
-          image: url,
+        final int? targetWidth =
+            constraints.maxWidth.isFinite && constraints.maxWidth > 0
+            ? (constraints.maxWidth * dpr).round()
+            : null;
+
+        return CachedNetworkImage(
+          imageUrl: url,
           fit: BoxFit.cover,
-          imageCacheHeight: isPortrait
-              ? max(constraints.maxHeight.toInt(), 600)
-              : null,
-          imageCacheWidth: !isPortrait
-              ? max(constraints.maxWidth.toInt(), 600)
-              : null,
-          imageErrorBuilder: (context, error, stackTrace) {
-            return Image.asset(
-              'assets/images/fallback_image.png',
-              fit: BoxFit.cover,
-            );
-          },
+
+          memCacheWidth: targetWidth,
+
+          placeholder: (context, url) => fallbackImage,
+          errorWidget: (context, url, error) => fallbackImage,
         );
       },
     );
