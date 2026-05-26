@@ -135,7 +135,7 @@ class CheckoutScreen extends ConsumerWidget {
                 SizedBox(
                   width: double.infinity,
                   child: AppButton.primary(
-                    label: "Continue",
+                    label: "Place Order",
                     isDisabled: !checkoutState.canPlaceOrder,
                     onPressed: () {
                       ref.read(checkoutViewModelProvider.notifier).placeOrder();

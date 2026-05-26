@@ -182,7 +182,7 @@ void main() {
           '1',
         ); // Incomplete date (null branch)
         await tester.pumpAndSettle();
-        await tester.enterText(expiryField, '1225'); // Complete valid date
+        await tester.enterText(expiryField, '1230'); // Complete valid date
         await tester.pumpAndSettle();
 
         // 2. CVV (covers empty string branch & valid integer branch)
@@ -202,7 +202,10 @@ void main() {
           'Card Number',
         );
         await tester.ensureVisible(cardNumberField);
-        await tester.enterText(cardNumberField, '4111222233334444');
+        await tester.enterText(
+          cardNumberField,
+          '4111 1111 1111 1111',
+        ); // Valid test card number
         await tester.pumpAndSettle();
 
         // 4. Name on card
