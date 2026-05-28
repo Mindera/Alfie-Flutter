@@ -35,15 +35,15 @@ class HomeState {
 
   /// Static product category filters for the horizontal navigation carousel.
   final List<String> categories = const [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
+    "Category A",
+    "Category B",
+    "Category C",
+    "Category D",
+    "Category E",
+    "Category F",
+    "Category G",
+    "Category H",
+    "Category I",
   ];
 
   /// Static promotional banners presented in the promotion gallery.

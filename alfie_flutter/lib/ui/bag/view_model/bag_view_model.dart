@@ -1,6 +1,7 @@
 import 'package:alfie_flutter/data/models/bag_item.dart';
 import 'package:alfie_flutter/data/models/product.dart';
 import 'package:alfie_flutter/data/repositories/bag_repository.dart';
+import 'package:alfie_flutter/ui/product_detail/view_model/product_detail_view_model.dart';
 import 'package:alfie_flutter/ui/wishlist/view_model/wishlist_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -54,7 +55,9 @@ class BagViewModel extends Notifier<List<BagItem>> {
 
   /// Migrates the specified [product] to the user's saved wishlist.
   void addToWishlist(Product product) {
-    ref.read(wishlistViewModelProvider.notifier).addProduct(product);
+    ref
+        .read(productDetailViewModelProvider(product.id).notifier)
+        .addToWishlist(product);
   }
 
   /// Removes the specified [product] from the user's saved wishlist.

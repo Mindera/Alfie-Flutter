@@ -56,7 +56,7 @@ class Gallery extends HookWidget {
     final pageController = usePageController();
 
     // Tracks user interaction to temporarily pause auto-scrolling.
-    final isInteracting = useState(false);
+    final isInteracting = useRef(false);
 
     useEffect(() {
       // Avoid setting up the timer if auto-scroll is disabled,
