@@ -45,7 +45,7 @@ class VerticalProductCard extends ConsumerWidget {
                   AspectRatio(
                     aspectRatio: aspectRatio,
                     child: ImageFactory.network(
-                      product.colours!.first.media!.first.firstUrl,
+                      product.colours?.first.media?.first.firstUrl ?? "",
                     ),
                   ),
                   Column(
