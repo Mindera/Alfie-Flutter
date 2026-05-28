@@ -36,7 +36,7 @@ enum AppRoute {
   ),
   // Sub-pages
   productDetail(path: 'product/:id'),
-  search(path: 'search'),
+  search(path: 'search', children: [productDetail]),
 
   auth(path: 'auth'),
   signIn(path: '/signIn'),

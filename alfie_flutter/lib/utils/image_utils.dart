@@ -6,10 +6,6 @@ import 'package:flutter/material.dart';
 
 /// Provides standardized factories for rendering application imagery.
 abstract class ImageFactory {
-  static const Image brandPlaceholder = Image(
-    image: AssetImage('assets/images/alfie.png'),
-    fit: BoxFit.cover,
-  );
   static const Image fallbackImage = Image(
     image: AssetImage('assets/images/fallback_image.png'),
     fit: BoxFit.cover,

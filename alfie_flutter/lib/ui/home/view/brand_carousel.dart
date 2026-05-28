@@ -1,4 +1,3 @@
-import 'package:alfie_flutter/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -46,7 +45,7 @@ class BrandCarousel extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.all(Spacing.extraSmall),
             // TODO: Replace placeholder with brand.imageUrl once available in the model
-            child: ImageFactory.brandPlaceholder,
+            child: Image.asset('assets/images/alfie.png'),
           ),
         ),
       ),

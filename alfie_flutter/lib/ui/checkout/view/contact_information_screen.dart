@@ -114,6 +114,10 @@ class ContactInformationScreen extends HookConsumerWidget {
         ),
       ),
       bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.symmetric(
+          horizontal: Spacing.small,
+          vertical: Spacing.large,
+        ),
         child: Container(
           width: double.maxFinite,
           padding: const EdgeInsets.symmetric(horizontal: Spacing.small),
