@@ -1,0 +1,205 @@
+# Alfie Flutter 
+This is a repository for an e-commerce Flutter app template. Its current behavior can be seen in the following demonstration:
+
+<!-- TODO DEMONSTRATION VIDEO -->
+
+## Prerequisites
+1. This project uses a mock GraphQL API for fetching data. Mock server can be run locally as described in documentation: https://github.com/Mindera/Alfie-Mocks
+2. This project uses two .env files: `.env.dev` and `.env.prod`. Both need a variable `GRAPHQL_SERVER` with a URL to the mock server.
+
+## Setting Up the Project
+
+1. Install Flutter and Dart on your machine. This repo uses the stable Flutter channel.
+2. Create the environment files in `alfie_flutter/`:
+   - `.env.dev`
+   - `.env.prod`
+3. Add the required GraphQL endpoint variable to both files:
+   - `GRAPHQL_SERVER=<your-mock-server-url>`
+4. From the repo root, install dependencies:
+   - `cd alfie_flutter && flutter pub get`
+5. Run the app locally with:
+   - `cd alfie_flutter && flutter run`
+
+
+## Contributing
+
+### Commit Message Convention
+
+- Use descriptive commit messages that explain the change clearly.
+- Follow a simple structure: `ALFMOB-[Ticket ID]: short summary`.
+- Examples:
+  - `ALFMOB-111: Added Unit Tests for New Adapters`
+  - `ALFMOB-413: Added Dynamic Payment Card List`
+- See the repository commit message template [commit message template](/.gitmessage).
+
+### PR Rules
+
+- Keep pull requests small and focused.
+- Describe what changed, why it changed, and how to test it.
+- Link the relevant ticket.
+- Ensure all tests pass (locally or through the CI runs) before creating a PR.
+- One obligatory revision is required before merging.
+- Use the [PR template](/.github/pull_request_template.md) when opening a PR, filling only the relevant sections.
+
+### Branching Convention
+
+- Use branch names that describe the work and allways reference the ticket.
+- Recommended prefixes:
+  - `task/` for new tickets
+  - `chore/` for CI/CD related branches
+  - `bug/` for bug fixes
+  - `hotfix/` for urgent production fixes
+  - `release/` for release preparation
+- Example: `task/ALFMOB-[Ticket ID]-Checkout-Scree`
+
+
+## Architecture 
+
+This project uses the MVVM architecture model as reccommended by the [Flutter Documentation](https://docs.flutter.dev/app-architecture/guide).
+
+### View
+
+- Can be composed by multiple widgets.
+- Shouldn't have bussiness logic.
+- Can have animation logic, simple routing logic, and if-else statements to choose wich widget to render.
+
+### View Model
+
+- Should serve the View with presentation ready domain data.
+- Should expose methods for use of the view.
+
+**Important Note:** Views and View Models must have a one-to-one relationship.
+
+
+### Repositories 
+
+- Repositories are the middleground between view models and services. 
+- Should transform raw data into domain objects.
+- Should expose methods that ease the access of data.
+
+### Services
+
+- Services are the entry point of the application.
+- Should abstract external factors like APIs and Local files
+
+<br></br>
+![alt text](Docs/mvvm_diagram.png)
+
+_Note: For more detail go see the flutter documentation._
+
+
+## State Management
+
+This project uses **Riverpod** for global state and **Flutter Hooks** for local widget state. We keep UI declarative, with no mutable global variables or `StatefulWidget`s.
+
+### State Management Philosophy
+
+- **Providers own state**. Views consume providers and dispatch notifier actions.
+- **UI is declarative**. Widgets reflect state instead of mutating it directly.
+- **Separation of concerns**: ViewModels handle presentation logic, Repositories handle data, Services handle external APIs.
+- **Immutable flow** prevents hidden state and keeps behavior predictable.
+
+### Application State (Riverpod) vs. Ephemetal State (Hooks)
+
+#### Riverpod Providers
+
+Used for shared application state and domain logic:
+
+- auth, bag contents, product listings
+- GraphQL queries and async operations
+- ViewModels exposing presentation state
+
+**Do / Don't**
+
+- **Do:** use `ref.watch(provider)` to subscribe and rebuild.
+- **Do:** prefer `ref.watch(provider.select(...))` for fine-grained updates.
+- **Do:** use `ref.listen(provider, callback)` for side effects.
+- **Don't:** use `ref.read(provider)` in `build()`; reserve it for callbacks and effects.
+
+Example:
+
+```dart
+final authRepositoryProvider = NotifierProvider<AuthRepository, User?>(
+  AuthRepository.new,
+);
+```
+
+#### Flutter Hooks
+
+Used for ephemeral (local) widget state without `StatefulWidget`:
+
+- controllers like `TextEditingController` or `ScrollController`
+- transient UI state and validation
+- lifecycle-bound effects
+
+Custom hook example:
+
+```dart
+ScrollController useScrollToTop(WidgetRef ref, String routeName) {
+  final controller = useScrollController();
+
+  ref.listen(scrollProvider(routeName), (prev, next) {
+    if (controller.hasClients && controller.offset > 0) {
+      controller.animateTo(0, duration: const Duration(milliseconds: 300));
+    }
+  });
+
+  return controller;
+}
+```
+
+
+
+
+## GraphQL
+
+This project relies on a mock GraphQL API for product and checkout data. You must run the mock server separately, as described in the [Alfie-Mocks documentation](https://github.com/Mindera/Alfie-Mocks).
+
+The app reads the GraphQL endpoint from the `.env.dev` or `.env.prod` files via the `GRAPHQL_SERVER` variable.
+
+GraphQL requests and responses are generated with GraphQL code generation. The generated models are not used directly across the app; instead, manual mappers convert those generated GraphQL DTOs into the apps domain models.
+
+The mapper implementations live in `alfie_flutter/lib/graphql/extensions`, where generated GraphQL output is translated into the apps domain objects.
+
+## CI/CD
+
+The repository includes GitHub Actions workflows to validate code, run tests, and build release artifacts:
+
+- `.github/workflows/ci.yaml`
+  - Runs on push to non-main branches and on pull requests.
+  - Calls the shared `test-and-lint` workflow.
+- `.github/workflows/cd.yaml`
+  - Runs on push to `main` and `release/**` branches.
+  - Executes the same `test-and-lint` workflow first.
+  - Runs integration tests for Android and iOS on supported runners.
+  - Builds Android APK and iOS IPA/archive artifacts.
+
+Shared workflow details:
+
+- `.github/workflows/test-and-lint.yaml`
+  - Checks out code and sets up Flutter.
+  - Runs `flutter analyze` for static analysis.
+  - Executes `alfie_flutter/test_coverage.sh` to run tests and generate coverage.
+  - Optionally runs smoke integration tests on Android when enabled.
+  - Uploads LCOV coverage reports as a PR message.
+
+Helper action:
+
+- `.github/actions/setup-env`
+  - Sets up Flutter using the internal setup action.
+  - Creates empty `.env.dev` and `.env.prod` files if required.
+  - Runs `flutter pub get` in `alfie_flutter/`.
+
+## Release
+
+Release builds are handled through the CD workflow. Note that these artifacts represent "raw" builds; they are neither code-signed nor ready for production. The repository can produce:
+
+- Android APK artifact: `alfie_flutter/build/app/outputs/flutter-apk/app-release.apk`
+- iOS archive artifact: `alfie_flutter/build/ios/archive/Runner.xcarchive`
+
+For local release builds, run:
+
+- `cd alfie_flutter && flutter build apk --release`
+- `cd alfie_flutter && flutter build ipa --release --no-codesign`
+
+---
