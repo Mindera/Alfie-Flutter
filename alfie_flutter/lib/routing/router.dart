@@ -67,8 +67,8 @@ final routerProvider = Provider((ref) {
         registry,
         AppRoute.checkout.name,
         redirect: (context, state) {
-          final isLoggedIn = authStateNotifier.value is RegisteredUser;
-          if (!isLoggedIn) {
+          final hasActiveUser = authStateNotifier.value != null;
+          if (!hasActiveUser) {
             return AppRoute.identification.fullPath;
           }
           return null;

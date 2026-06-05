@@ -72,6 +72,7 @@ class ContactInformationScreen extends HookConsumerWidget {
                   children: [
                     AppInputField(
                       "First Name",
+                      key: const Key('contact_first_name_field'),
                       validator: context.validateName,
                       keyboardType: TextInputType.name,
                       initialValue: formState.value.firstName,
@@ -80,6 +81,7 @@ class ContactInformationScreen extends HookConsumerWidget {
                     ),
                     AppInputField(
                       "Last Name",
+                      key: const Key('contact_last_name_field'),
                       validator: context.validateName,
                       keyboardType: TextInputType.name,
                       initialValue: formState.value.lastName,
@@ -88,6 +90,7 @@ class ContactInformationScreen extends HookConsumerWidget {
                     ),
                     AppInputField(
                       "Email",
+                      key: const Key('contact_email_field'),
                       validator: context.validateEmail,
                       keyboardType: TextInputType.emailAddress,
                       initialValue: formState.value.email,
@@ -96,6 +99,7 @@ class ContactInformationScreen extends HookConsumerWidget {
                     ),
                     AppInputField(
                       "Phone Number",
+                      key: const Key('contact_phone_field'),
                       validator: context.validatePhoneNumber,
                       keyboardType: TextInputType.phone,
                       initialValue: formState.value.phoneNumber,
