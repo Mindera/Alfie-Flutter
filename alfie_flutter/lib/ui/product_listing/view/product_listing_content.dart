@@ -18,7 +18,7 @@ class ProductListingContent extends ConsumerWidget {
   /// The active grid cross-axis layout preference.
   final int columns;
 
-  static const ratios = {1: 0.58, 2: 0.48};
+  static const ratios = {1: 0.58, 2: 0.475};
 
   const ProductListingContent({
     super.key,
