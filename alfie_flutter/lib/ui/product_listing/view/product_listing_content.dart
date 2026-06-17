@@ -63,7 +63,11 @@ class ProductListingContent extends ConsumerWidget {
                 builder: (context, value, child) {
                   return Transform.scale(scale: value, child: child);
                 },
-                child: VerticalProductCard(product: product, label: label),
+                child: VerticalProductCard(
+                  key: ValueKey('plp_product_card_$index'),
+                  product: product,
+                  label: label,
+                ),
               );
             }, childCount: productListing.products.length),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

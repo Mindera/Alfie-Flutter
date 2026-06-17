@@ -64,6 +64,7 @@ class ProductMainInfo extends ConsumerWidget {
           children: [
             Expanded(
               child: AppButton.primary(
+                key: const Key('pdp_add_to_bag_button'),
                 label: "Add to Bag",
                 onPressed: () {
                   ref
@@ -84,7 +85,10 @@ class ProductMainInfo extends ConsumerWidget {
                 },
               ),
             ),
-            WishlistButton(product: product),
+            WishlistButton(
+              key: const Key('pdp_wishlist_button'),
+              product: product,
+            ),
           ],
         ),
       ],

@@ -82,6 +82,7 @@ class VerticalProductCard extends ConsumerWidget {
           Align(
             alignment: Alignment.topRight,
             child: WishlistButton(
+              key: ValueKey('plp_product_card_${product.id}_wishlist_button'),
               product: product,
               buttonVariant: ButtonVariant.tertiary,
             ),
