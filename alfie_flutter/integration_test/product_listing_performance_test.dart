@@ -167,10 +167,10 @@ void main() {
         await Future<void>.delayed(const Duration(seconds: 2));
 
         // 8. Perform a final scroll pass to continue exploring the list.
-        _performScrollSteps(
+        await _performScrollSteps(
           tester,
           plpScrollView,
-          6,
+          10,
           offset: const Offset(0, 100),
           pause: const Duration(milliseconds: 200),
         );
