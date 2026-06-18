@@ -21,8 +21,11 @@ Finder _findScrollable(Finder customScrollView) => find
     .descendant(of: customScrollView, matching: find.byType(Scrollable))
     .first;
 
-Finder _findPlpProductCard() =>
-    find.byType(VerticalProductCard).hitTestable().first;
+Finder _findPlpProductCard({bool useFirst = true}) {
+  final card = find.byType(VerticalProductCard).hitTestable();
+  return useFirst ? card.first : card.last;
+}
+
 Finder _findPdpWishlistButton() => find.byKey(const Key('pdp_wishlist_button'));
 Finder _findPdpAddToBagButton() =>
     find.byKey(const Key('pdp_add_to_bag_button'));
@@ -68,6 +71,49 @@ Future<void> _performScrollSteps(
   }
 }
 
+Future<void> _inspectProductAndExecuteAction(
+  WidgetTester tester,
+  Finder plpScrollView,
+  Future<void> Function() pdpAction, {
+  bool useFirstProductCard = true,
+}) async {
+  // 1. Find and open the designated product card on the PLP
+  final productCard = _findPlpProductCard(useFirst: useFirstProductCard);
+  await _scrollAndTap(tester, productCard, plpScrollView);
+
+  // 2. Execute the custom PDP behavior (Wishlist or Add to Bag)
+  await pdpAction();
+
+  // 3. Return to the PLP securely via back button navigation
+  final pdpScrollView = _findPdpScrollView();
+  await _scrollAndTap(
+    tester,
+    _findPdpBackButton(),
+    pdpScrollView,
+    scrollOffset: -300,
+  );
+}
+
+Future<void> _addProductToWishlist(
+  WidgetTester tester, {
+  bool useFirstProductCard = true,
+}) async {
+  await _inspectProductAndExecuteAction(tester, _findPlpScrollView(), () async {
+    final pdpScrollView = _findPdpScrollView();
+    await _scrollAndTap(tester, _findPdpWishlistButton(), pdpScrollView);
+  }, useFirstProductCard: useFirstProductCard);
+}
+
+Future<void> _addProductToBag(
+  WidgetTester tester, {
+  bool useFirstProductCard = true,
+}) async {
+  await _inspectProductAndExecuteAction(tester, _findPlpScrollView(), () async {
+    final pdpScrollView = _findPdpScrollView();
+    await _scrollAndTap(tester, _findPdpAddToBagButton(), pdpScrollView);
+  }, useFirstProductCard: useFirstProductCard);
+}
+
 void main() {
   // 1. Enable timeline collection explicitly
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -96,12 +142,11 @@ void main() {
       await tester.pump();
 
       log(
-        "PAUSING FOR 5 SECONDS: Please accept the local network permission popup now...",
+        "PAUSING FOR 6 SECONDS: Please accept the local network permission popup now...",
       );
-      await Future<void>.delayed(const Duration(seconds: 5));
+      await Future<void>.delayed(const Duration(seconds: 6));
       await tester.pumpAndSettle();
 
-      // Navigate to Store tab
       final storeTab = find.text('Store');
       expect(storeTab, findsOneWidget);
       await tester.tap(storeTab);
@@ -110,73 +155,33 @@ void main() {
       final plpScrollView = _findPlpScrollView();
       expect(plpScrollView, findsOneWidget);
 
-      // Allow images to pre-fetch and settle before recording begins (buffer)
       await tester.pumpAndSettle(const Duration(seconds: 2));
+
+      // =========== START OF TIMELINE-RECORDED ACTIONS ===========
 
       // 2. Profile the actions using traceAction
       await binding.traceAction(() async {
-        // 1. SCROLL
-        await _performScrollSteps(tester, plpScrollView, 6);
+        for (int i = 0; i < 5; i++) {
+          // 1. SCROLL
+          await _performScrollSteps(tester, plpScrollView, 6);
 
-        // 2. OPEN FIRST PRODUCT
-        await _scrollAndTap(tester, _findPlpProductCard(), plpScrollView);
+          // 2. add the first product to the wishlist, then return to the PLP.
+          await _addProductToWishlist(tester, useFirstProductCard: i % 2 != 0);
 
-        await Future<void>.delayed(const Duration(milliseconds: 1500));
+          // 5. Scroll a bit more and open the second product.
+          await _performScrollSteps(tester, plpScrollView, 4);
 
-        // 3. WISHLIST PRODUCT
-        await _scrollAndTap(
-          tester,
-          _findPdpWishlistButton(),
-          _findPdpScrollView(),
-        );
+          await _addProductToBag(tester, useFirstProductCard: i % 2 == 0);
 
-        // 4. Pause 1.5 seconds, then return to the PLP.
-        await Future<void>.delayed(const Duration(milliseconds: 1500));
-
-        await _scrollAndTap(
-          tester,
-          _findPdpBackButton(),
-          _findPdpScrollView(),
-          scrollOffset: -300,
-        );
-
-        // 5. Scroll a bit more and open the second product.
-        await _performScrollSteps(tester, plpScrollView, 4);
-
-        await _scrollAndTap(tester, _findPlpProductCard(), plpScrollView);
-
-        // 6. Wait 1.5 seconds before adding the product to the bag.
-        await Future<void>.delayed(const Duration(milliseconds: 1500));
-
-        await _scrollAndTap(
-          tester,
-          _findPdpAddToBagButton(),
-          _findPdpScrollView(),
-        );
-
-        // 7. Pause another 2 seconds, then return to the PLP.
-        await Future<void>.delayed(const Duration(seconds: 2));
-
-        await _scrollAndTap(
-          tester,
-          _findPdpBackButton(),
-          _findPdpScrollView(),
-          scrollOffset: -300,
-        );
-
-        await Future<void>.delayed(const Duration(seconds: 2));
-
-        // 8. Perform a final scroll pass to continue exploring the list.
-        await _performScrollSteps(
-          tester,
-          plpScrollView,
-          10,
-          offset: const Offset(0, 100),
-          pause: const Duration(milliseconds: 200),
-        );
-
-        // 9. Wait a final second for the UI to settle before capturing timeline end.
-        await Future<void>.delayed(const Duration(seconds: 1));
+          // 8. Perform a final scroll pass to continue exploring the list.
+          await _performScrollSteps(
+            tester,
+            plpScrollView,
+            8,
+            offset: const Offset(0, 220),
+          );
+        }
+        await tester.pumpAndSettle();
       }, reportKey: 'plp_scroll_timeline');
 
       log('Timeline capture finished.');

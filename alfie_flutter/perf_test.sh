@@ -4,7 +4,7 @@ do
    flutter drive \
      --driver=test_driver/integration_test.dart \
      --target=integration_test/product_listing_performance_test.dart \
-     -d 00008140-001654421A13801C \
+     -d 61bb2e7f \
      --profile \
      --no-dds
    
