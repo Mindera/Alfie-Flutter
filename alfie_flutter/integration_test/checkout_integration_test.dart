@@ -276,7 +276,7 @@ void main() {
         // Verify order confirmation
         expect(find.text('Thank you!'), findsOneWidget);
         expect(find.textContaining('ORDER NUMBER'), findsOneWidget);
-        expect(find.textContaining('email@email.com'), findsOneWidget);
+        expect(find.textContaining('john@example.com'), findsOneWidget);
       }, tags: ['smoke']);
     });
 
@@ -309,7 +309,7 @@ void main() {
               .enabled,
           isFalse,
         );
-      });
+      }, tags: ['smoke']);
 
       testWidgets('Invalid payment details show errors', (
         WidgetTester tester,
@@ -369,7 +369,7 @@ void main() {
 
         // Should show validation error
         expect(find.text('Card is invalid'), findsOneWidget);
-      });
+      }, tags: ['smoke']);
 
       testWidgets('Submit button disabled when form is invalid', (
         WidgetTester tester,
@@ -418,7 +418,7 @@ void main() {
 
         // Button should now be enabled
         expect(tester.widget<ElevatedButton>(continueButton).enabled, isTrue);
-      });
+      }, tags: ['smoke']);
     });
 
     group('Navigation and UI State', () {
@@ -441,7 +441,7 @@ void main() {
         await tester.tap(find.byIcon(AppIcons.back));
         await tester.pumpAndSettle();
         expect(find.text('Identification'), findsOneWidget);
-      });
+      }, tags: ['smoke']);
 
       testWidgets('UI state updates correctly during checkout', (
         WidgetTester tester,
@@ -511,7 +511,7 @@ void main() {
         expect(find.textContaining('USA'), findsWidgets);
         expect(find.text('Delivery Method'), findsOneWidget);
         expect(find.textContaining('Standard Delivery'), findsOneWidget);
-      });
+      }, tags: ['smoke']);
     });
   });
 }
