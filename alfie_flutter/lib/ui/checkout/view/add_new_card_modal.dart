@@ -27,113 +27,138 @@ class AddNewCardModal extends HookConsumerWidget {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final card = useState<PaymentCard>(PaymentCard.invalid);
 
-    return Padding(
-      padding: const EdgeInsets.all(
-        Spacing.small,
-      ).add(context.mediaQuery.padding + context.mediaQuery.viewInsets),
-      child: Form(
-        key: formKey,
-        autovalidateMode: AutovalidateMode.onUnfocus,
-        child: SingleChildScrollView(
-          child: Column(
-            spacing: Spacing.medium,
-            children: [
-              Header(
-                title: "Add new card",
-                leading: AppButton.tertiary(
-                  leading: AppIcons.close,
-                  onPressed: () => context.safePop(),
+    final cardNumberValid =
+        context.validateCardNumber(card.value.number) == null;
+    final nameValid = card.value.name.isNotEmpty;
+    final monthValid = card.value.month != 0;
+    final yearValid = card.value.year != 0;
+    final cvvValid = card.value.cvv != 0;
+
+    final isCardValid =
+        cardNumberValid && nameValid && monthValid && yearValid && cvvValid;
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        context.unfocus();
+        formKey.currentState?.validate();
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(
+          Spacing.small,
+        ).add(context.mediaQuery.padding + context.mediaQuery.viewInsets),
+        child: Form(
+          key: formKey,
+          autovalidateMode: AutovalidateMode.onUnfocus,
+          child: SingleChildScrollView(
+            child: Column(
+              spacing: Spacing.medium,
+              children: [
+                Header(
+                  title: "Add new card",
+                  leading: AppButton.tertiary(
+                    leading: AppIcons.close,
+                    onPressed: () => context.safePop(),
+                  ),
                 ),
-              ),
-              Column(
-                spacing: Spacing.small,
-                children: [
-                  AppInputField(
-                    "Card Number",
-                    keyboardType: TextInputType.number,
-                    validator: context.validateCardNumber,
-                    onChanged: (value) => card.value = card.value.copyWith(
-                      number: PaymentCardUtils.getCleanedNumber(value),
-                      type: PaymentCardUtils.getCardTypeFrmNumber(value),
+                Column(
+                  spacing: Spacing.small,
+                  children: [
+                    AppInputField(
+                      "Card Number",
+                      key: const Key('card_number_field'),
+                      keyboardType: TextInputType.number,
+                      validator: context.validateCardNumber,
+                      onChanged: (value) => card.value = card.value.copyWith(
+                        number: PaymentCardUtils.getCleanedNumber(value),
+                        type: PaymentCardUtils.getCardTypeFrmNumber(value),
+                      ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(19),
+                        CardNumberInputFormatter(),
+                      ],
                     ),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(19),
-                      CardNumberInputFormatter(),
-                    ],
-                  ),
 
-                  AppInputField(
-                    "Name on card",
-                    keyboardType: TextInputType.text,
-                    validator: (String? value) =>
-                        value!.isEmpty ? "This field is required" : null,
-                    onChanged: (value) =>
-                        card.value = card.value.copyWith(name: value),
-                  ),
+                    AppInputField(
+                      "Name on card",
+                      key: const Key('card_name_field'),
+                      keyboardType: TextInputType.text,
+                      validator: (String? value) =>
+                          value!.isEmpty ? "This field is required" : null,
+                      onChanged: (value) =>
+                          card.value = card.value.copyWith(name: value),
+                    ),
 
-                  Row(
-                    spacing: Spacing.small,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: AppInputField(
-                          "Expiry Date",
-                          validator: context.validateDate,
-                          keyboardType: TextInputType.datetime,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(4),
-                            CardMonthInputFormatter(),
-                          ],
-                          onChanged: (value) {
-                            final expiryDate = PaymentCardUtils.getExpiryDate(
-                              value,
-                            );
-                            if (expiryDate != null) {
-                              card.value = card.value.copyWith(
-                                month: expiryDate[0],
-                                year: expiryDate[1],
+                    Row(
+                      spacing: Spacing.small,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: AppInputField(
+                            "Expiry Date",
+                            key: const Key('card_expiry_field'),
+                            validator: context.validateDate,
+                            keyboardType: TextInputType.datetime,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(4),
+                              CardMonthInputFormatter(),
+                            ],
+                            onChanged: (value) {
+                              final expiryDate = PaymentCardUtils.getExpiryDate(
+                                value,
                               );
-                            }
-                          },
+                              if (expiryDate != null) {
+                                card.value = card.value.copyWith(
+                                  month: expiryDate[0],
+                                  year: expiryDate[1],
+                                );
+                              }
+                            },
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: AppInputField(
-                          "CVV",
-                          validator: context.validateCVV,
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            if (value.isEmpty) return;
-                            card.value = card.value.copyWith(
-                              cvv: int.parse(value),
-                            );
-                          },
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(4),
-                          ],
+                        Expanded(
+                          child: AppInputField(
+                            "CVV",
+                            key: const Key('card_cvv_field'),
+                            validator: context.validateCVV,
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) {
+                              if (value.isEmpty) return;
+                              card.value = card.value.copyWith(
+                                cvv: int.parse(value),
+                              );
+                            },
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(4),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: double.maxFinite,
-                child: AppButton.primary(
-                  label: "Continue",
-                  onPressed: () {
-                    ref
-                        .read(checkoutViewModelProvider.notifier)
-                        .setPaymentMethod(card.value);
-
-                    context.safePop();
-                  },
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                SizedBox(
+                  width: double.maxFinite,
+                  child: AppButton.primary(
+                    label: "Continue",
+                    isDisabled: !isCardValid,
+                    onPressed: () {
+                      final isValid = formKey.currentState?.validate() ?? false;
+                      if (!isValid) return;
+
+                      ref
+                          .read(checkoutViewModelProvider.notifier)
+                          .setPaymentMethod(card.value);
+
+                      context.safePop();
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

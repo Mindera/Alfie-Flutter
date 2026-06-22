@@ -40,9 +40,9 @@ void main() {
 
       // The HomeState provides categories "A" through "I" by default.
       // Verify that the labelBuilder successfully extracts and renders them.
-      expect(find.text('A'), findsWidgets);
-      expect(find.text('B'), findsWidgets);
-      expect(find.text('C'), findsWidgets);
+      expect(find.text('Category A'), findsWidgets);
+      expect(find.text('Category B'), findsWidgets);
+      expect(find.text('Category C'), findsWidgets);
 
       // Verify `itemBuilder` returns the correct UI widget layout containing the placeholder icon
       expect(find.byType(Container), findsWidgets);

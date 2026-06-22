@@ -39,6 +39,7 @@ class ProductDetailScreen extends ConsumerWidget {
             return const Center(child: Text("Not Found"));
           }
           return CustomScrollView(
+            key: const Key('pdp_scroll_view'),
             slivers: [
               SliverAppBar(
                 primary: true,
@@ -48,6 +49,7 @@ class ProductDetailScreen extends ConsumerWidget {
                   background: Header(
                     title: product.name.capitalizeAll(),
                     leading: IconButton(
+                      key: const Key('pdp_back_button'),
                       padding: const EdgeInsets.only(),
                       icon: Icon(AppIcons.back),
                       onPressed: () => context.safePop(),

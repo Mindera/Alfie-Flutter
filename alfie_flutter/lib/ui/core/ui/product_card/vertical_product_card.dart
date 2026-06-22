@@ -35,34 +35,44 @@ class VerticalProductCard extends ConsumerWidget {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             spacing: Spacing.extraSmall,
             children: [
-              AspectRatio(
-                aspectRatio: aspectRatio,
-                child: ImageFactory.network(
-                  product.colours?.first.media?.first.firstUrl ?? "",
-                ),
-              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: Spacing.extraSmall,
                 children: [
-                  Text(
-                    product.brand.name,
-                    style: context.textTheme.labelSmall,
-                    maxLines: 1,
+                  AspectRatio(
+                    aspectRatio: aspectRatio,
+                    child: ImageFactory.network(
+                      product.colours?.first.media?.first.firstUrl ?? "",
+                    ),
                   ),
-                  Text(
-                    product.name.capitalizeAll(),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.textTheme.bodyMedium,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.brand.name,
+                        style: context.textTheme.labelSmall,
+                        maxLines: 1,
+                      ),
+                      Text(
+                        product.name.capitalizeAll(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.bodyMedium,
+                      ),
+                      Text(
+                        product.defaultVariant.price.amount.formatted,
+                        style: context.textTheme.bodyMediumBold,
+                      ),
+                      if (aditionalInfo != null)
+                        Text(
+                          aditionalInfo!,
+                          style: context.textTheme.labelSmall,
+                        ),
+                    ],
                   ),
-                  Text(
-                    product.defaultVariant.price.amount.formatted,
-                    style: context.textTheme.bodyMediumBold,
-                  ),
-                  if (aditionalInfo != null)
-                    Text(aditionalInfo!, style: context.textTheme.labelSmall),
                 ],
               ),
 
@@ -72,6 +82,7 @@ class VerticalProductCard extends ConsumerWidget {
           Align(
             alignment: Alignment.topRight,
             child: WishlistButton(
+              key: ValueKey('plp_product_card_${product.id}_wishlist_button'),
               product: product,
               buttonVariant: ButtonVariant.tertiary,
             ),
@@ -82,9 +93,7 @@ class VerticalProductCard extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(Spacing.extraSmall),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Spacing.extraSmall,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: Spacing.extraSmall),
                   color: AppColors.neutral800,
                   child: Text(
                     label!,

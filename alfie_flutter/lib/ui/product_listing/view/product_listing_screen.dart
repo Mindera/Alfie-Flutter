@@ -28,6 +28,7 @@ class ProductListingScreen extends HookConsumerWidget {
         ref.read(productListingViewModelProvider(id).notifier).updateCount();
       },
       child: CustomScrollView(
+        key: const Key('plp_scroll_view'),
         controller: controller,
         slivers: [
           ProductListingAppBar(id: id),

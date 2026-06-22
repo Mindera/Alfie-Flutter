@@ -18,7 +18,7 @@ class ProductListingContent extends ConsumerWidget {
   /// The active grid cross-axis layout preference.
   final int columns;
 
-  static const ratios = {1: 0.58, 2: 0.48};
+  static const ratios = {1: 0.58, 2: 0.475};
 
   const ProductListingContent({
     super.key,
@@ -63,7 +63,11 @@ class ProductListingContent extends ConsumerWidget {
                 builder: (context, value, child) {
                   return Transform.scale(scale: value, child: child);
                 },
-                child: VerticalProductCard(product: product, label: label),
+                child: VerticalProductCard(
+                  key: ValueKey('plp_product_card_$index'),
+                  product: product,
+                  label: label,
+                ),
               );
             }, childCount: productListing.products.length),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
