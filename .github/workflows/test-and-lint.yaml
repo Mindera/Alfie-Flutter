@@ -27,7 +27,7 @@ jobs:
       - name: Setup LCOV
         uses: hrishikesh-kadam/setup-lcov@6c1aa0cc9e1c02f9f58f01ac599f1064ccc83470
         with:
-          ref: HEAD
+          ref: v2.4
 
       - name: Run tests
         run: ./test_coverage.sh
