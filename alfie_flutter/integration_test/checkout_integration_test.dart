@@ -106,7 +106,7 @@ void main() {
         );
         await tester.enterText(
           find.byKey(const Key('contact_phone_field')),
-          '+1234567890',
+          '+44 7700 900000',
         );
 
         FocusManager.instance.primaryFocus?.unfocus();
@@ -232,7 +232,7 @@ void main() {
             firstName: 'John',
             lastName: 'Doe',
             email: 'john@example.com',
-            phoneNumber: '+1234567890',
+            phoneNumber: '+44 7700 900000',
           ),
         );
         checkoutVM.setDeliveryAddress(
@@ -324,7 +324,7 @@ void main() {
             firstName: 'John',
             lastName: 'Doe',
             email: 'john@example.com',
-            phoneNumber: '+1234567890',
+            phoneNumber: '+44 7700 900000',
           ),
         );
         checkoutVM.setDeliveryAddress(
@@ -412,7 +412,7 @@ void main() {
         );
         await tester.enterText(
           find.byKey(const Key('contact_phone_field')),
-          '+1234567890',
+          '+44 7700 900000',
         );
         await tester.pumpAndSettle();
 
@@ -471,7 +471,7 @@ void main() {
         );
         await tester.enterText(
           find.byKey(const Key('contact_phone_field')),
-          '+1234567890',
+          '+44 7700 900000',
         );
         await tester.pumpAndSettle();
         await tester.tap(find.widgetWithText(ElevatedButton, 'Continue').first);
