@@ -26,7 +26,7 @@ jobs:
             os: macos-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
@@ -45,7 +45,7 @@ jobs:
 
       - name: Run Android Integration Tests 
         if: matrix.platform == 'Android'
-        uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
         with:
           api-level: 30
           arch: x86_64
@@ -53,7 +53,7 @@ jobs:
           script: |
             cd alfie_flutter && flutter test integration_test
 
-      - uses: futureware-tech/simulator-action@e89aa8f93d3aec35083ff49d2854d07f7186f7f5
+      - uses: futureware-tech/simulator-action@c768f52966d5f70335ec77881f9806b24a52f80e
         if: matrix.platform == 'iOS'
         with:
           model: 'iPhone 17 Pro' 
@@ -96,7 +96,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
@@ -111,7 +111,7 @@ jobs:
         working-directory: alfie_flutter
 
       - name: Upload artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: ${{ matrix.artifact-name }}
           path: ${{ matrix.artifact-path }}
