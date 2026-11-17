@@ -8,6 +8,8 @@ runs:
       uses: ./.github/actions/setup-flutter
       with:
         channel: stable
+        # Pinned so a new stable release cannot break unrelated PRs; bump deliberately.
+        flutter-version: 3.47.9
         cache: true
           
     - name: Create .env files from secrets

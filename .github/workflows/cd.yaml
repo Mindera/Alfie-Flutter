@@ -36,6 +36,15 @@ jobs:
           ENV_DEV: ${{ secrets.ENV_DEV }}
           ENV_PROD: ${{ secrets.ENV_PROD }}
 
+      # Pinned so the runner image's default JDK cannot break the Gradle build;
+      # 17 matches the Android app's Java target.
+      - name: Setup Java
+        if: matrix.platform == 'Android'
+        uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: '17'
+
       - name: Enable KVM
         if: matrix.platform == 'Android'
         run: |
