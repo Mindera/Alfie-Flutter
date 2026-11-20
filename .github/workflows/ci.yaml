@@ -1,12 +1,10 @@
 name: CI
 
 on:
-  push:
-    branches-ignore: [main, "release/**"]
   pull_request:
 
 jobs:
   test-and-lint:
     uses: ./.github/workflows/test-and-lint.yaml
     with:
-      run-smoke-tests: ${{ github.event_name == 'pull_request' }}
+      run-smoke-tests: true
