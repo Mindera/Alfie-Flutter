@@ -33,6 +33,15 @@ jobs:
         run: ./test_coverage.sh
         working-directory: alfie_flutter
 
+      # Pinned so the runner image's default JDK cannot break the Gradle build;
+      # 17 matches the Android app's Java target.
+      - name: Setup Java
+        if: ${{ inputs.run-smoke-tests }}
+        uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: '17'
+
       - name: Enable KVM
         if: ${{ inputs.run-smoke-tests }}
         run: |
@@ -47,6 +56,7 @@ jobs:
           api-level: 30
           arch: x86_64
           profile: pixel_7_pro
+          enable-hw-keyboard: true
           script: |
             cd alfie_flutter && flutter test integration_test --tags=smoke
 

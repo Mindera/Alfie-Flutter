@@ -29,7 +29,7 @@ class Header extends StatelessWidget {
         left: Spacing.extraExtraSmall,
         bottom: Spacing.extraExtraSmall,
         right: Spacing.extraExtraSmall,
-      ).add(context.mediaQuery.padding),
+      ).add(EdgeInsets.only(top: context.mediaQuery.padding.top)),
       child: Row(
         spacing: Spacing.extraSmall,
         children: [

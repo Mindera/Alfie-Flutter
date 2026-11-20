@@ -135,7 +135,7 @@ void main() {
 
         expect(find.text('Total'), findsOneWidget);
         expect(find.text(r'$150.50'), findsOneWidget);
-        expect(find.text('Continue'), findsOneWidget);
+        expect(find.text('Place Order'), findsOneWidget);
       },
     );
 
@@ -301,7 +301,7 @@ void main() {
       expect(find.text('Payment Method Screen'), findsOneWidget);
     });
 
-    testWidgets('continue button can be interacted with', (
+    testWidgets('place order button can be interacted with', (
       WidgetTester tester,
     ) async {
       final bagViewModel = FakeBagViewModel(totalPrice: 10.0);
@@ -311,9 +311,9 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Ensure the continue action button doesn't crash on trigger
-      final continueBtn = find.text('Continue');
-      await tester.tap(continueBtn);
+      // Ensure the place order action button doesn't crash on trigger
+      final placeOrderBtn = find.text('Place Order');
+      await tester.tap(placeOrderBtn);
       await tester.pumpAndSettle();
 
       expect(tester.takeException(), isNull);

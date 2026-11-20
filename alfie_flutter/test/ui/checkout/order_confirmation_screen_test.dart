@@ -25,6 +25,7 @@ void main() {
 
     // Stub the state to return our mock user data
     when(() => mockCheckoutState.userData).thenReturn(mockUserData);
+    when(() => mockUserData.email).thenReturn('email@email.com');
 
     testViewModel = FakeCheckoutViewModel(mockCheckoutState);
   });

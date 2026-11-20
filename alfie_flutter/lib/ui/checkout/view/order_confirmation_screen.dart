@@ -17,6 +17,10 @@ class OrderConfirmationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final email = ref.watch(
+      checkoutViewModelProvider.select((state) => state.userData?.email),
+    );
+
     return Scaffold(
       appBar: AppBar(
         leading: AppButton.tertiary(
@@ -38,8 +42,8 @@ class OrderConfirmationScreen extends ConsumerWidget {
           children: [
             Text("Thank you!", style: context.textTheme.displayLarge),
             const Text("ORDER NUMBER #1A2B3C4D"),
-            const Text(
-              "We sent an email to email@email.com with everything you need to know about your order. Log in or register to enjoy a personalized experience and access all our services.",
+            Text(
+              "We sent an email to ${email ?? 'your email address'} with everything you need to know about your order. Log in or register to enjoy a personalized experience and access all our services.",
             ),
           ],
         ),
