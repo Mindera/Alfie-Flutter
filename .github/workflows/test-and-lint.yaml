@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
@@ -51,7 +51,7 @@ jobs:
 
       - name: Run Smoke Integration Tests
         if: ${{ inputs.run-smoke-tests }}
-        uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
         with:
           api-level: 30
           arch: x86_64
@@ -64,7 +64,7 @@ jobs:
       # comment fails with "Resource not accessible by integration".
       - name: Report LCOV
         if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: zgosalvez/github-actions-report-lcov@7d72c57ce4bc101a4a0bf9d726b6c435abde8439
+        uses: zgosalvez/github-actions-report-lcov@7e6043a0e3ae37bc6e45291401ddea852fc750e5
         with:
           coverage-files: alfie_flutter/coverage/lcov.info
           artifact-name: code-coverage-report
